@@ -1,0 +1,184 @@
+@import "tailwindcss";
+@import './css/fonts.css';
+
+.bg-primary {
+    background-color: #214A9A;
+  }
+  
+  .text-primary {
+    color: #214A9A;
+  }
+  
+  .border-primary {
+    border-color: #214A9A;
+  }
+  
+  .bg-secondary {
+    background-color: #f08f07;
+  }
+  
+  .text-secondary {
+    color: #f08f07;
+  }
+  
+  .border-secondary {
+    border-color: #f08f07;
+  }
+  .font-ancizar {
+    font-family: 'AncizarSans', sans-serif;
+  }
+  
+  .font-outfit {
+    font-family: 'Outfit', sans-serif;
+  }
+  
+  .font-robotoslab {
+    font-family: 'RobotoSlab', serif;
+  }
+  
+  .font-breeserif {
+    font-family: 'BreeSerif', serif;
+  }
+
+  .font-funneldisplay {
+    font-family: 'FunnelDisplay', sans-serif;
+  }
+
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+.delay-100 {
+  animation-delay: 0.1s;
+}
+
+.delay-200 {
+  animation-delay: 0.2s;
+}
+
+.delay-300 {
+  animation-delay: 0.3s;
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animate-bounce {
+  animation: bounce 2s infinite;
+}
+
+@keyframes float1 {
+  0%, 100% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(10px, 10px);
+  }
+}
+
+@keyframes float2 {
+  0%, 100% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(-15px, 15px);
+  }
+}
+
+@keyframes float3 {
+  0%, 100% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(5px, -10px);
+  }
+}
+
+.animate-float-1 {
+  animation: float1 6s ease-in-out infinite;
+}
+
+.animate-float-2 {
+  animation: float2 8s ease-in-out infinite;
+}
+
+.animate-float-3 {
+  animation: float3 7s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0) translateX(0);
+  }
+  50% {
+    transform: translateY(-20px) translateX(10px);
+  }
+}
+
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-gradient-shift {
+  background-size: 200% 200%;
+  animation: gradient-shift 8s ease infinite;
+}
+
+/* for enroll now button on tcs course page. */
+@keyframes slideInFromLeft {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.button-slide {
+  animation: slideInFromLeft 0.8s ease-out forwards;
+}
+
+/* for image animation on tcs course page. */
+@keyframes slideUp {
+  0% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.slide-up {
+  animation: slideUp 0.6s ease-out forwards;
+}
+

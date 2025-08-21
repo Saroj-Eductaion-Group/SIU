@@ -1,0 +1,944 @@
+{
+  "university": "Saroj International University",
+  "institutes": [
+    {
+    "name": "Saroj Institute of Artificial Intelligence",
+    "programs": [
+      {
+        "degree": "B.Tech",
+        "mode": "Regular Mode",
+        "specializations": "Artificial Intelligence & Machine Learning, Data Science, Robotics, Computer Science & Engineering",
+        "duration_in_yrs": 4,
+        "fees": {
+          "year1": 110000,
+          "year2": 110000,
+          "year3": 110000,
+          "year4": 110000,
+          "total": 440000
+        }
+      },
+      {
+        "degree": "M.Tech",
+        "mode": "Regular Mode",
+        "specializations": "Artificial Intelligence & Machine Learning, Data Science, Robotics, Computer Science & Engineering",
+        "duration_in_yrs": 2,
+        "fees": {
+          "year1": 125000,
+          "year2": 125000,
+          "total": 250000
+        }
+      },
+      {
+        "degree": "B.Tech",
+        "mode": "Global Mode",
+        "specializations": "Artificial Intelligence & Machine Learning, Data Science, Robotics, Computer Science & Engineering",
+        "duration_in_yrs": 4,
+        "fees": {
+          "year1": 160000,
+          "year2": 160000,
+          "year3": 160000,
+          "year4": 160000,
+          "total": 640000
+        }
+      },
+      {
+        "degree": "M.Tech",
+        "mode": "Global Mode",
+        "specializations": "Artificial Intelligence & Machine Learning, Data Science, Robotics, Computer Science & Engineering",
+        "duration_in_yrs": 2,
+        "fees": {
+          "year1": 175000,
+          "year2": 175000,
+          "total": 350000
+        }
+      }
+    ],
+    "eligibility": {
+      "B.Tech": {
+        "educational_qualifications": "Candidate must have passed the higher secondary examination (10+2) or its equivalent from a recognized board or institution. Should have studied Physics, Chemistry, and Mathematics as core subjects.",
+        "minimum_marks_requirement": "Minimum 50% in 10+2 from a recognized school/institution.",
+        "selection_process": "May include entrance exam scores, academic performance, and possibly personal interviews or counselling sessions."
+      },
+      "M.Tech": {
+        "educational_qualifications": "Bachelor's degree in Engineering or Technology (B.E./B.Tech) in relevant disciplines such as Computer Science, Electrical Engineering, Electronics and Communication Engineering, Information Technology, or related fields.",
+        "minimum_marks_requirement": "Minimum aggregate score of 50% in Bachelor's degree.",
+        "selection_process": "May include academic performance in undergraduate studies, personal interviews, and/or written tests."
+      }
+    }
+  },
+  {
+    "name": "Saroj Institute of Humanities & Education",
+    "programs": [
+      {
+        "degree": "BA/BS/B.Com",
+        "mode": "Regular Mode",
+        "specializations": "General, International Relations",
+        "duration_in_yrs": 3,
+        "fees": {
+          "year1": 60000,
+          "year2": 60000,
+          "year3": 60000,
+          "total": 180000
+        }
+      },
+      {
+        "degree": "B.Ed",
+        "mode": "Regular Mode",
+        "specializations": "Education",
+        "duration_in_yrs": 2,
+        "fees": {
+          "year1": 90000,
+          "year2": 90000,
+          "total": 180000
+        }
+      },
+      {
+        "degree": "MA/MS/M.Com",
+        "mode": "Regular Mode",
+        "specializations": "General, International Relations",
+        "duration_in_yrs": 2,
+        "fees": {
+          "year1": 60000,
+          "year2": 60000,
+          "total": 120000
+        }
+      },
+      {
+        "degree": "M.Ed",
+        "mode": "Regular Mode",
+        "specializations": "Education",
+        "duration_in_yrs": 2,
+        "fees": {
+          "year1": 60000,
+          "year2": 60000,
+          "total": 120000
+        }
+      }
+    ],
+    "eligibility": {
+      "BA/BS/B.Com": {
+        "educational_qualifications": "Candidate must have passed the higher secondary examination (10+2) or its equivalent from a recognized board or institution.",
+        "minimum_marks_requirement": "Minimum 50% in 10+2 from a recognized school/institution."
+      },
+      "B.Ed": {
+        "educational_qualifications": "Bachelor's degree or its equivalent in any discipline from a recognized university or institution.",
+        "minimum_marks_requirement": "Minimum aggregate score of 50% in Bachelor's degree."
+      },
+      "MA/MS/M.Com": {
+        "educational_qualifications": "Bachelor's degree or its equivalent in any discipline from a recognized university or institution.",
+        "minimum_marks_requirement": "Minimum aggregate score of 50% in Bachelor's degree."
+      },
+      "M.Ed": {
+        "educational_qualifications": "Bachelor's degree in Education (B.Ed.) or a related field from a recognized university or institution.",
+        "minimum_marks_requirement": "Minimum aggregate score of 50% in Bachelor's degree."
+      }
+    }
+  },
+  {
+    "name": "Saroj Institute of Entrepreneurship and Business",
+    "programs": [
+      {
+        "degree": "BBA",
+        "mode": "Regular Mode",
+        "specializations": "General, Banking Finance, International Business, Marketing, Insurance, Digital Marketing, Logistics & SCM HR, IT, Entrepreneurship, Retail & Start-Ups",
+        "duration_in_yrs": 3,
+        "fees": {
+          "year1": 110000,
+          "year2": 110000,
+          "year3": 110000,
+          "total": 330000
+        }
+      },
+      {
+        "degree": "MBA",
+        "mode": "Regular Mode",
+        "specializations": "General Business Administration, Business Finance, International Business, Marketing, Insurance, Digital Marketing", 
+        "duration_in_yrs": 2,
+        "fees": {
+          "year1": 120000,
+          "year2": 120000,
+          "total": 240000
+        }
+      },
+       {
+        "degree": "MBA",
+        "mode": "Global Mode",
+        "specializations": "General Business Administration, Business Finance, International Business, Marketing, Insurance, Digital Marketing", 
+        "duration_in_yrs": 2,
+        "fees": {
+          "year1": 170000,
+          "year2": 170000,
+          "total": 340000
+        }
+      },
+      {
+        "degree": "BBA",
+        "mode": "Global Mode",
+        "specializations": "General, Banking Finance, International Business, Marketing, Insurance, Digital Marketing, Logistics & SCM HR, IT, Entrepreneurship, Retail & Start-Ups",
+        "duration_in_yrs": 3,
+        "fees": {
+          "year1": 160000,
+          "year2": 160000,
+          "year3": 160000,
+          "total": 480000
+        }
+      }
+    ],
+    "eligibility": {
+      "BBA": {
+        "educational_qualifications": "Applicants should have successfully completed their higher secondary education (12th grade) from a recognized board or institution.",
+        "minimum_marks_requirement": "Minimum 50% in Higher Secondary Examination.",
+        "selection_process": "May include entrance exam scores, academic performance, and possibly personal interviews or counselling sessions."
+      },
+      "MBA": {
+        "educational_qualifications": "Bachelor's degree or its equivalent in any discipline from a recognized university or institution.",
+        "minimum_marks_requirement": "Minimum aggregate score of 50% in Bachelor's degree.",
+        "selection_process": "May include entrance exam scores, academic performance, and possibly personal interviews or counselling sessions."
+      }
+    }
+  },
+    {
+      "name": "Saroj Institute of Management & Technology",
+      "programs": [
+        {
+          "degree": "B.Tech",
+          "mode": "Regular Mode",
+          "specializations": "CSE, IT, Cyber Security, IOT, EC, ME, Civil, Mechatronics, Bio-Tech, Electrical Engg",
+          "duration_in_yrs": 4,
+          "fees": {
+            "year1": 110000,
+            "year2": 110000,
+            "year3": 110000,
+            "year4": 110000,
+            "total": 440000
+          }
+        },
+        {
+          "degree": "M.Tech",
+          "mode": "Regular Mode",
+          "specializations": "CSE, IT, Cyber Security, IOT, EC, ME, Civil, Mechatronics, Bio-Tech, Electrical Engg",
+          "duration_in_yrs": 2,
+          "fees": {
+            "year1": 125000,
+            "year2": 125000,
+            "total": 250000
+          }
+        },
+        {
+          "degree": "BCA",
+          "mode": "Regular Mode",
+          "specializations": "AI, ML, Cyber Security",
+          "duration_in_yrs": 3,
+          "fees": {
+            "year1": 100000,
+            "year2": 100000,
+            "year3": 100000,
+            "total": 300000
+          }
+        },
+        {
+          "degree": "MCA",
+          "mode": "Regular Mode",
+          "specializations": "AI, ML, Cyber Security",
+          "duration_in_yrs": 2,
+          "fees": {
+            "year1": 120000,
+            "year2": 120000,
+            "total": 240000
+          } 
+        },
+        {
+          "degree": "B.Tech",
+          "mode": "Global Mode",
+          "specializations": "CSE, IT, Cyber Security, IOT, EC, ME, Civil, Mechatronics, Bio-Tech, Electrical Engg",
+          "duration_in_yrs": 4,
+          "fees": {
+            "year1": 160000,
+            "year2": 160000,
+            "year3": 160000,
+            "year4": 160000,
+            "total": 640000
+          }
+        },
+        {
+          "degree": "M.Tech / MCA",
+          "mode": "Global Mode",
+          "specializations": "M.Tech (CSE, IT, Cyber Security, IOT, EC, ME, Civil, Mechatronics, Bio-Tech, Electrical Engg), MCA (AI, ML, Cyber Security)",
+          "duration_in_yrs": 2,
+          "fees": {
+            "year1": 150000,
+            "year2": 150000,
+            "total": 330000
+          }
+        },
+        {
+          "degree": "BCA",
+          "mode": "Global Mode",
+          "specializations": "AI, ML, Cyber Security",
+          "duration_in_yrs": 2,
+          "fees": {
+            "year1": 150000,
+            "year2": 150000,
+            "total": 300000
+          }
+        }
+      ],
+      "eligibility": {
+        "B.Tech": {
+          "educational_qualifications": "Candidates should have completed 10+2 or its equivalent examination from a recognized board or university. The required subjects in the qualifying examination may vary based on the specialization, but typically include Physics, Chemistry, and Mathematics.",
+          "minimum_marks_requirement": "Candidates are required to have a minimum percentage of 50% in the Higher Secondary Examination.",
+          "selection_process": "After meeting the eligibility criteria, candidates may be required to undergo a selection process, which may include a combination of entrance exam scores, academic performance, and possibly personal interviews or counselling sessions."
+        },
+        "Diploma": {
+          "educational_qualifications": "Candidates should have completed 10th standard (SSC) or its equivalent examination from a recognized board or institution.",
+          "minimum_marks_requirement": "Candidates are required to have a minimum percentage of 50% in the SSC Examination.",
+          "selection_process": "After meeting the eligibility criteria, candidates may be required to undergo a selection process, which may include a combination of entrance exam scores, academic performance, and possibly personal interviews or counselling sessions."
+        },
+        "M.Tech": {
+          "educational_qualifications": "Candidates must hold a Bachelor's Degree in Engineering or Technology (B.E. / B.Tech) in relevant disciplines such as Computer Science, Electrical Engineering, Electronics and Communication Engineering, Information Technology, or related fields from a recognized university or institution.",
+          "minimum_marks_requirement": "Candidates should have a minimum aggregate score of 50% in their Bachelor's degree.",
+          "selection_process": "After meeting the eligibility criteria, candidates may be required to undergo a selection process, which may include a combination of entrance exam scores, academic performance, and possibly personal interviews or counselling sessions."
+        },
+        "BCA": {
+          "educational_qualifications": "Applicants should have successfully completed their higher secondary education (12th grade) from a recognized board or institution.",
+          "minimum_marks_requirement": "Candidates are required to have a minimum percentage of 50% in the Higher Secondary Examination.",
+          "selection_process": "After meeting the eligibility criteria, candidates may be required to undergo a selection process, which may include a combination of entrance exam scores, academic performance, and possibly personal interviews or counselling sessions."
+        },
+        "MCA": {
+          "educational_qualifications": "Candidates should have a bachelor's degree in any discipline from a recognized university or institution.",
+          "minimum_marks_requirement": "Candidates should have a minimum aggregate score of 50% in their Bachelor's degree.",
+          "selection_process": "After meeting the eligibility criteria, candidates may be required to undergo a selection process, which may include a combination of entrance exam scores, academic performance, and possibly personal interviews or counselling sessions."
+        }
+      }
+    },
+    {
+      "name": "Saroj Institute of Basic & Health Sciences",
+      "programs": [
+        {
+          "degree": "B.Sc",
+          "mode": "Regular Mode",
+          "specializations": "Physics, Chemistry, Biology, Mathematics",
+          "duration_in_yrs": 3,
+          "fees": {
+            "year1": 80000,
+            "year2": 80000,
+            "year3": 80000,
+            "total": 240000
+          }
+        },
+        {
+          "degree": "BS",
+          "mode": "Regular Mode",
+          "specializations": "Data Sciences, Physiotherapy, Forensic Science, Radiology& Imaging, Medical Lab Technology",
+          "duration_in_yrs": 3,
+          "fees": {
+            "year1": 80000,
+            "year2": 80000,
+            "year3": 80000,
+            "total": 240000
+          }
+        },
+        {
+          "degree": "M.Sc",
+          "mode": "Regular Mode",
+          "specializations": "Physics, Biology, Chemistry, Mathematics",
+          "duration_in_yrs": 2,
+          "fees": {
+            "year1": 80000,
+            "year2": 80000,
+            "total": 160000
+          }
+        },
+        {
+          "degree": "MS",
+          "mode": "Regular Mode",
+          "specializations": "Data Sciences, Physiotherapy, Forensic Science, Radiology& Imaging, Medical Lab Technology",
+          "duration_in_yrs": 2,
+          "fees": {
+            "year1": 80000,
+            "year2": 80000,
+            "total": 160000
+          }
+        },
+        {
+          "degree": "Diploma",
+          "mode": "Regular Mode",
+          "specializations": "Public Health",
+          "duration_in_yrs": 1,
+          "fees": {
+            "year1": 60000,
+            "total": 60000
+          }
+        },
+        {
+          "degree": "Ph.D",
+          "mode": "Regular Mode",
+          "specializations": "Physics, Chemistry, Mathematics & Biology",
+          "duration_in_yrs": 3,
+          "fees": {
+            "year1": 100000,
+            "year2": 100000,
+            "year3": 100000,
+            "total": 300000
+          }
+        },
+        {
+          "degree": "Ph.D",
+          "mode": "Regular Mode",
+          "specializations": "Data Analytics",
+          "duration_in_yrs": 3,
+          "fees": {
+            "year1": 100000,
+            "year2": 100000,
+            "year3": 100000,
+            "total": 300000
+          }
+        },
+        {
+          "degree": "B.Sc",
+          "mode": "Global Mode",
+          "specializations": "Physics, Biology, Chemistry, Mathematics",
+          "duration_in_yrs": 3,
+          "fees": {
+            "year1": 125000,
+            "year2": 125000,
+            "year3": 125000,
+            "total": 375000
+          }
+        },
+        {
+          "degree": "BS",
+          "mode": "Global Mode",
+          "specializations": "Data Sciences, Physiotherapy, Forensic Science, Radiology, Imaging, Medical Lab Technology",
+          "duration_in_yrs": 3,
+          "fees": {
+            "year1": 125000,
+            "year2": 125000,
+            "year3": 125000,
+            "total": 375000
+          }
+        },
+        {
+          "degree": "M.Sc",
+          "mode": "Global Mode",
+          "specializations": "Physics, Biology, Chemistry, Mathematics",
+          "duration_in_yrs": 2,
+          "fees": {
+            "year1": 125000,
+            "year2": 125000,
+            "total": 250000
+          }
+        },
+        {
+          "degree": "MS",
+          "mode": "Global Mode",
+          "specializations": "Data Sciences, Physiotherapy, Forensic Science, Radiology, Imaging, Medical Lab Technology",
+          "duration_in_yrs": 2,
+          "fees": {
+            "year1": 125000,
+            "year2": 125000,
+            "total": 250000
+          }
+        },
+        {
+          "degree": "Ph.D",
+          "mode": "Global Mode",
+          "specializations": "Physics, Chemistry, Mathematics & Biology",
+          "duration_in_yrs": 3,
+          "fees": {
+            "year1": 150000,
+            "year2": 150000,
+            "year3": 150000,
+            "total": 450000
+          }
+        },
+        {
+          "degree": "Ph.D",
+          "mode": "Global Mode",
+          "specializations": "Data Analytics",
+          "duration_in_yrs": 3,
+          "fees": {
+            "year1": 150000,
+            "year2": 150000,
+            "year3": 150000,
+            "total": 450000
+          }
+        }
+      ],
+      "eligibility": {
+        "B.Sc (Physics, Chemistry, Mathematics)": {
+          "educational_qualifications": "Candidates must have completed their higher secondary education (10+2) or its equivalent from a recognized educational board. They should have studied Physics, Chemistry, and Mathematics as core subjects in their 10+2 curriculum.",
+          "minimum_marks_requirement": "Candidates are required to have a minimum percentage of 50% in the Higher Secondary Examination."
+        },
+        "BS (Data Analytics)": {
+          "educational_qualifications": "Applicants should have successfully completed their higher secondary education (12th grade) from a recognized board or institution.",
+          "minimum_marks_requirement": "Candidates are required to have a minimum percentage of 50% in the Higher Secondary Examination."
+        },
+        "BS (Physiotherapy, Forensic Science, Radiology & Imaging, Lab Technology)": {
+          "educational_qualifications": "Candidates must have completed their higher secondary education (10+2) or its equivalent from a recognized educational board. They should have studied Physics, Chemistry, and Biology as core subjects in their 10+2 curriculum.",
+          "minimum_marks_requirement": "Candidates are required to have a minimum percentage of 50% in the Higher Secondary Examination."
+        },
+        "Ph.D (Physics, Chemistry, Biology, Mathematics)": {
+          "educational_qualifications": "Candidates are required to have completed a master's degree in the relevant field (Physics, Chemistry, Mathematics, or Biology) or a closely related discipline from a recognized university or educational institution.",
+          "minimum_marks_requirement": "Candidates are required to have a minimum percentage of 55% in their Master's Degree"
+        },
+        "Diploma (Public Health)": {
+          "educational_qualifications": "Candidates must have completed their higher secondary education (10+2) or its equivalent from a recognized educational board. They should have studied Physics, Chemistry, and Biology as core subjects in their 10+2 curriculum.",
+          "minimum_marks_requirement": "Candidates are required to have a minimum percentage of 50% in the Higher Secondary Examination."
+        },
+        "M.Sc (Physics, Chemistry, Mathematics)": {
+          "educational_qualifications": "Candidates should have a Bachelor's degree in Science with a major in the respective subject (Physics, Chemistry, or Mathematics) or a related field from a recognized university.",
+          "minimum_marks_requirement": "Candidates should have a minimum aggregate score of 50% in their Bachelor's degree."
+        },
+        "MS (Data Analytics)": {
+          "educational_qualifications": "Bachelor's degree in a relevant field such as Computer Science, Statistics, Mathematics, Engineering, Economics, or a related discipline is required.",
+          "minimum_marks_requirement": "Candidates should have a minimum aggregate score of 50% in their Bachelor's degree."
+        },
+        "MS (Physiotherapy, Forensic Science, Radiology & Imaging, Lab Technology)": {
+          "educational_qualifications": "Candidates should have a Bachelor's degree in Science with a major in the respective subject or a related field from a recognized university.",
+          "minimum_marks_requirement": "Candidates should have a minimum aggregate score of 50% in their Bachelor's degree."
+        },
+        "Ph.D (Data Analytics)": {
+          "educational_qualifications": "Candidates should have completed a Master's degree in a relevant field such as Computer Science, Statistics, Mathematics, Engineering, Economics, or a related discipline from a recognized institution.",
+          "minimum_marks_requirement": "Candidates are required to have a minimum percentage of 55% in their Master's Degree."
+        }
+      }
+    },
+    {
+      "name": "Lucknow Institute of Pharmacy",
+      "programs": [
+        {
+          "degree": "B.Pharm",
+          "mode": "Regular Mode",
+          "specializations": [
+            "Pharmacology, Pharmaceutical Chemistry, Pharmaceutics, Pharmaceutical Analysis",
+            "Clinical Pharmacy, Pharmaceutical Biotechnology, Regulatory Affairs"
+          ],
+          "duration_in_yrs": 4,
+          "fees": {
+            "year1": 100000,
+            "year2": 100000,
+            "year3": 100000,
+            "year4": 100000,
+            "total": 400000
+          }
+        },
+        {
+          "degree": "D.Pharm",
+          "mode": "Regular Mode",
+          "specializations": [
+            "Pharmacology, Pharmaceutical Chemistry, Pharmaceutics, Pharmaceutical Analysis",
+            "Clinical Pharmacy, Pharmaceutical Biotechnology, Regulatory Affairs"
+          ],
+          "duration_in_yrs": 2,
+          "fees": {
+            "year1": 100000,
+            "year2": 100000,
+            "total": 200000
+          }
+        },
+        {
+          "degree": "M.Pharm (Pharmacology)",
+          "mode": "Regular Mode",
+          "specializations": [
+            "Pharmacology"
+          ],
+          "duration_in_yrs": 2,
+          "fees": {
+            "year1": 100000,
+            "year2": 100000,
+            "total": 200000
+          }
+        },
+        {
+          "degree": "M.Pharm (Medical Chemistry)",
+          "mode": "Regular Mode",
+          "specializations": [
+            "Medical Chemistry"
+          ],
+          "duration_in_yrs": 2,
+          "fees": {
+            "year1": 100000,
+            "year2": 100000,
+            "total": 200000
+          }
+        },
+        {
+          "degree": "Doctorate Programs",
+          "mode": "Regular Mode",
+          "duration_in_yrs": 3,
+          "fees": {
+            "year1": 125000,
+            "year2": 125000,
+            "year3": 125000,
+            "total": 375000
+          }
+        },
+        {
+          "degree": "B.Pharm",
+          "mode": "Global Mode",
+          "specializations": [
+            "Pharmacology, Pharmaceutical Chemistry, Pharmaceutics, Pharmaceutical Analysis",
+            "Clinical Pharmacy, Pharmaceutical Biotechnology, Regulatory Affairs"
+          ],
+          "duration_in_yrs": 4,
+          "fees": {
+            "year1": 150000,
+            "year2": 150000,
+            "year3": 150000,
+            "year4": 150000,
+            "total": 600000
+          }
+        },
+        {
+          "degree": "D.Pharm",
+          "mode": "Global Mode",
+          "specializations": [
+            "Pharmacology, Pharmaceutical Chemistry, Pharmaceutics, Pharmaceutical Analysis",
+            "Clinical Pharmacy, Pharmaceutical Biotechnology, Regulatory Affairs"
+          ],
+          "duration_in_yrs": 2,
+          "fees": {
+            "year1": 140000,
+            "year2": 140000,
+            "total": 280000
+          }
+        },
+        {
+          "degree": "M.Pharm (Pharmacology)",
+          "mode": "Global Mode",
+           "specializations": [ "Pharmacology" ],
+          "duration_in_yrs": 2,
+          "fees": {
+            "year1": 150000,
+            "year2": 150000,
+            "total": 300000
+          }
+        },
+        {
+          "degree": "M.Pharm (Medical Chemistry)",
+          "mode": "Global Mode",
+          "specializations": [ "Medical Chemistry" ],
+          "duration_in_yrs": 2,
+          "fees": {
+            "year1": 140000,
+            "year2": 140000,
+            "total": 280000
+          }
+        },
+        {
+          "degree": "Doctorate Programs",
+          "mode": "Global Mode",
+          "duration_in_yrs": 3,
+          "fees": {
+            "year1": 200000,
+            "year2": 200000,
+            "year3": 200000,
+            "total": 600000
+          }
+        }
+      ],
+      "eligibility": {
+        "B.Pharm": {
+          "educational_qualifications": "Candidates should have completed their higher secondary education (10+2) or equivalent with a science stream (Physics, Chemistry, and Biology, Mathematics).",
+          "minimum_marks_requirement": "Candidates are required to have a minimum percentage of 50% in the Higher Secondary Examination.",
+          "selection_process": "After meeting the eligibility criteria, candidates may be required to undergo a selection process, which may include a combination of entrance exam scores, academic performance, and possibly personal interviews or counselling sessions."
+        },
+        "D.Pharm": {
+          "educational_qualifications": "Candidates should have completed their higher secondary education (10+2) or equivalent with a science stream (Physics, Chemistry, and Biology, Mathematics).",
+          "minimum_marks_requirement": "Candidates are required to have a minimum percentage of 50% in the Higher Secondary Examination.",
+          "selection_process": "After meeting the eligibility criteria, candidates may be required to undergo a selection process, which may include a combination of entrance exam scores, academic performance, and possibly personal interviews or counselling sessions."
+        },
+        "M.Pharm": {
+          "educational_qualifications": "Candidates should have completed a Bachelor's degree in Pharmacy (B.Pharm) from a recognized institution.",
+          "minimum_marks_requirement": "Candidates should have a minimum aggregate score of 50% in their Bachelor's degree."
+        },
+        "Doctorate_Programs_in_Pharmacy": {
+          "educational_qualifications": "Candidates should have completed a Master's degree in Pharmacy (M.Pharm) or an equivalent degree in Pharmaceutical Sciences from a recognized institution.",
+          "minimum_marks_requirement": "Candidates are required to have a minimum percentage of 55% in their Master's Degree."
+        }
+      }
+    },
+    {
+      "name": "Saroj Institute of Sports Science & Research",
+      "programs": [
+        {
+          "degree": "BS",
+          "mode": "Regular Mode",
+          "specializations": [
+            "Sports Management, Applied Sports Psychology",
+            "Sports Nutritionist, Sports Coaching & Fitness"
+          ],
+          "duration_in_yrs": 3,
+          "fees": {
+            "year1": 90000,
+            "year2": 90000,
+            "year3": 90000,
+            "total": 270000
+          }
+        },
+        {
+          "degree": "MS",
+          "mode": "Regular Mode",
+          "specializations": [
+            "Sports Management, Applied Sports Psychology",
+            "Sports Nutritionist, Sports Coaching & Fitness"
+          ],
+          "duration_in_yrs": 2,
+          "fees": {
+            "year1": 90000,
+            "year2": 90000,
+            "total": 180000
+          }
+        },
+        {
+          "degree": "BS",
+          "mode": "Global Mode",
+          "specializations": [
+            "Sports Management, Applied Sports Psychology",
+            "Sports Nutritionist, Sports Coaching & Fitness"
+          ],
+          "duration_in_yrs": 3,
+          "fees": {
+            "year1": 140000,
+            "year2": 140000,
+            "year3": 140000,
+            "total": 420000
+          }
+        },
+        {
+          "degree": "MS",
+          "mode": "Global Mode",
+          "specializations": "Sports Management, Applied Sports Psychology, Sports Nutritionist, Sports Coaching & Fitness",
+          "duration_in_yrs": 2,
+          "fees": {
+            "year1": 140000,
+            "year2": 140000,
+            "total": 280000
+          }
+        }
+      ],
+      "eligibility": {
+        "BS (Sports Science)": {
+          "educational_qualifications": "Applicants should have successfully completed their higher secondary education (12th grade) from a recognized board or institution.",
+          "minimum_marks_requirement": "Candidates are required to have a minimum percentage of 50% in the Higher Secondary Examination.",
+          "selection_process": "After meeting the eligibility criteria, candidates may be required to undergo a selection process, which may include a combination of entrance exam scores, academic performance, and possibly personal interviews or counselling sessions."
+        },
+        "MS (Sports Science)": {
+          "educational_qualifications": "Applicants should have completed a bachelor's degree or its equivalent in any discipline from a recognized university or institution.",
+          "minimum_marks_requirement": "Candidates should have a minimum aggregate score of 50% in their Bachelor's degree.",
+          "selection_process": "After meeting the eligibility criteria, candidates may be required to undergo a selection process, which may include a combination of entrance exam scores, academic performance, and possibly personal interviews or counselling sessions."
+        }
+      }
+    },
+    {
+      "name": "Saroj Institute of Film & Fashion",
+      "programs": [
+        {
+          "degree": "B.Design",
+          "mode": "Regular Mode",
+          "specializations": "Fashion Design, Interior Design, Visual Communication Design, Animation & Game Design",
+          "duration_in_yrs": 4,
+          "fees": {
+            "year1": 100000,
+            "year2": 100000,
+            "year3": 100000,
+            "year4": 100000,
+            "total": 400000
+          }
+        },
+        {
+          "degree": "B.Sc",
+          "mode": "Regular Mode",
+          "specializations": "Film Making, Script, Direction, Audiography, Script Writing, Cinematography",
+          "duration_in_yrs": 3,
+          "fees": {
+            "year1": 100000,
+            "year2": 100000,
+            "year3": 100000,
+            "total": 300000
+          }
+        },
+        {
+          "degree": "BA",
+          "mode": "Regular Mode",
+          "specializations": [
+            "Acting & Drama",
+            "Advertising, Journalism, PR Events"
+          ],
+          "duration_in_yrs": 3,
+          "fees": {
+            "year1": 100000,
+            "year2": 100000,
+            "year3": 100000,
+            "total": 300000
+          }
+        },
+        {
+          "degree": "M.Design",
+          "mode": "Regular Mode",
+          "specializations": "Fashion Design, Visual Communication Design, Animation & Game Design",
+          "duration_in_yrs": 2,
+          "fees": {
+            "year1": 100000,
+            "year2": 100000,
+            "total": 200000
+          }
+        },
+        {
+          "degree": "M.Sc",
+          "mode": "Regular Mode",
+          "specializations": "Film Making, Script Writing, Cinematography",
+          "duration_in_yrs": 2,
+          "fees": {
+            "year1": 100000,
+            "year2": 100000,
+            "total": 200000
+          }
+        },
+        {
+          "degree": "MA",
+          "mode": "Regular Mode",
+          "specializations": [
+            "Acting & Drama",
+            "Advertising, Journalism, PR Events"
+          ],
+          "duration_in_yrs": 2,
+          "fees": {
+            "year1": 100000,
+            "year2": 100000,
+            "total": 200000
+          }
+        },
+        {
+          "degree": "B.Design",
+          "mode": "Global Mode",
+          "specializations": "Fashion Design, Interior Design, Visual Communication Design, Animation & Game Design",
+          "duration_in_yrs": 4,
+          "fees": {
+            "year1": 150000,
+            "year2": 150000,
+            "year3": 150000,
+            "year4": 150000,
+            "total": 600000
+          }
+        },
+        {
+          "degree": "B.Sc",
+          "mode": "Global Mode",
+          "specializations": "Film Making, Script, Direction, Audiography, Script Writing, Cinematography",
+          "duration_in_yrs": 3,
+          "fees": {
+            "year1": 150000,
+            "year2": 150000,
+            "year3": 150000,
+            "total": 450000
+          }
+        },
+        {
+          "degree": "BA",
+          "mode": "Global Mode",
+          "specializations": "Acting & Drama, Advertising, Journalism, PR Events",
+          "duration_in_yrs": 3,
+          "fees": {
+            "year1": 150000,
+            "year2": 150000,
+            "year3": 150000,
+            "total": 450000
+          }
+        },
+        {
+          "degree": "M.Design",
+          "mode": "Global Mode",
+          "specializations": "Fashion Design, Visual Communication Design, Animation & Game Design",
+          "duration_in_yrs": 2,
+          "fees": {
+            "year1": 150000,
+            "year2": 150000,
+            "total": 300000
+          }
+        },
+        {
+          "degree": "M.Sc",
+          "mode": "Global Mode",
+          "specializations": "Film Making, Script Writing, Cinematography",
+          "duration_in_yrs": 2,
+          "fees": {
+            "year1": 150000,
+            "year2": 150000,
+            "total": 300000
+          }
+        },
+        {
+          "degree": "MA",
+          "mode": "Global Mode",
+          "specializations": "Acting & Drama, Advertising, Journalism, PR Events",
+          "duration_in_yrs": 2,
+          "fees": {
+            "year1": 150000,
+            "year2": 150000,
+            "total": 300000
+          }
+        },
+        {
+          "degree": "Diploma",
+          "mode": "Regular Mode",
+          "specializations": [
+            {
+              "name": "Film Making, Script Writing",
+              "duration": "1 Yr"
+            },
+            {
+              "name": "Acting & Drama",
+              "duration": "12-18 Months"
+            },
+            {
+              "name": "Advertisement, Journalism, PR Events",
+              "duration": "12-18 Months"
+            }
+          ],
+          "duration_in_yrs": 1,
+
+          "fees": {
+            "year1": 100000,
+            "total": 100000
+          }
+        }
+      ],
+      "eligibility": {
+        "B.Design": {
+          "educational_qualifications": "Applicants should have successfully completed their higher secondary education (12th grade) from a recognized board or institution.",
+          "minimum_marks_requirement": "Candidates are required to have a minimum percentage of 50% in the Higher Secondary Examination."
+        },
+        "B.Sc (Film Making, Script Writing, Cinematography)": {
+          "educational_qualifications": "Applicants should have successfully completed their higher secondary education (12th grade) from a recognized board or institution.",
+          "minimum_marks_requirement": "Candidates are required to have a minimum percentage of 50% in the Higher Secondary Examination."
+        },
+        "BA (Acting & Drama, Advertising, Journalism, PR Events)": {
+          "educational_qualifications": "Applicants should have successfully completed their higher secondary education (12th grade) from a recognized board or institution.",
+          "minimum_marks_requirement": "Candidates are required to have a minimum percentage of 50% in the Higher Secondary Examination."
+        },
+        "M.Design": {
+          "educational_qualifications": "Applicants should have completed a bachelor's degree or its equivalent in any discipline from a recognized university or institution.",
+          "minimum_marks_requirement": "Candidates should have a minimum aggregate score of 50% in their Bachelor's degree."
+        },
+        "M.Sc (Film Making, Script Writing, Cinematography)": {
+          "educational_qualifications": "Applicants should have completed a bachelor's degree or its equivalent in any discipline from a recognized university or institution.",
+          "minimum_marks_requirement": "Candidates should have a minimum aggregate score of 50% in their Bachelor's degree."
+        },
+        "MA (Acting & Drama, Advertising, Journalism, PR Events)": {
+          "educational_qualifications": "Applicants should have completed a bachelor's degree or its equivalent in any discipline from a recognized university or institution.",
+          "minimum_marks_requirement": "Candidates should have a minimum aggregate score of 50% in their Bachelor's degree."
+        },
+        "Diploma Courses": {
+          "educational_qualifications": "Applicants should have successfully completed their higher secondary education (12th grade) from a recognized board or institution.",
+          "minimum_marks_requirement": "Candidates are required to have a minimum percentage of 50% in the Higher Secondary Examination."
+        }
+      }
+    }
+  ]
+}
+
+
+
+  

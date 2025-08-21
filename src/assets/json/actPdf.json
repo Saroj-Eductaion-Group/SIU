@@ -1,0 +1,16 @@
+{
+  "pageHeading": "University Documents",
+  "subHeading": "Browse official university legislation and legal resources",
+  "documents": [
+    {
+      "id": 1,
+      "title": "University Act",
+      "description": "Official university legislation document",
+      "fileName": "university-act.pdf",
+      "fileUrl": "/pdfs/university-act.pdf",
+      "category": "Legal",
+      "date": "2025-05-15",
+      "size": "1 MB"
+    }
+  ]
+}

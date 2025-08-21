@@ -1,0 +1,581 @@
+{
+  "title": "Programs",
+  "path": "/programs",
+  "megaMenu": true,
+  "columns": [
+    {
+      "heading": "TCS ACADEMIA",
+      "items": [
+        {
+          "title": "Design Thinking - Practitioner's Perspective [TCS]",
+          "path": "/programs/design-thinking",
+          "collaboration_link": "https://www.tcsion.com/courses/industry-honour-course/design-thinking/"
+        },
+        {
+          "title": "Innovation and Entrepreneurship [TCS]",
+          "path": "/programs/innovation-entrepreneurship",
+          "collaboration_link": "https://www.tcsion.com/courses/industry-honour-course/entrepreneurship-innovation/"
+        },
+        {
+          "title": "Artificial Intelligence for Real-World Application [TCS]",
+          "path": "/programs/artificial-intelligence-real-world",
+          "collaboration_link": "https://www.tcsion.com/courses/industry-honour-course/artificial-intelligence/"
+        },
+        {
+          "title": "Machine Learning for Real-World Application [TCS]",
+          "path": "/programs/machine-learning-real-world",
+          "collaboration_link": "https://www.tcsion.com/courses/industry-honour-course/machine-learning/"
+        },
+        {
+          "title": "Statistics using R and Python [TCS]",
+          "path": "/programs/statistics-r-python",
+          "collaboration_link": "https://www.tcsion.com/courses/industry-honour-course/statistics-using-r-python/"
+        },
+        {
+          "title": "Advanced Cyber Security - An Application Approach [TCS]",
+          "path": "/programs/advanced-cyber-security",
+          "collaboration_link": "https://www.tcsion.com/courses/industry-honour-course/cyber-security-advance/"
+        },
+        {
+          "title": "Cryptography [TCS]",
+          "path": "/programs/cryptography",
+          "collaboration_link": "https://www.tcsion.com/courses/industry-honour-course/cryptography/"
+        },
+        {
+          "title": "Cloud Development [TCS]",
+          "path": "/programs/cloud-development",
+          "collaboration_link": "https://www.tcsion.com/courses/ihc/cloud-development-course/"
+        },
+        {
+          "title": "Application of Deep Learning and Neural Networks [TCS]",
+          "path": "/programs/deep-learning-neural-networks",
+          "collaboration_link": "https://www.tcsion.com/courses/industry-honour-course/deep-learning-neural-networks/"
+        },
+        {
+          "title": "Information Security - Practitioner's Perspective [TCS]",
+          "path": "/programs/information-security",
+          "collaboration_link": "https://www.tcsion.com/courses/industry-honour-course/information-security/"
+        }
+     
+
+      ],
+      "comment": "Total TCS Academia Programs: 17"
+    },
+    {
+      "heading": "COLLABORATION",
+      "items": [
+        {
+          "title": "B.Tech - CSE with AI & ML [Microsoft]",
+          "path": "/"
+        },
+        {
+          "title": "B.Tech - CSE with Data Science [Google]",
+          "path": "/"
+        },
+        {
+          "title": "B.Tech - CSE Cyber Security [CNS/CFS]",
+          "path": "/"
+        },
+        {
+          "title": "B.Tech - CSE with Cloud Computing [Google]",
+          "path": "/"
+        },
+        {
+          "title": "M.Tech - CSE with AI & ML [CSES]",
+          "path": "/"
+        },
+        {
+          "title": "BBA(H) - Business Analytics [KPMG]",
+          "path": "/"
+        },
+        {
+          "title": "MBA - Global Business Management [KPMG]",
+          "path": "/"
+        }
+      ],
+      "comment": "Total Collaboration Programs: 7"
+    },
+    {
+      "heading": "ARTIFICIAL INTELLIGENCE & TECHNOLOGY",
+      "items": [
+        {
+          "title": "B.Tech - AI & Machine Learning",
+          "path": "/programs/btech-ai-ml"
+        },
+        {
+          "title": "B.Tech - Data Science",
+          "path": "/programs/btech-data-science"
+        },
+        {
+          "title": "B.Tech - Robotics",
+          "path": "/programs/btech-robotics"
+        },
+        {
+          "title": "B.Tech - Computer Science & Engineering",
+          "path": "/programs/btech-cse"
+        },
+        {
+          "title": "M.Tech - AI & Machine Learning",
+          "path": "/programs/mtech-ai-ml"
+        },
+        {
+          "title": "M.Tech - Data Science",
+          "path": "/programs/mtech-data-science"
+        },
+        {
+          "title": "M.Tech - Robotics",
+          "path": "/programs/mtech-robotics"
+        },
+        {
+          "title": "M.Tech - Computer Science & Engineering",
+          "path": "/programs/mtech-cse"
+        }
+      ],
+      "comment": "Total AI & Tech Programs: 8 (4 B.Tech, 4 M.Tech)"
+    },
+    {
+      "heading": "ENTREPRENEURSHIP AND BUSINESS",
+      "items": [
+        {
+          "title": "BBA - General",
+          "path": "/programs/bba-general"
+        },
+        {
+          "title": "BBA - Banking & Finance",
+          "path": "/programs/bba-banking-finance"
+        },
+        {
+          "title": "BBA - International Business",
+          "path": "/programs/bba-international-business"
+        },
+        {
+          "title": "BBA - Marketing",
+          "path": "/programs/bba-marketing"
+        },
+        {
+          "title": "BBA - Digital Marketing",
+          "path": "/programs/bba-digital-marketing"
+        },
+        {
+          "title": "BBA - Logistics & SCM",
+          "path": "/programs/bba-logistics-scm"
+        },
+        {
+          "title": "BBA - HR",
+          "path": "/programs/bba-hr"
+        },
+        {
+          "title": "BBA - IT",
+          "path": "/programs/bba-it"
+        },
+        {
+          "title": "BBA - Entrepreneurship",
+          "path": "/programs/bba-entrepreneurship"
+        },
+        {
+          "title": "BBA - Insurance",
+          "path": "/programs/bba-insurance"
+        },
+        {
+          "title": "BBA - Retail & Start-Ups",
+          "path": "/programs/bba-retail-startups"
+        },
+        {
+          "title": "MBA",
+          "path": "/programs/mba"
+        }
+      ],
+      "comment": "Total Business Programs: 12 (11 BBA, 1 MBA)"
+    },
+    {
+      "heading": "HUMANITIES & EDUCATION",
+      "items": [
+        {
+          "title": "BA",
+          "path": "/programs/ba"
+        },
+        {
+          "title": "BS - International Relations",
+          "path": "/programs/bs-international-relations"
+        },
+        {
+          "title": "B.Com",
+          "path": "/programs/bcom"
+        },
+        {
+          "title": "B.Ed",
+          "path": "/programs/bed"
+        },
+        {
+          "title": "MA",
+          "path": "/programs/ma"
+        },
+        {
+          "title": "MS - International Relations",
+          "path": "/programs/ms-international-relations"
+        },
+        {
+          "title": "M.Com",
+          "path": "/programs/mcom"
+        },
+        {
+          "title": "M.Ed",
+          "path": "/programs/med"
+        }
+      ],
+      "comment": "Total Humanities & Education Programs: 8 (4 UG, 4 PG)"
+    },
+    {
+      "heading": "MANAGEMENT AND TECH",
+      "items": [
+        {
+          "title": "B.Tech - CSE",
+          "path": "/programs/btech-cse"
+        },
+        {
+          "title": "B.Tech - IT",
+          "path": "/programs/btech-it"
+        },
+        {
+          "title": "B.Tech - Cyber Security",
+          "path": "/programs/btech-cyber-security"
+        },
+        {
+          "title": "B.Tech - IOT",
+          "path": "/programs/btech-iot"
+        },
+        {
+          "title": "B.Tech - Electronics & Communication",
+          "path": "/programs/btech-ece"
+        },
+        {
+          "title": "B.Tech - Mechanical Engineering",
+          "path": "/programs/btech-mechanical"
+        },
+        {
+          "title": "B.Tech - Civil Engineering",
+          "path": "/programs/btech-civil"
+        },
+        {
+          "title": "B.Tech - Mechtronics",
+          "path": "/programs/btech-mechtronics"
+        },
+        {
+          "title": "B.Tech - Bio-Tech",
+          "path": "/programs/btech-biotech"
+        },
+        {
+          "title": "B.Tech - Electrical Engineering",
+          "path": "/programs/btech-electrical"
+        },
+        {
+          "title": "M.Tech - CSE",
+          "path": "/programs/mtech-cse"
+        },
+        {
+          "title": "M.Tech - IT",
+          "path": "/programs/mtech-it"
+        },
+        {
+          "title": "M.Tech - Cyber Security",
+          "path": "/programs/mtech-cyber-security"
+        },
+        {
+          "title": "M.Tech - IOT",
+          "path": "/programs/mtech-iot"
+        },
+        {
+          "title": "M.Tech - Electronics & Communication",
+          "path": "/programs/mtech-ece"
+        },
+        {
+          "title": "M.Tech - Mechanical Engineering",
+          "path": "/programs/mtech-mechanical"
+        },
+        {
+          "title": "M.Tech - Civil Engineering",
+          "path": "/programs/mtech-civil"
+        },
+        {
+          "title": "M.Tech - Mechtronics",
+          "path": "/programs/mtech-mechtronics"
+        },
+        {
+          "title": "M.Tech - Bio-Tech",
+          "path": "/programs/mtech-biotech"
+        },
+        {
+          "title": "M.Tech - Electrical Engineering",
+          "path": "/programs/mtech-electrical"
+        },
+        {
+          "title": "Diploma - Civil Engineering",
+          "path": "/programs/diploma-civil"
+        },
+        {
+          "title": "Diploma - Electrical Engineering",
+          "path": "/programs/diploma-electrical"
+        },
+        {
+          "title": "Diploma - Mechanical Engineering",
+          "path": "/programs/diploma-mechanical"
+        },
+        {
+          "title": "Diploma - Computer Science",
+          "path": "/programs/diploma-cs"
+        },
+        {
+          "title": "BCA - AI, ML, Cyber Security",
+          "path": "/programs/bca-ai-ml-cyber"
+        },
+        {
+          "title": "MCA - AI, ML, Cyber Security",
+          "path": "/programs/mca-ai-ml-cyber"
+        }
+      ],
+      "comment": "Total Management & Tech Programs: 26 (10 B.Tech, 10 M.Tech, 4 Diploma, 1 BCA, 1 MCA)"
+    },
+    {
+      "heading": "PHARMACY",
+      "items": [
+        {
+          "title": "B.Pharm",
+          "path": "/programs/bpharm"
+        },
+        {
+          "title": "D.Pharm",
+          "path": "/programs/dpharm"
+        },
+        {
+          "title": "M.Pharm",
+          "path": "/programs/mpharm"
+        },
+        {
+          "title": "Ph.D - Pharmacy",
+          "path": "/programs/phd-pharmacy"
+        }
+      ],
+      "comment": "Total Pharmacy Programs: 4 (1 B.Pharm, 1 D.Pharm, 1 M.Pharm, 1 Ph.D)"
+    },
+    {
+      "heading": "SPORTS SCIENCE",
+      "items": [
+        {
+          "title": "BS - Sports Science",
+          "path": "/programs/bs-sports-science"
+        },
+        {
+          "title": "MS - Sports Science",
+          "path": "/programs/ms-sports-science"
+        }, {
+          "title": "BS - Sports Science Management",
+          "path": "/programs/bs-sports-science-management"
+        }, {
+          "title": "  BS - Sports Science Management",
+          "path": "/programs/ms-sports-science-management"
+        }
+      ],
+      "comment": "Total Sports Science Programs: 2 (1 BS, 1 MS)"
+    },
+    {
+      "heading": "FILM & FASHION",
+      "items": [
+        {
+          "title": "B.Sc - Film Making",
+          "path": "/programs/bsc-film-making"
+        },
+        {
+          "title": "B.Sc - Script Writing",
+          "path": "/programs/bsc-script-writing"
+        },
+        {
+          "title": "B.Sc - Cinematography",
+          "path": "/programs/bsc-cinematography"
+        },
+        {
+          "title": "BA - Acting & Drama",
+          "path": "/programs/ba-acting-drama"
+        },
+        {
+          "title": "BA - Advertising",
+          "path": "/programs/ba-advertising"
+        },
+        {
+          "title": "BA - Journalism",
+          "path": "/programs/ba-journalism"
+        },
+        {
+          "title": "BA - PR Events",
+          "path": "/programs/ba-pr-events"
+        },
+        {
+          "title": "B.Des",
+          "path": "/programs/bdes"
+        },
+        {
+          "title": "M.Sc - Film Making",
+          "path": "/programs/msc-film-making"
+        },
+        {
+          "title": "M.Sc - Script Writing",
+          "path": "/programs/msc-script-writing"
+        },
+        {
+          "title": "M.Sc - Cinematography",
+          "path": "/programs/msc-cinematography"
+        },
+        {
+          "title": "MA - Acting & Drama",
+          "path": "/programs/ma-acting-drama"
+        },
+        {
+          "title": "MA - Advertising",
+          "path": "/programs/ma-advertising"
+        },
+        {
+          "title": "MA - Journalism",
+          "path": "/programs/ma-journalism"
+        },
+        {
+          "title": "MA - PR Events",
+          "path": "/programs/ma-pr-events"
+        },
+        {
+          "title": "M.Des",
+          "path": "/programs/mdes"
+        },
+        {
+          "title": "Diploma - Film Making",
+          "path": "/programs/diploma-film-making"
+        },
+        {
+          "title": "Diploma - Script Writing",
+          "path": "/programs/diploma-script-writing"
+        },
+        {
+          "title": "Diploma - Acting & Drama",
+          "path": "/programs/diploma-acting-drama"
+        },
+        {
+          "title": "Diploma - Advertisement",
+          "path": "/programs/diploma-advertisement"
+        },
+        {
+          "title": "Diploma - Journalism",
+          "path": "/programs/diploma-journalism"
+        },
+        {
+          "title": "Diploma - PR Events",
+          "path": "/programs/diploma-pr-events"
+        }
+      ],
+      "comment": "Total Film & Fashion Programs: 22 (8 UG, 8 PG, 6 Diploma)"
+    },
+    {
+      "heading": "HEALTH SCIENCES",
+      "items": [
+        {
+          "title": "B.Sc - Physics",
+          "path": "/programs/bsc-physics"
+        },
+        {
+          "title": "B.Sc - Chemistry",
+          "path": "/programs/bsc-chemistry"
+        },
+        {
+          "title": "B.Sc - Mathematics",
+          "path": "/programs/bsc-mathematics"
+        },
+        {
+          "title": "B.Sc - Biology",
+          "path": "/programs/bsc-biology"
+        },
+        {
+          "title": "BS - Data Sciences",
+          "path": "/programs/bs-data-sciences"
+        },
+        {
+          "title": "BS - Physiotherapy",
+          "path": "/programs/bs-physiotherapy"
+        },
+        {
+          "title": "BS - Forensic Science",
+          "path": "/programs/bs-forensic-science"
+        },
+        {
+          "title": "BS - Radiology & Imaging",
+          "path": "/programs/bs-radiology-imaging"
+        },
+        {
+          "title": "BS - Medical Lab Technology",
+          "path": "/programs/bs-medical-lab-tech"
+        },
+        {
+          "title": "M.Sc - Physics",
+          "path": "/programs/msc-physics"
+        },
+        {
+          "title": "M.Sc - Chemistry",
+          "path": "/programs/msc-chemistry"
+        },
+        {
+          "title": "M.Sc - Mathematics",
+          "path": "/programs/msc-mathematics"
+        },
+        {
+          "title": "M.Sc - Biology",
+          "path": "/programs/msc-biology"
+        },
+        {
+          "title": "MS - Data Sciences",
+          "path": "/programs/ms-data-sciences"
+        },
+        {
+          "title": "MS - Physiotherapy",
+          "path": "/programs/ms-physiotherapy"
+        },
+        {
+          "title": "MS - Forensic Science",
+          "path": "/programs/ms-forensic-science"
+        },
+        {
+          "title": "MS - Radiology & Imaging",
+          "path": "/programs/ms-radiology-imaging"
+        },
+        {
+          "title": "MS - Medical Lab Technology",
+          "path": "/programs/ms-medical-lab-tech"
+        },
+        {
+          "title": "Diploma - Public Health",
+          "path": "/programs/diploma-public-health"
+        },
+        {
+          "title": "Ph.D - Physics",
+          "path": "/programs/phd-physics"
+        },
+        {
+          "title": "Ph.D - Chemistry",
+          "path": "/programs/phd-chemistry"
+        },
+        {
+          "title": "Ph.D - Mathematics",
+          "path": "/programs/phd-mathematics"
+        },
+        {
+          "title": "Ph.D - Biology",
+          "path": "/programs/phd-biology"
+        },
+        {
+          "title": "Ph.D - Data Analytics",
+          "path": "/programs/phd-data-analytics"
+        }
+      ],
+      "comment": "Total Basic & Health Sciences Programs: 24 (9 UG, 9 PG, 1 Diploma, 5 Ph.D)"
+    }
+  ],
+  "comment": "Total Programs Across All Categories: 132"
+}
+
+
+       
