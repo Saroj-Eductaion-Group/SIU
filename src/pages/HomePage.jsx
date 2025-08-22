@@ -30,6 +30,7 @@ import LatestNews from "../components/LatestNews.jsx";
 import { Helmet } from "react-helmet";
 // import InstagramEmbedComponent from "../components/InstagramFeed.jsx";
 import InstagramFeed from "../components/InstagramFeed.jsx";
+import ScholarshipPopup from "../components/ScholarshipPopup.jsx";
 
 function Home() {
   const logos = [
@@ -51,6 +52,7 @@ function Home() {
       <Layout>
       
         <PopupForm/>
+        
         <HeroSection/>
         <LightAIBanner/>
         <CompaniesTieUps/>

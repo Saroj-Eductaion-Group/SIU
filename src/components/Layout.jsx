@@ -4,6 +4,7 @@ import TopNav from './Topnav';
 import FloatingSocialMediaIcons from './FloatingSocialMediaIcons';
 import HeaderCTA from './HeaderCTA';
 import HelpDesk from './HelpDesk';
+import ScholarshipPopup from './ScholarshipPopup';
 
 
 
@@ -15,6 +16,7 @@ function Layout({children}){
             <HeaderCTA />
             <TopNav/>
             <Header  />
+            <ScholarshipPopup />
             <FloatingSocialMediaIcons />
             <div className="flex-1 overflow-hidden ">
                 {children}
