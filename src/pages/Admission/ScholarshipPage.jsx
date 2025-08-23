@@ -53,16 +53,16 @@ const ScholarshipPage = () => {
               </p>
             </div>
 
-            {/* Card: Percentage-Based Discounts */}
+            {/* Card: Percentage-Based scholarships */}
             <div className="bg-white shadow-xl rounded-xl p-6">
               <div className='flex items-center justify-center mb-4'>
               <Percent className='h-8 w-8 text-blue-600 mr-3'/>
-              <h3 className="text-blue-600 font-semibold text-2xl mb-2">Percentage-Based Discounts</h3>
+              <h3 className="text-blue-600 font-semibold text-2xl mb-2">Percentage-Based scholarships</h3>
               </div>
               <ul className="list-disc list-inside text-gray-600 space-y-2 text-xl">
-                <li>90–100% marks: <strong>75%</strong> tuition fee discount</li>
-                <li>70–90% marks: <strong>50%</strong> tuition fee discount</li>
-                <li>55–70% marks: <strong>25%</strong> tuition fee discount</li>
+                <p>90–100% marks: <strong>75%</strong> tuition fee scholarship.
+                70–90% marks: <strong>50%</strong> tuition fee scholarship.
+                55–70% marks: <strong>25%</strong> tuition fee scholarship.</p>
               </ul>
             </div>
 
