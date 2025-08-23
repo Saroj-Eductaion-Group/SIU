@@ -18,19 +18,21 @@ const CoursePage = ({ universityData = { university: '', institutes: [] } }) => 
   const allModes = [...new Set(universityData.institutes?.flatMap(i => i.programs?.map(p => p.mode)) || [])];
 
   // Group degree types by category
-  const degreeCategories = {
-    all: 'All Degrees',
-    btech: 'B.Tech',
-    mtech: 'M.Tech',
-    bca: 'BCA',
-    mca: 'MCA',
-    bsc: 'B.Sc',
-    msc: 'M.Sc',
-    bpharm: 'B.Pharm',
-    mpharm: 'M.Pharm',
-    phd: 'Ph.D',
-    diploma: 'Diploma'
-  };
+const degreeCategories = {
+  all: 'All Degrees',
+  btech: 'B.Tech',
+  mtech: 'M.Tech',
+  bca: 'BCA',
+  mca: 'MCA',
+  bsc: 'B.Sc',
+  msc: 'M.Sc',
+  bpharm: 'B.Pharm',
+  mpharm: 'M.Pharm',
+  mba: 'MBA',       // 🔹 add this
+  phd: 'Ph.D',
+  diploma: 'Diploma'
+};
+
 
   // Flatten all programs with institute info
   const allPrograms = universityData.institutes?.flatMap(institute => 
