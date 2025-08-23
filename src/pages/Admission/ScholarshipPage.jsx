@@ -60,9 +60,9 @@ const ScholarshipPage = () => {
               <h3 className="text-blue-600 font-semibold text-2xl mb-2">Percentage-Based scholarships</h3>
               </div>
               <ul className="list-disc list-inside text-gray-600 space-y-2 text-xl">
-                <p>90–100% marks: <strong>75%</strong> tuition fee scholarship.
-                70–90% marks: <strong>50%</strong> tuition fee scholarship.
-                55–70% marks: <strong>25%</strong> tuition fee scholarship.</p>
+                <p>90–100% marks- <strong>75%</strong> tuition fee scholarship.
+                70–90% marks- <strong>50%</strong> tuition fee scholarship.
+                55–70% marks- <strong>25%</strong> tuition fee scholarship.</p>
               </ul>
             </div>
 
