@@ -220,7 +220,7 @@ export default function SearchBar() {
         </span>
         <input
           type="text"
-          placeholder="Search for a page..."
+          placeholder="Search"
           value={query}
           onChange={handleSearchChange}
           // Tailwind classes for styling the input field
