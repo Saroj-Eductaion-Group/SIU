@@ -55,6 +55,14 @@ const TopNav = () => {
             </a>
 
             <span>|</span>
+             <a 
+href='/fee-payment'            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-[#f08f07] text-white px-4 py-1 rounded-md font-medium  whitespace-nowrap text-sm sm:text-base"
+            aria-label="Apply via SIUET Form"
+          >
+            Pay Fees Online
+          </a>
             <SearchBar />
 
           </div>

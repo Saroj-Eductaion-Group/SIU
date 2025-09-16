@@ -98,6 +98,9 @@ import DlPage from "./pages/tcs/Dl";
 import CyberSecurityPage from "./pages/tcs/CyberSecurity";
 import CryptographyPage from "./pages/tcs/Cryptography";
 
+// Fee Payment Page
+import FeePaymentPage from "./pages/FeePaymentPage";
+
 function App() {
   return (
     <Routes>
@@ -107,20 +110,22 @@ function App() {
       {/* Home */}
       <Route path='/' element={<HomePage />} />
 
+      {/* FeePayment Page */}
+      <Route path='/fee-payment' element ={<FeePaymentPage />} />
+
       {/* Programs Overview */}
       <Route path='/programs' element={<Courses />} />
 
       {/* Institute pages */}
        <Route path='/academics/Saroj-Institute-of-Film-and-Fashion' element={< InstituteFilmFashion/>} />
        <Route path='/academics/Lucknow-Institute-of-Pharmacy' element={< InstitutePharmacy/>} />
-        <Route path='/academics/Saroj-Insitute-of-Entrepreneurship-and-Business' element={< InstituteEntrepreneurshipBusiness/>} />
-        <Route path='/academics/Saroj-Institute-of-Sports-Science-and-Research' element={< InstituteSportsScience/>} />
-               <Route path='/academics/Saroj-Institute-of-Humanities-and-Education' element={< InstituteHumanitiesEducation/>} />
+       <Route path='/academics/Saroj-Insitute-of-Entrepreneurship-and-Business' element={< InstituteEntrepreneurshipBusiness/>} />
+       <Route path='/academics/Saroj-Institute-of-Sports-Science-and-Research' element={< InstituteSportsScience/>} />
+       <Route path='/academics/Saroj-Institute-of-Humanities-and-Education' element={< InstituteHumanitiesEducation/>} />
        <Route path='/academics/Saroj-Institute-of-Basic-and-Health-Sciences' element={< InstituteBasicHealthSciences/>} />
        <Route path='/academics/Saroj-Institute-of-Management-and-Technology' element={< InstituteManagementTechnology/>} />
        <Route path='/academics/Saroj-Institute-of-Artificial-Intelligence' element={< InstituteArtificialIntelligence/>} />
-
-        <Route path='/academics/saroj-college-of-law' element={< SarojCollegeOfLaw/>} />
+       <Route path='/academics/saroj-college-of-law' element={< SarojCollegeOfLaw/>} />
 
 
 
