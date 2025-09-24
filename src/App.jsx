@@ -100,6 +100,7 @@ import CryptographyPage from "./pages/tcs/Cryptography";
 
 // Fee Payment Page
 import FeePaymentPage from "./pages/FeePaymentPage";
+import OrientationPage from "./pages/Admission/OrientationPage";
 
 function App() {
   return (
@@ -192,6 +193,8 @@ function App() {
 
       <Route path='/admissions/admission-criteria' element={<AdmissionCriteria />} />
       <Route path='/admissions/scholarship' element={<ScholarshipPage />} />
+      <Route path='/admissions/orientation' element={<OrientationPage />} />
+
 
       {/* changes  */}
       <Route path='/admissions/admission-process' element={<AdmissionProcess />} />

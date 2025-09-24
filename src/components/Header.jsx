@@ -80,6 +80,7 @@ const navItems = [
     title: "Admissions",
     path: "/admissions",
     subItems: [
+      { title: "Orientation 2025–26 Highlights", path: "/admissions/orientation" },
       { title: "Admission Process", path: "/admissions/admission-process" },
       { title: "Eligibility Criteria", path: "/admissions/admission-criteria" },
       { title: "Fee Structure", path: "/admissions/fee-structure" },
