@@ -42,22 +42,11 @@ const SarojCollegeOfLaw = () => {
   const programs = [
     {
       icon: <FaGraduationCap className="text-4xl mb-4 text-blue-600" />,
-      title: "LLB Program",
-      description: "3-year comprehensive law degree program with practical training modules.",
+      title: "BA LLB Program",
+      description: "5-year comprehensive law degree program with practical training modules.",
       features: ["Comprehensive curriculum", "Moot court training", "Internship opportunities"]
     },
-    {
-      icon: <FaBook className="text-4xl mb-4 text-blue-600" />,
-      title: "LLM Program",
-      description: "Specialized postgraduate program with multiple specialization options.",
-      features: ["Multiple specializations", "Research opportunities", "Industry collaborations"]
-    },
-    {
-      icon: <FaBalanceScale className="text-4xl mb-4 text-blue-600" />,
-      title: "Diploma Courses",
-      description: "Short-term diploma programs in various legal specializations.",
-      features: ["Flexible schedules", "Practical focus", "Expert faculty"]
-    }
+    
   ];
 
   const stats = [
@@ -262,7 +251,8 @@ const SarojCollegeOfLaw = () => {
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true }}
-              className="grid md:grid-cols-3 gap-8"
+            className='w-full md:w-1/2 mx-auto
+            '
             >
               {programs.map((program, index) => (
                 <motion.div 
@@ -278,7 +268,7 @@ const SarojCollegeOfLaw = () => {
                   >
                     {program.icon}
                   </motion.div>
-                  <h3 className="text-xl font-bold mb-4 text-center text-blue-800">{program.title}</h3>
+                  <h3 className="text-2xl font-bold mb-4 text-center text-blue-800">{program.title}</h3>
                   <p className="text-gray-700 mb-6 text-center">{program.description}</p>
                   <ul className="space-y-2">
                     {program.features.map((feature, i) => (
