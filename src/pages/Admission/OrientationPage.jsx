@@ -8,7 +8,7 @@ import Img4 from '../../assets/orientation/O4.jpeg'
 import Img5 from '../../assets/orientation/O5.jpeg'
 import Img6 from '../../assets/orientation/O6.jpeg'
 import Img7 from '../../assets/orientation/O7.jpeg'
-import Img9 from '../../assets/orientation/O9.jpeg'
+import Img8 from '../../assets/orientation/O8.jpeg'
 
 
 
@@ -18,7 +18,7 @@ const OrientationPage = () => {
     <Layout> 
     <div className="bg-gray-100 py-12">
       <div className="container mx-auto px-4">
-        <h2 className="text-4xl font-bold text-center text-gray-800 mb-8">Orientation Program 2025-26gi</h2>
+        <h2 className="text-4xl font-bold text-center text-gray-800 mb-8">Orientation Program 2025-26</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* Day 1 Section */}
           <div className="bg-white rounded-lg shadow-lg p-6">
@@ -81,7 +81,7 @@ const OrientationPage = () => {
             />
 
             <img 
-              src= { Img9 }
+              src= { Img8 }
               alt="Day 2 Orientation" 
               className="w-full h-auto rounded-lg object-cover" 
             />  

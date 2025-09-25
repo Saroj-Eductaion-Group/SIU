@@ -130,7 +130,6 @@ function App() {
 
 
 
-
       {/* About */}
       <Route path='/about/about-siu' element={<AboutSIU />} />
       <Route path='/about/history' element={<HistoryPage />} />
