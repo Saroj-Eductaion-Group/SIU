@@ -91,7 +91,7 @@ import InnovationEntrepreneurshipPage from "./pages/tcs/InnovationEntrepreneursh
 import ArtificialIntelligencePage from "./pages/tcs/Artificial-Intelligence";
 import MachineLearningPage from "./pages/tcs/MachineLearning";
 import StatisticsPage from "./pages/tcs/Statistics";
-import SarojCollegeOfLaw from "./pages/Academics/Scp";
+import SarojInstituteOfLaw from "./pages/Academics/Sip";
 import CloudDevelopmentPage from "./pages/tcs/CloudDevelopment";
 import InformationSecurityPage from "./pages/tcs/InfoSecurity";
 import DlPage from "./pages/tcs/Dl";
@@ -126,7 +126,7 @@ function App() {
        <Route path='/academics/Saroj-Institute-of-Basic-and-Health-Sciences' element={< InstituteBasicHealthSciences/>} />
        <Route path='/academics/Saroj-Institute-of-Management-and-Technology' element={< InstituteManagementTechnology/>} />
        <Route path='/academics/Saroj-Institute-of-Artificial-Intelligence' element={< InstituteArtificialIntelligence/>} />
-       <Route path='/academics/saroj-college-of-law' element={< SarojCollegeOfLaw/>} />
+       <Route path='/academics/saroj-institute-of-law' element={< SarojInstituteOfLaw/>} />
 
 
 

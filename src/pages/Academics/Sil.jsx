@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { FaGraduationCap, FaBook, FaBalanceScale, FaChalkboardTeacher, FaUniversity, FaPhone, FaEnvelope, FaMapMarkerAlt, FaBars, FaTimes, FaArrowRight, FaArrowLeft } from 'react-icons/fa';
 import Layout from '../../components/Layout';
 
-const SarojCollegeOfLaw = () => {
+const SarojInstituteOfLaw = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeTestimonial, setActiveTestimonial] = useState(0);
 
@@ -22,20 +22,20 @@ const SarojCollegeOfLaw = () => {
     {
       id: 1,
       name: "Rahul Sharma",
-      role: "LLB Graduate",
-      content: "Saroj College provided me with exceptional legal education and practical training that prepared me perfectly for my career in corporate law."
+      role: "BA LLB Graduate",
+      content: "Saroj Institute of Law provided me with exceptional legal education and practical training that prepared me perfectly for my career in corporate law."
     },
     {
       id: 2,
       name: "Priya Patel",
-      role: "LLM Student",
+      role: "BA LLB Student",
       content: "The faculty here are truly dedicated. Their mentorship has helped me publish my first research paper in constitutional law."
     },
     {
       id: 3,
       name: "Vikram Singh",
       role: "Alumni, High Court Advocate",
-      content: "The moot court competitions and internship opportunities at Saroj College gave me the confidence to practice law effectively."
+      content: "The moot court competitions and internship opportunities at Saroj Institute gave me the confidence to practice law effectively."
     }
   ];
 
@@ -157,7 +157,7 @@ const SarojCollegeOfLaw = () => {
               transition={{ duration: 0.8 }}
               className="text-center mb-16"
             >
-              <h2 className="text-3xl md:text-4xl font-bold text-blue-800 mb-4">About Saroj College of Law</h2>
+              <h2 className="text-3xl md:text-4xl font-bold text-blue-800 mb-4">About Saroj Institute of Law</h2>
               <motion.div 
                 initial={{ width: 0 }}
                 whileInView={{ width: "6rem" }}
@@ -178,7 +178,7 @@ const SarojCollegeOfLaw = () => {
                 <div className="relative">
                   <img 
                     src="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" 
-                    alt="College Building" 
+                    alt="Institute Building" 
                     className="rounded-xl shadow-2xl w-full hover:shadow-xl transition duration-500 transform hover:-translate-y-2" 
                   />
                   
@@ -193,7 +193,7 @@ const SarojCollegeOfLaw = () => {
               >
                 <h3 className="text-2xl md:text-3xl font-semibold mb-6 text-blue-700">A Legacy of Legal Excellence</h3>
                 <p className="mb-6 text-gray-700 text-lg leading-relaxed">
-                  Saroj College of Law has been at the forefront of legal education, producing some of the finest legal minds in the country. Our institution combines rich tradition with innovative teaching methodologies.
+                  Saroj Institute of Law has been at the forefront of legal education, producing some of the finest legal minds in the country. Our institution combines rich tradition with innovative teaching methodologies.
                 </p>
                 <p className="mb-8 text-gray-700 text-lg leading-relaxed">
                   Our curriculum is designed to provide students with comprehensive knowledge of law while emphasizing practical skills through moot courts, internships, and legal aid programs. We pride ourselves on creating well-rounded legal professionals.
@@ -339,7 +339,7 @@ const SarojCollegeOfLaw = () => {
                   Our faculty comprises experienced legal practitioners, renowned academicians, and retired judges who bring real-world insights into the classroom. With decades of combined experience, they provide unparalleled mentorship to our students.
                 </p>
                 <p className="mb-8 text-gray-700 text-lg leading-relaxed">
-                  The faculty at Saroj College of Law are not just teachers but mentors who guide students through their academic journey and beyond, helping them build successful legal careers.
+                  The faculty at Saroj Institute of Law are not just teachers but mentors who guide students through their academic journey and beyond, helping them build successful legal careers.
                 </p>
                 
                 <motion.div 
@@ -387,7 +387,7 @@ const SarojCollegeOfLaw = () => {
                 className="w-24 h-1.5 bg-blue-600 mx-auto"
               />
               <p className="mt-6 text-gray-700 max-w-3xl mx-auto text-lg">
-                Hear from our students and alumni about their experiences at Saroj College of Law
+                Hear from our students and alumni about their experiences at Saroj Institute of Law
               </p>
             </motion.div>
             
@@ -464,7 +464,7 @@ const SarojCollegeOfLaw = () => {
             >
               <h2 className="text-3xl md:text-4xl font-bold mb-6">Ready to Start Your Legal Journey?</h2>
               <p className="text-xl mb-10 text-blue-100">
-                Join Saroj College of Law and become part of a legacy of legal excellence
+                Join Saroj Institute of Law and become part of a legacy of legal excellence
               </p>
              
             </motion.div>
@@ -475,4 +475,4 @@ const SarojCollegeOfLaw = () => {
   );
 };
 
-export default SarojCollegeOfLaw;
+export default SarojInstituteOfLaw;
