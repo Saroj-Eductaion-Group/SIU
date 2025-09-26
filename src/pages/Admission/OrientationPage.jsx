@@ -84,9 +84,6 @@ const OrientationPage = () => {
                 />
               </div>
 
-              <button className="mt-6 bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-6 py-3 rounded-lg font-semibold hover:from-blue-600 hover:to-indigo-700 transform hover:scale-105 transition-all duration-300 shadow-lg">
-                Explore Day 1 Schedule
-              </button>
             </div>
 
             {/* Day 2 Section */}
@@ -127,9 +124,6 @@ const OrientationPage = () => {
                 />
               </div>
 
-              <button className="mt-6 bg-gradient-to-r from-indigo-500 to-purple-600 text-white px-6 py-3 rounded-lg font-semibold hover:from-indigo-600 hover:to-purple-700 transform hover:scale-105 transition-all duration-300 shadow-lg">
-                Explore Day 2 Schedule
-              </button>
             </div>
           </div>
 
@@ -140,9 +134,9 @@ const OrientationPage = () => {
               <p className="text-xl mb-6 opacity-90">
                 Join a vibrant community of learners and innovators at one of the world's most forward-looking universities.
               </p>
-              <button className="bg-white text-[#f08f07] px-8 py-3 rounded-lg font-bold text-lg hover:bg-blue-50 transform hover:scale-110 transition-all duration-300">
+              <a href="https://siu.in8.nopaperforms.com/" target="_blank" className="bg-white text-[#f08f07] px-8 py-3 rounded-lg font-bold text-lg hover:bg-blue-50 transform hover:scale-110 transition-all duration-300">
                 Apply Now
-              </button>
+              </a>
             </div>
           </div>
         </div>

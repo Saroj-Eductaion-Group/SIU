@@ -91,7 +91,7 @@ import InnovationEntrepreneurshipPage from "./pages/tcs/InnovationEntrepreneursh
 import ArtificialIntelligencePage from "./pages/tcs/Artificial-Intelligence";
 import MachineLearningPage from "./pages/tcs/MachineLearning";
 import StatisticsPage from "./pages/tcs/Statistics";
-import SarojInstituteOfLaw from "./pages/Academics/Sip";
+import SarojInstituteOfLaw from "./pages/Academics/Sil";
 import CloudDevelopmentPage from "./pages/tcs/CloudDevelopment";
 import InformationSecurityPage from "./pages/tcs/InfoSecurity";
 import DlPage from "./pages/tcs/Dl";
