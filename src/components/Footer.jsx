@@ -55,16 +55,58 @@ const Footer = () => {
           {/* Other Colleges */}
           <div>
             <h3 className="text-xl font-bold mb-4 relative pb-2">
-              Other Colleges
+              Our Institutions
               <span className="absolute bottom-0 left-0 w-12 h-1 bg-yellow-400"></span>
             </h3>
             <ul className="space-y-2">
               <li>
                 <a
-                  href="#"
+                  href="https://seglko.org/lip/"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="text-gray-200 hover:text-yellow-400 hover:underline hover:underline-offset-8 transition-colors duration-300"
                 >
                   Lucknow Institute Of Pharmacy
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://www.seglko.org/scp/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-200 hover:text-yellow-400 hover:underline hover:underline-offset-8 transition-colors duration-300"
+                >
+                  Saroj College Of Pharmacy
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://www.seglko.org/sitm/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-200 hover:text-yellow-400 hover:underline hover:underline-offset-8 transition-colors duration-300"
+                >
+                  Saroj Institute Of Technology & Management
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://www.seglko.org/ssitm/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-200 hover:text-yellow-400 hover:underline hover:underline-offset-8 transition-colors duration-300"
+                >
+                  Shivdan Singh Institute Of Technology & Management
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://www.seglko.org/scep/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-200 hover:text-yellow-400 hover:underline hover:underline-offset-8 transition-colors duration-300"
+                >
+                  Saroj College of Engineering and Polytechnic
                 </a>
               </li>
             </ul>
