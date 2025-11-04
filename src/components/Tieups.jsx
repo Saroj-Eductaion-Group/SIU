@@ -127,7 +127,7 @@ export default function CompaniesTieUps() {
   const slideWidth = 100 / slidesToShow;
 
   return (
-    <div className=" bg-blue-100 relative">
+    <div className=" bg-blue-100 relative" id="companies-tie-ups">
       {/* Heading of industry tieups  */}
       <div className="bg-blue-50 py-10 px-6 sm:px-12 lg:px-24">
         <div className="max-w-7xl font-funneldisplay mx-auto flex flex-col lg:flex-row items-center justify-between gap-10">

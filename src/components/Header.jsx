@@ -1,6 +1,7 @@
 import logo from "../assets/logo.png";
 import { useState, useRef } from "react";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
+import { HashLink as Link } from 'react-router-hash-link';
 import { ChevronDown, Menu, X, ArrowRight } from "lucide-react";
 import programsData from "../assets/json/programs.json";
 

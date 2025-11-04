@@ -66,31 +66,32 @@
       "items": [
         {
           "title": "B.Tech - CSE with AI & ML [Microsoft]",
-          "path": "/"
+          "path": "#companies-tie-ups"
+            
         },
         {
           "title": "B.Tech - CSE with Data Science [Google]",
-          "path": "/"
+          "path": "#companies-tie-ups"
         },
         {
           "title": "B.Tech - CSE Cyber Security [CNS/CFS]",
-          "path": "/"
+          "path": "#companies-tie-ups"
         },
         {
           "title": "B.Tech - CSE with Cloud Computing [Google]",
-          "path": "/"
+          "path": "#companies-tie-ups"
         },
         {
           "title": "M.Tech - CSE with AI & ML [CSES]",
-          "path": "/"
+          "path": "#companies-tie-ups"
         },
         {
           "title": "BBA(H) - Business Analytics [KPMG]",
-          "path": "/"
+          "path": "#companies-tie-ups"
         },
         {
           "title": "MBA - Global Business Management [KPMG]",
-          "path": "/"
+          "path": "#companies-tie-ups"
         }
       ],
       "comment": "Total Collaboration Programs: 7"

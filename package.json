@@ -34,6 +34,7 @@
     "react-pdf": "^9.2.1",
     "react-pdf-viewer": "^0.1.0",
     "react-router-dom": "^7.6.0",
+    "react-router-hash-link": "^2.4.3",
     "react-social-media-embed": "^2.5.18",
     "react-swiper": "^0.1.5",
     "react-toastify": "^11.0.5",
