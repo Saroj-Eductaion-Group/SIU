@@ -17,401 +17,438 @@ import {
   UserCheck,
   RotateCw,
   Hand,
+  Gavel,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const ProgramsSection = () => {
-const programs = [
-  {
-    id: 1,
-    title: "Artificial Intelligence & Technology",
-    description:
-      "Cutting-edge programs in AI, ML, Data Science, and Robotics",
-    degrees: [
-      {
-        name: "B.Tech (AI, ML, Data Science, Robotics)",
-        duration: "4 Years",
-        fee: "₹1,10,000/yr",
-        mode: "Regular",
-        criteria: [
-          "10+2 with Physics, Chemistry, Mathematics",
-          "Minimum 50% marks",
-          "Entrance exam scores may be required",
-        ],
-      },
-      {
-        name: "B.Tech Computer Science & Engineering",
-        duration: "4 Years",
-        fee: "₹1,10,000/yr",
-        mode: "Regular",
-        criteria: [
-          "10+2 with Physics, Chemistry, Mathematics",
-          "Minimum 50% marks",
-          "Entrance exam scores may be required",
-        ],
-      },
-      {
-        name: "M.Tech (AI, ML, Data Science, Robotics)",
-        duration: "2 Years",
-        fee: "₹1,25,000/yr",
-        mode: "Regular",
-        criteria: [
-          "B.Tech/B.E. in relevant field",
-          "Minimum 50% marks",
-          "Professional certifications may be considered",
-        ],
-      },
-      {
-        name: "M.Tech Computer Science & Engineering",
-        duration: "2 Years",
-        fee: "₹1,25,000/yr",
-        mode: "Regular",
-        criteria: [
-          "B.Tech/B.E. in relevant field",
-          "Minimum 50% marks",
-          "Professional certifications may be considered",
-        ],
-      },
-    ],
-    icon: <Cpu className="w-5 h-5" />,
-    color: "bg-blue-100 text-blue-800",
-    borderColor: "border-blue-200",
-    bgColor: "from-blue-50 to-blue-100",
-    buttonColor:
-      "from-blue-600 to-blue-800 hover:from-blue-700 hover:to-blue-900",
-  },
-  {
-    id: 2,
-    title: "Management & Technology",
-    description: "Programs blending technology with business management",
-    degrees: [
-      {
-        name: "B.Tech (CSE, IT, Cyber Security, IoT)",
-        duration: "4 Years",
-        fee: "₹1,10,000/yr",
-        mode: "Regular",
-        criteria: [
-          "10+2 with Physics, Chemistry, Mathematics",
-          "Minimum 50% marks",
-          "Entrance exam scores may be required",
-        ],
-      },
-      {
-        name: "BCA (AI, ML, Cyber Security)",
-        duration: "3 Years",
-        fee: "₹1,00,000/yr",
-        mode: "Regular",
-        criteria: [
-          "10+2 from recognized board",
-          "Minimum 50% marks",
-          "Basic computer knowledge preferred",
-        ],
-      },
-      {
-        name: "MCA (AI, ML, Cyber Security)",
-        duration: "2 Years",
-        fee: "₹1,20,000/yr",
-        mode: "Regular",
-        criteria: [
-          "Bachelor's degree in any discipline",
-          "Minimum 50% marks",
-          "Mathematics in 10+2 preferred",
-        ],
-      },
-      {
-        name: "M.Tech (CSE, IT, Cyber Security, IoT)",
-        duration: "2 Years",
-        fee: "₹1,25,000/yr",
-        mode: "Regular",
-        criteria: [
-          "B.Tech/B.E. in relevant field",
-          "Minimum 50% marks",
-          "Entrance exam scores may be required",
-        ],
-      },
-    ],
-    icon: <Briefcase className="w-5 h-5" />,
-    color: "bg-purple-100 text-purple-800",
-    borderColor: "border-purple-200",
-    bgColor: "from-purple-50 to-purple-100",
-    buttonColor:
-      "from-purple-600 to-purple-800 hover:from-purple-700 hover:to-purple-900",
-  },
-  {
-    id: 3,
-    title: "Entrepreneurship & Business",
-    description:
-      "Programs designed for future business leaders and entrepreneurs",
-    degrees: [
-      {
-        name: "BBA (General, Banking, Marketing)",
-        duration: "3 Years",
-        fee: "₹1,10,000/yr",
-        mode: "Regular",
-        criteria: [
-          "10+2 from recognized board",
-          "Minimum 50% marks",
-          "Entrance exam scores may be required",
-        ],
-      },
-      {
-        name: "BBA (Logistics, HR, IT, Entrepreneurship)",
-        duration: "3 Years",
-        fee: "₹1,10,000/yr",
-        mode: "Regular",
-        criteria: [
-          "10+2 from recognized board",
-          "Minimum 50% marks",
-          "Entrance exam scores may be required",
-        ],
-      },
-      {
-        name: "BBA (Insurance, Retail, Start-Ups)",
-        duration: "3 Years",
-        fee: "₹1,10,000/yr",
-        mode: "Regular",
-        criteria: [
-          "10+2 from recognized board",
-          "Minimum 50% marks",
-          "Entrance exam scores may be required",
-        ],
-      },
-      {
-        name: "MBA",
-        duration: "2 Years",
-        fee: "₹1,20,000/yr",
-        mode: "Regular",
-        criteria: [
-          "Bachelor's degree in any discipline",
-          "Minimum 50% marks",
-          "Entrance exam scores may be required",
-        ],
-      },
-    ],
-    icon: <Briefcase className="w-5 h-5" />,
-    color: "bg-green-100 text-green-800",
-    borderColor: "border-green-200",
-    bgColor: "from-green-50 to-green-100",
-    buttonColor:
-      "from-green-600 to-green-800 hover:from-green-700 hover:to-green-900",
-  },
-  {
-    id: 4,
-    title: "Humanities & Education",
-    description: "Programs in arts, commerce, and education",
-    degrees: [
-      {
-        name: "BA",
-        duration: "3 Years",
-        fee: "₹60,000/yr",
-        mode: "Regular",
-        criteria: ["10+2 from recognized board", "Minimum 50% marks"],
-      },
-      {
-        name: "B.Com",
-        duration: "3 Years",
-        fee: "₹60,000/yr",
-        mode: "Regular",
-        criteria: ["10+2 from recognized board", "Minimum 50% marks"],
-      },
-      {
-        name: "B.Ed",
-        duration: "2 Years",
-        fee: "₹60,000/yr",
-        mode: "Regular",
-        criteria: [
-          "Bachelor's degree in any discipline",
-          "Minimum 50% marks",
-        ],
-      },
-      {
-        name: "MA",
-        duration: "2 Years",
-        fee: "₹60,000/yr",
-        mode: "Regular",
-        criteria: [
-          "Bachelor's degree in any discipline",
-          "Minimum 50% marks",
-        ],
-      },
-    ],
-    icon: <School className="w-5 h-5" />,
-    color: "bg-yellow-100 text-yellow-800",
-    borderColor: "border-yellow-200",
-    bgColor: "from-yellow-50 to-yellow-100",
-    buttonColor:
-      "from-yellow-600 to-yellow-800 hover:from-yellow-700 hover:to-yellow-900",
-  },
-  {
-    id: 5,
-    title: "Basic & Health Sciences",
-    description: "Programs in pure sciences and health-related fields",
-    degrees: [
-      {
-        name: "B.Sc (Physics, Chemistry, Biology, Math)",
-        duration: "3 Years",
-        fee: "₹80,000/yr",
-        mode: "Regular",
-        criteria: [
-          "10+2 with relevant science subjects",
-          "Minimum 50% marks",
-        ],
-      },
-      {
-        name: "BS (Data Science, Physiotherapy)",
-        duration: "3 Years",
-        fee: "₹80,000/yr",
-        mode: "Regular",
-        criteria: ["10+2 with relevant subjects", "Minimum 50% marks"],
-      },
-      {
-        name: "M.Sc (Physics, Chemistry, Biology, Math)",
-        duration: "2 Years",
-        fee: "₹80,000/yr",
-        mode: "Regular",
-        criteria: ["B.Sc in relevant subject", "Minimum 50% marks"],
-      },
-      {
-        name: "MS (Data Science, Physiotherapy)",
-        duration: "2 Years",
-        fee: "₹80,000/yr",
-        mode: "Regular",
-        criteria: [
-          "Bachelor's degree in relevant field",
-          "Minimum 50% marks",
-        ],
-      },
-    ],
-    icon: <FlaskConical className="w-5 h-5" />,
-    color: "bg-red-100 text-red-800",
-    borderColor: "border-red-200",
-    bgColor: "from-red-50 to-red-100",
-    buttonColor:
-      "from-red-600 to-red-800 hover:from-red-700 hover:to-red-900",
-  },
-  {
-    id: 6,
-       title: "Pharmacy",
-    description: "Programs in pharmaceutical sciences",
-    degrees: [
-      {
-        name: "B.Pharm",
-        duration: "4 Years",
-        fee: "₹1,00,000/yr",
-        mode: "Regular",
-        criteria: [
-          "10+2 with Physics, Chemistry, Biology/Mathematics",
-          "Minimum 50% marks",
-        ],
-      },
-      {
-        name: "D.Pharm",
-        duration: "2 Years",
-        fee: "₹1,00,000/yr",
-        mode: "Regular",
-        criteria: [
-          "10+2 with Physics, Chemistry, Biology/Mathematics",
-          "Minimum 50% marks",
-        ],
-      },
-      {
-        name: "M.Pharm",
-        duration: "2 Years",
-        fee: "₹1,00,000/yr",
-        mode: "Regular",
-        criteria: ["B.Pharm degree", "Minimum 50% marks"],
-      },
-      {
-        name: "Ph.D (Pharmacy)",
-        duration: "3-5 Years",
-        fee: "₹1,00,000/yr",
-        mode: "Regular",
-        criteria: ["M.Pharm or equivalent", "Minimum 55% marks"],
-      },
-    ],
-    icon: <Pill className="w-5 h-5" />,
-    color: "bg-indigo-100 text-indigo-800",
-    borderColor: "border-indigo-200",
-    bgColor: "from-indigo-50 to-indigo-100",
-    buttonColor:
-      "from-indigo-600 to-indigo-800 hover:from-indigo-700 hover:to-indigo-900",
-  },
-  {
-    id: 7,
-    title: "Sports Science",
-    description: "Programs in sports science and research",
-    degrees: [
-      {
-        name: "BS (Sports Science)",
-        duration: "3 Years",
-        fee: "₹90,000/yr",
-        mode: "Regular",
-        criteria: ["10+2 from recognized board", "Minimum 50% marks"],
-      },
-      {
-        name: "MS (Sports Science)",
-        duration: "2 Years",
-        fee: "₹90,000/yr",
-        mode: "Regular",
-        criteria: [
-          "Bachelor's degree in any discipline",
-          "Minimum 50% marks",
-        ],
-      },
-    ],
-    icon: <Dumbbell className="w-5 h-5" />,
-    color: "bg-orange-100 text-orange-800",
-    borderColor: "border-orange-200",
-    bgColor: "from-orange-50 to-orange-100",
-    buttonColor:
-      "from-orange-600 to-orange-800 hover:from-orange-700 hover:to-orange-900",
-  },
-  {
-    id: 8,
-    title: "Film & Fashion",
-    description: "Creative programs in film, fashion, and media",
-    degrees: [
-      {
-        name: "B.Sc (Film Making, Cinematography)",
-        duration: "3 Years",
-        fee: "₹1,00,000/yr",
-        mode: "Regular",
-        criteria: ["10+2 from recognized board", "Minimum 50% marks"],
-      },
-      {
-        name: "BA (Acting, Journalism, PR)",
-        duration: "3 Years",
-        fee: "₹1,00,000/yr",
-        mode: "Regular",
-        criteria: ["10+2 from recognized board", "Minimum 50% marks"],
-      },
-      {
-        name: "Diploma (Film Making, Acting)",
-        duration: "1 Year",
-        fee: "₹1,00,000",
-        mode: "Regular",
-        criteria: ["10+2 from recognized board", "Minimum 50% marks"],
-      },
-      {
-        name: "M.Sc (Film Making, Cinematography)",
-        duration: "2 Years",
-        fee: "₹1,00,000/yr",
-        mode: "Regular",
-        criteria: [
-          "Bachelor's degree in any discipline",
-          "Minimum 50% marks",
-        ],
-      },
-    ],
-    icon: <Film className="w-5 h-5" />,
-    color: "bg-pink-100 text-pink-800",
-    borderColor: "border-pink-200",
-    bgColor: "from-pink-50 to-pink-100",
-    buttonColor:
-      "from-pink-600 to-pink-800 hover:from-pink-700 hover:to-pink-900",
-  },
-];
-
+  const programs = [
+    {
+      id: 1,
+      title: "Artificial Intelligence & Technology",
+      description:
+        "Cutting-edge programs in AI, ML, Data Science, and Robotics",
+      degrees: [
+        {
+          name: "B.Tech (AI, ML, Data Science, Robotics)",
+          duration: "4 Years",
+          fee: "₹1,10,000/yr",
+          mode: "Regular",
+          criteria: [
+            "10+2 with Physics, Chemistry, Mathematics",
+            "Minimum 50% marks",
+            "Entrance exam scores may be required",
+          ],
+        },
+        {
+          name: "B.Tech Computer Science & Engineering",
+          duration: "4 Years",
+          fee: "₹1,10,000/yr",
+          mode: "Regular",
+          criteria: [
+            "10+2 with Physics, Chemistry, Mathematics",
+            "Minimum 50% marks",
+            "Entrance exam scores may be required",
+          ],
+        },
+        {
+          name: "M.Tech (AI, ML, Data Science, Robotics)",
+          duration: "2 Years",
+          fee: "₹1,25,000/yr",
+          mode: "Regular",
+          criteria: [
+            "B.Tech/B.E. in relevant field",
+            "Minimum 50% marks",
+            "Professional certifications may be considered",
+          ],
+        },
+        {
+          name: "M.Tech Computer Science & Engineering",
+          duration: "2 Years",
+          fee: "₹1,25,000/yr",
+          mode: "Regular",
+          criteria: [
+            "B.Tech/B.E. in relevant field",
+            "Minimum 50% marks",
+            "Professional certifications may be considered",
+          ],
+        },
+      ],
+      icon: <Cpu className="w-5 h-5" />,
+      color: "bg-blue-100 text-blue-800",
+      borderColor: "border-blue-200",
+      bgColor: "from-blue-50 to-blue-100",
+      buttonColor:
+        "from-blue-600 to-blue-800 hover:from-blue-700 hover:to-blue-900",
+      institute: "Saroj Institute of Artificial Intelligence"
+    },
+    {
+      id: 2,
+      title: "Management & Technology",
+      description: "Programs blending technology with business management",
+      degrees: [
+        {
+          name: "B.Tech (CSE, IT, Cyber Security, IoT)",
+          duration: "4 Years",
+          fee: "₹1,10,000/yr",
+          mode: "Regular",
+          criteria: [
+            "10+2 with Physics, Chemistry, Mathematics",
+            "Minimum 50% marks",
+            "Entrance exam scores may be required",
+          ],
+        },
+        {
+          name: "BCA (AI, ML, Cyber Security)",
+          duration: "3 Years",
+          fee: "₹1,00,000/yr",
+          mode: "Regular",
+          criteria: [
+            "10+2 from recognized board",
+            "Minimum 50% marks",
+            "Basic computer knowledge preferred",
+          ],
+        },
+        {
+          name: "MCA (AI, ML, Cyber Security)",
+          duration: "2 Years",
+          fee: "₹1,20,000/yr",
+          mode: "Regular",
+          criteria: [
+            "Bachelor's degree in any discipline",
+            "Minimum 50% marks",
+            "Mathematics in 10+2 preferred",
+          ],
+        },
+        {
+          name: "M.Tech (CSE, IT, Cyber Security, IoT)",
+          duration: "2 Years",
+          fee: "₹1,25,000/yr",
+          mode: "Regular",
+          criteria: [
+            "B.Tech/B.E. in relevant field",
+            "Minimum 50% marks",
+            "Entrance exam scores may be required",
+          ],
+        },
+      ],
+      icon: <Briefcase className="w-5 h-5" />,
+      color: "bg-purple-100 text-purple-800",
+      borderColor: "border-purple-200",
+      bgColor: "from-purple-50 to-purple-100",
+      buttonColor:
+        "from-purple-600 to-purple-800 hover:from-purple-700 hover:to-purple-900",
+      institute: "Saroj Institute of Management & Technology"
+    },
+    {
+      id: 3,
+      title: "Entrepreneurship & Business",
+      description:
+        "Programs designed for future business leaders and entrepreneurs",
+      degrees: [
+        {
+          name: "BBA (General, Banking, Marketing)",
+          duration: "3 Years",
+          fee: "₹1,10,000/yr",
+          mode: "Regular",
+          criteria: [
+            "10+2 from recognized board",
+            "Minimum 50% marks",
+            "Entrance exam scores may be required",
+          ],
+        },
+        {
+          name: "BBA (Logistics, HR, IT, Entrepreneurship)",
+          duration: "3 Years",
+          fee: "₹1,10,000/yr",
+          mode: "Regular",
+          criteria: [
+            "10+2 from recognized board",
+            "Minimum 50% marks",
+            "Entrance exam scores may be required",
+          ],
+        },
+        {
+          name: "BBA (Insurance, Retail, Start-Ups)",
+          duration: "3 Years",
+          fee: "₹1,10,000/yr",
+          mode: "Regular",
+          criteria: [
+            "10+2 from recognized board",
+            "Minimum 50% marks",
+            "Entrance exam scores may be required",
+          ],
+        },
+        {
+          name: "MBA",
+          duration: "2 Years",
+          fee: "₹1,20,000/yr",
+          mode: "Regular",
+          criteria: [
+            "Bachelor's degree in any discipline",
+            "Minimum 50% marks",
+            "Entrance exam scores may be required",
+          ],
+        },
+      ],
+      icon: <Briefcase className="w-5 h-5" />,
+      color: "bg-green-100 text-green-800",
+      borderColor: "border-green-200",
+      bgColor: "from-green-50 to-green-100",
+      buttonColor:
+        "from-green-600 to-green-800 hover:from-green-700 hover:to-green-900",
+      institute: "Saroj Institute of Entrepreneurship and Business"
+    },
+    {
+      id: 4,
+      title: "Humanities & Education",
+      description: "Programs in arts, commerce, and education",
+      degrees: [
+        {
+          name: "BA",
+          duration: "3 Years",
+          fee: "₹60,000/yr",
+          mode: "Regular",
+          criteria: ["10+2 from recognized board", "Minimum 50% marks"],
+        },
+        {
+          name: "B.Com",
+          duration: "3 Years",
+          fee: "₹60,000/yr",
+          mode: "Regular",
+          criteria: ["10+2 from recognized board", "Minimum 50% marks"],
+        },
+        {
+          name: "B.Ed",
+          duration: "2 Years",
+          fee: "₹60,000/yr",
+          mode: "Regular",
+          criteria: [
+            "Bachelor's degree in any discipline",
+            "Minimum 50% marks",
+          ],
+        },
+        {
+          name: "MA",
+          duration: "2 Years",
+          fee: "₹60,000/yr",
+          mode: "Regular",
+          criteria: [
+            "Bachelor's degree in any discipline",
+            "Minimum 50% marks",
+          ],
+        },
+      ],
+      icon: <School className="w-5 h-5" />,
+      color: "bg-yellow-100 text-yellow-800",
+      borderColor: "border-yellow-200",
+      bgColor: "from-yellow-50 to-yellow-100",
+      buttonColor:
+        "from-yellow-600 to-yellow-800 hover:from-yellow-700 hover:to-yellow-900",
+      institute: "Saroj Institute of Humanities & Education"
+    },
+    {
+      id: 5,
+      title: "Basic & Health Sciences",
+      description: "Programs in pure sciences and health-related fields",
+      degrees: [
+        {
+          name: "B.Sc (Physics, Chemistry, Biology, Math)",
+          duration: "3 Years",
+          fee: "₹80,000/yr",
+          mode: "Regular",
+          criteria: [
+            "10+2 with relevant science subjects",
+            "Minimum 50% marks",
+          ],
+        },
+        {
+          name: "BS (Data Science, Physiotherapy)",
+          duration: "3 Years",
+          fee: "₹80,000/yr",
+          mode: "Regular",
+          criteria: ["10+2 with relevant subjects", "Minimum 50% marks"],
+        },
+        {
+          name: "M.Sc (Physics, Chemistry, Biology, Math)",
+          duration: "2 Years",
+          fee: "₹80,000/yr",
+          mode: "Regular",
+          criteria: ["B.Sc in relevant subject", "Minimum 50% marks"],
+        },
+        {
+          name: "MS (Data Science, Physiotherapy)",
+          duration: "2 Years",
+          fee: "₹80,000/yr",
+          mode: "Regular",
+          criteria: [
+            "Bachelor's degree in relevant field",
+            "Minimum 50% marks",
+          ],
+        },
+      ],
+      icon: <FlaskConical className="w-5 h-5" />,
+      color: "bg-red-100 text-red-800",
+      borderColor: "border-red-200",
+      bgColor: "from-red-50 to-red-100",
+      buttonColor:
+        "from-red-600 to-red-800 hover:from-red-700 hover:to-red-900",
+      institute: "Saroj Institute of Basic & Health Sciences"
+    },
+    {
+      id: 6,
+      title: "Pharmacy",
+      description: "Programs in pharmaceutical sciences",
+      degrees: [
+        {
+          name: "B.Pharm",
+          duration: "4 Years",
+          fee: "₹1,00,000/yr",
+          mode: "Regular",
+          criteria: [
+            "10+2 with Physics, Chemistry, Biology/Mathematics",
+            "Minimum 50% marks",
+          ],
+        },
+        {
+          name: "D.Pharm",
+          duration: "2 Years",
+          fee: "₹1,00,000/yr",
+          mode: "Regular",
+          criteria: [
+            "10+2 with Physics, Chemistry, Biology/Mathematics",
+            "Minimum 50% marks",
+          ],
+        },
+        {
+          name: "M.Pharm",
+          duration: "2 Years",
+          fee: "₹1,00,000/yr",
+          mode: "Regular",
+          criteria: ["B.Pharm degree", "Minimum 50% marks"],
+        },
+        {
+          name: "Ph.D (Pharmacy)",
+          duration: "3-5 Years",
+          fee: "₹1,00,000/yr",
+          mode: "Regular",
+          criteria: ["M.Pharm or equivalent", "Minimum 55% marks"],
+        },
+      ],
+      icon: <Pill className="w-5 h-5" />,
+      color: "bg-indigo-100 text-indigo-800",
+      borderColor: "border-indigo-200",
+      bgColor: "from-indigo-50 to-indigo-100",
+      buttonColor:
+        "from-indigo-600 to-indigo-800 hover:from-indigo-700 hover:to-indigo-900",
+      institute: "Lucknow Institute of Pharmacy"
+    },
+    {
+      id: 7,
+      title: "Sports Science",
+      description: "Programs in sports science and research",
+      degrees: [
+        {
+          name: "BS (Sports Science)",
+          duration: "3 Years",
+          fee: "₹90,000/yr",
+          mode: "Regular",
+          criteria: ["10+2 from recognized board", "Minimum 50% marks"],
+        },
+        {
+          name: "MS (Sports Science)",
+          duration: "2 Years",
+          fee: "₹90,000/yr",
+          mode: "Regular",
+          criteria: [
+            "Bachelor's degree in any discipline",
+            "Minimum 50% marks",
+          ],
+        },
+      ],
+      icon: <Dumbbell className="w-5 h-5" />,
+      color: "bg-orange-100 text-orange-800",
+      borderColor: "border-orange-200",
+      bgColor: "from-orange-50 to-orange-100",
+      buttonColor:
+        "from-orange-600 to-orange-800 hover:from-orange-700 hover:to-orange-900",
+      institute: "Saroj Institute of Sports Science & Research"
+    },
+    {
+      id: 8,
+      title: "Film & Fashion",
+      description: "Creative programs in film, fashion, and media",
+      degrees: [
+        {
+          name: "B.Sc (Film Making, Cinematography)",
+          duration: "3 Years",
+          fee: "₹1,00,000/yr",
+          mode: "Regular",
+          criteria: ["10+2 from recognized board", "Minimum 50% marks"],
+        },
+        {
+          name: "BA (Acting, Journalism, PR)",
+          duration: "3 Years",
+          fee: "₹1,00,000/yr",
+          mode: "Regular",
+          criteria: ["10+2 from recognized board", "Minimum 50% marks"],
+        },
+        {
+          name: "Diploma (Film Making, Acting)",
+          duration: "1 Year",
+          fee: "₹1,00,000",
+          mode: "Regular",
+          criteria: ["10+2 from recognized board", "Minimum 50% marks"],
+        },
+        {
+          name: "M.Sc (Film Making, Cinematography)",
+          duration: "2 Years",
+          fee: "₹1,00,000/yr",
+          mode: "Regular",
+          criteria: [
+            "Bachelor's degree in any discipline",
+            "Minimum 50% marks",
+          ],
+        },
+      ],
+      icon: <Film className="w-5 h-5" />,
+      color: "bg-pink-100 text-pink-800",
+      borderColor: "border-pink-200",
+      bgColor: "from-pink-50 to-pink-100",
+      buttonColor:
+        "from-pink-600 to-pink-800 hover:from-pink-700 hover:to-pink-900",
+      institute: "Saroj Institute of Film & Fashion"
+    },
+    {
+      id: 9,
+      title: "Saroj Institute of Law",
+      description: "5-year comprehensive law degree program with practical training modules.",
+      degrees: [
+        {
+          name: "BA LLB Program",
+          duration: "5 Years",
+          fee: "₹75,000/yr",
+          mode: "Regular",
+          criteria: [
+            "Successful completion of 10+2 or equivalent examination.",
+            "Minimum aggregate percentage as per university norms.",
+          ],
+          features: [
+            "Comprehensive curriculum",
+            "Moot court training",
+            "Internship opportunities",
+          ],
+        },
+      ],
+      icon: <Gavel className="w-5 h-5" />,
+      color: "bg-teal-100 text-teal-800",
+      borderColor: "border-teal-200",
+      bgColor: "from-teal-50 to-teal-100",
+      buttonColor:
+        "from-teal-600 to-teal-800 hover:from-teal-700 hover:to-teal-900",
+      institute: "Saroj Institute of Law"
+    },
+  ];
 
   const [activeTab, setActiveTab] = useState(programs[0].id);
   const [hoveredProgram, setHoveredProgram] = useState(null);
@@ -453,7 +490,7 @@ const programs = [
           </h2>
           <p className="text-base md:text-lg font-funneldisplay text-left text-gray-600 max-w-4xl">
             Explore our diverse range of undergraduate, postgraduate, and
-            doctoral programs designed to shape future leaders.
+            doctoral programs across 9 institutes including Saroj Institute of Law.
           </p>
         </motion.div>
 
@@ -467,7 +504,7 @@ const programs = [
             >
               <span className="font-medium text-gray-700 flex items-center gap-2 text-sm">
                 <Hand className="w-4 h-4" />
-                Program Categories
+                Program Categories ({programs.length})
               </span>
               <button
                 onClick={() => setIsAutoRotating(!isAutoRotating)}
@@ -491,7 +528,7 @@ const programs = [
               </button>
             </div>
 
-            <div className="space-y-2 max-h-[600px] overflow-y-auto pr-2 custom-scrollbar">
+            <div className="space-y-2 max-h-[800px] overflow-y-auto pr-2 custom-scrollbar">
               {programs.map((program) => (
                 <motion.div
                   key={program.id}
@@ -517,7 +554,8 @@ const programs = [
                         hoveredProgram !== activeTab
                           ? "ring-2 ring-opacity-50 ring-gray-300"
                           : ""
-                      }`}
+                      }
+                      ${program.id === 9 ? 'border-teal-300' : ''}`}
                   >
                     <div
                       className={`p-2 rounded-lg ${
@@ -531,6 +569,9 @@ const programs = [
                     <div className="text-left flex-1 min-w-0">
                       <span className="font-medium text-sm block truncate">
                         {program.title}
+                        {program.id === 9 && (
+                          <span className="ml-1 text-xs bg-teal-500 text-white px-1.5 py-0.5 rounded-full">New</span>
+                        )}
                       </span>
                       <span className="text-xs text-gray-500 line-clamp-1">
                         {program.description}
@@ -543,7 +584,7 @@ const programs = [
                           : "bg-gray-100 text-gray-700"
                       }`}
                     >
-                      {program.degrees.length} programs
+                      {program.degrees.length} program{program.degrees.length !== 1 ? 's' : ''}
                     </span>
                   </button>
                 </motion.div>
@@ -586,13 +627,28 @@ const programs = [
                   <div className="p-2 rounded-lg bg-white text-blue-700 shadow-sm">
                     {currentProgram.icon}
                   </div>
-                  <div>
-                    <h3 className="text-xl font-bold text-gray-900">
-                      {currentProgram.title}
-                    </h3>
-                    <p className="text-xs opacity-90 mt-1">
-                      {currentProgram.description}
-                    </p>
+                  <div className="flex-1">
+                    <div className="flex items-start justify-between">
+                      <div>
+                        <h3 className="text-xl font-bold text-gray-900">
+                          {currentProgram.title}
+                        </h3>
+                        <p className="text-xs opacity-90 mt-1">
+                          {currentProgram.description}
+                        </p>
+                      </div>
+                      {currentProgram.id === 9 && (
+                        <span className="bg-teal-500 text-white text-xs px-2 py-1 rounded-full font-medium">
+                          New Institute
+                        </span>
+                      )}
+                    </div>
+                    {currentProgram.institute && (
+                      <div className="mt-2 flex items-center gap-1 text-xs text-gray-700">
+                        <School className="w-3 h-3" />
+                        <span>{currentProgram.institute}</span>
+                      </div>
+                    )}
                   </div>
                 </div>
 
@@ -665,6 +721,27 @@ const programs = [
                                     </li>
                                   ))}
                                 </ul>
+                                {degree.features && (
+                                  <div className="mt-3">
+                                    <h5 className="font-semibold text-xs flex items-center gap-2 mb-1 text-gray-700">
+                                      <UserCheck className="w-3 h-3" />
+                                      Key Features
+                                    </h5>
+                                    <ul className="space-y-1 text-xs text-gray-700">
+                                      {degree.features.map((feature, i) => (
+                                        <li
+                                          key={i}
+                                          className="flex items-start gap-2"
+                                        >
+                                          <span className="text-blue-500 mt-0.5">
+                                            •
+                                          </span>
+                                          <span>{feature}</span>
+                                        </li>
+                                      ))}
+                                    </ul>
+                                  </div>
+                                )}
                               </div>
                               <a
                                 target="_blank"
@@ -779,10 +856,6 @@ const programs = [
                         Start Application
                         <ArrowRight className="w-4 h-4" />
                       </a>
-                      {/* <button className="flex-1 px-4 py-2 bg-white border border-gray-300 hover:bg-gray-50 text-gray-800 rounded-md transition-all flex items-center justify-center gap-1 font-medium text-sm">
-                        <Globe className="w-4 h-4" />
-                        Global Mode Info
-                      </button> */}
                     </div>
                   </div>
                 </div>
@@ -791,6 +864,23 @@ const programs = [
           </div>
         </div>
       </div>
+
+      <style jsx>{`
+        .custom-scrollbar::-webkit-scrollbar {
+          width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+          background: #f1f1f1;
+          border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+          background: #c1c1c1;
+          border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+          background: #a8a8a8;
+        }
+      `}</style>
     </section>
   );
 };
