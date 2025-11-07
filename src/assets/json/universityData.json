@@ -935,7 +935,34 @@
           "minimum_marks_requirement": "Candidates are required to have a minimum percentage of 50% in the Higher Secondary Examination."
         }
       }
+    },
+    {
+  "name": "Saroj Institute of Law",
+  "programs": [
+    {
+      "degree": "BA LLB",
+      "mode": "Regular Mode",
+      "specializations": "Law",
+      "duration_in_yrs": 5,
+      "fees": {
+        "year1": 75000,
+        "year2": 75000,
+        "year3": 75000,
+        "year4": 75000,
+        "year5": 75000,
+        "total": 375000
+      }
     }
+  ],
+  "eligibility": {
+    "BA LLB": {
+      "educational_qualifications": "Candidate must have passed the higher secondary examination (10+2) or its equivalent from a recognized board or institution.",
+      "minimum_marks_requirement": "Minimum 50% in 10+2 from a recognized school/institution.",
+      "selection_process": "May include entrance exam scores, academic performance, and possibly personal interviews or counselling sessions."
+    }
+  }
+}
+
   ]
 }
 
