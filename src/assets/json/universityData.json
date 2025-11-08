@@ -961,6 +961,66 @@
       "selection_process": "May include entrance exam scores, academic performance, and possibly personal interviews or counselling sessions."
     }
   }
+},
+{
+  "name": "Saroj Institute of Agriculture Science",
+  "programs": [
+    {
+      "degree": "BSc in Agriculture (Hons)",
+      "mode": "Regular Mode",
+      "specializations": "Agriculture",
+      "duration_in_yrs": 4,
+      "fees": {
+        "year1": 35000,
+        "year2": 35000,
+        "year3": 35000,
+        "year4": 35000,
+        "total": 140000
+      }
+    },
+    {
+      "degree": "MSc in Agriculture",
+      "mode": "Regular Mode",
+      "specializations": "Agriculture",
+      "duration_in_yrs": 2,
+      "fees": {
+        "year1": 35000,
+        "year2": 35000,
+        "total": 70000
+      }
+    },
+    {
+      "degree": "PhD in Agriculture",
+      "mode": "Regular Mode",
+      "specializations": "Agriculture",
+      "duration_in_yrs": 5,
+      "fees": {
+        "year1": 110000,
+        "year2": 110000,
+        "year3": 110000,
+        "year4": 110000,
+        "year5": 110000,
+        "total": 550000
+      }
+    }
+  ],
+  "eligibility": {
+    "BSc in Agriculture (Hons)": {
+      "educational_qualifications": "Candidate must have passed 10+2 or equivalent examination with Physics, Chemistry, and Biology/Mathematics/Agriculture from a recognized board.",
+      "minimum_marks_requirement": "Minimum 50% aggregate marks in 10+2 examination.",
+      "selection_process": "Based on entrance exam scores, academic merit, and personal interview."
+    },
+    "MSc in Agriculture": {
+      "educational_qualifications": "Candidate must have completed BSc in Agriculture or equivalent degree from a recognized university.",
+      "minimum_marks_requirement": "Minimum 55% marks in undergraduate degree.",
+      "selection_process": "Based on entrance examination, academic performance, and personal interview."
+    },
+    "PhD in Agriculture": {
+      "educational_qualifications": "Candidate must have completed Master's degree in Agriculture or related field from a recognized university.",
+      "minimum_marks_requirement": "Minimum 60% marks in postgraduate degree.",
+      "selection_process": "Based on entrance test, research proposal evaluation, and interview with faculty committee."
+    }
+  }
 }
 
   ]
