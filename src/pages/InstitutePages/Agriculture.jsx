@@ -98,9 +98,11 @@ const CourseCard = ({ course }) => {
       </div>
 
       {/* Apply Button */}
-      <button className="mt-auto w-full bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors">
-        Apply Now
-      </button>
+     <div className="mt-6">
+                  <a href="https://siu.in8.nopaperforms.com/" target="/blank" className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-medium py-2 px-4 rounded-md transition duration-300">
+                    Apply Now
+                  </a>
+                </div>
     </div>
   );
 };
