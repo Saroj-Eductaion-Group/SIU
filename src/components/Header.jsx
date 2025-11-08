@@ -278,12 +278,12 @@ function Header() {
                       {/* // ACADEMIA LAYOUT */}
                       {item.megaMenu && item.title === "Academics" && (
                         // ACADEMIA LAYOUT
-                        <div className={`absolute left-1/2 -translate-x-3/4 mt-1 w-[1100px] bg-white rounded-md shadow-lg p-6 z-50 border border-gray-200 ${openSubmenu === index ? "block" : "hidden"} max-h-[600px] overflow-y-auto`}>
+                        <div className={`text-xl absolute left-1/2 -translate-x-3/4 mt-1 w-[1100px] bg-white rounded-md shadow-lg p-6 z-50 border border-gray-200 ${openSubmenu === index ? "block" : "hidden"} max-h-[600px] overflow-y-auto`}>
                           <div className='absolute -top-1 left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-8 border-r-8 border-b-8 border-l-transparent border-r-transparent border-b-white'></div>
                           <div className='grid grid-cols-3 gap-x-8 gap-y-4'>
                             {item.columns.map((column, colIndex) => (
                               <div key={`${column.heading}-${colIndex}`} className='relative'>
-                                <h3 className='font-bold text-sm text-blue-800 mb-3 pb-2 border-b-2 border-orange-500 relative'>
+                                <h3 className='font-bold text-base text-blue-800 mb-3 pb-2 border-b-2 border-orange-500 relative'>
                                   {column.heading}
                                   <span className='absolute bottom-0 left-0 w-1/3 h-0.5 bg-gradient-to-r from-orange-500 to-transparent'></span>
                                 </h3>
@@ -291,7 +291,7 @@ function Header() {
                                   {column.type === "institutes" &&
                                     column.items.map((subItem, subItemIndex) => (
                                       <li key={`${subItem.path}-${subItemIndex}`} className='mb-1'>
-                                        <Link to={subItem.path} className='text-gray-700 hover:text-orange-500 transition-colors duration-200 text-sm flex items-center justify-between group' onClick={closeAllMenus}>
+                                        <Link to={subItem.path} className='text-gray-700 hover:text-orange-500 transition-colors duration-200 text-base flex items-center justify-between group' onClick={closeAllMenus}>
                                           <div className='flex items-start'>
                                             <span className='w-1 h-1 bg-orange-500 rounded-full mt-2 mr-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200'></span>
                                             {subItem.title}
@@ -304,7 +304,7 @@ function Header() {
                                   {column.type === "fees" &&
                                     column.items.map((subItem, subItemIndex) => (
                                       <li key={`${subItem.path}-${subItemIndex}`} className='mb-1'>
-                                        <Link to={subItem.path} className='text-gray-700 hover:text-orange-500 transition-colors duration-200 text-sm flex items-center justify-between group' onClick={closeAllMenus}>
+                                        <Link to={subItem.path} className='text-gray-700 hover:text-orange-500 transition-colors duration-200 text-base flex items-center justify-between group' onClick={closeAllMenus}>
                                           <div className='flex items-start'>
                                             <span className='w-1 h-1 bg-orange-500 rounded-full mt-2 mr-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200'></span>
                                             {subItem.title}
@@ -316,7 +316,7 @@ function Header() {
                                   {column.type === "academics-menu" &&
                                     column.items.map((subItem, subItemIndex) => (
                                       <li key={`${subItem.path}-${subItemIndex}`} className='mb-1'>
-                                        <Link to={subItem.path} className='text-gray-700 hover:text-orange-500 transition-colors duration-200 text-sm flex items-center justify-between group' onClick={closeAllMenus}>
+                                        <Link to={subItem.path} className='text-gray-700 hover:text-orange-500 transition-colors duration-200 text-base flex items-center justify-between group' onClick={closeAllMenus}>
                                           <div className='flex items-start'>
                                             <span className='w-1 h-1 bg-orange-500 rounded-full mt-2 mr-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200'></span>
                                             {subItem.title}
