@@ -29,7 +29,7 @@ const allCourses = [
     level: 'Ph.D',
     name: 'Ph.D (Agriculture Science)',
     specializations: ['Agricultural Biotechnology', 'Climate-Smart Agriculture', 'Food Security Research'],
-    duration: '3-5 years',
+    duration: '5 years',
     fee: '₹110,000 per year',
     eligibility: 'M.Sc in Agriculture or a related discipline with a strong research proposal.',
     mode: 'Regular Mode'
