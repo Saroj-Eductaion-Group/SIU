@@ -30,7 +30,8 @@ const degreeCategories = {
   mpharm: 'M.Pharm',
   mba: 'MBA',       // 🔹 add this
   phd: 'Ph.D',
-  diploma: 'Diploma'
+  diploma: 'Diploma',
+  llb: 'BA LLB',
 };
 
 
