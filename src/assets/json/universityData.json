@@ -2,201 +2,258 @@
   "university": "Saroj International University",
   "institutes": [
     {
-    "name": "Saroj Institute of Artificial Intelligence",
-    "programs": [
-      {
-        "degree": "B.Tech",
-        "mode": "Regular Mode",
-        "specializations": "Artificial Intelligence & Machine Learning, Data Science, Robotics, Computer Science & Engineering",
-        "duration_in_yrs": 4,
-        "fees": {
-          "year1": 110000,
-          "year2": 110000,
-          "year3": 110000,
-          "year4": 110000,
-          "total": 440000
+      "name": "Saroj Institute of Artificial Intelligence",
+      "programs": [
+        {
+          "degree": "B.Tech",
+          "mode": "Regular Mode",
+          "specializations": "Artificial Intelligence & Machine Learning, Data Science, Robotics, Computer Science & Engineering",
+          "duration_in_yrs": 4,
+          "fees": {
+            "year1": 110000,
+            "year2": 110000,
+            "year3": 110000,
+            "year4": 110000,
+            "total": 440000
+          }
+        },
+        {
+          "degree": "M.Tech",
+          "mode": "Regular Mode",
+          "specializations": "Artificial Intelligence & Machine Learning, Data Science, Robotics, Computer Science & Engineering",
+          "duration_in_yrs": 2,
+          "fees": {
+            "year1": 125000,
+            "year2": 125000,
+            "total": 250000
+          }
+        },
+        {
+          "degree": "B.Tech",
+          "mode": "Global Mode",
+          "specializations": "Artificial Intelligence & Machine Learning, Data Science, Robotics, Computer Science & Engineering",
+          "duration_in_yrs": 4,
+          "fees": {
+            "year1": 160000,
+            "year2": 160000,
+            "year3": 160000,
+            "year4": 160000,
+            "total": 640000
+          }
+        },
+        {
+          "degree": "M.Tech",
+          "mode": "Global Mode",
+          "specializations": "Artificial Intelligence & Machine Learning, Data Science, Robotics, Computer Science & Engineering",
+          "duration_in_yrs": 2,
+          "fees": {
+            "year1": 175000,
+            "year2": 175000,
+            "total": 350000
+          }
+        },
+        {
+          "degree": "Ph.D",
+          "mode": "Regular Mode",
+          "specializations": "Artificial Intelligence & Machine Learning, Data Science, Robotics, Computer Science & Engineering",
+          "duration_in_yrs": 5,
+          "fees": {
+            "year1": 110000,
+            "year2": 110000,
+            "year3": 110000,
+            "year4": 110000,
+            "year5": 110000,
+            "total": 550000
+          }
         }
-      },
-      {
-        "degree": "M.Tech",
-        "mode": "Regular Mode",
-        "specializations": "Artificial Intelligence & Machine Learning, Data Science, Robotics, Computer Science & Engineering",
-        "duration_in_yrs": 2,
-        "fees": {
-          "year1": 125000,
-          "year2": 125000,
-          "total": 250000
-        }
-      },
-      {
-        "degree": "B.Tech",
-        "mode": "Global Mode",
-        "specializations": "Artificial Intelligence & Machine Learning, Data Science, Robotics, Computer Science & Engineering",
-        "duration_in_yrs": 4,
-        "fees": {
-          "year1": 160000,
-          "year2": 160000,
-          "year3": 160000,
-          "year4": 160000,
-          "total": 640000
-        }
-      },
-      {
-        "degree": "M.Tech",
-        "mode": "Global Mode",
-        "specializations": "Artificial Intelligence & Machine Learning, Data Science, Robotics, Computer Science & Engineering",
-        "duration_in_yrs": 2,
-        "fees": {
-          "year1": 175000,
-          "year2": 175000,
-          "total": 350000
-        }
-      }
-    ],
-    "eligibility": {
-      "B.Tech": {
-        "educational_qualifications": "Candidate must have passed the higher secondary examination (10+2) or its equivalent from a recognized board or institution. Should have studied Physics, Chemistry, and Mathematics as core subjects.",
-        "minimum_marks_requirement": "Minimum 50% in 10+2 from a recognized school/institution.",
-        "selection_process": "May include entrance exam scores, academic performance, and possibly personal interviews or counselling sessions."
-      },
-      "M.Tech": {
-        "educational_qualifications": "Bachelor's degree in Engineering or Technology (B.E./B.Tech) in relevant disciplines such as Computer Science, Electrical Engineering, Electronics and Communication Engineering, Information Technology, or related fields.",
-        "minimum_marks_requirement": "Minimum aggregate score of 50% in Bachelor's degree.",
-        "selection_process": "May include academic performance in undergraduate studies, personal interviews, and/or written tests."
-      }
-    }
-  },
-  {
-    "name": "Saroj Institute of Humanities & Education",
-    "programs": [
-      {
-        "degree": "BA/BS/B.Com",
-        "mode": "Regular Mode",
-        "specializations": "General, International Relations",
-        "duration_in_yrs": 3,
-        "fees": {
-          "year1": 60000,
-          "year2": 60000,
-          "year3": 60000,
-          "total": 180000
-        }
-      },
-      {
-        "degree": "B.Ed",
-        "mode": "Regular Mode",
-        "specializations": "Education",
-        "duration_in_yrs": 2,
-        "fees": {
-          "year1": 90000,
-          "year2": 90000,
-          "total": 180000
-        }
-      },
-      {
-        "degree": "MA/MS/M.Com",
-        "mode": "Regular Mode",
-        "specializations": "General, International Relations",
-        "duration_in_yrs": 2,
-        "fees": {
-          "year1": 60000,
-          "year2": 60000,
-          "total": 120000
-        }
-      },
-      {
-        "degree": "M.Ed",
-        "mode": "Regular Mode",
-        "specializations": "Education",
-        "duration_in_yrs": 2,
-        "fees": {
-          "year1": 60000,
-          "year2": 60000,
-          "total": 120000
+      ],
+      "eligibility": {
+        "B.Tech": {
+          "educational_qualifications": "Candidate must have passed the higher secondary examination (10+2) or its equivalent from a recognized board or institution. Should have studied Physics, Chemistry, and Mathematics as core subjects.",
+          "minimum_marks_requirement": "Minimum 50% in 10+2 from a recognized school/institution.",
+          "selection_process": "May include entrance exam scores, academic performance, and possibly personal interviews or counselling sessions."
+        },
+        "M.Tech": {
+          "educational_qualifications": "Bachelor's degree in Engineering or Technology (B.E./B.Tech) in relevant disciplines such as Computer Science, Electrical Engineering, Electronics and Communication Engineering, Information Technology, or related fields.",
+          "minimum_marks_requirement": "Minimum aggregate score of 50% in Bachelor's degree.",
+          "selection_process": "May include academic performance in undergraduate studies, personal interviews, and/or written tests."
+        },
+        "Ph.D": {
+          "educational_qualifications": "Master's degree in relevant field (M.Tech/M.E.) from a recognized university or institution.",
+          "minimum_marks_requirement": "Minimum aggregate score of 55% in Master's degree.",
+          "selection_process": "Based on entrance test, research proposal evaluation, and interview with faculty committee."
         }
       }
-    ],
-    "eligibility": {
-      "BA/BS/B.Com": {
-        "educational_qualifications": "Candidate must have passed the higher secondary examination (10+2) or its equivalent from a recognized board or institution.",
-        "minimum_marks_requirement": "Minimum 50% in 10+2 from a recognized school/institution."
-      },
-      "B.Ed": {
-        "educational_qualifications": "Bachelor's degree or its equivalent in any discipline from a recognized university or institution.",
-        "minimum_marks_requirement": "Minimum aggregate score of 50% in Bachelor's degree."
-      },
-      "MA/MS/M.Com": {
-        "educational_qualifications": "Bachelor's degree or its equivalent in any discipline from a recognized university or institution.",
-        "minimum_marks_requirement": "Minimum aggregate score of 50% in Bachelor's degree."
-      },
-      "M.Ed": {
-        "educational_qualifications": "Bachelor's degree in Education (B.Ed.) or a related field from a recognized university or institution.",
-        "minimum_marks_requirement": "Minimum aggregate score of 50% in Bachelor's degree."
+    },
+    {
+      "name": "Saroj Institute of Humanities & Education",
+      "programs": [
+        {
+          "degree": "BA/BS/B.Com",
+          "mode": "Regular Mode",
+          "specializations": "General, International Relations",
+          "duration_in_yrs": 3,
+          "fees": {
+            "year1": 60000,
+            "year2": 60000,
+            "year3": 60000,
+            "total": 180000
+          }
+        },
+        {
+          "degree": "B.Ed",
+          "mode": "Regular Mode",
+          "specializations": "Education",
+          "duration_in_yrs": 2,
+          "fees": {
+            "year1": 90000,
+            "year2": 90000,
+            "total": 180000
+          }
+        },
+        {
+          "degree": "MA/MS/M.Com",
+          "mode": "Regular Mode",
+          "specializations": "General, International Relations",
+          "duration_in_yrs": 2,
+          "fees": {
+            "year1": 60000,
+            "year2": 60000,
+            "total": 120000
+          }
+        },
+        {
+          "degree": "M.Ed",
+          "mode": "Regular Mode",
+          "specializations": "Education",
+          "duration_in_yrs": 2,
+          "fees": {
+            "year1": 60000,
+            "year2": 60000,
+            "total": 120000
+          }
+        },
+        {
+          "degree": "Ph.D",
+          "mode": "Regular Mode",
+          "specializations": "Humanities, Education, International Relations",
+          "duration_in_yrs": 5,
+          "fees": {
+            "year1": 110000,
+            "year2": 110000,
+            "year3": 110000,
+            "year4": 110000,
+            "year5": 110000,
+            "total": 550000
+          }
+        }
+      ],
+      "eligibility": {
+        "BA/BS/B.Com": {
+          "educational_qualifications": "Candidate must have passed the higher secondary examination (10+2) or its equivalent from a recognized board or institution.",
+          "minimum_marks_requirement": "Minimum 50% in 10+2 from a recognized school/institution."
+        },
+        "B.Ed": {
+          "educational_qualifications": "Bachelor's degree or its equivalent in any discipline from a recognized university or institution.",
+          "minimum_marks_requirement": "Minimum aggregate score of 50% in Bachelor's degree."
+        },
+        "MA/MS/M.Com": {
+          "educational_qualifications": "Bachelor's degree or its equivalent in any discipline from a recognized university or institution.",
+          "minimum_marks_requirement": "Minimum aggregate score of 50% in Bachelor's degree."
+        },
+        "M.Ed": {
+          "educational_qualifications": "Bachelor's degree in Education (B.Ed.) or a related field from a recognized university or institution.",
+          "minimum_marks_requirement": "Minimum aggregate score of 50% in Bachelor's degree."
+        },
+        "Ph.D": {
+          "educational_qualifications": "Master's degree in relevant field from a recognized university or institution.",
+          "minimum_marks_requirement": "Minimum aggregate score of 55% in Master's degree.",
+          "selection_process": "Based on entrance test, research proposal evaluation, and interview with faculty committee."
+        }
       }
-    }
-  },
-  {
-    "name": "Saroj Institute of Entrepreneurship and Business",
-    "programs": [
-      {
-        "degree": "BBA",
-        "mode": "Regular Mode",
-        "specializations": "General, Banking Finance, International Business, Marketing, Insurance, Digital Marketing, Logistics & SCM HR, IT, Entrepreneurship, Retail & Start-Ups",
-        "duration_in_yrs": 3,
-        "fees": {
-          "year1": 110000,
-          "year2": 110000,
-          "year3": 110000,
-          "total": 330000
+    },
+    {
+      "name": "Saroj Institute of Entrepreneurship and Business",
+      "programs": [
+        {
+          "degree": "BBA",
+          "mode": "Regular Mode",
+          "specializations": "General, Banking Finance, International Business, Marketing, Insurance, Digital Marketing, Logistics & SCM HR, IT, Entrepreneurship, Retail & Start-Ups",
+          "duration_in_yrs": 3,
+          "fees": {
+            "year1": 110000,
+            "year2": 110000,
+            "year3": 110000,
+            "total": 330000
+          }
+        },
+        {
+          "degree": "MBA",
+          "mode": "Regular Mode",
+          "specializations": "General Business Administration, Business Finance, International Business, Marketing, Insurance, Digital Marketing",
+          "duration_in_yrs": 2,
+          "fees": {
+            "year1": 120000,
+            "year2": 120000,
+            "total": 240000
+          }
+        },
+        {
+          "degree": "MBA",
+          "mode": "Global Mode",
+          "specializations": "General Business Administration, Business Finance, International Business, Marketing, Insurance, Digital Marketing",
+          "duration_in_yrs": 2,
+          "fees": {
+            "year1": 170000,
+            "year2": 170000,
+            "total": 340000
+          }
+        },
+        {
+          "degree": "BBA",
+          "mode": "Global Mode",
+          "specializations": "General, Banking Finance, International Business, Marketing, Insurance, Digital Marketing, Logistics & SCM HR, IT, Entrepreneurship, Retail & Start-Ups",
+          "duration_in_yrs": 3,
+          "fees": {
+            "year1": 160000,
+            "year2": 160000,
+            "year3": 160000,
+            "total": 480000
+          }
+        },
+        {
+          "degree": "Ph.D",
+          "mode": "Regular Mode",
+          "specializations": "Business Administration, Entrepreneurship, Management Studies",
+          "duration_in_yrs": 5,
+          "fees": {
+            "year1": 110000,
+            "year2": 110000,
+            "year3": 110000,
+            "year4": 110000,
+            "year5": 110000,
+            "total": 550000
+          }
         }
-      },
-      {
-        "degree": "MBA",
-        "mode": "Regular Mode",
-        "specializations": "General Business Administration, Business Finance, International Business, Marketing, Insurance, Digital Marketing", 
-        "duration_in_yrs": 2,
-        "fees": {
-          "year1": 120000,
-          "year2": 120000,
-          "total": 240000
-        }
-      },
-       {
-        "degree": "MBA",
-        "mode": "Global Mode",
-        "specializations": "General Business Administration, Business Finance, International Business, Marketing, Insurance, Digital Marketing", 
-        "duration_in_yrs": 2,
-        "fees": {
-          "year1": 170000,
-          "year2": 170000,
-          "total": 340000
-        }
-      },
-      {
-        "degree": "BBA",
-        "mode": "Global Mode",
-        "specializations": "General, Banking Finance, International Business, Marketing, Insurance, Digital Marketing, Logistics & SCM HR, IT, Entrepreneurship, Retail & Start-Ups",
-        "duration_in_yrs": 3,
-        "fees": {
-          "year1": 160000,
-          "year2": 160000,
-          "year3": 160000,
-          "total": 480000
+      ],
+      "eligibility": {
+        "BBA": {
+          "educational_qualifications": "Applicants should have successfully completed their higher secondary education (12th grade) from a recognized board or institution.",
+          "minimum_marks_requirement": "Minimum 50% in Higher Secondary Examination.",
+          "selection_process": "May include entrance exam scores, academic performance, and possibly personal interviews or counselling sessions."
+        },
+        "MBA": {
+          "educational_qualifications": "Bachelor's degree or its equivalent in any discipline from a recognized university or institution.",
+          "minimum_marks_requirement": "Minimum aggregate score of 50% in Bachelor's degree.",
+          "selection_process": "May include entrance exam scores, academic performance, and possibly personal interviews or counselling sessions."
+        },
+        "Ph.D": {
+          "educational_qualifications": "Master's degree in relevant field (MBA/M.Com) from a recognized university or institution.",
+          "minimum_marks_requirement": "Minimum aggregate score of 55% in Master's degree.",
+          "selection_process": "Based on entrance test, research proposal evaluation, and interview with faculty committee."
         }
       }
-    ],
-    "eligibility": {
-      "BBA": {
-        "educational_qualifications": "Applicants should have successfully completed their higher secondary education (12th grade) from a recognized board or institution.",
-        "minimum_marks_requirement": "Minimum 50% in Higher Secondary Examination.",
-        "selection_process": "May include entrance exam scores, academic performance, and possibly personal interviews or counselling sessions."
-      },
-      "MBA": {
-        "educational_qualifications": "Bachelor's degree or its equivalent in any discipline from a recognized university or institution.",
-        "minimum_marks_requirement": "Minimum aggregate score of 50% in Bachelor's degree.",
-        "selection_process": "May include entrance exam scores, academic performance, and possibly personal interviews or counselling sessions."
-      }
-    }
-  },
+    },
     {
       "name": "Saroj Institute of Management & Technology",
       "programs": [
@@ -245,7 +302,7 @@
             "year1": 120000,
             "year2": 120000,
             "total": 240000
-          } 
+          }
         },
         {
           "degree": "B.Tech",
@@ -281,6 +338,20 @@
             "year2": 150000,
             "total": 300000
           }
+        },
+        {
+          "degree": "Ph.D",
+          "mode": "Regular Mode",
+          "specializations": "Computer Science, Information Technology, Engineering, Management",
+          "duration_in_yrs": 5,
+          "fees": {
+            "year1": 110000,
+            "year2": 110000,
+            "year3": 110000,
+            "year4": 110000,
+            "year5": 110000,
+            "total": 550000
+          }
         }
       ],
       "eligibility": {
@@ -308,6 +379,11 @@
           "educational_qualifications": "Candidates should have a bachelor's degree in any discipline from a recognized university or institution.",
           "minimum_marks_requirement": "Candidates should have a minimum aggregate score of 50% in their Bachelor's degree.",
           "selection_process": "After meeting the eligibility criteria, candidates may be required to undergo a selection process, which may include a combination of entrance exam scores, academic performance, and possibly personal interviews or counselling sessions."
+        },
+        "Ph.D": {
+          "educational_qualifications": "Master's degree in relevant field from a recognized university or institution.",
+          "minimum_marks_requirement": "Minimum aggregate score of 55% in Master's degree.",
+          "selection_process": "Based on entrance test, research proposal evaluation, and interview with faculty committee."
         }
       }
     },
@@ -463,6 +539,20 @@
             "year3": 150000,
             "total": 450000
           }
+        },
+        {
+          "degree": "Ph.D",
+          "mode": "Regular Mode",
+          "specializations": "Basic Sciences, Health Sciences",
+          "duration_in_yrs": 5,
+          "fees": {
+            "year1": 110000,
+            "year2": 110000,
+            "year3": 110000,
+            "year4": 110000,
+            "year5": 110000,
+            "total": 550000
+          }
         }
       ],
       "eligibility": {
@@ -501,6 +591,11 @@
         "Ph.D (Data Analytics)": {
           "educational_qualifications": "Candidates should have completed a Master's degree in a relevant field such as Computer Science, Statistics, Mathematics, Engineering, Economics, or a related discipline from a recognized institution.",
           "minimum_marks_requirement": "Candidates are required to have a minimum percentage of 55% in their Master's Degree."
+        },
+        "Ph.D": {
+          "educational_qualifications": "Master's degree in relevant field from a recognized university or institution.",
+          "minimum_marks_requirement": "Minimum aggregate score of 55% in Master's degree.",
+          "selection_process": "Based on entrance test, research proposal evaluation, and interview with faculty committee."
         }
       }
     },
@@ -607,7 +702,7 @@
         {
           "degree": "M.Pharm (Pharmacology)",
           "mode": "Global Mode",
-           "specializations": [ "Pharmacology" ],
+          "specializations": ["Pharmacology"],
           "duration_in_yrs": 2,
           "fees": {
             "year1": 150000,
@@ -618,7 +713,7 @@
         {
           "degree": "M.Pharm (Medical Chemistry)",
           "mode": "Global Mode",
-          "specializations": [ "Medical Chemistry" ],
+          "specializations": ["Medical Chemistry"],
           "duration_in_yrs": 2,
           "fees": {
             "year1": 140000,
@@ -635,6 +730,20 @@
             "year2": 200000,
             "year3": 200000,
             "total": 600000
+          }
+        },
+        {
+          "degree": "Ph.D",
+          "mode": "Regular Mode",
+          "specializations": "Pharmaceutical Sciences",
+          "duration_in_yrs": 5,
+          "fees": {
+            "year1": 110000,
+            "year2": 110000,
+            "year3": 110000,
+            "year4": 110000,
+            "year5": 110000,
+            "total": 550000
           }
         }
       ],
@@ -656,6 +765,11 @@
         "Doctorate_Programs_in_Pharmacy": {
           "educational_qualifications": "Candidates should have completed a Master's degree in Pharmacy (M.Pharm) or an equivalent degree in Pharmaceutical Sciences from a recognized institution.",
           "minimum_marks_requirement": "Candidates are required to have a minimum percentage of 55% in their Master's Degree."
+        },
+        "Ph.D": {
+          "educational_qualifications": "Master's degree in Pharmacy or relevant field from a recognized university or institution.",
+          "minimum_marks_requirement": "Minimum aggregate score of 55% in Master's degree.",
+          "selection_process": "Based on entrance test, research proposal evaluation, and interview with faculty committee."
         }
       }
     },
@@ -716,6 +830,20 @@
             "year2": 140000,
             "total": 280000
           }
+        },
+        {
+          "degree": "Ph.D",
+          "mode": "Regular Mode",
+          "specializations": "Sports Science, Sports Management, Sports Psychology",
+          "duration_in_yrs": 5,
+          "fees": {
+            "year1": 110000,
+            "year2": 110000,
+            "year3": 110000,
+            "year4": 110000,
+            "year5": 110000,
+            "total": 550000
+          }
         }
       ],
       "eligibility": {
@@ -728,6 +856,11 @@
           "educational_qualifications": "Applicants should have completed a bachelor's degree or its equivalent in any discipline from a recognized university or institution.",
           "minimum_marks_requirement": "Candidates should have a minimum aggregate score of 50% in their Bachelor's degree.",
           "selection_process": "After meeting the eligibility criteria, candidates may be required to undergo a selection process, which may include a combination of entrance exam scores, academic performance, and possibly personal interviews or counselling sessions."
+        },
+        "Ph.D": {
+          "educational_qualifications": "Master's degree in relevant field from a recognized university or institution.",
+          "minimum_marks_requirement": "Minimum aggregate score of 55% in Master's degree.",
+          "selection_process": "Based on entrance test, research proposal evaluation, and interview with faculty committee."
         }
       }
     },
@@ -903,6 +1036,20 @@
             "year1": 100000,
             "total": 100000
           }
+        },
+        {
+          "degree": "Ph.D",
+          "mode": "Regular Mode",
+          "specializations": "Film Studies, Fashion Design, Media & Communication",
+          "duration_in_yrs": 5,
+          "fees": {
+            "year1": 110000,
+            "year2": 110000,
+            "year3": 110000,
+            "year4": 110000,
+            "year5": 110000,
+            "total": 550000
+          }
         }
       ],
       "eligibility": {
@@ -933,99 +1080,118 @@
         "Diploma Courses": {
           "educational_qualifications": "Applicants should have successfully completed their higher secondary education (12th grade) from a recognized board or institution.",
           "minimum_marks_requirement": "Candidates are required to have a minimum percentage of 50% in the Higher Secondary Examination."
+        },
+        "Ph.D": {
+          "educational_qualifications": "Master's degree in relevant field from a recognized university or institution.",
+          "minimum_marks_requirement": "Minimum aggregate score of 55% in Master's degree.",
+          "selection_process": "Based on entrance test, research proposal evaluation, and interview with faculty committee."
         }
       }
     },
     {
-  "name": "Saroj Institute of Law",
-  "programs": [
-    {
-      "degree": "BA LLB",
-      "mode": "Regular Mode",
-      "specializations": "Law",
-      "duration_in_yrs": 5,
-      "fees": {
-        "year1": 75000,
-        "year2": 75000,
-        "year3": 75000,
-        "year4": 75000,
-        "year5": 75000,
-        "total": 375000
-      }
-    }
-  ],
-  "eligibility": {
-    "BA LLB": {
-      "educational_qualifications": "Candidate must have passed the higher secondary examination (10+2) or its equivalent from a recognized board or institution.",
-      "minimum_marks_requirement": "Minimum 50% in 10+2 from a recognized school/institution.",
-      "selection_process": "May include entrance exam scores, academic performance, and possibly personal interviews or counselling sessions."
-    }
-  }
-},
-{
-  "name": "Saroj Institute of Agriculture Science",
-  "programs": [
-    {
-      "degree": "BSc in Agriculture (Hons)",
-      "mode": "Regular Mode",
-      "specializations": "Agriculture",
-      "duration_in_yrs": 4,
-      "fees": {
-        "year1": 35000,
-        "year2": 35000,
-        "year3": 35000,
-        "year4": 35000,
-        "total": 140000
-      }
-    },
-    {
-      "degree": "MSc in Agriculture",
-      "mode": "Regular Mode",
-      "specializations": "Agriculture",
-      "duration_in_yrs": 2,
-      "fees": {
-        "year1": 35000,
-        "year2": 35000,
-        "total": 70000
+      "name": "Saroj Institute of Law",
+      "programs": [
+        {
+          "degree": "BA LLB",
+          "mode": "Regular Mode",
+          "specializations": "Law",
+          "duration_in_yrs": 5,
+          "fees": {
+            "year1": 75000,
+            "year2": 75000,
+            "year3": 75000,
+            "year4": 75000,
+            "year5": 75000,
+            "total": 375000
+          }
+        },
+        {
+          "degree": "Ph.D",
+          "mode": "Regular Mode",
+          "specializations": "Law, Legal Studies",
+          "duration_in_yrs": 5,
+          "fees": {
+            "year1": 110000,
+            "year2": 110000,
+            "year3": 110000,
+            "year4": 110000,
+            "year5": 110000,
+            "total": 550000
+          }
+        }
+      ],
+      "eligibility": {
+        "BA LLB": {
+          "educational_qualifications": "Candidate must have passed the higher secondary examination (10+2) or its equivalent from a recognized board or institution.",
+          "minimum_marks_requirement": "Minimum 50% in 10+2 from a recognized school/institution.",
+          "selection_process": "May include entrance exam scores, academic performance, and possibly personal interviews or counselling sessions."
+        },
+        "Ph.D": {
+          "educational_qualifications": "Master's degree in Law or relevant field from a recognized university or institution.",
+          "minimum_marks_requirement": "Minimum aggregate score of 55% in Master's degree.",
+          "selection_process": "Based on entrance test, research proposal evaluation, and interview with faculty committee."
+        }
       }
     },
     {
-      "degree": "PhD in Agriculture",
-      "mode": "Regular Mode",
-      "specializations": "Agriculture",
-      "duration_in_yrs": 5,
-      "fees": {
-        "year1": 110000,
-        "year2": 110000,
-        "year3": 110000,
-        "year4": 110000,
-        "year5": 110000,
-        "total": 550000
+      "name": "Saroj Institute of Agriculture Science",
+      "programs": [
+        {
+          "degree": "BSc in Agriculture (Hons)",
+          "mode": "Regular Mode",
+          "specializations": "Agriculture",
+          "duration_in_yrs": 4,
+          "fees": {
+            "year1": 35000,
+            "year2": 35000,
+            "year3": 35000,
+            "year4": 35000,
+            "total": 140000
+          }
+        },
+        {
+          "degree": "MSc in Agriculture",
+          "mode": "Regular Mode",
+          "specializations": "Agriculture",
+          "duration_in_yrs": 2,
+          "fees": {
+            "year1": 35000,
+            "year2": 35000,
+            "total": 70000
+          }
+        },
+        {
+          "degree": "Ph.D in Agriculture",
+          "mode": "Regular Mode",
+          "specializations": "Agriculture",
+          "duration_in_yrs": 5,
+          "fees": {
+            "year1": 110000,
+            "year2": 110000,
+            "year3": 110000,
+            "year4": 110000,
+            "year5": 110000,
+            "total": 550000
+          }
+        }
+      ],
+      "eligibility": {
+        "BSc in Agriculture (Hons)": {
+          "educational_qualifications": "Candidate must have passed 10+2 or equivalent examination with Physics, Chemistry, and Biology/Mathematics/Agriculture from a recognized board.",
+          "minimum_marks_requirement": "Minimum 50% aggregate marks in 10+2 examination.",
+          "selection_process": "Based on entrance exam scores, academic merit, and personal interview."
+        },
+        "MSc in Agriculture": {
+          "educational_qualifications": "Candidate must have completed BSc in Agriculture or equivalent degree from a recognized university.",
+          "minimum_marks_requirement": "Minimum 55% marks in undergraduate degree.",
+          "selection_process": "Based on entrance examination, academic performance, and personal interview."
+        },
+        "Ph.D in Agriculture": {
+          "educational_qualifications": "Candidate must have completed Master's degree in Agriculture or related field from a recognized university.",
+          "minimum_marks_requirement": "Minimum 60% marks in postgraduate degree.",
+          "selection_process": "Based on entrance test, research proposal evaluation, and interview with faculty committee."
+        }
       }
     }
-  ],
-  "eligibility": {
-    "BSc in Agriculture (Hons)": {
-      "educational_qualifications": "Candidate must have passed 10+2 or equivalent examination with Physics, Chemistry, and Biology/Mathematics/Agriculture from a recognized board.",
-      "minimum_marks_requirement": "Minimum 50% aggregate marks in 10+2 examination.",
-      "selection_process": "Based on entrance exam scores, academic merit, and personal interview."
-    },
-    "MSc in Agriculture": {
-      "educational_qualifications": "Candidate must have completed BSc in Agriculture or equivalent degree from a recognized university.",
-      "minimum_marks_requirement": "Minimum 55% marks in undergraduate degree.",
-      "selection_process": "Based on entrance examination, academic performance, and personal interview."
-    },
-    "PhD in Agriculture": {
-      "educational_qualifications": "Candidate must have completed Master's degree in Agriculture or related field from a recognized university.",
-      "minimum_marks_requirement": "Minimum 60% marks in postgraduate degree.",
-      "selection_process": "Based on entrance test, research proposal evaluation, and interview with faculty committee."
-    }
-  }
-}
-
   ]
 }
-
-
-
-  
