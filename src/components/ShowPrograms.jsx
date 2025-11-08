@@ -28,10 +28,13 @@ const degreeCategories = {
   msc: 'M.Sc',
   bpharm: 'B.Pharm',
   mpharm: 'M.Pharm',
-  mba: 'MBA',       // 🔹 add this
+  bba: 'BBA',
+  mba: 'MBA',        
   phd: 'Ph.D',
   diploma: 'Diploma',
   llb: 'BA LLB',
+  
+   
 };
 
 
