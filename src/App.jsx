@@ -101,6 +101,7 @@ import CryptographyPage from "./pages/tcs/Cryptography";
 // Fee Payment Page
 import FeePaymentPage from "./pages/FeePaymentPage";
 import OrientationPage from "./pages/Admission/OrientationPage";
+import InstituteAgriculture from "./pages/InstitutePages/Agriculture";
 
 function App() {
   return (
@@ -127,7 +128,9 @@ function App() {
        <Route path='/academics/Saroj-Institute-of-Management-and-Technology' element={< InstituteManagementTechnology/>} />
        <Route path='/academics/Saroj-Institute-of-Artificial-Intelligence' element={< InstituteArtificialIntelligence/>} />
        <Route path='/academics/saroj-institute-of-law' element={< SarojInstituteOfLaw/>} />
+       <Route path='/academics/saroj-institute-of-agriculture-science' element={< InstituteAgriculture/>} />
 
+       
 
 
       {/* About */}
