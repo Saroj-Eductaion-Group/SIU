@@ -255,138 +255,155 @@
       }
     },
     {
-      "name": "Saroj Institute of Management & Technology",
-      "programs": [
-        {
-          "degree": "B.Tech",
-          "mode": "Regular Mode",
-          "specializations": "CSE, IT, Cyber Security, IOT, EC, ME, Civil, Mechatronics, Bio-Tech, Electrical Engg, Environmental Engg, BioTech, Agricultural Engg",
-          "duration_in_yrs": 4,
-          "fees": {
-            "year1": 110000,
-            "year2": 110000,
-            "year3": 110000,
-            "year4": 110000,
-            "total": 440000
-          }
-        },
-        {
-          "degree": "M.Tech",
-          "mode": "Regular Mode",
-          "specializations": "CSE, IT, Cyber Security, IOT, EC, ME, Civil, Mechatronics, Bio-Tech, Electrical Engg, Environmental Engg, BioTech, Agricultural Engg",
-          "duration_in_yrs": 2,
-          "fees": {
-            "year1": 125000,
-            "year2": 125000,
-            "total": 250000
-          }
-        },
-        {
-          "degree": "BCA",
-          "mode": "Regular Mode",
-          "specializations": "Data Scince, AI, ML, Cyber Security",
-          "duration_in_yrs": 3,
-          "fees": {
-            "year1": 100000,
-            "year2": 100000,
-            "year3": 100000,
-            "total": 300000
-          }
-        },
-        {
-          "degree": "MCA",
-          "mode": "Regular Mode",
-          "specializations": "Data Science,AI, ML, Cyber Security",
-          "duration_in_yrs": 2,
-          "fees": {
-            "year1": 120000,
-            "year2": 120000,
-            "total": 240000
-          }
-        },
-        {
-          "degree": "B.Tech",
-          "mode": "Global Mode",
-          "specializations": "CSE, IT, Cyber Security, IOT, EC, ME, Civil, Mechatronics, Bio-Tech, Electrical Engg, Environmental Engg, BioTech, Agricultural Engg",
-          "duration_in_yrs": 4,
-          "fees": {
-            "year1": 160000,
-            "year2": 160000,
-            "year3": 160000,
-            "year4": 160000,
-            "total": 640000
-          }
-        },
-        {
-          "degree": "M.Tech / MCA",
-          "mode": "Global Mode",
-          "specializations": "CSE, IT, Data Science, Cyber Security, IOT, EC, ME, Civil, Mechatronics, Bio-Tech, Electrical Engg, Environmental Engg, BioTech, Agricultural Engg",
-          "duration_in_yrs": 2,
-          "fees": {
-            "year1": 150000,
-            "year2": 150000,
-            "total": 330000
-          }
-        },
-        {
-          "degree": "BCA",
-          "mode": "Global Mode",
-          "specializations": "Data Science, AI, ML, Cyber Security",
-          "duration_in_yrs": 2,
-          "fees": {
-            "year1": 150000,
-            "year2": 150000,
-            "total": 300000
-          }
-        },
-        {
-          "degree": "Ph.D",
-          "mode": "Regular Mode",
-          "specializations": "Computer Science, Information Technology, Engineering, Management",
-          "duration_in_yrs": 5,
-          "fees": {
-            "year1": 110000,
-            "year2": 110000,
-            "year3": 110000,
-            "year4": 110000,
-            "year5": 110000,
-            "total": 550000
-          }
-        }
-      ],
-      "eligibility": {
-        "B.Tech": {
-          "educational_qualifications": "Candidates should have completed 10+2 or its equivalent examination from a recognized board or university. The required subjects in the qualifying examination may vary based on the specialization, but typically include Physics, Chemistry, and Mathematics.",
-          "minimum_marks_requirement": "Candidates are required to have a minimum percentage of 50% in the Higher Secondary Examination.",
-          "selection_process": "After meeting the eligibility criteria, candidates may be required to undergo a selection process, which may include a combination of entrance exam scores, academic performance, and possibly personal interviews or counselling sessions."
-        },
-        "Diploma": {
-          "educational_qualifications": "Candidates should have completed 10th standard (SSC) or its equivalent examination from a recognized board or institution.",
-          "minimum_marks_requirement": "Candidates are required to have a minimum percentage of 50% in the SSC Examination.",
-          "selection_process": "After meeting the eligibility criteria, candidates may be required to undergo a selection process, which may include a combination of entrance exam scores, academic performance, and possibly personal interviews or counselling sessions."
-        },
-        "M.Tech": {
-          "educational_qualifications": "Candidates must hold a Bachelor's Degree in Engineering or Technology (B.E. / B.Tech) in relevant disciplines such as Computer Science, Electrical Engineering, Electronics and Communication Engineering, Information Technology, or related fields from a recognized university or institution.",
-          "minimum_marks_requirement": "Candidates should have a minimum aggregate score of 50% in their Bachelor's degree.",
-          "selection_process": "After meeting the eligibility criteria, candidates may be required to undergo a selection process, which may include a combination of entrance exam scores, academic performance, and possibly personal interviews or counselling sessions."
-        },
-        "BCA": {
-          "educational_qualifications": "Applicants should have successfully completed their higher secondary education (12th grade) from a recognized board or institution.",
-          "minimum_marks_requirement": "Candidates are required to have a minimum percentage of 50% in the Higher Secondary Examination.",
-          "selection_process": "After meeting the eligibility criteria, candidates may be required to undergo a selection process, which may include a combination of entrance exam scores, academic performance, and possibly personal interviews or counselling sessions."
-        },
-        "MCA": {
-          "educational_qualifications": "Candidates should have a bachelor's degree in any discipline from a recognized university or institution.",
-          "minimum_marks_requirement": "Candidates should have a minimum aggregate score of 50% in their Bachelor's degree.",
-          "selection_process": "After meeting the eligibility criteria, candidates may be required to undergo a selection process, which may include a combination of entrance exam scores, academic performance, and possibly personal interviews or counselling sessions."
-        },
-        "Ph.D": {
-          "educational_qualifications": "Master's degree in relevant field from a recognized university or institution.",
-          "minimum_marks_requirement": "Minimum aggregate score of 55% in Master's degree.",
-          "selection_process": "Based on entrance test, research proposal evaluation, and interview with faculty committee."
-        }
+  "name": "Saroj Institute of Management & Technology",
+  "programs": [
+    {
+      "degree": "Diploma Engineering",
+      "mode": "Regular Mode",
+      "specializations": "CE, EE, ME, ECE",
+      "duration_in_yrs": 3,
+      "fees": {
+        "year1": 60000,
+        "year2": 60000,
+        "year3": 60000,
+        "total": 180000
       }
     },
+    {
+      "degree": "B.Tech",
+      "mode": "Regular Mode",
+      "specializations": "CSE, IT, Cyber Security, IOT, EC, ME, Civil, Mechatronics, Bio-Tech, Electrical Engg, Environmental Engg, BioTech, Agricultural Engg",
+      "duration_in_yrs": 4,
+      "fees": {
+        "year1": 110000,
+        "year2": 110000,
+        "year3": 110000,
+        "year4": 110000,
+        "total": 440000
+      }
+    },
+    {
+      "degree": "M.Tech",
+      "mode": "Regular Mode",
+      "specializations": "CSE, IT, Cyber Security, IOT, EC, ME, Civil, Mechatronics, Bio-Tech, Electrical Engg, Environmental Engg, BioTech, Agricultural Engg",
+      "duration_in_yrs": 2,
+      "fees": {
+        "year1": 125000,
+        "year2": 125000,
+        "total": 250000
+      }
+    },
+    {
+      "degree": "BCA",
+      "mode": "Regular Mode",
+      "specializations": "Data Scince, AI, ML, Cyber Security",
+      "duration_in_yrs": 3,
+      "fees": {
+        "year1": 100000,
+        "year2": 100000,
+        "year3": 100000,
+        "total": 300000
+      }
+    },
+    {
+      "degree": "MCA",
+      "mode": "Regular Mode",
+      "specializations": "Data Science,AI, ML, Cyber Security",
+      "duration_in_yrs": 2,
+      "fees": {
+        "year1": 120000,
+        "year2": 120000,
+        "total": 240000
+      }
+    },
+    {
+      "degree": "B.Tech",
+      "mode": "Global Mode",
+      "specializations": "CSE, IT, Cyber Security, IOT, EC, ME, Civil, Mechatronics, Bio-Tech, Electrical Engg, Environmental Engg, BioTech, Agricultural Engg",
+      "duration_in_yrs": 4,
+      "fees": {
+        "year1": 160000,
+        "year2": 160000,
+        "year3": 160000,
+        "year4": 160000,
+        "total": 640000
+      }
+    },
+    {
+      "degree": "M.Tech / MCA",
+      "mode": "Global Mode",
+      "specializations": "CSE, IT, Data Science, Cyber Security, IOT, EC, ME, Civil, Mechatronics, Bio-Tech, Electrical Engg, Environmental Engg, BioTech, Agricultural Engg",
+      "duration_in_yrs": 2,
+      "fees": {
+        "year1": 150000,
+        "year2": 150000,
+        "total": 330000
+      }
+    },
+    {
+      "degree": "BCA",
+      "mode": "Global Mode",
+      "specializations": "Data Science, AI, ML, Cyber Security",
+      "duration_in_yrs": 2,
+      "fees": {
+        "year1": 150000,
+        "year2": 150000,
+        "total": 300000
+      }
+    },
+    {
+      "degree": "Ph.D",
+      "mode": "Regular Mode",
+      "specializations": "Computer Science, Information Technology, Engineering, Management",
+      "duration_in_yrs": 5,
+      "fees": {
+        "year1": 110000,
+        "year2": 110000,
+        "year3": 110000,
+        "year4": 110000,
+        "year5": 110000,
+        "total": 550000
+      }
+    }
+  ],
+  "eligibility": {
+    "Diploma Engineering": {
+      "educational_qualifications": "Candidates should have completed 10th standard (SSC) or its equivalent examination from a recognized board or institution.",
+      "minimum_marks_requirement": "Candidates are required to have a minimum percentage of 50% in the SSC Examination.",
+      "selection_process": "After meeting the eligibility criteria, candidates may be required to undergo a selection process, which may include a combination of entrance exam scores, academic performance, and possibly personal interviews or counselling sessions."
+    },
+    "B.Tech": {
+      "educational_qualifications": "Candidates should have completed 10+2 or its equivalent examination from a recognized board or university. The required subjects in the qualifying examination may vary based on the specialization, but typically include Physics, Chemistry, and Mathematics.",
+      "minimum_marks_requirement": "Candidates are required to have a minimum percentage of 50% in the Higher Secondary Examination.",
+      "selection_process": "After meeting the eligibility criteria, candidates may be required to undergo a selection process, which may include a combination of entrance exam scores, academic performance, and possibly personal interviews or counselling sessions."
+    },
+    "Diploma": {
+      "educational_qualifications": "Candidates should have completed 10th standard (SSC) or its equivalent examination from a recognized board or institution.",
+      "minimum_marks_requirement": "Candidates are required to have a minimum percentage of 50% in the SSC Examination.",
+      "selection_process": "After meeting the eligibility criteria, candidates may be required to undergo a selection process, which may include a combination of entrance exam scores, academic performance, and possibly personal interviews or counselling sessions."
+    },
+    "M.Tech": {
+      "educational_qualifications": "Candidates must hold a Bachelor's Degree in Engineering or Technology (B.E. / B.Tech) in relevant disciplines such as Computer Science, Electrical Engineering, Electronics and Communication Engineering, Information Technology, or related fields from a recognized university or institution.",
+      "minimum_marks_requirement": "Candidates should have a minimum aggregate score of 50% in their Bachelor's degree.",
+      "selection_process": "After meeting the eligibility criteria, candidates may be required to undergo a selection process, which may include a combination of entrance exam scores, academic performance, and possibly personal interviews or counselling sessions."
+    },
+    "BCA": {
+      "educational_qualifications": "Applicants should have successfully completed their higher secondary education (12th grade) from a recognized board or institution.",
+      "minimum_marks_requirement": "Candidates are required to have a minimum percentage of 50% in the Higher Secondary Examination.",
+      "selection_process": "After meeting the eligibility criteria, candidates may be required to undergo a selection process, which may include a combination of entrance exam scores, academic performance, and possibly personal interviews or counselling sessions."
+    },
+    "MCA": {
+      "educational_qualifications": "Candidates should have a bachelor's degree in any discipline from a recognized university or institution.",
+      "minimum_marks_requirement": "Candidates should have a minimum aggregate score of 50% in their Bachelor's degree.",
+      "selection_process": "After meeting the eligibility criteria, candidates may be required to undergo a selection process, which may include a combination of entrance exam scores, academic performance, and possibly personal interviews or counselling sessions."
+    },
+    "Ph.D": {
+      "educational_qualifications": "Master's degree in relevant field from a recognized university or institution.",
+      "minimum_marks_requirement": "Minimum aggregate score of 55% in Master's degree.",
+      "selection_process": "Based on entrance test, research proposal evaluation, and interview with faculty committee."
+    }
+  }
+},
     {
       "name": "Saroj Institute of Basic & Health Sciences",
       "programs": [
