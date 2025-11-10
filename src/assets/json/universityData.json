@@ -1089,50 +1089,83 @@
       }
     },
     {
-      "name": "Saroj Institute of Law",
-      "programs": [
-        {
-          "degree": "BA LLB",
-          "mode": "Regular Mode",
-          "specializations": "Law",
-          "duration_in_yrs": 5,
-          "fees": {
-            "year1": 75000,
-            "year2": 75000,
-            "year3": 75000,
-            "year4": 75000,
-            "year5": 75000,
-            "total": 375000
-          }
-        },
-        {
-          "degree": "Ph.D",
-          "mode": "Regular Mode",
-          "specializations": "Law, Legal Studies",
-          "duration_in_yrs": 5,
-          "fees": {
-            "year1": 110000,
-            "year2": 110000,
-            "year3": 110000,
-            "year4": 110000,
-            "year5": 110000,
-            "total": 550000
-          }
-        }
-      ],
-      "eligibility": {
-        "BA LLB": {
-          "educational_qualifications": "Candidate must have passed the higher secondary examination (10+2) or its equivalent from a recognized board or institution.",
-          "minimum_marks_requirement": "Minimum 50% in 10+2 from a recognized school/institution.",
-          "selection_process": "May include entrance exam scores, academic performance, and possibly personal interviews or counselling sessions."
-        },
-        "Ph.D": {
-          "educational_qualifications": "Master's degree in Law or relevant field from a recognized university or institution.",
-          "minimum_marks_requirement": "Minimum aggregate score of 55% in Master's degree.",
-          "selection_process": "Based on entrance test, research proposal evaluation, and interview with faculty committee."
-        }
+  "name": "Saroj Institute of Law",
+  "programs": [
+    {
+      "degree": "BA LLB",
+      "mode": "Regular Mode",
+      "specializations": "Law",
+      "duration_in_yrs": 5,
+      "fees": {
+        "year1": 75000,
+        "year2": 75000,
+        "year3": 75000,
+        "year4": 75000,
+        "year5": 75000,
+        "total": 375000
       }
     },
+    {
+      "degree": "LLB",
+      "mode": "Regular Mode",
+      "specializations": "Law",
+      "duration_in_yrs": 3,
+      "fees": {
+        "year1": 75000,
+        "year2": 75000,
+        "year3": 75000,
+        "total": 225000
+      }
+    },
+    {
+      "degree": "LLM",
+      "mode": "Regular Mode",
+      "specializations": "Corporate Law, Intellectual Property (IP) Law, Human Rights Law, Criminal Law, Constitutional Law, Environment Law, Cyber Law/Technology Law, International Trade & Eco Law",
+      "duration_in_yrs": 2,
+      "fees": {
+        "year1": 90000,
+        "year2": 90000,
+        "total": 180000
+      }
+    },
+    {
+      "degree": "Ph.D",
+      "mode": "Regular Mode",
+      "specializations": "Law, Legal Studies",
+      "duration_in_yrs": 5,
+      "fees": {
+        "year1": 110000,
+        "year2": 110000,
+        "year3": 110000,
+        "year4": 110000,
+        "year5": 110000,
+        "total": 550000
+      }
+    }
+  ],
+  "eligibility": {
+    "BA LLB": {
+      "educational_qualifications": "Candidate must have passed the higher secondary examination (10+2) or its equivalent from a recognized board or institution.",
+      "minimum_marks_requirement": "Minimum 50% in 10+2 from a recognized school/institution.",
+      "selection_process": "May include entrance exam scores, academic performance, and possibly personal interviews or counselling sessions."
+    },
+    "LLB": {
+      "educational_qualifications": "Candidate must have completed a Bachelor's degree (in any discipline) from a recognized university or institution.",
+      "minimum_marks_requirement": "Minimum 50% in Bachelor's degree from a recognized university.",
+      "selection_process": "Based on entrance exam scores, academic performance, and personal interview."
+    },
+    "LLM": {
+      "educational_qualifications": "Candidate must have completed LLB or equivalent law degree from a recognized university or institution.",
+      "minimum_marks_requirement": "Minimum 55% in LLB or equivalent law degree.",
+      "selection_process": "Based on entrance test scores, academic performance, and interview with faculty committee."
+    },
+    "Ph.D": {
+      "educational_qualifications": "Master's degree in Law or relevant field from a recognized university or institution.",
+      "minimum_marks_requirement": "Minimum aggregate score of 55% in Master's degree.",
+      "selection_process": "Based on entrance test, research proposal evaluation, and interview with faculty committee."
+    }
+  }
+},
     {
       "name": "Saroj Institute of Agriculture Science",
       "programs": [
