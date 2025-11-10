@@ -20,7 +20,7 @@
         {
           "degree": "M.Tech",
           "mode": "Regular Mode",
-          "specializations": "Artificial Intelligence & Machine Learning, Data Science, Robotics, Computer Science & Engineering",
+          "specializations": "Artificial Intelligence & Machine Learning, Data Analytics, Data Science, Robotics, Cloud Technology, Computer Science & Engineering",
           "duration_in_yrs": 2,
           "fees": {
             "year1": 125000,
@@ -31,7 +31,7 @@
         {
           "degree": "B.Tech",
           "mode": "Global Mode",
-          "specializations": "Artificial Intelligence & Machine Learning, Data Science, Robotics, Computer Science & Engineering",
+          "specializations": "Artificial Intelligence & Machine Learning, Data Analytics, Data Science, Robotics, Cloud Technology, Computer Science & Engineering",
           "duration_in_yrs": 4,
           "fees": {
             "year1": 160000,
@@ -44,7 +44,7 @@
         {
           "degree": "M.Tech",
           "mode": "Global Mode",
-          "specializations": "Artificial Intelligence & Machine Learning, Data Science, Robotics, Computer Science & Engineering",
+          "specializations": "Artificial Intelligence & Machine Learning, Data Analytics, Data Science, Robotics, Cloud Technology, Computer Science & Engineering",
           "duration_in_yrs": 2,
           "fees": {
             "year1": 175000,
