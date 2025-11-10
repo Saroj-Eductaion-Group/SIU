@@ -18,25 +18,22 @@ const CoursePage = ({ universityData = { university: '', institutes: [] } }) => 
   const allModes = [...new Set(universityData.institutes?.flatMap(i => i.programs?.map(p => p.mode)) || [])];
 
   // Group degree types by category
-const degreeCategories = {
-  all: 'All Degrees',
-  btech: 'B.Tech',
-  mtech: 'M.Tech',
-  bca: 'BCA',
-  mca: 'MCA',
-  bsc: 'B.Sc',
-  msc: 'M.Sc',
-  bpharm: 'B.Pharm',
-  mpharm: 'M.Pharm',
-  bba: 'BBA',
-  mba: 'MBA',        
-  phd: 'Ph.D',
-  diploma: 'Diploma',
-  llb: 'BA LLB',
-  
-   
-};
-
+  const degreeCategories = {
+    all: 'All Degrees',
+    btech: 'B.Tech',
+    mtech: 'M.Tech',
+    bca: 'BCA',
+    mca: 'MCA',
+    bsc: 'B.Sc',
+    msc: 'M.Sc',
+    bpharm: 'B.Pharm',
+    mpharm: 'M.Pharm',
+    bba: 'BBA',
+    mba: 'MBA',        
+    phd: 'Ph.D',
+    diploma: 'Diploma',
+    llb: 'BA LLB',
+  };
 
   // Flatten all programs with institute info
   const allPrograms = universityData.institutes?.flatMap(institute => 
@@ -73,20 +70,27 @@ const degreeCategories = {
     return matchesSearch && matchesFilters;
   });
 
-  // Filter by degree tab
+  // Filter by degree tab - UPDATED to include D.Pharm under diploma
   const filteredByDegree = filteredPrograms.filter(program => {
     if (activeDegreeTab === 'all') return true;
     if (!program?.degree) return false;
 
     const selectedDegree = degreeCategories[activeDegreeTab];
+    
+    // Special handling for diploma to include D.Pharm and other diploma programs
+    if (activeDegreeTab === 'diploma') {
+      return program.degree.toLowerCase().includes('diploma') || 
+             program.degree.toLowerCase().includes('d.pharm');
+    }
+    
     return program.degree.toLowerCase().includes(selectedDegree.toLowerCase());
   });
 
   // Filter by category tab
   const tabGroups = {
     all: filteredByDegree,
-    undergraduate: filteredByDegree.filter(p => p?.degree?.includes('B.') || p?.degree?.includes('Diploma')),
-    postgraduate: filteredByDegree.filter(p => p?.degree?.includes('M.') || p?.degree?.includes('MS')),
+    undergraduate: filteredByDegree.filter(p => p?.degree?.includes('B.') || p?.degree?.includes('Diploma') || p?.degree?.includes('D.Pharm') || p?.degree?.includes('BA') || p?.degree?.includes('B.Sc') || p?.degree?.includes('B.Design')),
+    postgraduate: filteredByDegree.filter(p => p?.degree?.includes('M.') || p?.degree?.includes('MS') || p?.degree?.includes('MCA') || p?.degree?.includes('MBA') || p?.degree?.includes('M.Sc') || p?.degree?.includes('M.Design') || p?.degree?.includes('LLM') || p?.degree?.includes('M.Pharm')),
     doctorate: filteredByDegree.filter(p => p?.degree?.includes('Ph.D') || p?.degree?.includes('Doctorate'))
   };
 
@@ -314,7 +318,7 @@ const degreeCategories = {
                   className={`px-4 py-2 text-sm font-medium rounded-md ${activeDegreeTab === key
                     ? 'bg-blue-600 text-white'
                     : 'bg-white text-gray-700 hover:bg-gray-50'
-                  } ${key === 'all' ? 'rounded-l-md' : ''} ${key === 'diploma' ? 'rounded-r-md' : ''}`}
+                  } ${key === 'all' ? 'rounded-l-md' : ''} ${key === 'llb' ? 'rounded-r-md' : ''}`}
                 >
                   {label}
                 </button>
@@ -427,8 +431,9 @@ const degreeCategories = {
                           </button>
                           
                           <Link 
-                          to="https://siu.in8.nopaperforms.com/"
-                          className="flex items-center justify-center px-4 py-2 bg-green-600 text-white rounded-lg text-sm font-medium hover:bg-green-700">
+                            to="https://siu.in8.nopaperforms.com/"
+                            className="flex items-center justify-center px-4 py-2 bg-green-600 text-white rounded-lg text-sm font-medium hover:bg-green-700"
+                          >
                             <Info className="mr-1 h-4 w-4" />
                             Apply Now
                           </Link>
