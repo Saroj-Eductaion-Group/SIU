@@ -79,10 +79,29 @@ const SarojInstituteOfLaw = () => {
         "Minimum marks as per university norms"
       ],
       fee: {
-        annual: "₹85,000",
+        annual: "₹75,000",
         disclaimer: "*Excluding examination and miscellaneous charges.",
       }
-    }
+    },
+
+    {
+      icon: <FaGraduationCap className="text-4xl mb-4 text-blue-600" />,
+       title: "Ph.D in Law",
+      description: "5-year doctoral program for advanced legal research and scholarship.",
+      features: ["Research intensive", "Faculty mentorship", "Publication opportunities"],
+     eligibility: [
+        "LLM or equivalent postgraduate law degree",
+        "Research proposal approval",
+        "University entrance examination"
+      ],
+      fee: {
+        annual: "₹110,000",
+        disclaimer: "*Excluding examination and miscellaneous charges.",
+      }
+    },
+
+
+    
   ];
 
   const stats = [
@@ -273,7 +292,7 @@ const SarojInstituteOfLaw = () => {
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true }}
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+              className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-4 gap-8"
             >
               {programs.map((program, index) => (
                 <motion.div 
