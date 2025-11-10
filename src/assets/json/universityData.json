@@ -1094,7 +1094,7 @@
     {
       "degree": "BA LLB",
       "mode": "Regular Mode",
-      "specializations": "Law",
+      "specializations": "Corporate Law, Intellectual Property (IP) Law, Human Rights Law, Criminal Law, Constitutional Law, Environment Law, Cyber Law/Technology Law, International Trade & Eco Law",
       "duration_in_yrs": 5,
       "fees": {
         "year1": 75000,
@@ -1108,7 +1108,7 @@
     {
       "degree": "LLB",
       "mode": "Regular Mode",
-      "specializations": "Law",
+      "specializations": "Corporate Law, Intellectual Property (IP) Law, Human Rights Law, Criminal Law, Constitutional Law, Environment Law, Cyber Law/Technology Law, International Trade & Eco Law",
       "duration_in_yrs": 3,
       "fees": {
         "year1": 75000,
@@ -1131,7 +1131,7 @@
     {
       "degree": "Ph.D",
       "mode": "Regular Mode",
-      "specializations": "Law, Legal Studies",
+      "specializations": "Corporate Law, Intellectual Property (IP) Law, Human Rights Law, Criminal Law, Constitutional Law, Environment Law, Cyber Law/Technology Law, International Trade & Eco Law, Legal Studies",
       "duration_in_yrs": 5,
       "fees": {
         "year1": 110000,
