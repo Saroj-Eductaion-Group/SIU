@@ -33,6 +33,10 @@ const CoursePage = ({ universityData = { university: '', institutes: [] } }) => 
     phd: 'Ph.D',
     diploma: 'Diploma',
     llb: 'BA LLB',
+    llm: 'LLM',
+    ba: 'BA',
+    ma: 'MA',
+   
   };
 
   // Flatten all programs with institute info
