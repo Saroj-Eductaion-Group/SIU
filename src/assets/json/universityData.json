@@ -101,6 +101,18 @@
       }
     },
     {
+      "degree": "B.Com",
+      "mode": "Regular Mode",
+      "specializations": "General, Accounting, Finance, Business Studies",
+      "duration_in_yrs": 3,
+      "fees": {
+        "year1": 60000,
+        "year2": 60000,
+        "year3": 60000,
+        "total": 180000
+      }
+    },
+    {
       "degree": "B.Ed",
       "mode": "Regular Mode",
       "specializations": "Education",
@@ -123,6 +135,17 @@
       }
     },
     {
+      "degree": "M.Com",
+      "mode": "Regular Mode",
+      "specializations": "General, Accounting, Finance, Business Management",
+      "duration_in_yrs": 2,
+      "fees": {
+        "year1": 60000,
+        "year2": 60000,
+        "total": 120000
+      }
+    },
+    {
       "degree": "M.Ed",
       "mode": "Regular Mode",
       "specializations": "Education",
@@ -136,7 +159,7 @@
     {
       "degree": "Ph.D",
       "mode": "Regular Mode",
-      "specializations": "Humanities, Education, International Relations, Liberal Arts, History, Economics, Language, Political Science",
+      "specializations": "Humanities, Education, International Relations, Liberal Arts, History, Economics, Language, Political Science, Commerce",
       "duration_in_yrs": 5,
       "fees": {
         "year1": 110000,
@@ -149,17 +172,19 @@
     }
   ],
   "eligibility": {
-    "BA/BS/B.Com": {
+    "BA/B.Com": {
       "educational_qualifications": "Candidate must have passed the higher secondary examination (10+2) or its equivalent from a recognized board or institution.",
-      "minimum_marks_requirement": "Minimum 50% in 10+2 from a recognized school/institution."
+      "minimum_marks_requirement": "Minimum 50% in 10+2 from a recognized school/institution.",
+      "preferred_subjects": "For B.Com: Commerce/Mathematics/Economics in 10+2 preferred"
     },
     "B.Ed": {
       "educational_qualifications": "Bachelor's degree or its equivalent in any discipline from a recognized university or institution.",
       "minimum_marks_requirement": "Minimum aggregate score of 50% in Bachelor's degree."
     },
-    "MA/MS/M.Com": {
-      "educational_qualifications": "Bachelor's degree or its equivalent in any discipline from a recognized university or institution.",
-      "minimum_marks_requirement": "Minimum aggregate score of 50% in Bachelor's degree."
+    "MA/M.Com": {
+      "educational_qualifications": "Bachelor's degree or its equivalent in relevant discipline from a recognized university or institution.",
+      "minimum_marks_requirement": "Minimum aggregate score of 50% in Bachelor's degree.",
+      "specific_requirements": "For M.Com: Bachelor's degree in Commerce (B.Com) or related field preferred"
     },
     "M.Ed": {
       "educational_qualifications": "Bachelor's degree in Education (B.Ed.) or a related field from a recognized university or institution.",
