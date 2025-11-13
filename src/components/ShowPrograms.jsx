@@ -36,6 +36,9 @@ const CoursePage = ({ universityData = { university: '', institutes: [] } }) => 
     llm: 'LLM',
     ba: 'BA',
     ma: 'MA',
+    bcom: 'B.Com',
+    mcom: 'M.Com',
+   
   };
 
   // Flatten all programs with institute info
