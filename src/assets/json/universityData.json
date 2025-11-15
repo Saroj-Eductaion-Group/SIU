@@ -678,7 +678,8 @@
           "degree": "M.Pharm (Pharmacology)",
           "mode": "Regular Mode",
           "specializations": [
-            "Pharmacology"
+            "Pharmacology, Pharmaceutical Chemistry, Pharmaceutics, Pharmaceutical Analysis",
+            "Clinical Pharmacy, Pharmaceutical Biotechnology, Regulatory Affairs"
           ],
           "duration_in_yrs": 2,
           "fees": {
@@ -691,7 +692,8 @@
           "degree": "M.Pharm (Medical Chemistry)",
           "mode": "Regular Mode",
           "specializations": [
-            "Medical Chemistry"
+            "Pharmacology, Pharmaceutical Chemistry, Pharmaceutics, Pharmaceutical Analysis",
+            "Clinical Pharmacy, Pharmaceutical Biotechnology, Regulatory Affairs"
           ],
           "duration_in_yrs": 2,
           "fees": {
@@ -744,7 +746,10 @@
         {
           "degree": "M.Pharm (Pharmacology)",
           "mode": "Global Mode",
-          "specializations": ["Pharmacology"],
+          "specializations": [
+            "Pharmacology, Pharmaceutical Chemistry, Pharmaceutics, Pharmaceutical Analysis",
+            "Clinical Pharmacy, Pharmaceutical Biotechnology, Regulatory Affairs"
+          ],
           "duration_in_yrs": 2,
           "fees": {
             "year1": 150000,
@@ -755,7 +760,10 @@
         {
           "degree": "M.Pharm (Medical Chemistry)",
           "mode": "Global Mode",
-          "specializations": ["Medical Chemistry"],
+         "specializations": [
+            "Pharmacology, Pharmaceutical Chemistry, Pharmaceutics, Pharmaceutical Analysis",
+            "Clinical Pharmacy, Pharmaceutical Biotechnology, Regulatory Affairs"
+          ],
           "duration_in_yrs": 2,
           "fees": {
             "year1": 140000,
