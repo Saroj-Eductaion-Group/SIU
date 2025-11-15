@@ -17,27 +17,19 @@ const CoursePage = ({ universityData = { university: '', institutes: [] } }) => 
   const allInstitutes = [...new Set(universityData.institutes?.map(i => i.name) || [])];
   const allModes = [...new Set(universityData.institutes?.flatMap(i => i.programs?.map(p => p.mode)) || [])];
 
-  // Group degree types by category - UPDATED to include BSc and MSc
+  // Group degree types by category - UPDATED to combine related degrees
   const degreeCategories = {
     all: 'All Degrees',
-    btech: 'B.Tech',
-    mtech: 'M.Tech',
-    bca: 'BCA',
-    mca: 'MCA',
-    bsc: 'B.Sc', // Updated to match BSc
-    msc: 'M.Sc', // Updated to match MSc
-    bpharm: 'B.Pharm',
-    mpharm: 'M.Pharm',
-    bba: 'BBA',
-    mba: 'MBA',        
+    tech: 'B.Tech / M.Tech',
+    computers: 'BCA / MCA',
+    science: 'B.Sc / M.Sc',
+    pharma: 'B.Pharm / M.Pharm',
+    business: 'BBA / MBA',
+    arts: 'BA / MA',
+    commerce: 'B.Com / M.Com',
+    law: 'Law (LLB / LLM)',
     phd: 'Ph.D',
     diploma: 'Diploma',
-    llb: 'BA LLB',
-    llm: 'LLM',
-    ba: 'BA',
-    ma: 'MA',
-    bcom: 'B.Com',
-    mcom: 'M.Com',
   };
 
   // Flatten all programs with institute info
@@ -75,15 +67,15 @@ const CoursePage = ({ universityData = { university: '', institutes: [] } }) => 
     return matchesSearch && matchesFilters;
   });
 
-  // Filter by degree tab - FIXED BA and MA filtering
+  // Filter by degree tab - REFACTORED to use combined degree groups
   const filteredByDegree = filteredPrograms.filter(program => {
     if (activeDegreeTab === 'all') return true;
     if (!program?.degree) return false;
 
     const degreeLower = program.degree.toLowerCase().trim();
     
-    // Handle BA specifically - only show pure BA programs
-    if (activeDegreeTab === 'ba') {
+    // Handle BA / MA
+    if (activeDegreeTab === 'arts') {
       // Check for BA matches
       const isBA = 
         degreeLower === 'ba' ||
@@ -94,7 +86,7 @@ const CoursePage = ({ universityData = { university: '', institutes: [] } }) => 
         (degreeLower.includes('arts') && degreeLower.includes('bachelor'));
       
       // Exclude all non-BA programs
-      const isExcluded = 
+      const isBAExcluded = 
         degreeLower.includes('bba') ||
         degreeLower.includes('mba') ||
         degreeLower.includes('ba llb') ||
@@ -109,11 +101,8 @@ const CoursePage = ({ universityData = { university: '', institutes: [] } }) => 
         degreeLower.includes('bachelor of design') ||
         degreeLower.includes('bachelor of engineering');
       
-      return isBA && !isExcluded;
-    }
-    
-    // Handle MA specifically - only show pure MA programs
-    if (activeDegreeTab === 'ma') {
+      const isPureBA = isBA && !isBAExcluded;
+
       // Check for MA matches
       const isMA = 
         degreeLower === 'ma' ||
@@ -124,7 +113,7 @@ const CoursePage = ({ universityData = { university: '', institutes: [] } }) => 
         (degreeLower.includes('arts') && degreeLower.includes('master'));
       
       // Exclude all non-MA programs
-      const isExcluded = 
+      const isMAExcluded = 
         degreeLower.includes('mba') ||
         degreeLower.includes('llm') ||
         degreeLower.includes('master of business') ||
@@ -137,111 +126,85 @@ const CoursePage = ({ universityData = { university: '', institutes: [] } }) => 
         degreeLower.includes('master of design') ||
         degreeLower.includes('master of engineering');
       
-      return isMA && !isExcluded;
+      const isPureMA = isMA && !isMAExcluded;
+      
+      return isPureBA || isPureMA;
     }
     
-    // Handle BSc/B.Sc variations
-    if (activeDegreeTab === 'bsc') {
+    // Handle B.Sc / M.Sc
+    if (activeDegreeTab === 'science') {
       return degreeLower.includes('bsc') || 
              degreeLower.includes('b.sc') ||
-             degreeLower.includes('bachelor of science');
-    }
-    
-    // Handle MSc/M.Sc variations
-    if (activeDegreeTab === 'msc') {
-      return degreeLower.includes('msc') || 
+             degreeLower.includes('bachelor of science') ||
+             degreeLower.includes('msc') || 
              degreeLower.includes('m.sc') ||
              degreeLower.includes('master of science');
     }
     
-    // Handle PhD variations
+    // Handle PhD
     if (activeDegreeTab === 'phd') {
       return degreeLower.includes('ph.d') || 
              degreeLower.includes('phd') ||
              degreeLower.includes('doctor of philosophy');
     }
     
-    // Special handling for diploma to include D.Pharm and other diploma programs
+    // Handle Diploma
     if (activeDegreeTab === 'diploma') {
       return degreeLower.includes('diploma') || 
              degreeLower.includes('d.pharm');
     }
     
-    // Handle BA LLB specifically - only show law programs
-    if (activeDegreeTab === 'llb') {
+    // Handle Law (LLB / LLM)
+    if (activeDegreeTab === 'law') {
       return degreeLower.includes('ba llb') || 
              degreeLower.includes('llb') ||
-             degreeLower.includes('bachelor of law');
-    }
-    
-    // Handle LLM specifically - only show master of law
-    if (activeDegreeTab === 'llm') {
-      return degreeLower.includes('llm') || 
+             degreeLower.includes('bachelor of law') ||
+             degreeLower.includes('llm') || 
              degreeLower.includes('master of law');
     }
     
-    // Handle BBA specifically - only show business administration
-    if (activeDegreeTab === 'bba') {
+    // Handle BBA / MBA
+    if (activeDegreeTab === 'business') {
       return degreeLower.includes('bba') || 
-             degreeLower.includes('bachelor of business administration');
-    }
-    
-    // Handle MBA specifically - only show master of business administration
-    if (activeDegreeTab === 'mba') {
-      return degreeLower.includes('mba') || 
+             degreeLower.includes('bachelor of business administration') ||
+             degreeLower.includes('mba') || 
              degreeLower.includes('master of business administration');
     }
     
-    // Handle B.Com specifically
-    if (activeDegreeTab === 'bcom') {
+    // Handle B.Com / M.Com
+    if (activeDegreeTab === 'commerce') {
       return degreeLower.includes('b.com') || 
              degreeLower.includes('bcom') ||
-             degreeLower.includes('bachelor of commerce');
-    }
-    
-    // Handle M.Com specifically
-    if (activeDegreeTab === 'mcom') {
-      return degreeLower.includes('m.com') || 
+             degreeLower.includes('bachelor of commerce') ||
+             degreeLower.includes('m.com') || 
              degreeLower.includes('mcom') ||
              degreeLower.includes('master of commerce');
     }
     
-    // Handle B.Tech specifically
-    if (activeDegreeTab === 'btech') {
+    // Handle B.Tech / M.Tech
+    if (activeDegreeTab === 'tech') {
       return degreeLower.includes('b.tech') || 
              degreeLower.includes('btech') ||
-             degreeLower.includes('bachelor of technology');
-    }
-    
-    // Handle M.Tech specifically
-    if (activeDegreeTab === 'mtech') {
-      return degreeLower.includes('m.tech') || 
+             degreeLower.includes('bachelor of technology') ||
+             degreeLower.includes('m.tech') || 
              degreeLower.includes('mtech') ||
              degreeLower.includes('master of technology');
     }
     
-    // Handle BCA specifically
-    if (activeDegreeTab === 'bca') {
+    // Handle BCA / MCA
+    if (activeDegreeTab === 'computers') {
       return degreeLower.includes('bca') || 
-             degreeLower.includes('bachelor of computer application');
-    }
-    
-    // Handle MCA specifically
-    if (activeDegreeTab === 'mca') {
-      return degreeLower.includes('mca') || 
+             degreeLower.includes('bachelor of computer application') ||
+             degreeLower.includes('mca') || 
              degreeLower.includes('master of computer application');
     }
     
-    // Handle B.Pharm specifically
-    if (activeDegreeTab === 'bpharm') {
+    // Handle B.Pharm / M.Pharm
+    if (activeDegreeTab === 'pharma') {
       return degreeLower.includes('b.pharm') || 
              degreeLower.includes('bpharm') ||
-             degreeLower.includes('bachelor of pharmacy');
-    }
-    
-    // Handle M.Pharm specifically
-    if (activeDegreeTab === 'mpharm') {
-      return degreeLower.includes('m.pharm') || 
+             degreeLower.includes('bachelor of pharmacy') ||
+             degreeLower.includes('m.pharm') || 
              degreeLower.includes('mpharm') ||
              degreeLower.includes('master of pharmacy');
     }
@@ -508,17 +471,20 @@ const CoursePage = ({ universityData = { university: '', institutes: [] } }) => 
             )}
           </div>
 
-          {/* Degree Type Tabs */}
+          {/* Degree Type Tabs - UPDATED */}
           <div className="mb-4 overflow-x-auto">
             <div className="inline-flex rounded-md shadow-sm">
-              {Object.entries(degreeCategories).map(([key, label]) => (
+              {Object.entries(degreeCategories).map(([key, label], index, arr) => (
                 <button
                   key={key}
                   onClick={() => setActiveDegreeTab(key)}
-                  className={`px-4 py-2 text-sm font-medium rounded-md ${activeDegreeTab === key
-                    ? 'bg-blue-600 text-white'
-                    : 'bg-white text-gray-700 hover:bg-gray-50'
-                  } ${key === 'all' ? 'rounded-l-md' : ''} ${key === 'ma' ? 'rounded-r-md' : ''}`}
+                  className={`relative px-4 py-2 text-sm font-medium whitespace-nowrap border border-gray-200 ${
+                    activeDegreeTab === key
+                      ? 'bg-blue-600 text-white z-10'
+                      : 'bg-white text-gray-700 hover:bg-gray-50'
+                  } ${index === 0 ? 'rounded-l-md' : ''} ${
+                    index === arr.length - 1 ? 'rounded-r-md' : ''
+                  } ${index > 0 ? '-ml-px' : ''}`}
                 >
                   {label}
                 </button>
@@ -543,10 +509,13 @@ const CoursePage = ({ universityData = { university: '', institutes: [] } }) => 
                   <button
                     key={key}
                     onClick={() => setActiveCategoryTab(key)}
-                    className={`px-4 py-2 text-sm font-medium rounded-md ${activeCategoryTab === key
-                      ? 'bg-blue-600 text-white'
-                      : 'bg-white text-gray-700 hover:bg-gray-50'
-                    } ${key === 'all' ? 'rounded-l-md' : ''} ${key === 'doctorate' ? 'rounded-r-md' : ''}`}
+                    className={`px-4 py-2 text-sm font-medium rounded-md ${
+                      activeCategoryTab === key
+                        ? 'bg-blue-600 text-white'
+                        : 'bg-white text-gray-700 hover:bg-gray-50'
+                    } ${key === 'all' ? 'rounded-l-md' : ''} ${
+                      key === 'doctorate' ? 'rounded-r-md' : ''
+                    }`}
                   >
                     {label} ({tabGroups[key]?.length || 0})
                   </button>
@@ -588,10 +557,10 @@ const CoursePage = ({ universityData = { university: '', institutes: [] } }) => 
                               <div className="mt-2">
                                 <p className="text-gray-700">
                                   <span className="font-medium">Specializations:</span> 
-                                  <div className="mt-1">
-                                    {renderSpecializations(program.specializations)}
-                                  </div>
                                 </p>
+                                <div className="mt-1">
+                                  {renderSpecializations(program.specializations)}
+                                </div>
                               </div>
                               
                               <div className="mt-3 flex flex-wrap gap-2">
@@ -698,4 +667,4 @@ const CoursePage = ({ universityData = { university: '', institutes: [] } }) => 
   );
 };
 
-export default CoursePage;
+export default CoursePage;``
