@@ -28,6 +28,7 @@ const CoursePage = ({ universityData = { university: '', institutes: [] } }) => 
     arts: 'BA / MA',
     commerce: 'B.Com / M.Com',
     law: 'Law (LLB / LLM)',
+    education: 'B.Ed / M.Ed', // Added B.Ed / M.Ed tag
     phd: 'Ph.D',
     diploma: 'Diploma',
   };
@@ -99,7 +100,8 @@ const CoursePage = ({ universityData = { university: '', institutes: [] } }) => 
         degreeLower.includes('bachelor of computer') ||
         degreeLower.includes('bachelor of pharmacy') ||
         degreeLower.includes('bachelor of design') ||
-        degreeLower.includes('bachelor of engineering');
+        degreeLower.includes('bachelor of engineering') ||
+        degreeLower.includes('bachelor of education'); // Exclude B.Ed
       
       const isPureBA = isBA && !isBAExcluded;
 
@@ -124,7 +126,8 @@ const CoursePage = ({ universityData = { university: '', institutes: [] } }) => 
         degreeLower.includes('master of computer') ||
         degreeLower.includes('master of pharmacy') ||
         degreeLower.includes('master of design') ||
-        degreeLower.includes('master of engineering');
+        degreeLower.includes('master of engineering') ||
+        degreeLower.includes('master of education'); // Exclude M.Ed
       
       const isPureMA = isMA && !isMAExcluded;
       
@@ -133,80 +136,111 @@ const CoursePage = ({ universityData = { university: '', institutes: [] } }) => 
     
     // Handle B.Sc / M.Sc
     if (activeDegreeTab === 'science') {
-      return degreeLower.includes('bsc') || 
+      return (degreeLower.includes('bsc') || 
              degreeLower.includes('b.sc') ||
              degreeLower.includes('bachelor of science') ||
              degreeLower.includes('msc') || 
              degreeLower.includes('m.sc') ||
-             degreeLower.includes('master of science');
+             degreeLower.includes('master of science')) &&
+             !degreeLower.includes('pharm'); // Exclude pharmacy programs
     }
     
     // Handle PhD
     if (activeDegreeTab === 'phd') {
-      return degreeLower.includes('ph.d') || 
+      return (degreeLower.includes('ph.d') || 
              degreeLower.includes('phd') ||
-             degreeLower.includes('doctor of philosophy');
+             degreeLower.includes('doctor of philosophy')) &&
+             !degreeLower.includes('pharm'); // Exclude pharmacy programs
     }
     
     // Handle Diploma
     if (activeDegreeTab === 'diploma') {
-      return degreeLower.includes('diploma') || 
-             degreeLower.includes('d.pharm');
+      return (degreeLower.includes('diploma') || 
+             degreeLower.includes('d.pharm')) &&
+             !degreeLower.includes('b.ed') && // Exclude B.Ed
+             !degreeLower.includes('m.ed');   // Exclude M.Ed
     }
     
     // Handle Law (LLB / LLM)
     if (activeDegreeTab === 'law') {
-      return degreeLower.includes('ba llb') || 
+      return (degreeLower.includes('ba llb') || 
              degreeLower.includes('llb') ||
              degreeLower.includes('bachelor of law') ||
              degreeLower.includes('llm') || 
-             degreeLower.includes('master of law');
+             degreeLower.includes('master of law')) &&
+             !degreeLower.includes('pharm'); // Exclude pharmacy programs
     }
     
     // Handle BBA / MBA
     if (activeDegreeTab === 'business') {
-      return degreeLower.includes('bba') || 
+      return (degreeLower.includes('bba') || 
              degreeLower.includes('bachelor of business administration') ||
              degreeLower.includes('mba') || 
-             degreeLower.includes('master of business administration');
+             degreeLower.includes('master of business administration')) &&
+             !degreeLower.includes('pharm'); // Exclude pharmacy programs
     }
     
     // Handle B.Com / M.Com
     if (activeDegreeTab === 'commerce') {
-      return degreeLower.includes('b.com') || 
+      return (degreeLower.includes('b.com') || 
              degreeLower.includes('bcom') ||
              degreeLower.includes('bachelor of commerce') ||
              degreeLower.includes('m.com') || 
              degreeLower.includes('mcom') ||
-             degreeLower.includes('master of commerce');
+             degreeLower.includes('master of commerce')) &&
+             !degreeLower.includes('pharm'); // Exclude pharmacy programs
     }
     
     // Handle B.Tech / M.Tech
     if (activeDegreeTab === 'tech') {
-      return degreeLower.includes('b.tech') || 
+      return (degreeLower.includes('b.tech') || 
              degreeLower.includes('btech') ||
              degreeLower.includes('bachelor of technology') ||
              degreeLower.includes('m.tech') || 
              degreeLower.includes('mtech') ||
-             degreeLower.includes('master of technology');
+             degreeLower.includes('master of technology')) &&
+             !degreeLower.includes('pharm'); // Exclude pharmacy programs
     }
     
     // Handle BCA / MCA
     if (activeDegreeTab === 'computers') {
-      return degreeLower.includes('bca') || 
+      return (degreeLower.includes('bca') || 
              degreeLower.includes('bachelor of computer application') ||
              degreeLower.includes('mca') || 
-             degreeLower.includes('master of computer application');
+             degreeLower.includes('master of computer application')) &&
+             !degreeLower.includes('pharm'); // Exclude pharmacy programs
     }
     
     // Handle B.Pharm / M.Pharm
     if (activeDegreeTab === 'pharma') {
-      return degreeLower.includes('b.pharm') || 
+      return (degreeLower.includes('b.pharm') || 
              degreeLower.includes('bpharm') ||
              degreeLower.includes('bachelor of pharmacy') ||
              degreeLower.includes('m.pharm') || 
              degreeLower.includes('mpharm') ||
-             degreeLower.includes('master of pharmacy');
+             degreeLower.includes('master of pharmacy')) &&
+             !degreeLower.includes('b.ed') && // Exclude B.Ed
+             !degreeLower.includes('m.ed');   // Exclude M.Ed
+    }
+    
+    // Handle B.Ed / M.Ed - NEW EDUCATION CATEGORY with precise matching
+    if (activeDegreeTab === 'education') {
+      // More precise matching for education degrees
+      const isBEd = 
+        degreeLower === 'b.ed' ||
+        degreeLower === 'bed' ||
+        degreeLower === 'bachelor of education' ||
+        (degreeLower.startsWith('b.ed ') && !degreeLower.includes('pharm')) || // B.Ed but not pharmacy
+        (degreeLower.includes('bachelor') && degreeLower.includes('education') && !degreeLower.includes('pharm'));
+      
+      const isMEd = 
+        degreeLower === 'm.ed' ||
+        degreeLower === 'med' ||
+        degreeLower === 'master of education' ||
+        (degreeLower.startsWith('m.ed ') && !degreeLower.includes('pharm')) || // M.Ed but not pharmacy
+        (degreeLower.includes('master') && degreeLower.includes('education') && !degreeLower.includes('pharm'));
+      
+      return isBEd || isMEd;
     }
     
     return false;
@@ -225,7 +259,8 @@ const CoursePage = ({ universityData = { university: '', institutes: [] } }) => 
              degreeLower.includes('diploma') || 
              degreeLower.includes('d.pharm') || 
              (degreeLower.includes('ba ') && !degreeLower.includes('bba') && !degreeLower.includes('ba llb')) ||
-             degreeLower.includes('b.design')) &&
+             degreeLower.includes('b.design') ||
+             degreeLower.includes('b.ed')) && // Include B.Ed
              !degreeLower.includes('m.') &&
              !degreeLower.includes('master') &&
              !degreeLower.includes('phd') &&
@@ -244,7 +279,8 @@ const CoursePage = ({ universityData = { university: '', institutes: [] } }) => 
              degreeLower.includes('m.sc') || 
              degreeLower.includes('m.design') || 
              degreeLower.includes('llm') || 
-             degreeLower.includes('m.pharm')) &&
+             degreeLower.includes('m.pharm') ||
+             degreeLower.includes('m.ed')) && // Include M.Ed
              !degreeLower.includes('bachelor') &&
              !degreeLower.includes('b.');
     }),
@@ -471,7 +507,7 @@ const CoursePage = ({ universityData = { university: '', institutes: [] } }) => 
             )}
           </div>
 
-          {/* Degree Type Tabs - UPDATED */}
+          {/* Degree Type Tabs - UPDATED with B.Ed / M.Ed */}
           <div className="mb-4 overflow-x-auto">
             <div className="inline-flex rounded-md shadow-sm">
               {Object.entries(degreeCategories).map(([key, label], index, arr) => (
@@ -667,4 +703,4 @@ const CoursePage = ({ universityData = { university: '', institutes: [] } }) => 
   );
 };
 
-export default CoursePage;``
+export default CoursePage;
