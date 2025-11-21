@@ -614,8 +614,8 @@
           "educational_qualifications": "Candidates are required to have completed a master's degree in the relevant field (Physics, Chemistry, Mathematics, or Biology) or a closely related discipline from a recognized university or educational institution.",
           "minimum_marks_requirement": "Candidates are required to have a minimum percentage of 55% in their Master's Degree"
         },
-        "Diploma (Public Health)": {
-          "educational_qualifications": "Candidates must have completed their higher secondary education (10+2) or its equivalent from a recognized educational board. They should have studied Physics, Chemistry, and Biology as core subjects in their 10+2 curriculum.",
+        "Diploma": {
+          "educational_qualifications": "Candidates should have completed 10th standard (SSC) or its equivalent examination from a recognized board or institution.",
           "minimum_marks_requirement": "Candidates are required to have a minimum percentage of 50% in the Higher Secondary Examination."
         },
         "M.Sc (Physics, Chemistry, Mathematics)": {
@@ -804,7 +804,7 @@
           "selection_process": "After meeting the eligibility criteria, candidates may be required to undergo a selection process, which may include a combination of entrance exam scores, academic performance, and possibly personal interviews or counselling sessions."
         },
         "D.Pharm": {
-          "educational_qualifications": "Candidates should have completed their higher secondary education (10+2) or equivalent with a science stream (Physics, Chemistry, and Biology, Mathematics).",
+          "educational_qualifications": "Candidates should have completed 10th standard (SSC) or its equivalent examination from a recognized board or institution.",
           "minimum_marks_requirement": "Candidates are required to have a minimum percentage of 50% in the Higher Secondary Examination.",
           "selection_process": "After meeting the eligibility criteria, candidates may be required to undergo a selection process, which may include a combination of entrance exam scores, academic performance, and possibly personal interviews or counselling sessions."
         },
@@ -1127,8 +1127,8 @@
           "educational_qualifications": "Applicants should have completed a bachelor's degree or its equivalent in any discipline from a recognized university or institution.",
           "minimum_marks_requirement": "Candidates should have a minimum aggregate score of 50% in their Bachelor's degree."
         },
-        "Diploma Courses": {
-          "educational_qualifications": "Applicants should have successfully completed their higher secondary education (12th grade) from a recognized board or institution.",
+        "Diploma": {
+      "educational_qualifications": "Candidates should have completed 10th standard (SSC) or its equivalent examination from a recognized board or institution.",
           "minimum_marks_requirement": "Candidates are required to have a minimum percentage of 50% in the Higher Secondary Examination."
         },
         "Ph.D": {
