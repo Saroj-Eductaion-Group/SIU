@@ -616,7 +616,7 @@
         },
         "Diploma": {
           "educational_qualifications": "Candidates should have completed 10th standard (SSC) or its equivalent examination from a recognized board or institution.",
-          "minimum_marks_requirement": "Candidates are required to have a minimum percentage of 50% in the Higher Secondary Examination."
+          "minimum_marks_requirement": "Candidates are required to have a minimum percentage of 50% in the SSC Examination."
         },
         "M.Sc (Physics, Chemistry, Mathematics)": {
           "educational_qualifications": "Candidates should have a Bachelor's degree in Science with a major in the respective subject (Physics, Chemistry, or Mathematics) or a related field from a recognized university.",
@@ -805,7 +805,7 @@
         },
         "D.Pharm": {
           "educational_qualifications": "Candidates should have completed 10th standard (SSC) or its equivalent examination from a recognized board or institution.",
-          "minimum_marks_requirement": "Candidates are required to have a minimum percentage of 50% in the Higher Secondary Examination.",
+          "minimum_marks_requirement": "Candidates are required to have a minimum percentage of 50% in the SSC Examination.",
           "selection_process": "After meeting the eligibility criteria, candidates may be required to undergo a selection process, which may include a combination of entrance exam scores, academic performance, and possibly personal interviews or counselling sessions."
         },
         "M.Pharm": {
@@ -1129,7 +1129,7 @@
         },
         "Diploma": {
       "educational_qualifications": "Candidates should have completed 10th standard (SSC) or its equivalent examination from a recognized board or institution.",
-          "minimum_marks_requirement": "Candidates are required to have a minimum percentage of 50% in the Higher Secondary Examination."
+          "minimum_marks_requirement": "Candidates are required to have a minimum percentage of 50% in the SSC Examination."
         },
         "Ph.D": {
           "educational_qualifications": "Master's degree in relevant field from a recognized university or institution.",
