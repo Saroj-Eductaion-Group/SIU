@@ -55,20 +55,20 @@ const SarojInstituteOfLaw = () => {
         disclaimer: "*Excluding examination and miscellaneous charges.",
       }
     },
-    {
-      icon: <FaGraduationCap className="text-4xl mb-4 text-blue-600" />,
-      title: "LLB (3-Year Program)",
-      description: "3-year bachelor of law degree with multiple specializations.",
-      features: ["Multiple specializations", "Regular mode", "Industry-oriented curriculum"],
-      eligibility: [
-        "Graduation in any discipline from a recognized university",
-        "Minimum marks as per university norms"
-      ],
-      fee: {
-        annual: "₹75,000",
-        disclaimer: "*Excluding examination and miscellaneous charges.",
-      }
-    },
+    // {
+    //   icon: <FaGraduationCap className="text-4xl mb-4 text-blue-600" />,
+    //   title: "LLB (3-Year Program)",
+    //   description: "3-year bachelor of law degree with multiple specializations.",
+    //   features: ["Multiple specializations", "Regular mode", "Industry-oriented curriculum"],
+    //   eligibility: [
+    //     "Graduation in any discipline from a recognized university",
+    //     "Minimum marks as per university norms"
+    //   ],
+    //   fee: {
+    //     annual: "₹75,000",
+    //     disclaimer: "*Excluding examination and miscellaneous charges.",
+    //   }
+    // },
     {
       icon: <FaGraduationCap className="text-4xl mb-4 text-blue-600" />,
       title: "LLM Program",
