@@ -487,10 +487,10 @@
           "specializations": "Physics, Chemistry, Mathematics & Biology",
           "duration_in_yrs": 3,
           "fees": {
-            "year1": 100000,
-            "year2": 100000,
-            "year3": 100000,
-            "total": 300000
+            "year1": 110000,
+            "year2": 110000,
+            "year3": 110000,
+            "total": 330000
           }
         },
         {
@@ -499,10 +499,10 @@
           "specializations": "Data Analytics",
           "duration_in_yrs": 3,
           "fees": {
-            "year1": 100000,
-            "year2": 100000,
-            "year3": 100000,
-            "total": 300000
+            "year1": 110000,
+            "year2": 110000,
+            "year3": 110000,
+            "total": 330000
           }
         },
         {
