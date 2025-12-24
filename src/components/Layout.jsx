@@ -16,7 +16,7 @@ function Layout({children}){
             <HeaderCTA />
             <TopNav/>
             <Header  />
-            <ScholarshipPopup />
+            {/* <ScholarshipPopup /> */}
             <FloatingSocialMediaIcons />
             <div className="flex-1 overflow-hidden ">
                 {children}

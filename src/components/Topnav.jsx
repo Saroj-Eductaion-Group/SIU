@@ -63,7 +63,7 @@ href='/fee-payment'            target="_blank"
           >
             Pay Fees Online
           </a>
-            <SearchBar />
+           
 
           </div>
 
