@@ -33,7 +33,9 @@ const SIUFeeStructure = () => {
           degree: "M.Tech",
           specializations: "Artificial Intelligence & Machine Learning, Data Science, Robotics, Computer Science & Engineering",
           fees: { year1: 125000, year2: 125000, total: 250000 }
-        }
+        },
+        { degree: "Ph.D", specializations: "Artificial Intelligence & Machine Learning, Data Science, Robotics, Computer Science & Engineering", fees: { year1: 110000, year2: 110000, year3: 110000, total: 330000 } }
+
       ]
     },
     {
@@ -44,7 +46,10 @@ const SIUFeeStructure = () => {
         { degree: "M.Tech", specializations: "CSE, IT, Cyber Security, IOT, EC, ME, Civil, Mechatronics, Bio-Tech, Electrical Engg", fees: { year1: 125000, year2: 125000, total: 250000 } },
         { degree: "BCA", specializations: "AI, ML, Cyber Security", fees: { year1: 100000, year2: 100000, year3: 100000, total: 300000 } },
         { degree: "MCA", specializations: "AI, ML, Cyber Security", fees: { year1: 120000, year2: 120000, total: 240000 } },
-        { degree: "Diploma Engg.", specializations: "All fields", fees: { year1: 60000, year2: 60000, year3: 60000, total: 180000 } }
+        { degree: "Diploma Engg.", specializations: "All fields", fees: { year1: 60000, year2: 60000, year3: 60000, total: 180000 } },
+        { degree: "Ph.D", specializations: "Computer Science, Information Technology, Engineering, Management", fees: { year1: 110000, year2: 110000, year3: 110000, total: 330000 } }
+
+      
       ]
     },
     {
@@ -56,7 +61,11 @@ const SIUFeeStructure = () => {
         { degree: "M.Sc", specializations: "Physics, Biology, Chemistry, Mathematics", fees: { year1: 80000, year2: 80000, total: 160000 } },
         { degree: "MS", specializations: "Data Sciences, Physiotherapy, Forensic Science, Radiology & Imaging, Medical Lab Technology", fees: { year1: 80000, year2: 80000, total: 160000 } },
         { degree: "Diploma", specializations: "Public Health", fees: { year1: 60000, total: 60000 } },
-        { degree: "Ph.D", specializations: "All disciplines", fees: { year1: 100000, year2: 100000, year3: 100000, total: 300000 } }
+        { degree: "Ph.D", specializations: "Physics, Chemistry, Mathematics & Biology", fees: { year1: 110000, year2: 110000, year3: 110000, total: 330000 } },
+        { degree: "Ph.D", specializations: "Data Analytics", fees: { year1: 110000, year2: 110000, year3: 110000, total: 330000 } },
+        { degree: "Ph.D", specializations: "Basic Sciences, Health Sciences", fees: { year1: 110000, year2: 110000, year3: 110000, total: 330000 } },
+
+  
       ]
     },
     {
@@ -66,15 +75,18 @@ const SIUFeeStructure = () => {
         { degree: "B.Pharm", specializations: "Pharmacology, Pharmaceutical Chemistry, Pharmaceutics, Pharmaceutical Analysis, Clinical Pharmacy, Pharmaceutical Biotechnology, Regulatory Affairs", fees: { year1: 100000, year2: 100000, year3: 100000, year4: 100000, total: 400000 } },
         { degree: "D.Pharm", specializations: "General Diploma in Pharmacy", fees: { year1: 100000, year2: 100000, total: 200000 } },
         { degree: "M.Pharm", specializations: "Pharmacology", fees: { year1: 100000, year2: 100000, total: 200000 } },
-        { degree: "M.Pharm", specializations: "Medical Chemistry", fees: { year1: 100000, year2: 100000, total: 200000 } }
-      ]
+        { degree: "M.Pharm", specializations: "Medical Chemistry", fees: { year1: 100000, year2: 100000, total: 200000 } },
+        { degree: "Ph.D", specializations: "Pharmaceutical Sciences", fees: { year1: 110000, year2: 110000, year3: 110000, total: 330000 } }
+  ]
     },
     {
       name: "Saroj Institute of Sports Science & Research",
       domain: "Sports Science & Research",
       programs: [
         { degree: "BS", specializations: "Sports Management, Applied Sports Psychology, Sports Nutritionist, Sports Coaching & Fitness", fees: { year1: 90000, year2: 90000, year3: 90000, total: 270000 } },
-        { degree: "MS", specializations: "Sports Management, Applied Sports Psychology, Sports Nutritionist, Sports Coaching & Fitness", fees: { year1: 90000, year2: 90000, total: 180000 } }
+        { degree: "MS", specializations: "Sports Management, Applied Sports Psychology, Sports Nutritionist, Sports Coaching & Fitness", fees: { year1: 90000, year2: 90000, total: 180000 } },
+        { degree: "Ph.D", specializations: "Sports Science, Sports Management, Sports Psychology", fees: { year1: 110000, year2: 110000, year3: 110000, total: 330000 } }
+
       ]
     },
     {
@@ -87,7 +99,9 @@ const SIUFeeStructure = () => {
         { degree: "M.Design", specializations: "Fashion Design, Visual Communication Design, Animation & Game Design", fees: { year1: 100000, year2: 100000, total: 200000 } },
         { degree: "M.Sc", specializations: "Film Making, Script Writing, Cinematography", fees: { year1: 100000, year2: 100000, total: 200000 } },
         { degree: "MA", specializations: "Acting & Drama, Advertising, Journalism, PR Events", fees: { year1: 100000, year2: 100000, total: 200000 } },
-        { degree: "Diploma", specializations: "Film/Drama/Media", fees: { year1: 100000, total: 100000 } }
+        { degree: "Diploma", specializations: "Film/Drama/Media", fees: { year1: 100000, total: 100000 } },
+        { degree: "Ph.D", specializations: "Film Studies, Fashion Design, Media & Communication", fees: { year1: 110000, year2: 110000, year3: 110000, total: 330000 } }
+
       ]
     },
     {
@@ -113,7 +127,9 @@ const SIUFeeStructure = () => {
           degree: "M.Ed",
           specializations: "Education",
           fees: { year1: 60000, year2: 60000, total: 120000 },
-        }
+        },
+        { degree: "Ph.D", specializations: "Humanities, Education, International Relations, Liberal Arts, History, Economics, Language, Political Science, Commerce", fees: { year1: 110000, year2: 110000, year3: 110000, total: 330000 } }
+
       ]
     },
     {
@@ -129,8 +145,93 @@ const SIUFeeStructure = () => {
           degree: "MBA",
           specializations: "General Business Administration",
           fees: { year1: 120000, year2: 120000, total: 240000 }
-        }
+        },
+         { degree: "Ph.D", specializations: "All disciplines", fees: { year1: 110000, year2: 110000, year3: 110000, total: 330000 } }
+
       ]
+    },
+     {
+        "name": "Saroj Institute of Law",
+        "domain": "Law",
+        "programs": [
+            {
+                "degree": "BA LLB",
+                "specializations": "Corporate Law, Intellectual Property (IP) Law, Human Rights Law, Criminal Law, Constitutional Law, Environment Law, Cyber Law/Technology Law, International Trade & Eco Law",
+                "fees": {
+                    "year1": 75000,
+                    "year2": 75000,
+                    "year3": 75000,
+                    "year4": 75000,
+                    "year5": 75000,
+                    "total": 375000
+                }
+            },
+            {
+                "degree": "LLB",
+                "specializations": "Corporate Law, Intellectual Property (IP) Law, Human Rights Law, Criminal Law, Constitutional Law, Environment Law, Cyber Law/Technology Law, International Trade & Eco Law",
+                "fees": {
+                    "year1": 75000,
+                    "year2": 75000,
+                    "year3": 75000,
+                    "total": 225000
+                }
+            },
+            {
+                "degree": "LLM",
+                "specializations": "Corporate Law, Intellectual Property (IP) Law, Human Rights Law, Criminal Law, Constitutional Law, Environment Law, Cyber Law/Technology Law, International Trade & Eco Law",
+                "fees": {
+                    "year1": 90000,
+                    "year2": 90000,
+                    "total": 180000
+                }
+            },
+            {
+                "degree": "Ph.D",
+                "specializations": "Corporate Law, Intellectual Property (IP) Law, Human Rights Law, Criminal Law, Constitutional Law, Environment Law, Cyber Law/Technology Law, International Trade & Eco Law, Legal Studies",
+                "fees": {
+                    "year1": 110000,
+                    "year2": 110000,
+                    "year3": 110000,
+                    "total": 330000
+                }
+            }
+        ]
+    },
+    {
+        "name": "Saroj Institute of Agriculture Science",
+        "domain": "Agriculture",
+        "programs": [
+            {
+                "degree": "B.Sc",
+                "specializations": "Agriculture",
+                "fees": {
+                    "year1": 35000,
+                    "year2": 35000,
+                    "year3": 35000,
+                    "year4": 35000,
+                    "total": 140000
+                }
+            },
+            {
+                "degree": "M.Sc",
+                "specializations": "Agriculture",
+                "fees": {
+                    "year1": 35000,
+                    "year2": 35000,
+                    "total": 70000
+                }
+            },
+            {
+                "degree": "Ph.D",
+                "specializations": "Agriculture",
+                "fees": {
+                    "year1": 110000,
+                    "year2": 110000,
+                    "year3": 110000,
+                    "total": 330000
+                }
+            }
+        ]
     }
   ], []);
 
@@ -237,7 +338,10 @@ const SIUFeeStructure = () => {
           note: "Global mode details not specified in document",
         }
       ]
-    }
+    },
+    
+  
+
   ], []);
 
   // State for search and filter controls
