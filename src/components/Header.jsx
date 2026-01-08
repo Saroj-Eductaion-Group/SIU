@@ -76,6 +76,7 @@ const navItems = [
           { title: "Academic Calendar", path: "/academics/academic-calendar" },
           { title: "Statutes", path: "/academics/statutes" },
           { title: "Faculty", path: "/academics/faculty" },
+           { title: "Research", path: "/academics/research" },
         ],
       },
     ],

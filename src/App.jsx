@@ -59,6 +59,7 @@ import AcademicCalendar from "./pages/Academics/AcademicCalendar";
 import Statutes from "./pages/Academics/Statutes";
 import AnnualReport from "./pages/Academics/AnnualReport";
 
+
 // Legal
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsAndConditions from "./pages/TermsConditions";
@@ -102,6 +103,7 @@ import CryptographyPage from "./pages/tcs/Cryptography";
 import FeePaymentPage from "./pages/FeePaymentPage";
 import OrientationPage from "./pages/Admission/OrientationPage";
 import InstituteAgriculture from "./pages/InstitutePages/Agriculture";
+import Research from "./pages/ResearchPage";
 
 function App() {
   return (
@@ -190,6 +192,9 @@ function App() {
       <Route path='/academics/academic-calendar' element={<AcademicCalendar />} />
       <Route path='/academics/statutes' element={<Statutes />} />
       <Route path='/academics/faculty' element={<Faculty />} />
+      <Route path='/academics/research' element={<Research />} />
+
+
 
       {/* Admissions */}
 
