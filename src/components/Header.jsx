@@ -46,7 +46,7 @@ const navItems = [
   },
   {
     title: "Programs",
-    // path: "/programs",
+    path: "/programs",
     megaMenu: true,
     columns: programsData.columns,
   },
