@@ -168,7 +168,12 @@
         }
       ],
       "eligibility": {
-        "BA/B.Com": {
+        "BA": {
+          "educational_qualifications": "Candidate must have passed the higher secondary examination (10+2) or its equivalent from a recognized board or institution.",
+          "minimum_marks_requirement": "Minimum 50% in 10+2 from a recognized school/institution.",
+          "preferred_subjects": "For B.Com: Commerce/Mathematics/Economics in 10+2 preferred"
+        },
+        "B.Com": {
           "educational_qualifications": "Candidate must have passed the higher secondary examination (10+2) or its equivalent from a recognized board or institution.",
           "minimum_marks_requirement": "Minimum 50% in 10+2 from a recognized school/institution.",
           "preferred_subjects": "For B.Com: Commerce/Mathematics/Economics in 10+2 preferred"
@@ -177,7 +182,12 @@
           "educational_qualifications": "Bachelor's degree or its equivalent in any discipline from a recognized university or institution.",
           "minimum_marks_requirement": "Minimum aggregate score of 50% in Bachelor's degree."
         },
-        "MA/M.Com": {
+        "MA": {
+          "educational_qualifications": "Bachelor's degree or its equivalent in relevant discipline from a recognized university or institution.",
+          "minimum_marks_requirement": "Minimum aggregate score of 50% in Bachelor's degree.",
+          "specific_requirements": "For M.Com: Bachelor's degree in Commerce (B.Com) or related field preferred"
+        },
+        "M.Com": {
           "educational_qualifications": "Bachelor's degree or its equivalent in relevant discipline from a recognized university or institution.",
           "minimum_marks_requirement": "Minimum aggregate score of 50% in Bachelor's degree.",
           "specific_requirements": "For M.Com: Bachelor's degree in Commerce (B.Com) or related field preferred"
@@ -349,7 +359,18 @@
           }
         },
         {
-          "degree": "M.Tech / MCA",
+          "degree": "M.Tech",
+          "mode": "Global Mode",
+          "specializations": "CSE, IT, Data Science, Cyber Security, IOT, EC, ME, Civil, Mechatronics, Bio-Tech, Electrical Engg, Environmental Engg, BioTech, Agricultural Engg",
+          "duration_in_yrs": 2,
+          "fees": {
+            "year1": 150000,
+            "year2": 150000,
+            "total": 300000
+          }
+        },
+        {
+          "degree": "MCA",
           "mode": "Global Mode",
           "specializations": "CSE, IT, Data Science, Cyber Security, IOT, EC, ME, Civil, Mechatronics, Bio-Tech, Electrical Engg, Environmental Engg, BioTech, Agricultural Engg",
           "duration_in_yrs": 2,
@@ -589,19 +610,19 @@
         }
       ],
       "eligibility": {
-        "B.Sc (Physics, Chemistry, Mathematics)": {
+        "B.Sc": {
           "educational_qualifications": "Candidates must have completed their higher secondary education (10+2) or its equivalent from a recognized educational board. They should have studied Physics, Chemistry, and Mathematics as core subjects in their 10+2 curriculum.",
           "minimum_marks_requirement": "Candidates are required to have a minimum percentage of 50% in the Higher Secondary Examination."
         },
-        "BS (Data Analytics)": {
+        "BS": {
           "educational_qualifications": "Applicants should have successfully completed their higher secondary education (12th grade) from a recognized board or institution.",
           "minimum_marks_requirement": "Candidates are required to have a minimum percentage of 50% in the Higher Secondary Examination."
         },
-        "BS (Physiotherapy, Forensic Science, Radiology & Imaging, Lab Technology)": {
+        "BS": {
           "educational_qualifications": "Candidates must have completed their higher secondary education (10+2) or its equivalent from a recognized educational board. They should have studied Physics, Chemistry, and Biology as core subjects in their 10+2 curriculum.",
           "minimum_marks_requirement": "Candidates are required to have a minimum percentage of 50% in the Higher Secondary Examination."
         },
-        "Ph.D (Physics, Chemistry, Biology, Mathematics)": {
+        "Ph.D": {
           "educational_qualifications": "Candidates are required to have completed a master's degree in the relevant field (Physics, Chemistry, Mathematics, or Biology) or a closely related discipline from a recognized university or educational institution.",
           "minimum_marks_requirement": "Candidates are required to have a minimum percentage of 55% in their Master's Degree"
         },
@@ -609,19 +630,19 @@
           "educational_qualifications": "Candidates should have completed 10th standard (SSC) or its equivalent examination from a recognized board or institution.",
           "minimum_marks_requirement": "Candidates are required to have a minimum percentage of 50% in the SSC Examination."
         },
-        "M.Sc (Physics, Chemistry, Mathematics)": {
+        "M.Sc": {
           "educational_qualifications": "Candidates should have a Bachelor's degree in Science with a major in the respective subject (Physics, Chemistry, or Mathematics) or a related field from a recognized university.",
           "minimum_marks_requirement": "Candidates should have a minimum aggregate score of 50% in their Bachelor's degree."
         },
-        "MS (Data Analytics)": {
+        "MS": {
           "educational_qualifications": "Bachelor's degree in a relevant field such as Computer Science, Statistics, Mathematics, Engineering, Economics, or a related discipline is required.",
           "minimum_marks_requirement": "Candidates should have a minimum aggregate score of 50% in their Bachelor's degree."
         },
-        "MS (Physiotherapy, Forensic Science, Radiology & Imaging, Lab Technology)": {
+        "MS": {
           "educational_qualifications": "Candidates should have a Bachelor's degree in Science with a major in the respective subject or a related field from a recognized university.",
           "minimum_marks_requirement": "Candidates should have a minimum aggregate score of 50% in their Bachelor's degree."
         },
-        "Ph.D (Data Analytics)": {
+        "Ph.D": {
           "educational_qualifications": "Candidates should have completed a Master's degree in a relevant field such as Computer Science, Statistics, Mathematics, Engineering, Economics, or a related discipline from a recognized institution.",
           "minimum_marks_requirement": "Candidates are required to have a minimum percentage of 55% in their Master's Degree."
         },
@@ -884,12 +905,12 @@
         }
       ],
       "eligibility": {
-        "BS (Sports Science)": {
+        "BS": {
           "educational_qualifications": "Applicants should have successfully completed their higher secondary education (12th grade) from a recognized board or institution.",
           "minimum_marks_requirement": "Candidates are required to have a minimum percentage of 50% in the Higher Secondary Examination.",
           "selection_process": "After meeting the eligibility criteria, candidates may be required to undergo a selection process, which may include a combination of entrance exam scores, academic performance, and possibly personal interviews or counselling sessions."
         },
-        "MS (Sports Science)": {
+        "MS": {
           "educational_qualifications": "Applicants should have completed a bachelor's degree or its equivalent in any discipline from a recognized university or institution.",
           "minimum_marks_requirement": "Candidates should have a minimum aggregate score of 50% in their Bachelor's degree.",
           "selection_process": "After meeting the eligibility criteria, candidates may be required to undergo a selection process, which may include a combination of entrance exam scores, academic performance, and possibly personal interviews or counselling sessions."
@@ -1091,11 +1112,11 @@
           "educational_qualifications": "Applicants should have successfully completed their higher secondary education (12th grade) from a recognized board or institution.",
           "minimum_marks_requirement": "Candidates are required to have a minimum percentage of 50% in the Higher Secondary Examination."
         },
-        "B.Sc (Film Making, Script Writing, Cinematography)": {
+        "B.Sc": {
           "educational_qualifications": "Applicants should have successfully completed their higher secondary education (12th grade) from a recognized board or institution.",
           "minimum_marks_requirement": "Candidates are required to have a minimum percentage of 50% in the Higher Secondary Examination."
         },
-        "BA (Acting & Drama, Advertising, Journalism, PR Events)": {
+        "BA": {
           "educational_qualifications": "Applicants should have successfully completed their higher secondary education (12th grade) from a recognized board or institution.",
           "minimum_marks_requirement": "Candidates are required to have a minimum percentage of 50% in the Higher Secondary Examination."
         },
@@ -1103,11 +1124,11 @@
           "educational_qualifications": "Applicants should have completed a bachelor's degree or its equivalent in any discipline from a recognized university or institution.",
           "minimum_marks_requirement": "Candidates should have a minimum aggregate score of 50% in their Bachelor's degree."
         },
-        "M.Sc (Film Making, Script Writing, Cinematography)": {
+        "M.Sc": {
           "educational_qualifications": "Applicants should have completed a bachelor's degree or its equivalent in any discipline from a recognized university or institution.",
           "minimum_marks_requirement": "Candidates should have a minimum aggregate score of 50% in their Bachelor's degree."
         },
-        "MA (Acting & Drama, Advertising, Journalism, PR Events)": {
+        "MA": {
           "educational_qualifications": "Applicants should have completed a bachelor's degree or its equivalent in any discipline from a recognized university or institution.",
           "minimum_marks_requirement": "Candidates should have a minimum aggregate score of 50% in their Bachelor's degree."
         },

@@ -31,6 +31,7 @@ const CoursePage = ({ universityData = { university: '', institutes: [] } }) => 
     education: 'B.Ed / M.Ed', // Added B.Ed / M.Ed tag
     phd: 'Ph.D',
     diploma: 'Diploma',
+    bs_ms: 'BS / MS',
   };
 
   // Flatten all programs with institute info
@@ -74,6 +75,20 @@ const CoursePage = ({ universityData = { university: '', institutes: [] } }) => 
     if (!program?.degree) return false;
 
     const degreeLower = program.degree.toLowerCase().trim();
+
+    if (activeDegreeTab === 'bs_ms') {
+  return (degreeLower === 'bs' ||
+         degreeLower === 'b.s' ||
+         degreeLower === 'b.s.' ||
+         degreeLower.startsWith('bs ') ||
+         degreeLower.includes('bachelor of science') ||
+         degreeLower === 'ms' ||
+         degreeLower === 'm.s' ||
+         degreeLower === 'm.s.' ||
+         degreeLower.startsWith('ms ') ||
+         degreeLower.includes('master of science')) &&
+         !degreeLower.includes('pharm'); // Exclude pharmacy programs
+}
     
     // Handle BA / MA
     if (activeDegreeTab === 'arts') {
