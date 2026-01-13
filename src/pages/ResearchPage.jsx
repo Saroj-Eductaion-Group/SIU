@@ -1,85 +1,142 @@
 import React from 'react';
-import { GraduationCap, BookOpenCheck } from 'lucide-react';
+import Layout from '../components/Layout';
 
-const researchPapers = [
-  {
-    author: "Dr. Neeraj Kumar Dixit",
-    title: "Design in-silico multi-pathogenic vaccine of dengue and zika viruses using envelope protein",
-    journal: "International Journal of Pharmaceutical Sciences and Research",
-    year: 2022,
-  },
-  {
-    author: "Dr. Neeraj Kumar Dixit",
-    title: "Design of Epitope- based vaccine for Dengue virus using Immunoinformatic approach",
-    journal: "International Journal on Life Science and Bioengineering",
-    year: 2018,
-  },
-  {
-    author: "Dr. Neeraj Kumar Dixit",
-    title: "Using an immunoinformatic approach, identification of B-cell envelope proteome for multipathogenic dengue and Zika viruses",
-    journal: "International Journal of Pharmaceutical Sciences and Research",
-    year: 2022,
-  },
+const Research = () => {
+  // PDF data - now pointing to files in public/pdfs/
+  const pdfDocuments = [
+    {
+      id: 1,
+      title: 'Ordinance',
+      description: 'Academic regulations and guidelines document',
+      fileName: 'ordinance.pdf',
+      filePath: '/pdfs/Ph.D-Ordinance.pdf',
+      fileSize: '2.4 MB'
+    },
+    {
+      id: 2,
+      title: 'Entrance Schedule',
+      description: 'Entrance examination dates and timelines',
+      fileName: 'entrance-schedule.pdf',
+      filePath: '/pdfs/Ph.D-entrance-schedule.pdf',
+      fileSize: '1.8 MB'
+    },
+    {
+      id: 3,
+      title: 'Course Work Schedule',
+      description: 'Academic calendar and coursework timeline',
+      fileName: 'course-work-schedule.pdf',
+      filePath: '/pdfs/course-work-schedule.pdf',
+      fileSize: '3.1 MB'
+    }
+  ];
 
+  // Function to handle PDF view (opens in new tab)
+  const handleViewPDF = (pdfPath, pdfName) => {
+    // Open PDF in new tab
+    window.open(pdfPath, '_blank');
+    console.log(`Opening PDF: ${pdfName}`);
+  };
 
-];
-
-export default function Research() {
   return (
-    <div className="bg-blue-50 bg-opacity-70 py-8 sm:py-20"> {/* Changed background to blue-50 and adjusted padding */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"> {/* Adjusted padding */}
-
-        {/* Page Heading */}
-        <h1 className="text-center text-2xl sm:text-5xl font-extrabold text-gray-900 mb-6 sm:mb-8 relative pb-2">
-          <span className="">UNIVERSITY <span className="text-blue-500">RESEARCH</span></span> {/* Blue theme for heading */}
-        </h1>
-        <p className="mt-1 max-w-xl mx-auto text-xl text-gray-600 text-center mb-14"> {/* Centered paragraph */}
-          Explore pioneering research from Saroj International University's faculty, contributing to scientific advancement globally.
-        </p>
-
-        <div className="grid md:grid-cols-2 gap-8 mb-10">
-          {/* Expert Faculty Card */}
-          <div className="flex items-center space-x-4 bg-white p-6 rounded-lg shadow-md"> {/* Added bg-white, padding, rounded, shadow */}
-            <GraduationCap className="h-10 w-10 text-blue-600" /> {/* Blue icon color */}
-            <div>
-              <h3 className="text-xl font-bold text-gray-900">EXPERT FACULTY</h3> {/* Uppercase and bold */}
-              <p className="text-gray-700 text-base">Led by experienced researchers across global journals.</p> {/* Adjusted text color */}
-            </div>
+    <Layout>
+      <div className="min-h-screen bg-gray-50 p-4 md:p-8">
+        <div className="max-w-7xl mx-auto">
+          {/* Header */}
+          <div className="mb-8 md:mb-12">
+            <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-3">
+              Research Documents
+            </h1>
+            <p className="text-gray-600 md:text-lg">
+              Access important academic documents and schedules
+            </p>
           </div>
-          {/* Published Work Card */}
-          <div className="flex items-center space-x-4 bg-white p-6 rounded-lg shadow-md"> {/* Added bg-white, padding, rounded, shadow */}
-            <BookOpenCheck className="h-10 w-10 text-blue-600" /> {/* Blue icon color */}
-            <div>
-              <h3 className="text-xl font-bold text-gray-900">PUBLISHED WORK</h3> {/* Uppercase and bold */}
-              <p className="text-gray-700 text-base">Peer-reviewed publications in international journals.</p> {/* Adjusted text color */}
-            </div>
-          </div>
-        </div>
 
-        <div className="overflow-x-auto bg-white rounded-lg shadow-md p-6"> {/* Table container styling */}
-          <h2 className="text-xl font-bold text-gray-900 mb-4 px-2">RECENT PUBLICATIONS</h2> {/* Added heading for the table */}
-          <table className="min-w-full table-auto text-left border-collapse"> {/* Removed top border, used border-collapse */}
-            <thead>
-              <tr className="bg-blue-100 text-sm text-blue-800 uppercase tracking-wider"> {/* Blue theme for table header */}
-                <th className="px-4 py-3 border-b border-gray-200">AUTHOR</th> {/* Added bottom border to header cells */}
-                <th className="px-4 py-3 border-b border-gray-200">TITLE</th>
-                <th className="px-4 py-3 border-b border-gray-200">JOURNAL</th>
-                <th className="px-4 py-3 border-b border-gray-200">YEAR</th>
-              </tr>
-            </thead>
-            <tbody className="text-gray-700 text-base divide-y divide-gray-200"> {/* Adjusted text size */}
-              {researchPapers.map((paper, idx) => (
-                <tr key={idx} className="hover:bg-blue-50 transition-colors duration-200"> {/* Blue hover effect */}
-                  <td className="px-4 py-3">{paper.author}</td>
-                  <td className="px-4 py-3">{paper.title}</td>
-                  <td className="px-4 py-3">{paper.journal}</td>
-                  <td className="px-4 py-3">{paper.year}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          {/* PDF Cards Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {pdfDocuments.map((pdf) => (
+              <div
+                key={pdf.id}
+                className="bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden border border-gray-200"
+              >
+                {/* Card Header */}
+                <div className="p-6">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center space-x-3">
+                      <div className="bg-red-100 p-3 rounded-lg">
+                        <svg
+                          className="w-8 h-8 text-red-600"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
+                            d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"
+                          />
+                        </svg>
+                      </div>
+                      <div>
+                        <h3 className="text-xl font-semibold text-gray-800">
+                          {pdf.title}
+                        </h3>
+                        <p className="text-sm text-gray-500 mt-1">
+                          {pdf.fileSize}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Card Content */}
+                  <p className="text-gray-600 mb-6 line-clamp-2">
+                    {pdf.description}
+                  </p>
+
+                  <div className="text-sm text-gray-500 font-mono bg-gray-50 p-2 rounded">
+                    {pdf.fileName}
+                  </div>
+                </div>
+
+                {/* Card Footer - Single View button */}
+                <div className="px-6 py-4 bg-gray-50 border-t border-gray-100">
+                  <button
+                    onClick={() => handleViewPDF(pdf.filePath, pdf.fileName)}
+                    className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-300 flex items-center justify-center space-x-2"
+                  >
+                    <svg
+                      className="w-5 h-5"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                      />
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                      />
+                    </svg>
+                    <span>View Document</span>
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+
+         
         </div>
       </div>
-    </div>
+    </Layout>
   );
-}
+};
+
+export default Research;
