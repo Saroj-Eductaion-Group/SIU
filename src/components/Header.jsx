@@ -76,19 +76,12 @@ const navItems = [
           { title: "Academic Calendar", path: "/academics/academic-calendar" },
           { title: "Statutes", path: "/academics/statutes" },
           { title: "Faculty", path: "/academics/faculty" },
-<<<<<<< HEAD
           { 
             title: "Research", 
             path: "/academics/research",
             isHeader: true // Optional flag if you want to style this differently
           },
-          { title: "• Ordinance", path: "/academics/research/ordinance" },
-          { title: "• Entrance Schedule", path: "/academics/research/entrance-schedule" },
-          { title: "• Course Work Schedule", path: "/academics/research/course-work-schedule" },
-           
-=======
-           { title: "Research", path: "/academics/research" },
->>>>>>> 686007c49439fa4d7f847fd1e4218318c8655593
+          
         ],
       },
     ],

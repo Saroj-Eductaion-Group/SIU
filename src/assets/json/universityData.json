@@ -687,7 +687,7 @@
           }
         },
         {
-          "degree": "M.Pharm (Pharmacology)",
+          "degree": "M.Pharm",
           "mode": "Regular Mode",
           "specializations": [
             "Pharmacology, Pharmaceutical Chemistry, Pharmaceutics, Pharmaceutical Analysis",
@@ -756,7 +756,7 @@
           }
         },
         {
-          "degree": "M.Pharm (Pharmacology)",
+          "degree": "M.Pharm",
           "mode": "Global Mode",
           "specializations": [
             "Pharmacology, Pharmaceutical Chemistry, Pharmaceutics, Pharmaceutical Analysis",
@@ -769,7 +769,7 @@
             "total": 300000
           }
         },
-        {
+        {  
           "degree": "M.Pharm (Medical Chemistry)",
           "mode": "Global Mode",
           "specializations": [
