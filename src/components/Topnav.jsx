@@ -11,21 +11,12 @@ const TopNav = () => {
           {/* Contact Info - Wrapped for better mobile display */}
           <div className=" flex-wrap flex items-center justify-center sm:justify-start gap-x-4 gap-y-1 text-sm m-2">
             
-            <div className="flex items-center space-x-1">
-              <a 
-                href="tel:+919513731275" 
-                className="flex items-center hover:text-blue-200 transition-colors duration-200 group"
-                aria-label="Call admission helpline"
-              >
-                <Phone className="h-3.5 w-3.5 mr-1 flex-shrink-0" />
-                <span className="whitespace-nowrap">+91-522-311-6178</span>
-              </a>
-              <span className="text-blue-300 mx-1 hidden sm:inline">|</span>
-            </div>
+            
 
             <div className="flex items-center space-x-1">
               <a 
-                href="tel:+91-522-311-6178" 
+                
+                href="tel:+919513731275"
                 className="flex items-center hover:text-blue-200 transition-colors duration-200 group"
                 aria-label="Call main university number"
               >
