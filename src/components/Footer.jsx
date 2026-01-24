@@ -60,55 +60,104 @@ const Footer = () => {
             </h3>
             <ul className="space-y-2">
               <li>
-                <a
-                  href="https://seglko.org/lip/"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <Link
+                  to="/academics/Saroj-institute-of-artificial-intelligence"
                   className="text-gray-200 hover:text-yellow-400 hover:underline hover:underline-offset-8 transition-colors duration-300"
                 >
-                  Lucknow Institute Of Pharmacy
-                </a>
+                  Saroj Institute of Artificial Intelligence
+                </Link>
               </li>
               <li>
-                <a
-                  href="https://www.seglko.org/scp/"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <Link
+                  to="/academics/Saroj-institute-of-management-and-technology"
                   className="text-gray-200 hover:text-yellow-400 hover:underline hover:underline-offset-8 transition-colors duration-300"
                 >
-                  Saroj College Of Pharmacy
-                </a>
+                  Saroj Institute of Management & Technology
+                </Link>
               </li>
               <li>
-                <a
-                  href="https://www.seglko.org/sitm/"
+                <Link
+                  to="/academics/Saroj-institute-of-basic-and-health-sciences"
+                  
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-gray-200 hover:text-yellow-400 hover:underline hover:underline-offset-8 transition-colors duration-300"
                 >
-                  Saroj Institute Of Technology & Management
-                </a>
+                  Saroj Institute of Basic & Health Sciences
+                </Link>
               </li>
               <li>
-                <a
-                  href="https://www.seglko.org/ssitm/"
+                <Link
+                  to="/academics/Saroj-institute-of-humanities-and-education"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-gray-200 hover:text-yellow-400 hover:underline hover:underline-offset-8 transition-colors duration-300"
                 >
-                  Shivdan Singh Institute Of Technology & Management
-                </a>
+                  Saroj Institute of Humanities & Education
+                </Link>
               </li>
               <li>
-                <a
-                  href="https://www.seglko.org/scep/"
+                <Link
+                  to="/academics/Saroj-institute-of-sports-science-and-research"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-gray-200 hover:text-yellow-400 hover:underline hover:underline-offset-8 transition-colors duration-300"
                 >
-                  Saroj College of Engineering and Polytechnic
-                </a>
+                  Saroj Institute of Sports Sciences & Research
+                </Link>
               </li>
+
+               <li>
+                <Link
+                  to="/academics/Saroj-insitute-of-entrepreneurship-and-business"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-200 hover:text-yellow-400 hover:underline hover:underline-offset-8 transition-colors duration-300"
+                >
+                  Saroj Institute of Entrepreneurship & Business
+                </Link>
+              </li>
+               <li>
+                <Link
+                  to="/academics/Saroj-institute-of-film-and-fashion"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-200 hover:text-yellow-400 hover:underline hover:underline-offset-8 transition-colors duration-300"
+                >
+                  Saroj Institute of Film and Fashion
+                </Link>
+              </li>
+               <li>
+                <Link
+                  to="/academics/Lucknow-institute-of-pharmacy"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-200 hover:text-yellow-400 hover:underline hover:underline-offset-8 transition-colors duration-300"
+                >
+                  Lucknow Institute of Pharmacy
+                </Link>
+              </li>
+               <li>
+                <Link
+                  to="/academics/Saroj-institute-of-law"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-200 hover:text-yellow-400 hover:underline hover:underline-offset-8 transition-colors duration-300"
+                >
+                  Saroj Institute of Law
+                </Link>
+              </li>
+               <li>
+                <Link
+                  to="/academics/Saroj-institute-of-agriculture-science"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-200 hover:text-yellow-400 hover:underline hover:underline-offset-8 transition-colors duration-300"
+                >
+                  Saroj Institute of Agriculture Science
+                </Link>
+              </li>
+               
             </ul>
           </div>
 
