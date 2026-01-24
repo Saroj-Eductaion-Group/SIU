@@ -40,9 +40,9 @@ const NewsSection = () => {
   const notices = [
     {
       id: 1,
-      title: "Admissions Open 2025-26",
+      title: "Admissions Open 2026-27",
       content: "Applications for UG and PG programs are now being accepted online",
-      date: "June 1, 2025",
+      date: "Jan 1, 2026",
       important: true
     },
     {
