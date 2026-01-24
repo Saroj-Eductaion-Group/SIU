@@ -47,7 +47,7 @@ const Boards = () => {
       { name: "Mr. Alfiya Qureshi", role: "First Year BP Student" }
     ],
     "Engineering and AI": [
-      { name: "Dr. Shivi Chaturvedi", role: "Head of Department - Chairman" },
+       
       { name: "Shri Ashish Das", role: "Associate Professor" },
       { name: "Dr. Avnita Dixit", role: "Faculty Member" },
       { name: "Shri Sameer Bajpai", role: "Assistant Professor" },
