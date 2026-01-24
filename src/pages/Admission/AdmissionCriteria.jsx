@@ -48,7 +48,7 @@ const criteria = [
 ];
 
 const additionalNotes = [
-  "Applicants currently appearing for their final year graduation exams in 2024 are also eligible to apply for Postgraduate programs.",
+  "Applicants currently appearing for their final year graduation exams in 2025 are also eligible to apply for Postgraduate programs.",
   "The university reserves the right to assess a candidate's capability through Group Discussion/Personal Interview (GD/PI) before final admission.",
   "Applicants must be at least 17 years old by 31st December of the academic year for which they are applying.",
   "Special scholarships available for meritorious students and sportspersons.",
@@ -225,7 +225,7 @@ const AdmissionCriteria = () => {
               </a>
             </motion.div>
             <p className="mt-4 text-gray-600 text-sm">
-              Applications for 2025 intake are now open
+              Applications for 2026 intake are now open
             </p>
           </div>
         </div>
