@@ -1160,18 +1160,7 @@
             "total": 375000
           }
         },
-        {
-          "degree": "LLB",
-          "mode": "Regular Mode",
-          "specializations": "Corporate Law, Intellectual Property (IP) Law, Human Rights Law, Criminal Law, Constitutional Law, Environment Law, Cyber Law/Technology Law, International Trade & Eco Law",
-          "duration_in_yrs": 3,
-          "fees": {
-            "year1": 75000,
-            "year2": 75000,
-            "year3": 75000,
-            "total": 225000
-          }
-        },
+        
         {
           "degree": "LLM",
           "mode": "Regular Mode",
