@@ -32,7 +32,7 @@ const InstituteArtificialIntelligence = () => {
         level: "ug",
         specializations: "Computer Vision, Natural Language Processing, Robotics, Neural Networks",
         duration_in_yrs: 4,
-        fees: { year1: 120000, year2: 120000, year3: 120000, year4: 120000, total: 480000 }
+        fees: { year1: 110000, year2: 110000, year3: 110000, year4: 110000, total: 440000 }
       },
       {
         degree: "M.Tech (Artificial Intelligence)",
@@ -40,7 +40,7 @@ const InstituteArtificialIntelligence = () => {
         level: "pg",
         specializations: "Deep Learning, Reinforcement Learning, AI Ethics, Autonomous Systems",
         duration_in_yrs: 2,
-        fees: { year1: 130000, year2: 130000, total: 260000 }
+        fees: { year1: 125000, year2: 125000, total: 250000 }
       },
       {
         degree: "BCA (AI & Data Science)",
@@ -94,7 +94,7 @@ const InstituteArtificialIntelligence = () => {
         mode: "Regular Mode",
         level: "phd",
         duration_in_yrs: 3,
-        fees: { year1: 140000, year2: 140000, year3: 140000, total: 420000 }
+        fees: { year1: 110000, year2: 110000, year3: 110000, total: 330000 }
       },
       {
         degree: "B.Tech (Global AI Systems)",
