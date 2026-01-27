@@ -128,7 +128,7 @@ const SIUFeeStructure = () => {
           specializations: "Education",
           fees: { year1: 60000, year2: 60000, total: 120000 },
         },
-        { degree: "Ph.D", specializations: "Humanities, Education, International Relations, Liberal Arts, History, Economics, Language, Political Science, Commerce", fees: { year1: 110000, year2: 110000, year3: 110000, total: 330000 } }
+        { degree: "Ph.D", specializations: "Humanities, Education, International Relations, Liberal Arts, History, Economics, Language, Political Science, Commerce, Home Science", fees: { year1: 110000, year2: 110000, year3: 110000, total: 330000 } }
 
       ]
     },
