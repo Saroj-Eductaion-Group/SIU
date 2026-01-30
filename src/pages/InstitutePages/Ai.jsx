@@ -42,53 +42,7 @@ const InstituteArtificialIntelligence = () => {
         duration_in_yrs: 2,
         fees: { year1: 125000, year2: 125000, total: 250000 }
       },
-      {
-        degree: "BCA (AI & Data Science)",
-        mode: "Regular Mode",
-        level: "ug",
-        specializations: "Predictive Analytics, Big Data, AI Programming, Business Intelligence",
-        duration_in_yrs: 3,
-        fees: { year1: 95000, year2: 95000, year3: 95000, total: 285000 }
-      },
-      {
-        degree: "MCA (AI Specialization)",
-        mode: "Regular Mode",
-        level: "pg",
-        specializations: "AI Architecture, Cloud AI, Edge Computing, AI Security",
-        duration_in_yrs: 2,
-        fees: { year1: 110000, year2: 110000, total: 220000 }
-      },
-      {
-        degree: "Diploma in AI Applications",
-        mode: "Regular Mode",
-        level: "diploma",
-        specializations: "Chatbots, Computer Vision, AI for IoT, Smart Systems",
-        duration_in_yrs: 1,
-        fees: { total: 90000 }
-      },
-      {
-        degree: "Certificate in Machine Learning",
-        mode: "Regular Mode",
-        level: "certificate",
-        duration_in_yrs: 0.5,
-        fees: { total: 45000 }
-      },
-      {
-        degree: "B.Sc (Cognitive Science)",
-        mode: "Regular Mode",
-        level: "ug",
-        specializations: "Human-AI Interaction, Neural Science, Computational Psychology",
-        duration_in_yrs: 3,
-        fees: { year1: 85000, year2: 85000, year3: 85000, total: 255000 }
-      },
-      {
-        degree: "M.Sc (AI & Robotics)",
-        mode: "Regular Mode",
-        level: "pg",
-        specializations: "Autonomous Systems, Humanoid Robotics, Swarm Intelligence",
-        duration_in_yrs: 2,
-        fees: { year1: 115000, year2: 115000, total: 230000 }
-      },
+       
       {
         degree: "Ph.D in Artificial Intelligence",
         mode: "Regular Mode",
@@ -102,7 +56,7 @@ const InstituteArtificialIntelligence = () => {
         level: "ug",
         specializations: "International AI Standards, Global AI Policy, Multinational AI Systems",
         duration_in_yrs: 4,
-        fees: { year1: 180000, year2: 180000, year3: 180000, year4: 180000, total: 720000 }
+        fees: { year1: 160000, year2: 160000, year3: 160000, year4: 160000, total: 640000 }
       },
       {
         degree: "M.Tech (Global AI Research)",
@@ -110,7 +64,7 @@ const InstituteArtificialIntelligence = () => {
         level: "pg",
         specializations: "Cross-border AI Ethics, International AI Collaboration, Global AI Infrastructure",
         duration_in_yrs: 2,
-        fees: { year1: 190000, year2: 190000, total: 380000 }
+        fees: { year1: 175000, year2: 175000, total: 350000 }
       }
     ],
     eligibility: {
