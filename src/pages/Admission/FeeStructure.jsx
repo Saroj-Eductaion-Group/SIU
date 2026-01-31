@@ -171,9 +171,9 @@ const SIUFeeStructure = () => {
                 "degree": "LLM",
                 "specializations": "Corporate Law, Intellectual Property (IP) Law, Human Rights Law, Criminal Law, Constitutional Law, Environment Law, Cyber Law/Technology Law, International Trade & Eco Law",
                 "fees": {
-                    "year1": 90000,
-                    "year2": 90000,
-                    "total": 180000
+                    "year1": 75000,
+                    "year2": 75000,
+                    "total": 150000
                 }
             },
             {
