@@ -79,7 +79,7 @@ const SarojInstituteOfLaw = () => {
         "Minimum marks as per university norms"
       ],
       fee: {
-        annual: "₹90,000",
+        annual: "₹75,000",
         disclaimer: "*Excluding examination and miscellaneous charges.",
       }
     },
