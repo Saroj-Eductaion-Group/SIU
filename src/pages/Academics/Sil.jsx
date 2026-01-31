@@ -87,7 +87,7 @@ const SarojInstituteOfLaw = () => {
     {
       icon: <FaGraduationCap className="text-4xl mb-4 text-blue-600" />,
        title: "Ph.D in Law",
-      description: "5-year doctoral program for advanced legal research and scholarship.",
+      description: "3-year doctoral program for advanced legal research and scholarship.",
       features: ["Research intensive", "Faculty mentorship", "Publication opportunities"],
      eligibility: [
         "LLM or equivalent postgraduate law degree",

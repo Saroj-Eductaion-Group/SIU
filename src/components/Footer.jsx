@@ -61,7 +61,7 @@ const Footer = () => {
             <ul className="space-y-2">
               <li>
                 <Link
-                  to="/academics/Saroj-institute-of-artificial-intelligence"
+                  to="/saroj-institute-artificial-intelligence"
                   className="text-gray-200 hover:text-yellow-400 hover:underline hover:underline-offset-8 transition-colors duration-300"
                 >
                   Saroj Institute of Artificial Intelligence
