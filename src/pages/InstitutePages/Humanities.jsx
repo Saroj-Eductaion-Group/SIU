@@ -93,7 +93,7 @@ const InstituteHumanitiesEducation = () => {
         mode: "Regular Mode",
         level: "phd",
         duration_in_yrs: 3,
-        fees: { year1: 100000, year2: 100000, year3: 100000, total: 300000 }
+        fees: { year1: 110000, year2: 110000, year3: 110000, total: 330000 }
       }
     ],
     eligibility: {
