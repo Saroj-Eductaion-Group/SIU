@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom'
 import Layout from '.././components/Layout';
 import { Download, ExternalLink } from 'lucide-react';
 import SIUQR from '../assets/SIUQR.jpeg';
@@ -24,15 +23,13 @@ const CollegePaymentCard = ({ instituteName, location, code, contactEmail, onlin
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
         <div className="flex flex-col items-center md:items-start">
           <h3 className="text-lg font-semibold text-blue-700 mb-2">Payment QR Code</h3>
-          <Link to="https://smartpay.easebuzz.in/229692/feepaymentlink">
-          
-          <img
-            src={SIUQR}
-            alt={`${instituteName} QR Code`}
-            target= "_blank"
-            className="w-36 h-36 border border-gray-300 rounded-lg mb-3"
+          <a href="https://smartpay.easebuzz.in/229692/feepaymentlink" target="_blank" rel="noopener noreferrer">
+            <img
+              src={SIUQR}
+              alt={`${instituteName} QR Code`}
+              className="w-36 h-36 border border-gray-300 rounded-lg mb-3"
             />
-            </Link>
+          </a>
           <a
             href={SIUQR}
             download
