@@ -20,7 +20,7 @@ const HelpDesk = () => {
 
   return (
     <div className="relative bg-gray-100 flex items-center justify-center">
-      <div className="fixed bottom-8 left-8 flex flex-row items-start space-y-1 z-50">
+      <div className="fixed bottom-8 left-8 flex flex-row items-start space-y-1 z-50 hidden sm:flex">
         {/* Help Desk Component */}
         <div className="bg-[#f08f07] text-white flex items-center p-3 rounded-full shadow-lg max-w-sm">
           {/* Headphone Icon SVG */}

@@ -50,7 +50,7 @@ const PopupForm = () => {
   return (
     <button
       type="button"
-      className="npfWidgetButton npfWidget-3f2146898ee4a1d0cd203acd0a7c0dc7"
+      className="npfWidgetButton npfWidget-3f2146898ee4a1d0cd203acd0a7c0dc7 hidden sm:block"
       style={{
         position: "fixed",
         right: "-55px",

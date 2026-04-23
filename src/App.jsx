@@ -102,6 +102,7 @@ import CryptographyPage from "./pages/tcs/Cryptography";
 // Fee Payment Page
 import FeePaymentPage from "./pages/FeePaymentPage";
 import OrientationPage from "./pages/Admission/OrientationPage";
+import TalentHunt from "./pages/TalentHunt";
 import InstituteAgriculture from "./pages/InstitutePages/Agriculture";
 import Research from "./pages/ResearchPage";
 
@@ -116,6 +117,9 @@ function App() {
 
       {/* FeePayment Page */}
       <Route path='/fee-payment' element ={<FeePaymentPage />} />
+
+      {/* Talent Hunt */}
+      <Route path='/talent-hunt' element={<TalentHunt />} />
 
       {/* Programs Overview */}
       <Route path='/programs' element={<Courses />} />

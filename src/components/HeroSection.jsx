@@ -50,7 +50,7 @@ const HeroSection = () => {
   };
 
   return (
-    <div className="relative bg-gradient-to-br font-funneldisplay from-blue-50 to-white overflow-hidden py-2">
+    <div className="relative bg-gradient-to-br font-funneldisplay from-blue-50 to-white overflow-hidden py-2 max-w-full">
       {/* Stable background elements */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
         <div 
@@ -63,7 +63,7 @@ const HeroSection = () => {
         ></div>
       </div>
       
-      <div className="relative z-10 max-w-full mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-10">
+      <div className="relative z-10 w-full max-w-full mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-10 overflow-hidden">
         {/* Header with improved text rendering */}
         <header className="text-center mb-6 sm:mb-12">
         <a 

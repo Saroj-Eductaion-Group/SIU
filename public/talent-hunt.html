@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Saroj International University — Talent Hunt 2026-27</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0e2557;
+  --gold:#c9a84c;
+  --gold-light:#f0d080;
+  --cream:#faf8f2;
+  --white:#ffffff;
+  --green:#1a6b3a;
+  --green-light:#e8f5ee;
+  --red:#b52b2b;
+  --red-light:#fdeaea;
+  --amber:#8a5c0a;
+  --amber-light:#fdf3dc;
+  --blue-light:#e8f0fc;
+  --purple:#4a2d8a;
+  --purple-light:#eeebfa;
+  --gray:#6b7280;
+  --gray-light:#f4f4f6;
+  --border:#e2ddd4;
+  --shadow:0 2px 12px rgba(14,37,87,0.10);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:#1a1a2e;min-height:100vh}
+
+/* HEADER */
+.site-header{background:var(--navy);padding:0;position:sticky;top:0;z-index:100;box-shadow:0 2px 16px rgba(14,37,87,0.18)}
+.header-inner{max-width:1000px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:12px 24px}
+.logo-area{display:flex;align-items:center;gap:14px}
+.logo-circle{width:48px;height:48px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--navy);flex-shrink:0}
+.logo-text h1{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:#fff;line-height:1.2}
+.logo-text p{font-size:11px;color:rgba(255,255,255,0.65);margin-top:2px}
+.session-badge{background:var(--gold);color:var(--navy);font-size:12px;font-weight:600;padding:5px 14px;border-radius:20px}
+
+/* NAV TABS */
+.nav-strip{background:var(--white);border-bottom:2px solid var(--border);position:sticky;top:72px;z-index:99}
+.nav-inner{max-width:1000px;margin:0 auto;display:flex;gap:0;padding:0 24px}
+.nav-btn{padding:14px 20px;font-size:13px;font-weight:500;color:var(--gray);border:none;background:transparent;cursor:pointer;border-bottom:3px solid transparent;transition:all 0.2s;white-space:nowrap;font-family:'DM Sans',sans-serif}
+.nav-btn:hover{color:var(--navy)}
+.nav-btn.active{color:var(--navy);border-bottom-color:var(--gold);font-weight:600}
+
+/* MAIN */
+.main{max-width:1000px;margin:0 auto;padding:28px 24px}
+.panel{display:none}.panel.active{display:block}
+
+/* CARDS */
+.card{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:24px;margin-bottom:20px;box-shadow:var(--shadow)}
+.card-title{font-family:'Playfair Display',serif;font-size:18px;font-weight:600;color:var(--navy);margin-bottom:4px}
+.card-sub{font-size:13px;color:var(--gray);margin-bottom:20px}
+.section-label{font-size:11px;font-weight:600;color:var(--gray);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:12px;padding-bottom:6px;border-bottom:1px solid var(--border)}
+
+/* FORM */
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+.form-grid.full{grid-template-columns:1fr}
+.form-grid.three{grid-template-columns:1fr 1fr 1fr}
+.field{display:flex;flex-direction:column;gap:5px}
+.field label{font-size:12px;font-weight:600;color:#3d3d5c}
+.field input,.field select,.field textarea{
+  padding:10px 13px;border:1.5px solid var(--border);border-radius:9px;
+  font-size:13px;font-family:'DM Sans',sans-serif;background:var(--cream);
+  color:#1a1a2e;transition:border-color 0.2s,box-shadow 0.2s
+}
+.field input:focus,.field select:focus,.field textarea:focus{
+  outline:none;border-color:var(--navy);box-shadow:0 0 0 3px rgba(14,37,87,0.08)
+}
+.field textarea{resize:vertical;min-height:80px}
+.required{color:#c0392b}
+
+/* CHIPS */
+.chip-section{margin-bottom:16px}
+.chip-group-label{font-size:12px;font-weight:600;color:var(--navy);margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.chip-group-label span{background:var(--blue-light);color:var(--navy);font-size:10px;padding:2px 8px;border-radius:10px}
+.chips{display:flex;flex-wrap:wrap;gap:7px}
+.chip{border:1.5px solid var(--border);border-radius:20px;padding:6px 14px;font-size:12px;cursor:pointer;background:var(--white);color:#3d3d5c;transition:all 0.18s;font-family:'DM Sans',sans-serif;font-weight:500}
+.chip:hover{border-color:var(--navy);background:var(--blue-light)}
+.chip.sel{background:var(--navy);border-color:var(--navy);color:var(--white)}
+
+/* BUTTONS */
+.btn{padding:11px 24px;border-radius:9px;font-size:14px;font-weight:600;cursor:pointer;transition:all 0.18s;font-family:'DM Sans',sans-serif;border:none}
+.btn-navy{background:var(--navy);color:#fff}.btn-navy:hover{background:#1a3a8a}
+.btn-gold{background:var(--gold);color:var(--navy)}.btn-gold:hover{background:#b8963e}
+.btn-outline{background:transparent;border:1.5px solid var(--border);color:var(--gray)}.btn-outline:hover{border-color:var(--navy);color:var(--navy)}
+.btn-green{background:var(--green);color:#fff;font-size:12px;padding:6px 14px;border-radius:7px}
+.btn-red{background:var(--red);color:#fff;font-size:12px;padding:6px 14px;border-radius:7px}
+.btn-full{width:100%}
+
+/* STATS */
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
+.stat-card{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:16px;text-align:center;box-shadow:var(--shadow)}
+.stat-num{font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:var(--navy)}
+.stat-label{font-size:11px;color:var(--gray);margin-top:3px;font-weight:500}
+
+/* TABLE */
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13px}
+thead tr{background:var(--navy)}
+th{padding:10px 12px;text-align:left;font-weight:600;font-size:11px;color:rgba(255,255,255,0.9);letter-spacing:0.4px}
+td{padding:11px 12px;border-bottom:1px solid var(--border);vertical-align:middle}
+tr:hover td{background:#f8f7ff}
+
+/* BADGES */
+.badge{display:inline-block;padding:3px 11px;border-radius:12px;font-size:11px;font-weight:600}
+.badge-pending{background:var(--amber-light);color:var(--amber)}
+.badge-approved{background:var(--green-light);color:var(--green)}
+.badge-rejected{background:var(--red-light);color:var(--red)}
+.badge-done{background:var(--purple-light);color:var(--purple)}
+.badge-pass{background:var(--green-light);color:var(--green)}
+.badge-fail{background:var(--red-light);color:var(--red)}
+.badge-a{background:#e8f5ee;color:#1a6b3a}
+.badge-b{background:#e8f0fc;color:#1a3a8a}
+.badge-c{background:#fdf3dc;color:#8a5c0a}
+.badge-f{background:#fdeaea;color:#b52b2b}
+
+/* ALERTS */
+.alert{padding:13px 16px;border-radius:10px;font-size:13px;margin-top:12px;display:none}
+.alert-success{background:var(--green-light);color:var(--green);border:1px solid #a8d5ba}
+.alert-warning{background:var(--amber-light);color:var(--amber);border:1px solid #f0d090}
+.alert-error{background:var(--red-light);color:var(--red);border:1px solid #f5b0b0}
+.alert-info{background:var(--blue-light);color:var(--navy);border:1px solid #b5cff0}
+
+/* EXAM */
+.exam-header{background:var(--navy);border-radius:14px;padding:20px 24px;margin-bottom:20px;display:flex;justify-content:space-between;align-items:center}
+.exam-cand-info h3{color:#fff;font-size:16px;font-weight:600}
+.exam-cand-info p{color:rgba(255,255,255,0.65);font-size:12px;margin-top:3px}
+.exam-timer-box{text-align:right}
+.exam-timer-box .timer{font-family:'Playfair Display',serif;font-size:32px;font-weight:700;color:var(--gold-light)}
+.exam-timer-box p{color:rgba(255,255,255,0.6);font-size:11px}
+.progress-bar{height:6px;background:rgba(255,255,255,0.15);border-radius:3px;overflow:hidden;margin-top:12px}
+.progress-fill{height:100%;background:var(--gold);border-radius:3px;transition:width 1s linear}
+.q-nav{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:16px}
+.q-dot{width:30px;height:30px;border-radius:8px;border:1.5px solid var(--border);background:var(--white);cursor:pointer;font-size:11px;font-weight:600;display:flex;align-items:center;justify-content:center;color:var(--gray);transition:all 0.15s}
+.q-dot.answered{background:var(--navy);color:#fff;border-color:var(--navy)}
+.q-dot.current{border-color:var(--gold);border-width:2px;color:var(--navy)}
+.q-dot.answered.current{background:var(--navy);color:var(--gold-light);border-color:var(--gold)}
+.question-card{background:var(--white);border:1.5px solid var(--border);border-radius:14px;padding:24px;margin-bottom:16px;box-shadow:var(--shadow)}
+.q-meta{font-size:11px;font-weight:600;color:var(--gold);text-transform:uppercase;letter-spacing:0.6px;margin-bottom:10px}
+.q-text{font-size:15px;font-weight:500;color:#1a1a2e;line-height:1.6;margin-bottom:18px}
+.option{display:flex;align-items:center;gap:12px;padding:11px 16px;border:1.5px solid var(--border);border-radius:10px;margin-bottom:8px;cursor:pointer;transition:all 0.15s;font-size:13px;color:#3d3d5c}
+.option:hover{border-color:var(--navy);background:var(--blue-light)}
+.option.selected{border-color:var(--navy);background:var(--blue-light);color:var(--navy);font-weight:500}
+.opt-label{width:26px;height:26px;border-radius:50%;border:1.5px solid currentColor;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+.nav-btns{display:flex;gap:10px;align-items:center}
+.nav-btns .spacer{flex:1}
+
+/* RESULT PAGE */
+.result-hero{text-align:center;padding:32px 20px}
+.result-score-ring{width:120px;height:120px;border-radius:50%;border:5px solid var(--navy);display:flex;flex-direction:column;align-items:center;justify-content:center;margin:0 auto 16px}
+.result-score-ring .score-num{font-family:'Playfair Display',serif;font-size:32px;font-weight:700;color:var(--navy);line-height:1}
+.result-score-ring .score-unit{font-size:12px;color:var(--gray);margin-top:2px}
+.result-grade-badge{display:inline-block;padding:7px 24px;border-radius:20px;font-size:16px;font-weight:700;margin-bottom:8px}
+.result-summary{font-size:14px;color:var(--gray);margin-bottom:24px}
+.breakdown-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px}
+.breakdown-item{background:var(--gray-light);border-radius:10px;padding:14px;text-align:center}
+.breakdown-num{font-family:'Playfair Display',serif;font-size:24px;font-weight:700}
+.breakdown-label{font-size:11px;color:var(--gray);margin-top:3px}
+.section-bar-row{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.section-bar-label{width:80px;font-size:12px;color:var(--gray);text-align:right;flex-shrink:0}
+.section-bar-track{flex:1;height:18px;background:var(--gray-light);border-radius:4px;overflow:hidden}
+.section-bar-fill{height:100%;background:var(--navy);border-radius:4px;display:flex;align-items:center;justify-content:flex-end;padding-right:6px}
+.section-bar-fill span{color:#fff;font-size:10px;font-weight:600}
+.scholarship-banner{background:linear-gradient(135deg,#1a6b3a,#2d9e5f);border-radius:12px;padding:16px 20px;color:#fff;margin-top:16px;display:flex;align-items:center;gap:14px}
+.sch-icon{width:40px;height:40px;background:rgba(255,255,255,0.2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+
+/* LOGIN */
+.login-container{max-width:440px;margin:40px auto}
+
+/* HERO BANNER */
+.hero-banner{background:var(--navy);border-radius:14px;padding:28px;margin-bottom:24px;position:relative;overflow:hidden}
+.hero-banner::before{content:'';position:absolute;top:-30px;right:-30px;width:160px;height:160px;border-radius:50%;background:rgba(201,168,76,0.12)}
+.hero-banner::after{content:'';position:absolute;bottom:-40px;left:-20px;width:120px;height:120px;border-radius:50%;background:rgba(255,255,255,0.04)}
+.hero-banner h2{font-family:'Playfair Display',serif;font-size:22px;color:#fff;margin-bottom:6px;position:relative}
+.hero-banner p{font-size:13px;color:rgba(255,255,255,0.7);position:relative;margin-bottom:14px}
+.hero-tags{display:flex;gap:8px;flex-wrap:wrap;position:relative}
+.hero-tag{background:rgba(201,168,76,0.2);color:var(--gold-light);font-size:11px;padding:4px 12px;border-radius:12px;border:1px solid rgba(201,168,76,0.3)}
+
+/* STEP INDICATOR */
+.step-indicator{display:flex;align-items:center;gap:0;margin-bottom:24px}
+.step-item{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:600}
+.step-circle{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0}
+.step-circle.active{background:var(--navy);color:#fff}
+.step-circle.done{background:var(--green);color:#fff}
+.step-circle.inactive{background:var(--border);color:var(--gray)}
+.step-line{flex:1;height:2px;background:var(--border);min-width:20px}
+.step-line.done{background:var(--green)}
+.step-label{color:var(--gray)}.step-label.active{color:var(--navy)}
+
+/* ADMIN FILTER */
+.filter-row{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;align-items:center}
+.filter-chip{padding:6px 14px;border-radius:20px;border:1.5px solid var(--border);font-size:12px;font-weight:500;cursor:pointer;background:var(--white);color:var(--gray);transition:all 0.15s;font-family:'DM Sans',sans-serif}
+.filter-chip.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+.ml-auto{margin-left:auto}
+
+@media(max-width:640px){
+  .form-grid{grid-template-columns:1fr}
+  .form-grid.three{grid-template-columns:1fr 1fr}
+  .stats-row{grid-template-columns:1fr 1fr}
+  .breakdown-grid{grid-template-columns:1fr 1fr 1fr}
+  .header-inner{padding:10px 14px}
+  .nav-btn{padding:12px 12px;font-size:12px}
+  .main{padding:16px 14px}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="header-inner">
+    <div class="logo-area">
+      <div class="logo-circle">SIU</div>
+      <div class="logo-text">
+        <h1>Saroj International University</h1>
+        <p>Talent Hunt Examination Portal</p>
+      </div>
+    </div>
+    <div class="session-badge">Session 2026-27</div>
+  </div>
+</header>
+
+<!-- NAV -->
+<nav class="nav-strip">
+  <div class="nav-inner">
+    <button class="nav-btn active" onclick="showPanel('registration')">&#9998; Registration</button>
+    <button class="nav-btn" onclick="showPanel('admin')">&#128101; Admin Approval</button>
+    <button class="nav-btn" onclick="showPanel('exam')">&#128221; Exam Portal</button>
+    <button class="nav-btn" onclick="showPanel('results')">&#127942; Results</button>
+  </div>
+</nav>
+
+<main class="main">
+
+<!-- ===== REGISTRATION PANEL ===== -->
+<div class="panel active" id="panel-registration">
+  <div class="hero-banner">
+    <h2>Talent Hunt Examination 2026-27</h2>
+    <p>Register for Saroj International University's scholarship-based entrance examination. Top scorers receive merit scholarships.</p>
+    <div class="hero-tags">
+      <span class="hero-tag">UG Programs</span>
+      <span class="hero-tag">PG Programs</span>
+      <span class="hero-tag">Professional Courses</span>
+      <span class="hero-tag">Merit Scholarships</span>
+      <span class="hero-tag">Online & Offline Mode</span>
+    </div>
+  </div>
+
+  <div class="step-indicator" id="reg-steps">
+    <div class="step-item"><div class="step-circle active" id="sc1">1</div><span class="step-label active" id="sl1">Personal Info</span></div>
+    <div class="step-line" id="line1"></div>
+    <div class="step-item"><div class="step-circle inactive" id="sc2">2</div><span class="step-label" id="sl2">Academic & Courses</span></div>
+    <div class="step-line" id="line2"></div>
+    <div class="step-item"><div class="step-circle inactive" id="sc3">3</div><span class="step-label" id="sl3">Exam Preference</span></div>
+  </div>
+
+  <!-- Step 1 -->
+  <div id="reg-step1">
+    <div class="card">
+      <div class="card-title">Personal Information</div>
+      <div class="card-sub">Fill in your personal details as per your school/college records.</div>
+      <div class="section-label">Basic Details</div>
+      <div class="form-grid">
+        <div class="field"><label>First Name <span class="required">*</span></label><input type="text" id="fn" placeholder="Enter first name"></div>
+        <div class="field"><label>Last Name <span class="required">*</span></label><input type="text" id="ln" placeholder="Enter last name"></div>
+      </div>
+      <div class="form-grid">
+        <div class="field"><label>Date of Birth <span class="required">*</span></label><input type="date" id="dob"></div>
+        <div class="field"><label>Gender <span class="required">*</span></label>
+          <select id="gender"><option value="">-- Select --</option><option>Male</option><option>Female</option><option>Other</option><option>Prefer not to say</option></select>
+        </div>
+      </div>
+      <div class="section-label" style="margin-top:16px">Contact Details</div>
+      <div class="form-grid">
+        <div class="field"><label>Mobile Number <span class="required">*</span></label><input type="tel" id="mobile" placeholder="+91 XXXXX XXXXX"></div>
+        <div class="field"><label>Email Address <span class="required">*</span></label><input type="email" id="email" placeholder="email@example.com"></div>
+      </div>
+      <div class="form-grid">
+        <div class="field"><label>City <span class="required">*</span></label><input type="text" id="city" placeholder="Your city"></div>
+        <div class="field"><label>State <span class="required">*</span></label>
+          <select id="state"><option value="">-- Select State --</option><option>Uttar Pradesh</option><option>Delhi</option><option>Bihar</option><option>Madhya Pradesh</option><option>Rajasthan</option><option>Gujarat</option><option>Maharashtra</option><option>Punjab</option><option>Haryana</option><option>Other</option></select>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;justify-content:flex-end">
+      <button class="btn btn-navy" onclick="goStep(2)">Next: Academic Details &rarr;</button>
+    </div>
+  </div>
+
+  <!-- Step 2 -->
+  <div id="reg-step2" style="display:none">
+    <div class="card">
+      <div class="card-title">Academic Background</div>
+      <div class="card-sub">Enter your last qualification details.</div>
+      <div class="form-grid">
+        <div class="field"><label>Highest Qualification <span class="required">*</span></label>
+          <select id="qual"><option value="">-- Select --</option><option>Class 10</option><option>Class 12 / Intermediate</option><option>Graduation</option><option>Post Graduation</option></select>
+        </div>
+        <div class="field"><label>Board / University</label><input type="text" id="board" placeholder="e.g. CBSE, UP Board, LU"></div>
+      </div>
+      <div class="form-grid">
+        <div class="field"><label>Percentage / CGPA <span class="required">*</span></label><input type="text" id="marks" placeholder="e.g. 85% or 8.5 CGPA"></div>
+        <div class="field"><label>Year of Passing</label>
+          <select id="yop"><option value="">-- Select --</option><option>Appearing 2026</option><option>2025</option><option>2024</option><option>2023</option><option>2022</option></select>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Select Desired Course(s)</div>
+      <div class="card-sub">Tap to select one or more courses. The exam will be tailored to your selection.</div>
+      <div class="chip-section">
+        <div class="chip-group-label">UG Programs <span>4 years</span></div>
+        <div class="chips">
+          <div class="chip" onclick="toggleChip(this)">B.Tech</div>
+          <div class="chip" onclick="toggleChip(this)">BBA</div>
+          <div class="chip" onclick="toggleChip(this)">BCA</div>
+          <div class="chip" onclick="toggleChip(this)">B.Sc</div>
+          <div class="chip" onclick="toggleChip(this)">B.Com</div>
+          <div class="chip" onclick="toggleChip(this)">BA</div>
+          <div class="chip" onclick="toggleChip(this)">B.Ed</div>
+          <div class="chip" onclick="toggleChip(this)">B.Arch</div>
+        </div>
+      </div>
+      <div class="chip-section">
+        <div class="chip-group-label">PG Programs <span>2 years</span></div>
+        <div class="chips">
+          <div class="chip" onclick="toggleChip(this)">MBA</div>
+          <div class="chip" onclick="toggleChip(this)">M.Tech</div>
+          <div class="chip" onclick="toggleChip(this)">MCA</div>
+          <div class="chip" onclick="toggleChip(this)">M.Sc</div>
+          <div class="chip" onclick="toggleChip(this)">M.Com</div>
+          <div class="chip" onclick="toggleChip(this)">MA</div>
+          <div class="chip" onclick="toggleChip(this)">M.Ed</div>
+          <div class="chip" onclick="toggleChip(this)">M.Phil</div>
+        </div>
+      </div>
+      <div class="chip-section">
+        <div class="chip-group-label">Professional Programs <span>3-5 years</span></div>
+        <div class="chips">
+          <div class="chip" onclick="toggleChip(this)">LLB (Law)</div>
+          <div class="chip" onclick="toggleChip(this)">LLM</div>
+          <div class="chip" onclick="toggleChip(this)">B.Pharma</div>
+          <div class="chip" onclick="toggleChip(this)">M.Pharma</div>
+          <div class="chip" onclick="toggleChip(this)">MBBS</div>
+          <div class="chip" onclick="toggleChip(this)">BDS</div>
+          <div class="chip" onclick="toggleChip(this)">B.Nursing</div>
+          <div class="chip" onclick="toggleChip(this)">BAMS</div>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;gap:10px;justify-content:space-between">
+      <button class="btn btn-outline" onclick="goStep(1)">&larr; Back</button>
+      <button class="btn btn-navy" onclick="goStep(3)">Next: Exam Preference &rarr;</button>
+    </div>
+  </div>
+
+  <!-- Step 3 -->
+  <div id="reg-step3" style="display:none">
+    <div class="card">
+      <div class="card-title">Exam Preference</div>
+      <div class="card-sub">Choose your preferred exam date, mode, and centre.</div>
+      <div class="form-grid three">
+        <div class="field"><label>Exam Date <span class="required">*</span></label>
+          <select id="examdate"><option value="">-- Select --</option><option>15 May 2026 (Morning)</option><option>15 May 2026 (Evening)</option><option>22 May 2026 (Morning)</option><option>22 May 2026 (Evening)</option><option>01 Jun 2026 (Morning)</option><option>15 Jun 2026 (Morning)</option></select>
+        </div>
+        <div class="field"><label>Exam Mode</label>
+          <select id="exammode"><option>Online (CBT)</option><option>Offline (Pen &amp; Paper)</option></select>
+        </div>
+        <div class="field"><label>Exam Centre</label>
+          <select id="centre"><option value="">-- Select --</option><option>Lucknow Main Campus</option><option>Barabanki Centre</option><option>Sitapur Centre</option><option>Hardoi Centre</option><option>Raebareli Centre</option></select>
+        </div>
+      </div>
+      <div class="form-grid">
+        <div class="field"><label>Medium of Exam</label>
+          <select id="medium"><option>English</option><option>Hindi</option><option>Bilingual (Both)</option></select>
+        </div>
+        <div class="field"><label>Category</label>
+          <select id="categ"><option>General</option><option>OBC</option><option>SC</option><option>ST</option><option>EWS</option></select>
+        </div>
+      </div>
+      <div class="form-grid">
+        <div class="field"><label>Scholarship Interest</label>
+          <select id="scholar"><option>Yes, interested</option><option>No, not required</option></select>
+        </div>
+        <div class="field"><label>How did you hear about us?</label>
+          <select id="hearsrc"><option value="">-- Select --</option><option>School / College</option><option>Social Media</option><option>Friends / Family</option><option>Newspaper / Magazine</option><option>Coaching Institute</option><option>University Website</option><option>Other</option></select>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;gap:10px;justify-content:space-between">
+      <button class="btn btn-outline" onclick="goStep(2)">&larr; Back</button>
+      <button class="btn btn-gold" style="padding:12px 32px;font-size:15px" onclick="submitRegistration()">&#10003; Submit Registration</button>
+    </div>
+    <div class="alert alert-success" id="reg-success"></div>
+    <div class="alert alert-error" id="reg-error"></div>
+  </div>
+</div>
+
+<!-- ===== ADMIN PANEL ===== -->
+<div class="panel" id="panel-admin">
+  <div class="card" style="background:var(--navy);border-color:var(--navy)">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <div><h2 style="font-family:'Playfair Display',serif;font-size:20px;color:#fff">Admin Dashboard</h2>
+      <p style="font-size:12px;color:rgba(255,255,255,0.65);margin-top:3px">Session 2026-27 — Review and approve candidate applications</p></div>
+      <button class="btn" style="background:var(--gold);color:var(--navy);font-size:13px" onclick="exportCSV()">&#11123; Export CSV</button>
+    </div>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat-card"><div class="stat-num" id="a-total">0</div><div class="stat-label">Total Registrations</div></div>
+    <div class="stat-card"><div class="stat-num" id="a-pend" style="color:#8a5c0a">0</div><div class="stat-label">Pending Approval</div></div>
+    <div class="stat-card"><div class="stat-num" id="a-appr" style="color:var(--green)">0</div><div class="stat-label">Approved</div></div>
+    <div class="stat-card"><div class="stat-num" id="a-rej" style="color:var(--red)">0</div><div class="stat-label">Rejected</div></div>
+  </div>
+
+  <div class="card">
+    <div class="filter-row">
+      <button class="filter-chip active" onclick="filterAdmin('all',this)">All</button>
+      <button class="filter-chip" onclick="filterAdmin('Pending',this)">Pending</button>
+      <button class="filter-chip" onclick="filterAdmin('Approved',this)">Approved</button>
+      <button class="filter-chip" onclick="filterAdmin('Rejected',this)">Rejected</button>
+      <button class="filter-chip ml-auto" onclick="approveAll()" style="background:#e8f5ee;color:var(--green);border-color:#a8d5ba">Approve All Pending</button>
+    </div>
+    <div class="table-wrap">
+      <table id="admin-table">
+        <thead><tr><th>App ID</th><th>Candidate Name</th><th>Mobile</th><th>Courses Applied</th><th>Exam Date</th><th>Status</th><th>Action</th></tr></thead>
+        <tbody id="admin-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ===== EXAM PANEL ===== -->
+<div class="panel" id="panel-exam">
+  <div id="exam-login-screen">
+    <div class="login-container">
+      <div class="card">
+        <div style="text-align:center;margin-bottom:20px">
+          <div style="width:60px;height:60px;background:var(--navy);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--gold)">SIU</div>
+          <div class="card-title">Exam Portal Login</div>
+          <div class="card-sub" style="margin-bottom:0">Session 2026-27 | Talent Hunt Examination</div>
+        </div>
+        <div class="section-label">Candidate Login</div>
+        <div class="field" style="margin-bottom:14px">
+          <label>Application ID <span class="required">*</span></label>
+          <input type="text" id="exam-login-id" placeholder="Enter your Application ID (e.g. SIU123456)" style="text-align:center;font-weight:600;font-size:15px;letter-spacing:1px">
+        </div>
+        <button class="btn btn-navy btn-full" style="font-size:15px;padding:13px" onclick="loginToExam()">Access My Exam &rarr;</button>
+        <div class="alert alert-error" id="login-error" style="margin-top:10px"></div>
+        <div class="alert alert-warning" id="login-pending" style="margin-top:10px"></div>
+        <div class="alert alert-info" id="login-done" style="margin-top:10px"></div>
+        <div style="margin-top:16px;padding-top:14px;border-top:1px solid var(--border);font-size:12px;color:var(--gray);text-align:center">
+          Don't have an ID? <a href="#" onclick="showPanel('registration');return false;" style="color:var(--navy);font-weight:600">Register here</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="exam-active-screen" style="display:none">
+    <div class="exam-header">
+      <div class="exam-cand-info">
+        <h3 id="ex-name">Candidate Name</h3>
+        <p id="ex-info">App ID | Course | Session 2026-27</p>
+      </div>
+      <div class="exam-timer-box">
+        <div class="timer" id="ex-timer">25:00</div>
+        <p>Time Remaining</p>
+      </div>
+    </div>
+    <div class="progress-bar" style="margin-bottom:16px;height:5px;background:#e2ddd4;border-radius:3px;overflow:hidden"><div class="progress-fill" id="ex-time-bar" style="width:100%;background:var(--navy);height:100%;border-radius:3px;transition:width 1s linear"></div></div>
+
+    <div class="card" style="padding:16px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+        <div class="section-label" style="margin:0">Question Navigator</div>
+        <span style="font-size:12px;color:var(--gray)" id="ex-answered-count">0 / 10 answered</span>
+      </div>
+      <div class="q-nav" id="q-nav-dots"></div>
+    </div>
+
+    <div id="question-display"></div>
+
+    <div class="nav-btns">
+      <button class="btn btn-outline" id="btn-prev" onclick="navQ(-1)">&larr; Previous</button>
+      <div class="spacer"></div>
+      <button class="btn btn-outline" id="btn-next" onclick="navQ(1)">Next &rarr;</button>
+      <button class="btn btn-gold" onclick="confirmSubmitExam()" style="padding:11px 24px">Submit Exam &#10003;</button>
+    </div>
+  </div>
+
+  <div id="exam-result-screen" style="display:none">
+    <div class="card">
+      <div class="result-hero">
+        <div style="font-size:13px;color:var(--gray);margin-bottom:12px">Talent Hunt Examination 2026-27 — Result</div>
+        <div style="font-size:17px;font-weight:600;color:var(--navy);margin-bottom:16px" id="res-candidate-name"></div>
+        <div class="result-score-ring" id="res-ring">
+          <div class="score-num" id="res-pct"></div>
+          <div class="score-unit">Score</div>
+        </div>
+        <div class="result-grade-badge" id="res-grade-badge"></div>
+        <div class="result-summary" id="res-summary-text"></div>
+        <div class="breakdown-grid">
+          <div class="breakdown-item"><div class="breakdown-num" id="res-correct" style="color:var(--green)"></div><div class="breakdown-label">Correct</div></div>
+          <div class="breakdown-item"><div class="breakdown-num" id="res-wrong" style="color:var(--red)"></div><div class="breakdown-label">Wrong</div></div>
+          <div class="breakdown-item"><div class="breakdown-num" id="res-skipped" style="color:var(--amber)"></div><div class="breakdown-label">Skipped</div></div>
+        </div>
+      </div>
+      <div style="padding:0 20px 20px">
+        <div class="section-label">Section-wise Performance</div>
+        <div id="section-performance"></div>
+        <div id="scholarship-banner" style="display:none" class="scholarship-banner">
+          <div class="sch-icon">&#127941;</div>
+          <div>
+            <div style="font-weight:700;font-size:15px;margin-bottom:3px">Merit Scholarship Qualified!</div>
+            <div style="font-size:13px;opacity:0.9">Congratulations! You have scored 75%+ and qualify for a merit scholarship at Saroj International University for Session 2026-27. Our admissions team will contact you shortly.</div>
+          </div>
+        </div>
+        <div style="margin-top:16px;text-align:center">
+          <button class="btn btn-navy" onclick="showPanel('results')">View Full Results Sheet</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== RESULTS PANEL ===== -->
+<div class="panel" id="panel-results">
+  <div class="card" style="background:var(--navy);border-color:var(--navy)">
+    <div><h2 style="font-family:'Playfair Display',serif;font-size:20px;color:#fff">Official Result Sheet</h2>
+    <p style="font-size:12px;color:rgba(255,255,255,0.65);margin-top:3px">Saroj International University — Talent Hunt Examination 2026-27</p></div>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat-card"><div class="stat-num" id="rs-total">0</div><div class="stat-label">Appeared</div></div>
+    <div class="stat-card"><div class="stat-num" id="rs-pass" style="color:var(--green)">0</div><div class="stat-label">Qualified</div></div>
+    <div class="stat-card"><div class="stat-num" id="rs-top" style="color:var(--navy)">—</div><div class="stat-label">Top Score</div></div>
+    <div class="stat-card"><div class="stat-num" id="rs-avg" style="color:var(--navy)">—</div><div class="stat-label">Average Score</div></div>
+  </div>
+
+  <div class="card">
+    <div class="filter-row">
+      <button class="filter-chip active" onclick="filterResults('all',this)">All</button>
+      <button class="filter-chip" onclick="filterResults('A',this)">Grade A</button>
+      <button class="filter-chip" onclick="filterResults('B',this)">Grade B</button>
+      <button class="filter-chip" onclick="filterResults('C',this)">Grade C</button>
+      <button class="filter-chip" onclick="filterResults('F',this)">Not Qualified</button>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>App ID</th><th>Candidate</th><th>Course</th><th>Score</th><th>Grade</th><th>Scholarship</th><th>Status</th></tr></thead>
+        <tbody id="results-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<script>
+// ---- STATE ----
+var DB = { registrations: [], currentFilter: 'all', resultFilter: 'all' };
+var EXAM = { candidate: null, questions: [], currentQ: 0, answers: {}, timerInterval: null, timeLeft: 1500, totalTime: 1500, submitted: false };
+var selectedCourses = [];
+var currentStep = 1;
+
+// ---- QUESTION BANK ----
+var QB = {
+  "B.Tech": [
+    {q:"If a train travels 60 km in 45 minutes, what is its speed in km/h?",opts:["80 km/h","90 km/h","75 km/h","100 km/h"],ans:0,sec:"Mathematics"},
+    {q:"What is the SI unit of electric current?",opts:["Volt","Watt","Ampere","Ohm"],ans:2,sec:"Physics"},
+    {q:"If 2x + 5 = 17, what is x?",opts:["5","6","7","4"],ans:1,sec:"Mathematics"},
+    {q:"Which of the following is a renewable energy source?",opts:["Coal","Solar","Natural Gas","Petroleum"],ans:1,sec:"Science"},
+    {q:"The chemical formula of water is:",opts:["H2O2","H2O","HO","H3O"],ans:1,sec:"Chemistry"},
+    {q:"Which component stores data temporarily in a computer?",opts:["ROM","HDD","RAM","CPU"],ans:2,sec:"Computers"},
+    {q:"Find the odd one out: 2, 4, 6, 9, 12",opts:["2","6","9","12"],ans:2,sec:"Reasoning"},
+    {q:"Newton's second law relates force to:",opts:["Velocity","Acceleration","Speed","Distance"],ans:1,sec:"Physics"},
+    {q:"Choose the correct meaning of 'Diligent':",opts:["Lazy","Hardworking","Careless","Confused"],ans:1,sec:"English"},
+    {q:"Who invented the telephone?",opts:["Edison","Tesla","Bell","Marconi"],ans:2,sec:"GK"}
+  ],
+  "BBA": [
+    {q:"Which of these is a function of management?",opts:["Production","Planning","Transportation","Advertising"],ans:1,sec:"Management"},
+    {q:"GDP stands for:",opts:["Gross Domestic Product","General Demand Price","Gross Development Plan","None"],ans:0,sec:"Economics"},
+    {q:"If a product costs Rs. 400 and profit is 25%, the selling price is:",opts:["Rs. 450","Rs. 480","Rs. 500","Rs. 520"],ans:2,sec:"Mathematics"},
+    {q:"A cheque is a:",opts:["Currency note","Negotiable instrument","Bond","Promissory note"],ans:1,sec:"Commerce"},
+    {q:"Find the next number: 3, 6, 12, 24, ?",opts:["36","42","48","54"],ans:2,sec:"Reasoning"},
+    {q:"India's currency is regulated by:",opts:["SBI","SEBI","RBI","Finance Ministry"],ans:2,sec:"Economics"},
+    {q:"Marketing mix consists of how many Ps?",opts:["2","3","4","5"],ans:2,sec:"Management"},
+    {q:"Which of these is NOT a type of business ownership?",opts:["Partnership","Sole proprietorship","Corporation","Municipality"],ans:3,sec:"Commerce"},
+    {q:"Choose the correct spelling:",opts:["Accomodate","Accommodate","Acommodate","Acomodate"],ans:1,sec:"English"},
+    {q:"If an article is sold for Rs. 480 at a loss of 20%, its cost price is:",opts:["Rs. 550","Rs. 600","Rs. 620","Rs. 640"],ans:1,sec:"Mathematics"}
+  ],
+  "MBA": [
+    {q:"SWOT analysis stands for:",opts:["Strengths, Weaknesses, Opportunities, Threats","System, Work, Output, Target","None of above","Strategic, Workload, Operational, Technical"],ans:0,sec:"Strategy"},
+    {q:"'Blue Ocean Strategy' was introduced by:",opts:["Porter","Drucker","Kim & Mauborgne","Kotler"],ans:2,sec:"Strategy"},
+    {q:"Which financial statement shows assets, liabilities and equity?",opts:["Income Statement","Cash Flow Statement","Balance Sheet","P&L Account"],ans:2,sec:"Finance"},
+    {q:"If ROI = 20% and investment is Rs. 5,00,000, the profit is:",opts:["Rs. 80,000","Rs. 1,00,000","Rs. 1,20,000","Rs. 90,000"],ans:1,sec:"Finance"},
+    {q:"Herzberg's two-factor theory relates to:",opts:["Leadership","Motivation","Communication","Strategy"],ans:1,sec:"HR"},
+    {q:"GST replaced which tax system in India?",opts:["VAT only","Multiple indirect taxes","Income tax","Corporate tax"],ans:1,sec:"Economics"},
+    {q:"Which is a primary market activity?",opts:["Trading of existing shares","IPO","Bond trading","Repo rate"],ans:1,sec:"Finance"},
+    {q:"What does 'B2B' mean?",opts:["Bank to Bank","Business to Business","Business to Buyer","None"],ans:1,sec:"Management"},
+    {q:"The manager __ the report yesterday. (Choose correct form)",opts:["submits","submitted","will submit","submitting"],ans:1,sec:"English"},
+    {q:"Find the next in series: 1, 1, 2, 3, 5, 8, ?",opts:["11","12","13","14"],ans:2,sec:"Reasoning"}
+  ],
+  "LLB": [
+    {q:"The Constitution of India came into force on:",opts:["15 Aug 1947","26 Jan 1950","26 Nov 1949","2 Oct 1948"],ans:1,sec:"Constitutional Law"},
+    {q:"'Habeas Corpus' writ relates to:",opts:["Property rights","Personal liberty","Election disputes","Tax evasion"],ans:1,sec:"Constitutional Law"},
+    {q:"Which Article of Constitution deals with Right to Equality?",opts:["Article 12","Article 14","Article 19","Article 21"],ans:1,sec:"Constitutional Law"},
+    {q:"A contract requires which element to be valid?",opts:["Offer only","Offer and acceptance","Offer, acceptance and consideration","None"],ans:2,sec:"Contract Law"},
+    {q:"'Mens rea' in criminal law means:",opts:["Guilty act","Guilty mind","Crime scene","Evidence"],ans:1,sec:"Criminal Law"},
+    {q:"The Right to Information Act was passed in:",opts:["2000","2003","2005","2007"],ans:2,sec:"Law"},
+    {q:"Find odd one out: IPC, CrPC, CPC, MPC",opts:["IPC","CrPC","CPC","MPC"],ans:3,sec:"Reasoning"},
+    {q:"The Supreme Court of India has how many judges including CJI?",opts:["25","30","34","40"],ans:2,sec:"Constitutional Law"},
+    {q:"Correct meaning of 'Jurisprudence':",opts:["Court procedure","Science of law","Criminal act","Law enforcement"],ans:1,sec:"English"},
+    {q:"Which UN organ settles international disputes?",opts:["General Assembly","Security Council","ICJ","WHO"],ans:2,sec:"GK"}
+  ],
+  "MBBS": [
+    {q:"Normal human body temperature is:",opts:["35°C","36°C","37°C","38°C"],ans:2,sec:"Physiology"},
+    {q:"Which blood group is the universal donor?",opts:["A","B","AB","O"],ans:3,sec:"Biology"},
+    {q:"DNA stands for:",opts:["Deoxyribonucleic Acid","Diribonucleic Acid","Deoxyribonuclear Acid","None"],ans:0,sec:"Biology"},
+    {q:"The powerhouse of the cell is:",opts:["Nucleus","Ribosome","Mitochondria","Golgi body"],ans:2,sec:"Biology"},
+    {q:"Which vitamin is produced by sunlight?",opts:["Vitamin A","Vitamin B","Vitamin C","Vitamin D"],ans:3,sec:"Nutrition"},
+    {q:"Insulin is produced by which organ?",opts:["Liver","Kidney","Pancreas","Stomach"],ans:2,sec:"Physiology"},
+    {q:"If heart beats 72 times/min, how many times in 1 hour?",opts:["3600","4200","4320","4800"],ans:2,sec:"Mathematics"},
+    {q:"Malaria is caused by:",opts:["Bacteria","Virus","Protozoa","Fungus"],ans:2,sec:"Microbiology"},
+    {q:"Study of blood is called:",opts:["Cardiology","Hematology","Nephrology","Neurology"],ans:1,sec:"Medical Science"},
+    {q:"Which part of the brain controls balance?",opts:["Cerebrum","Medulla","Cerebellum","Thalamus"],ans:2,sec:"Anatomy"}
+  ],
+  "B.Pharma": [
+    {q:"The branch of pharmacology dealing with drug interactions is:",opts:["Pharmacokinetics","Pharmacodynamics","Pharmacogenomics","Toxicology"],ans:1,sec:"Pharmacology"},
+    {q:"pH of blood is approximately:",opts:["6.8","7.4","7.0","8.0"],ans:1,sec:"Biochemistry"},
+    {q:"Aspirin belongs to which drug class?",opts:["Antibiotic","NSAID","Antiviral","Analgesic opioid"],ans:1,sec:"Pharmacology"},
+    {q:"Which organ primarily metabolises drugs?",opts:["Kidney","Heart","Liver","Lungs"],ans:2,sec:"Physiology"},
+    {q:"Normal blood glucose level (fasting) is:",opts:["50-70 mg/dL","70-100 mg/dL","120-150 mg/dL","150-200 mg/dL"],ans:1,sec:"Biochemistry"},
+    {q:"Find the odd one out: 3, 6, 9, 14, 15",opts:["3","6","14","15"],ans:2,sec:"Reasoning"},
+    {q:"Insulin is used to treat:",opts:["Hypertension","Diabetes Mellitus","Asthma","Arthritis"],ans:1,sec:"Pharmacology"},
+    {q:"Which vitamin deficiency causes scurvy?",opts:["Vitamin A","Vitamin B12","Vitamin C","Vitamin D"],ans:2,sec:"Nutrition"},
+    {q:"Choose the correct spelling:",opts:["Presciption","Prescription","Priscription","Prescreption"],ans:1,sec:"English"},
+    {q:"USFDA stands for:",opts:["US Food and Drug Authority","US Food and Drug Administration","United States Federal Drug Agency","None"],ans:1,sec:"GK"}
+  ],
+  "default": [
+    {q:"What is 15% of 200?",opts:["25","30","35","40"],ans:1,sec:"Mathematics"},
+    {q:"The capital of India is:",opts:["Mumbai","Kolkata","New Delhi","Chennai"],ans:2,sec:"GK"},
+    {q:"Choose the correct spelling:",opts:["Recieve","Receive","Receve","Receeve"],ans:1,sec:"English"},
+    {q:"Complete the series: 5, 10, 20, 40, ?",opts:["60","70","80","90"],ans:2,sec:"Reasoning"},
+    {q:"If a man walks 4 km in 1 hour, how far in 90 minutes?",opts:["5 km","6 km","7 km","8 km"],ans:1,sec:"Mathematics"},
+    {q:"Photosynthesis takes place in which part of a plant?",opts:["Root","Stem","Leaf","Flower"],ans:2,sec:"Science"},
+    {q:"Find the odd one: Cat, Dog, Eagle, Cow",opts:["Cat","Dog","Eagle","Cow"],ans:2,sec:"Reasoning"},
+    {q:"ISRO stands for:",opts:["Indian Space Research Organisation","Indian Science Research Organisation","International Space Research Organisation","None"],ans:0,sec:"GK"},
+    {q:"Choose the antonym of 'Abundant':",opts:["Plentiful","Scarce","Rich","Ample"],ans:1,sec:"English"},
+    {q:"Which planet is known as the Red Planet?",opts:["Jupiter","Saturn","Mars","Venus"],ans:2,sec:"Science"}
+  ]
+};
+
+function getQuestions(courses) {
+  var keys = Object.keys(QB).filter(k => k !== 'default');
+  for (var i = 0; i < courses.length; i++) {
+    for (var j = 0; j < keys.length; j++) {
+      if (courses[i].indexOf(keys[j]) >= 0 || keys[j].indexOf(courses[i]) >= 0) return QB[keys[j]];
+    }
+  }
+  return QB.default;
+}
+
+// ---- NAVIGATION ----
+function showPanel(id) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('panel-' + id).classList.add('active');
+  var idx = ['registration','admin','exam','results'].indexOf(id);
+  document.querySelectorAll('.nav-btn')[idx].classList.add('active');
+  if (id === 'admin') refreshAdminTable();
+  if (id === 'results') refreshResultsTable();
+}
+
+// ---- REGISTRATION STEPS ----
+function goStep(n) {
+  document.getElementById('reg-step' + currentStep).style.display = 'none';
+  currentStep = n;
+  document.getElementById('reg-step' + n).style.display = 'block';
+  for (var i = 1; i <= 3; i++) {
+    var sc = document.getElementById('sc' + i);
+    var sl = document.getElementById('sl' + i);
+    if (i < n) { sc.className = 'step-circle done'; sc.innerHTML = '&#10003;'; sl.className = 'step-label'; }
+    else if (i === n) { sc.className = 'step-circle active'; sc.textContent = i; sl.className = 'step-label active'; }
+    else { sc.className = 'step-circle inactive'; sc.textContent = i; sl.className = 'step-label'; }
+    if (i < 3) document.getElementById('line' + i).className = 'step-line' + (i < n ? ' done' : '');
+  }
+}
+
+function toggleChip(el) {
+  el.classList.toggle('sel');
+  var n = el.textContent;
+  if (el.classList.contains('sel')) { if (!selectedCourses.includes(n)) selectedCourses.push(n); }
+  else { selectedCourses = selectedCourses.filter(c => c !== n); }
+}
+
+function submitRegistration() {
+  var fn = document.getElementById('fn').value.trim();
+  var ln = document.getElementById('ln').value.trim();
+  var mob = document.getElementById('mobile').value.trim();
+  var email = document.getElementById('email').value.trim();
+  var errEl = document.getElementById('reg-error');
+  var sucEl = document.getElementById('reg-success');
+  errEl.style.display = 'none'; sucEl.style.display = 'none';
+  if (!fn || !ln) { errEl.textContent = 'Please enter your full name.'; errEl.style.display = 'block'; return; }
+  if (!mob) { errEl.textContent = 'Mobile number is required.'; errEl.style.display = 'block'; return; }
+  if (!email) { errEl.textContent = 'Email address is required.'; errEl.style.display = 'block'; return; }
+  if (selectedCourses.length === 0) { errEl.textContent = 'Please select at least one course in Step 2.'; errEl.style.display = 'block'; return; }
+  if (!document.getElementById('examdate').value) { errEl.textContent = 'Please select an exam date.'; errEl.style.display = 'block'; return; }
+  var id = 'SIU' + String(Date.now()).slice(-6);
+  var reg = {
+    id, name: fn + ' ' + ln, dob: document.getElementById('dob').value, gender: document.getElementById('gender').value,
+    mobile: mob, email, city: document.getElementById('city').value, state: document.getElementById('state').value,
+    qual: document.getElementById('qual').value, marks: document.getElementById('marks').value,
+    courses: [...selectedCourses], examDate: document.getElementById('examdate').value,
+    examMode: document.getElementById('exammode').value, centre: document.getElementById('centre').value,
+    medium: document.getElementById('medium').value, category: document.getElementById('categ').value,
+    source: document.getElementById('hearsrc').value, session: '2026-27',
+    status: 'Pending', score: null, grade: null, sectionData: null,
+    registeredAt: new Date().toLocaleString('en-IN')
+  };
+  DB.registrations.push(reg);
+  sucEl.innerHTML = '<strong>Registration Successful!</strong> Your Application ID is <strong style="font-size:16px;letter-spacing:1px">' + id + '</strong><br><small>Save this ID to access the exam after admin approval. Session 2026-27.</small>';
+  sucEl.style.display = 'block';
+  // reset
+  selectedCourses = [];
+  document.querySelectorAll('.chip.sel').forEach(c => c.classList.remove('sel'));
+  ['fn','ln','mobile','email','city','marks'].forEach(id => document.getElementById(id).value = '');
+  setTimeout(() => { sucEl.style.display = 'none'; goStep(1); }, 6000);
+}
+
+// ---- ADMIN ----
+function refreshAdminTable(filter) {
+  filter = filter || DB.currentFilter;
+  DB.currentFilter = filter;
+  var rows = filter === 'all' ? DB.registrations : DB.registrations.filter(r => r.status === filter);
+  document.getElementById('a-total').textContent = DB.registrations.length;
+  document.getElementById('a-pend').textContent = DB.registrations.filter(r => r.status === 'Pending').length;
+  document.getElementById('a-appr').textContent = DB.registrations.filter(r => r.status === 'Approved').length;
+  document.getElementById('a-rej').textContent = DB.registrations.filter(r => r.status === 'Rejected').length;
+  var tbody = document.getElementById('admin-tbody');
+  if (!rows.length) { tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:2rem;color:var(--gray)">No registrations found. Go to Registration tab to add candidates.</td></tr>'; return; }
+  tbody.innerHTML = rows.map(r => {
+    var bc = r.status === 'Pending' ? 'badge-pending' : r.status === 'Approved' ? 'badge-approved' : 'badge-rejected';
+    var done = r.score !== null ? ' <span class="badge badge-done" style="margin-left:4px">Exam Done</span>' : '';
+    var btns = r.status === 'Pending'
+      ? '<button class="btn-green" onclick="setStatus(\''+r.id+'\',\'Approved\')">Approve</button> <button class="btn-red" style="margin-left:4px" onclick="setStatus(\''+r.id+'\',\'Rejected\')">Reject</button>'
+      : (r.status === 'Approved' ? '<span style="font-size:11px;color:var(--green);font-weight:600">&#10003; Approved'+done+'</span>' : '<span style="font-size:11px;color:var(--red)">&#10005; Rejected</span>');
+    return '<tr><td style="font-weight:700;color:var(--navy);letter-spacing:0.5px">'+r.id+'</td><td>'+r.name+'</td><td>'+r.mobile+'</td><td>'+r.courses.slice(0,2).join(', ')+(r.courses.length>2?'…':'')+'</td><td>'+r.examDate+'</td><td><span class="badge '+bc+'">'+r.status+'</span></td><td>'+btns+'</td></tr>';
+  }).join('');
+}
+
+function filterAdmin(f, el) { document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active')); el.classList.add('active'); refreshAdminTable(f); }
+function setStatus(id, status) { var r = DB.registrations.find(x => x.id === id); if (r) { r.status = status; refreshAdminTable(); } }
+function approveAll() { DB.registrations.filter(r => r.status === 'Pending').forEach(r => r.status = 'Approved'); refreshAdminTable(); }
+
+function exportCSV() {
+  if (!DB.registrations.length) { alert('No data to export.'); return; }
+  var headers = ['App ID','Name','Mobile','Email','City','State','Courses','Qual','Exam Date','Mode','Session','Category','Source','Status','Score','Grade','Registered At'];
+  var rows = DB.registrations.map(r => [r.id,r.name,r.mobile,r.email,r.city,r.state,r.courses.join('|'),r.qual,r.examDate,r.examMode,r.session,r.category,r.source,r.status,r.score||'',r.grade||'',r.registeredAt].map(v => '"'+(v||'').toString().replace(/"/g,'""')+'"').join(','));
+  var csv = [headers.join(','), ...rows].join('\n');
+  var a = document.createElement('a'); a.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv); a.download = 'SIU_TalentHunt_2026-27.csv'; a.click();
+}
+
+// ---- EXAM ----
+function loginToExam() {
+  var id = document.getElementById('exam-login-id').value.trim().toUpperCase();
+  var r = DB.registrations.find(x => x.id === id);
+  var errEl = document.getElementById('login-error');
+  var pendEl = document.getElementById('login-pending');
+  var doneEl = document.getElementById('login-done');
+  [errEl, pendEl, doneEl].forEach(e => e.style.display = 'none');
+  if (!r) { errEl.textContent = 'Application ID not found. Please check your ID or register first.'; errEl.style.display = 'block'; return; }
+  if (r.status === 'Pending') { pendEl.innerHTML = '<strong>Pending Approval</strong> — Your application is awaiting admin review. Please check back after approval.'; pendEl.style.display = 'block'; return; }
+  if (r.status === 'Rejected') { errEl.innerHTML = '<strong>Application Rejected</strong> — Your application has been rejected. Please contact the admissions office.'; errEl.style.display = 'block'; return; }
+  if (r.score !== null) { doneEl.innerHTML = '<strong>Exam Already Completed</strong> — You scored <strong>'+r.score+'%</strong> (Grade '+r.grade+'). View your result in the Results tab.'; doneEl.style.display = 'block'; return; }
+  startExam(r);
+}
+
+function startExam(r) {
+  EXAM.candidate = r;
+  EXAM.questions = getQuestions(r.courses);
+  EXAM.currentQ = 0; EXAM.answers = {}; EXAM.submitted = false;
+  EXAM.timeLeft = 1500; EXAM.totalTime = 1500;
+  document.getElementById('exam-login-screen').style.display = 'none';
+  document.getElementById('exam-active-screen').style.display = 'block';
+  document.getElementById('ex-name').textContent = r.name + ' — ' + r.id;
+  document.getElementById('ex-info').textContent = 'Course: ' + r.courses.join(', ') + ' | ' + r.examDate + ' | Session 2026-27';
+  renderNavDots(); renderQuestion();
+  if (EXAM.timerInterval) clearInterval(EXAM.timerInterval);
+  EXAM.timerInterval = setInterval(function() {
+    if (EXAM.submitted) { clearInterval(EXAM.timerInterval); return; }
+    EXAM.timeLeft--;
+    var pct = Math.round(EXAM.timeLeft / EXAM.totalTime * 100);
+    document.getElementById('ex-time-bar').style.width = pct + '%';
+    var m = Math.floor(EXAM.timeLeft / 60), s = EXAM.timeLeft % 60;
+    document.getElementById('ex-timer').textContent = (m < 10 ? '0' : '') + m + ':' + (s < 10 ? '0' : '') + s;
+    if (EXAM.timeLeft <= 300) document.getElementById('ex-timer').style.color = '#f0d080';
+    if (EXAM.timeLeft <= 60) document.getElementById('ex-timer').style.color = '#ff9999';
+    if (EXAM.timeLeft <= 0) { clearInterval(EXAM.timerInterval); finalizeExam(); }
+  }, 1000);
+}
+
+function renderNavDots() {
+  var html = '';
+  for (var i = 0; i < EXAM.questions.length; i++) {
+    var cls = 'q-dot' + (EXAM.answers[i] !== undefined ? ' answered' : '') + (i === EXAM.currentQ ? ' current' : '');
+    html += '<div class="' + cls + '" onclick="jumpQ(' + i + ')">' + (i + 1) + '</div>';
+  }
+  document.getElementById('q-nav-dots').innerHTML = html;
+  var ans = Object.keys(EXAM.answers).length;
+  document.getElementById('ex-answered-count').textContent = ans + ' / ' + EXAM.questions.length + ' answered';
+}
+
+function renderQuestion() {
+  var q = EXAM.questions[EXAM.currentQ];
+  var html = '<div class="question-card"><div class="q-meta">Question ' + (EXAM.currentQ + 1) + ' of ' + EXAM.questions.length + ' &nbsp;&#183;&nbsp; ' + q.sec + '</div>';
+  html += '<div class="q-text">' + q.q + '</div>';
+  q.opts.forEach(function(opt, i) {
+    var cls = 'option' + (EXAM.answers[EXAM.currentQ] === i ? ' selected' : '');
+    html += '<div class="' + cls + '" onclick="selectAnswer(' + i + ')"><div class="opt-label">' + String.fromCharCode(65 + i) + '</div><span>' + opt + '</span></div>';
+  });
+  html += '</div>';
+  document.getElementById('question-display').innerHTML = html;
+  document.getElementById('btn-prev').disabled = EXAM.currentQ === 0;
+  document.getElementById('btn-next').disabled = EXAM.currentQ === EXAM.questions.length - 1;
+}
+
+function selectAnswer(i) { EXAM.answers[EXAM.currentQ] = i; renderQuestion(); renderNavDots(); }
+function navQ(d) { var nq = EXAM.currentQ + d; if (nq >= 0 && nq < EXAM.questions.length) { EXAM.currentQ = nq; renderQuestion(); renderNavDots(); } }
+function jumpQ(i) { EXAM.currentQ = i; renderQuestion(); renderNavDots(); }
+
+function confirmSubmitExam() {
+  var unanswered = EXAM.questions.length - Object.keys(EXAM.answers).length;
+  if (unanswered > 0) {
+    if (!confirm('You have ' + unanswered + ' unanswered question(s). Are you sure you want to submit?')) return;
+  }
+  finalizeExam();
+}
+
+function finalizeExam() {
+  if (EXAM.submitted) return;
+  EXAM.submitted = true;
+  clearInterval(EXAM.timerInterval);
+  var correct = 0, sectionData = {};
+  EXAM.questions.forEach(function(q, i) {
+    if (!sectionData[q.sec]) sectionData[q.sec] = { total: 0, correct: 0 };
+    sectionData[q.sec].total++;
+    if (EXAM.answers[i] === q.ans) { correct++; sectionData[q.sec].correct++; }
+  });
+  var total = EXAM.questions.length;
+  var pct = Math.round(correct / total * 100);
+  var grade, gClass;
+  if (pct >= 75) { grade = 'A'; gClass = 'badge-a'; }
+  else if (pct >= 55) { grade = 'B'; gClass = 'badge-b'; }
+  else if (pct >= 40) { grade = 'C'; gClass = 'badge-c'; }
+  else { grade = 'F'; gClass = 'badge-f'; }
+  EXAM.candidate.score = pct; EXAM.candidate.grade = grade; EXAM.candidate.sectionData = sectionData;
+
+  document.getElementById('exam-active-screen').style.display = 'none';
+  document.getElementById('exam-result-screen').style.display = 'block';
+  document.getElementById('res-candidate-name').textContent = EXAM.candidate.name + ' — ' + EXAM.candidate.id;
+  document.getElementById('res-pct').textContent = pct + '%';
+  var gb = document.getElementById('res-grade-badge');
+  gb.textContent = 'Grade ' + grade; gb.className = 'result-grade-badge ' + gClass;
+  document.getElementById('res-ring').style.borderColor = grade === 'A' ? 'var(--green)' : grade === 'F' ? 'var(--red)' : 'var(--navy)';
+  document.getElementById('res-summary-text').textContent = 'You answered ' + correct + ' out of ' + total + ' questions correctly. (' + Object.keys(EXAM.answers).length + ' attempted, ' + (total - Object.keys(EXAM.answers).length) + ' skipped)';
+  document.getElementById('res-correct').textContent = correct;
+  document.getElementById('res-wrong').textContent = Object.keys(EXAM.answers).length - correct;
+  document.getElementById('res-skipped').textContent = total - Object.keys(EXAM.answers).length;
+
+  var secHtml = '';
+  Object.keys(sectionData).forEach(sec => {
+    var d = sectionData[sec], sp = Math.round(d.correct / d.total * 100);
+    var fillColor = sp >= 75 ? 'var(--green)' : sp >= 50 ? 'var(--navy)' : sp >= 40 ? 'var(--amber)' : 'var(--red)';
+    secHtml += '<div class="section-bar-row"><div class="section-bar-label">' + sec + '</div><div class="section-bar-track"><div class="section-bar-fill" style="width:' + sp + '%;background:' + fillColor + '"><span>' + sp + '%</span></div></div></div>';
+  });
+  document.getElementById('section-performance').innerHTML = secHtml;
+  document.getElementById('scholarship-banner').style.display = grade === 'A' ? 'flex' : 'none';
+  refreshResultsTable();
+}
+
+// ---- RESULTS ----
+function filterResults(f, el) {
+  DB.resultFilter = f;
+  document.querySelectorAll('#panel-results .filter-chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  refreshResultsTable();
+}
+
+function refreshResultsTable() {
+  var appeared = DB.registrations.filter(r => r.score !== null);
+  var filtered = DB.resultFilter === 'all' ? appeared : appeared.filter(r => r.grade === DB.resultFilter);
+  document.getElementById('rs-total').textContent = appeared.length;
+  document.getElementById('rs-pass').textContent = appeared.filter(r => r.grade !== 'F').length;
+  var scores = appeared.map(r => r.score);
+  document.getElementById('rs-top').textContent = scores.length ? Math.max(...scores) + '%' : '—';
+  document.getElementById('rs-avg').textContent = scores.length ? Math.round(scores.reduce((a, b) => a + b, 0) / scores.length) + '%' : '—';
+  var tbody = document.getElementById('results-tbody');
+  if (!filtered.length) { tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:2rem;color:var(--gray)">No results available yet.</td></tr>'; return; }
+  tbody.innerHTML = filtered.map(r => {
+    var gc = r.grade === 'A' ? 'badge-a' : r.grade === 'B' ? 'badge-b' : r.grade === 'C' ? 'badge-c' : 'badge-f';
+    var sch = r.grade === 'A' ? '<span class="badge badge-approved">Eligible</span>' : '<span style="font-size:12px;color:var(--gray)">—</span>';
+    var st = r.grade !== 'F' ? '<span class="badge badge-approved">Qualified</span>' : '<span class="badge badge-rejected">Not Qualified</span>';
+    return '<tr><td style="font-weight:700;color:var(--navy)">'+r.id+'</td><td>'+r.name+'</td><td>'+r.courses[0]+'</td><td style="font-weight:700;font-size:15px">'+r.score+'%</td><td><span class="badge '+gc+'">Grade '+r.grade+'</span></td><td>'+sch+'</td><td>'+st+'</td></tr>';
+  }).join('');
+}
+</script>
+</body>
+</html>

@@ -3,7 +3,7 @@ import '../css/SocialMediaIcons.css';
 
 const FloatingSocialMediaIcons = () => {
   return (
-    <div className="fixed top-1/2 left-0 -translate-y-1/2 z-50">
+    <div className="fixed top-1/2 left-0 -translate-y-1/2 z-50 hidden sm:block">
         <div className="bg-white py-2 rounded-lg shadow-lg">
             <ul className="iconsFooter flex flex-col gap-4 ">
               <li className="icon-contentFooter">

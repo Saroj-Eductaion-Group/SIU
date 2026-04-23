@@ -451,8 +451,16 @@ function Header() {
                   )}
                 </li>
               ))}
+              {/* Talent Hunt Button - Mobile */}
+              <li className='mt-2'>
+                <a href='/talent-hunt'>
+                  <button className='w-full bg-yellow-500 hover:bg-yellow-600 text-white font-semibold px-6 py-3 rounded-md transition duration-300 flex items-center justify-center gap-2'>
+                    🏆 Talent Hunt 2026-27
+                  </button>
+                </a>
+              </li>
               {/* Apply Now Button - Mobile */}
-              <li className='mt-4'>
+              <li className='mt-2'>
                 <a href='https://siu.in8.nopaperforms.com/' target='_blank' rel='noopener noreferrer'>
                   <button className='w-full bg-red-500 hover:bg-red-600 text-white font-semibold px-6 py-3 rounded-md transition duration-300'>Apply Now</button>
                 </a>

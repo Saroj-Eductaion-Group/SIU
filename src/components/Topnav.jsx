@@ -5,9 +5,20 @@ import SearchBar from './SearchBar';
 
 const TopNav = () => {
   return (
-    <div className="bg-gradient-to-r  from-blue-900 z-[999] to-blue-800 text-white shadow-sm font-funneldisplay">
+    <div className="bg-gradient-to-r from-blue-900 z-[999] to-blue-800 text-white shadow-sm font-funneldisplay">
       <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="md:flex md:flex-row hidden  justify-between items-center py-1 gap-2 sm:gap-0">
+        {/* Mobile — only Talent Hunt button */}
+        <div className="flex md:hidden justify-center py-1.5">
+          <a
+            href="/talent-hunt"
+            className="bg-yellow-500 hover:bg-yellow-600 text-blue-900 font-bold px-4 py-1.5 rounded-md text-xs whitespace-nowrap"
+          >
+            🏆 Talent Hunt 2026-27
+          </a>
+        </div>
+
+        {/* Desktop */}
+        <div className="md:flex md:flex-row hidden justify-between items-center py-1 gap-2 sm:gap-0">
           {/* Contact Info - Wrapped for better mobile display */}
           <div className=" flex-wrap flex items-center justify-center sm:justify-start gap-x-4 gap-y-1 text-sm m-2">
             
@@ -59,16 +70,26 @@ href='/fee-payment'            target="_blank"
           </div>
 
           {/* SIUET Form Button with Enhanced Blinking Effect */}
-          <a 
-            href="https://docs.google.com/forms/d/e/1FAIpQLSeRz6xp5FxhMEHH-nh0G9lsNvH0m12dJbVk2gKjB0umw-qxZg/viewform" 
-            target="_blank"
-            rel="noopener noreferrer"
-            className="bg-red-600 hover:bg-red-700 text-white px-4 py-1 rounded-md font-medium transition-all duration-300 shadow-lg hover:shadow-red-500/20 animate-[pulse_2s_infinite] whitespace-nowrap text-sm sm:text-base"
-            aria-label="Apply via SIUET Form"
-          >
-            SIUAT Application Form
-          </a>
+          <div className="flex items-center gap-2">
+            <a 
+              href="https://docs.google.com/forms/d/e/1FAIpQLSeRz6xp5FxhMEHH-nh0G9lsNvH0m12dJbVk2gKjB0umw-qxZg/viewform" 
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-red-600 hover:bg-red-700 text-white px-4 py-1 rounded-md font-medium transition-all duration-300 shadow-lg hover:shadow-red-500/20 animate-[pulse_2s_infinite] whitespace-nowrap text-sm sm:text-base"
+              aria-label="Apply via SIUAT Form"
+            >
+              SIUAT Application Form
+            </a>
+            <a 
+              href="/talent-hunt"
+              className="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-1 rounded-md font-medium transition-all duration-300 shadow-lg animate-[pulse_2s_infinite] whitespace-nowrap text-sm sm:text-base"
+              aria-label="Talent Hunt 2026-27"
+            >
+              Talent Hunt 2026-27
+            </a>
+          </div>
         </div>
+        {/* End Desktop */}
       </div>
     </div>
   );
