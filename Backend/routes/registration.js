@@ -3,6 +3,16 @@ const router = express.Router();
 const Registration = require('../models/Registration');
 const auth = require('../middleware/auth');
 
+// PUBLIC — Get seat availability
+router.get('/seats', async (req, res) => {
+  try {
+    const count = await Registration.countDocuments();
+    res.json({ filled: count, left: Math.max(0, 500 - count), total: 500 });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
 // PUBLIC — Get all results (only completed exams)
 router.get('/results', async (req, res) => {
   try {

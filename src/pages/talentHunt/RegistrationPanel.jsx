@@ -1,26 +1,32 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { EXAM_DATES, MAX_SEATS } from './thData';
 
 const BASE = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 const API = `${BASE}/registrations`;
-const UG   = ['B.Tech','BBA','BCA','B.Sc','B.Com','BA','B.Ed','B.Arch'];
-const PG   = ['MBA','M.Tech','MCA','M.Sc','M.Com','MA','M.Ed','M.Phil'];
-const PROF = ['LLB (Law)','LLM','B.Pharma','M.Pharma','MBBS','BDS','B.Nursing','BAMS'];
+const UG   = ['B.Tech','BBA','BCA','B.Sc','B.Com','BA'];
+const PG   = ['MBA','M.Tech','MCA','M.Sc','M.Com','MA'];
+const PROF = ['LLB (Law)','LLM','B.Pharma','M.Pharma'];
 
 const inp = 'w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-blue-700 focus:ring-1 focus:ring-blue-700 bg-white';
 const lbl = 'block text-xs font-semibold text-gray-700 mb-1';
 
-export default function RegistrationPanel() {
+export default function RegistrationPanel({ onOpenScholarship }) {
   const [step, setStep]       = useState(1);
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(false);
   const [err, setErr]         = useState('');
   const [appId, setAppId]     = useState('');
+  const [seatsLeft, setSeatsLeft] = useState(null);
   const [f, setF] = useState({
     fn:'', ln:'', dob:'', gender:'', mobile:'', email:'', city:'', state:'',
     qual:'', board:'', marks:'', yop:'',
     examdate:'', exammode:'Online (CBT)', centre:'', medium:'English',
-    categ:'General', scholar:'Yes, interested', hearsrc:''
+    categ:'General', scholar:'Yes, very interested', hearsrc:''
   });
+
+  useEffect(() => {
+    fetch(`${API}/seats`).then(r => r.json()).then(d => setSeatsLeft(d.left)).catch(() => {});
+  }, []);
 
   const upd = e => setF(p => ({ ...p, [e.target.name]: e.target.value }));
   const toggle = c => setCourses(p => p.includes(c) ? p.filter(x=>x!==c) : [...p,c]);
@@ -29,16 +35,17 @@ export default function RegistrationPanel() {
     setErr('');
     if (n === 2) {
       if (!f.fn || !f.ln) return setErr('Please enter your full name.');
-      if (!f.dob) return setErr('Date of Birth is required.');
-      if (!f.gender) return setErr('Please select your gender.');
-      if (!f.mobile) return setErr('Mobile number is required.');
-      if (!f.email) return setErr('Email address is required.');
-      if (!f.city) return setErr('City is required.');
-      if (!f.state) return setErr('Please select your state.');
+      if (!f.dob)         return setErr('Date of Birth is required.');
+      if (!f.gender)      return setErr('Please select your gender.');
+      if (!f.mobile)      return setErr('Mobile number is required.');
+      if (!/^[6-9]\d{9}$/.test(f.mobile.replace(/^(\+91|91|0)/, '').replace(/\s/g,'')))
+        return setErr('Please enter a valid 10-digit Indian mobile number.');
+      if (!f.email)       return setErr('Email address is required.');
+      if (!f.city)        return setErr('City is required.');
+      if (!f.state)       return setErr('Please select your state.');
     }
     if (n === 3) {
-      if (!f.qual) return setErr('Please select your qualification.');
-      if (!f.marks) return setErr('Please enter your percentage/CGPA.');
+      if (!f.qual)           return setErr('Please select your qualification.');
       if (courses.length === 0) return setErr('Please select at least one course.');
     }
     setStep(n);
@@ -46,12 +53,7 @@ export default function RegistrationPanel() {
 
   const submit = async () => {
     setErr('');
-    if (!f.fn||!f.ln) return setErr('Please enter your full name.');
-    if (!f.mobile) return setErr('Mobile number is required.');
-    if (!/^[6-9]\d{9}$/.test(f.mobile.replace(/^(\+91|91|0)/, '').replace(/\s/g,''))) return setErr('Please enter a valid 10-digit Indian mobile number.');
-    if (!f.email) return setErr('Email address is required.');
-    if (!courses.length) return setErr('Please select at least one course in Step 2.');
-    if (!f.examdate)  return setErr('Please select an exam date.');
+    if (!f.examdate) return setErr('Please select an exam date.');
     setLoading(true);
     try {
       const res = await fetch(`${API}/register`, {
@@ -71,7 +73,7 @@ export default function RegistrationPanel() {
         setAppId(data.appId);
         setStep(4);
         setCourses([]);
-        setF({ fn:'',ln:'',dob:'',gender:'',mobile:'',email:'',city:'',state:'',qual:'',board:'',marks:'',yop:'',examdate:'',exammode:'Online (CBT)',centre:'',medium:'English',categ:'General',scholar:'Yes, interested',hearsrc:'' });
+        setF({ fn:'',ln:'',dob:'',gender:'',mobile:'',email:'',city:'',state:'',qual:'',board:'',marks:'',yop:'',examdate:'',exammode:'Online (CBT)',centre:'',medium:'English',categ:'General',scholar:'Yes, very interested',hearsrc:'' });
       } else {
         setErr(data.message || 'Registration failed. Please try again.');
       }
@@ -94,31 +96,46 @@ export default function RegistrationPanel() {
       <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
         <svg className="w-10 h-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7"/></svg>
       </div>
-      <h2 className="text-2xl font-bold text-blue-800 mb-2">Registration Successful!</h2>
-      <p className="text-gray-500 mb-4 text-sm">Your Application ID is:</p>
+      <h2 className="text-2xl font-bold text-blue-800 mb-1">Registration Successful!</h2>
+      <p className="text-gray-500 mb-4 text-sm">Your SIUAT Application ID is:</p>
       <div className="bg-blue-700 text-white text-2xl sm:text-3xl font-bold tracking-widest px-6 py-4 rounded-xl inline-block mb-3 font-outfit">{appId}</div>
       <div className="mb-4">
         <button onClick={copyId} className={`text-xs font-semibold px-4 py-1.5 rounded-full border transition ${copied?'bg-green-100 text-green-700 border-green-300':'bg-gray-100 text-gray-600 border-gray-300 hover:border-blue-700 hover:text-blue-700'}`}>
           {copied ? '✓ Copied!' : '📋 Copy ID'}
         </button>
       </div>
-      <p className="text-gray-500 text-sm mb-6">Save this ID. You'll need it to access the exam after admin approval.</p>
-      <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-6 text-left">
+      <p className="text-gray-500 text-sm mb-4">Save this ID. You'll need it to access the exam after admin approval.</p>
+      <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-4 text-left">
         <p className="text-amber-800 text-xs font-semibold mb-1">⚠️ Next Steps:</p>
         <ol className="text-amber-700 text-xs space-y-1 list-decimal list-inside">
-          <li>Wait for Admin approval (you'll be notified)</li>
-          <li>Go to <strong>Exam Portal</strong> tab</li>
+          <li>Wait for Admin approval</li>
+          <li>Go to <strong>Exam Portal</strong> tab on your exam date</li>
           <li>Enter your Application ID to start the exam</li>
+          <li>Score 90%+ to win <strong>100% Scholarship!</strong></li>
         </ol>
       </div>
-      <button onClick={() => { setStep(1); setAppId(''); setCopied(false); }} className="bg-blue-700 hover:bg-blue-800 text-white font-semibold px-6 py-2 rounded-lg text-sm transition">Register Another Candidate</button>
+      <button onClick={() => onOpenScholarship && onOpenScholarship()} className="bg-yellow-500 hover:bg-yellow-600 text-blue-900 font-bold px-5 py-2 rounded-lg text-sm transition mb-3 mr-2">
+        🏆 View Scholarship Details
+      </button>
+      <button onClick={() => { setStep(1); setAppId(''); setCopied(false); }} className="bg-blue-700 hover:bg-blue-800 text-white font-semibold px-5 py-2 rounded-lg text-sm transition">
+        Register Another
+      </button>
     </div>
   );
 
-  const stepLabel = ['Personal Info', 'Academic & Courses', 'Exam Preference'];
+  const stepLabel = ['Personal Info & Qualification', 'Course Selection', 'Exam Preference'];
 
   return (
     <div>
+      {/* Capacity Banner */}
+      {seatsLeft !== null && seatsLeft !== undefined && !isNaN(seatsLeft) && (
+        <div className={`flex items-center gap-2 px-4 py-2.5 rounded-xl mb-4 text-sm font-medium ${seatsLeft <= 50 ? 'bg-red-50 border border-red-200 text-red-700' : seatsLeft <= 150 ? 'bg-amber-50 border border-amber-200 text-amber-700' : 'bg-blue-50 border border-blue-200 text-blue-700'}`}>
+          <span className="text-lg">{seatsLeft <= 50 ? '🔥' : '⚠️'}</span>
+          {seatsLeft <= 0 ? 'Registrations FULL (500/500). No more seats available.' :
+           seatsLeft <= 50 ? `Only ${seatsLeft} seats remaining out of 500! Register immediately.` :
+           `${MAX_SEATS - seatsLeft}/500 seats filled. ${seatsLeft} seats available.`}
+        </div>
+      )}
 
       {/* Stepper */}
       <div className="flex items-center mb-6">
@@ -142,8 +159,8 @@ export default function RegistrationPanel() {
       {/* STEP 1 */}
       {step === 1 && (
         <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 mb-4">
-          <h3 className="text-blue-800 font-bold text-lg font-outfit mb-1">Personal Information</h3>
-          <p className="text-gray-400 text-xs mb-4">Fill in your details as per school/college records.</p>
+          <h3 className="text-blue-800 font-bold text-lg font-outfit mb-1">Personal Information & Highest Qualification</h3>
+          <p className="text-gray-400 text-xs mb-4">Fill in your personal details and highest academic qualification as per your records.</p>
 
           <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3 pb-2 border-b border-gray-100">Basic Details</p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
@@ -156,24 +173,45 @@ export default function RegistrationPanel() {
                 <option>Male</option><option>Female</option><option>Other</option><option>Prefer not to say</option>
               </select>
             </div>
-          </div>
-
-          <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3 pb-2 border-b border-gray-100">Contact Details</p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div><label className={lbl}>Mobile Number <span className="text-red-500">*</span></label><input name="mobile" type="tel" value={f.mobile} onChange={upd} placeholder="+91 XXXXX XXXXX" className={inp}/></div>
+            <div><label className={lbl}>Mobile Number <span className="text-red-500">*</span></label><input name="mobile" type="tel" value={f.mobile} onChange={e=>{ const v=e.target.value.replace(/[^0-9+]/g,''); if(v.length<=13) upd({target:{name:'mobile',value:v}}); }} placeholder="+91 XXXXX XXXXX" maxLength={13} className={inp}/></div>
             <div><label className={lbl}>Email Address <span className="text-red-500">*</span></label><input name="email" type="email" value={f.email} onChange={upd} placeholder="email@example.com" className={inp}/></div>
             <div><label className={lbl}>City <span className="text-red-500">*</span></label><input name="city" value={f.city} onChange={upd} placeholder="Your city" className={inp}/></div>
             <div><label className={lbl}>State <span className="text-red-500">*</span></label>
               <select name="state" value={f.state} onChange={upd} className={inp}>
                 <option value="">-- Select State --</option>
-                {['Uttar Pradesh','Delhi','Bihar','Madhya Pradesh','Rajasthan','Gujarat','Maharashtra','Punjab','Haryana','Other'].map(s=><option key={s}>{s}</option>)}
+                {['Uttar Pradesh','Delhi','Bihar','Madhya Pradesh','Rajasthan','Gujarat','Maharashtra','Punjab','Haryana','Uttarakhand','Jharkhand','West Bengal','Other'].map(s=><option key={s}>{s}</option>)}
+              </select>
+            </div>
+          </div>
+
+          <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3 pb-2 border-b border-gray-100">Highest Qualification</p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div><label className={lbl}>Qualification Level <span className="text-red-500">*</span></label>
+              <select name="qual" value={f.qual} onChange={upd} className={inp}>
+                <option value="">-- Select --</option>
+                <option>Class 10 / Secondary</option>
+                <option>Class 12 / Intermediate / Higher Secondary</option>
+                <option>Diploma (Polytechnic / ITI)</option>
+                <option>B.A / B.Sc / B.Com (Graduation)</option>
+                <option>B.Tech / B.E (Engineering)</option>
+                <option>Other Bachelor's Degree</option>
+                <option>Master's Degree (PG)</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div><label className={lbl}>Board / University</label><input name="board" value={f.board} onChange={upd} placeholder="e.g. CBSE, UP Board, AKTU, LU" className={inp}/></div>
+            <div><label className={lbl}>Percentage / CGPA</label><input name="marks" value={f.marks} onChange={upd} placeholder="e.g. 85% or 8.5 CGPA" className={inp}/></div>
+            <div><label className={lbl}>Year of Passing</label>
+              <select name="yop" value={f.yop} onChange={upd} className={inp}>
+                <option value="">-- Select --</option>
+                <option>Appearing 2026</option><option>2025</option><option>2024</option><option>2023</option><option>2022</option><option>2021</option><option>2020 or earlier</option>
               </select>
             </div>
           </div>
 
           {err && <p className="mt-3 text-sm text-red-600 bg-red-50 border border-red-200 rounded-lg px-3 py-2">{err}</p>}
           <div className="flex justify-end mt-5">
-            <button onClick={() => next(2)} className="bg-blue-700 hover:bg-blue-800 text-white font-semibold px-6 py-2 rounded-lg text-sm transition">Next: Academic Details →</button>
+            <button onClick={() => next(2)} className="bg-blue-700 hover:bg-blue-800 text-white font-semibold px-6 py-2 rounded-lg text-sm transition">Next: Select Course →</button>
           </div>
         </div>
       )}
@@ -182,30 +220,9 @@ export default function RegistrationPanel() {
       {step === 2 && (
         <div>
           <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 mb-4">
-            <h3 className="text-blue-800 font-bold text-lg font-outfit mb-1">Academic Background</h3>
-            <p className="text-gray-400 text-xs mb-4">Enter your last qualification details.</p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div><label className={lbl}>Highest Qualification <span className="text-red-500">*</span></label>
-                <select name="qual" value={f.qual} onChange={upd} className={inp}>
-                  <option value="">-- Select --</option>
-                  <option>Class 10</option><option>Class 12 / Intermediate</option><option>Graduation</option><option>Post Graduation</option>
-                </select>
-              </div>
-              <div><label className={lbl}>Board / University</label><input name="board" value={f.board} onChange={upd} placeholder="e.g. CBSE, UP Board, LU" className={inp}/></div>
-              <div><label className={lbl}>Percentage / CGPA <span className="text-red-500">*</span></label><input name="marks" value={f.marks} onChange={upd} placeholder="e.g. 85% or 8.5 CGPA" className={inp}/></div>
-              <div><label className={lbl}>Year of Passing</label>
-                <select name="yop" value={f.yop} onChange={upd} className={inp}>
-                  <option value="">-- Select --</option>
-                  <option>Appearing 2026</option><option>2025</option><option>2024</option><option>2023</option><option>2022</option>
-                </select>
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 mb-4">
             <h3 className="text-blue-800 font-bold text-lg font-outfit mb-1">Select Desired Course(s)</h3>
-            <p className="text-gray-400 text-xs mb-4">Tap to select one or more courses. The exam will be tailored to your selection.</p>
-            {[['UG Programs','4 years',UG],['PG Programs','2 years',PG],['Professional Programs','3-5 years',PROF]].map(([label,dur,list])=>(
+            <p className="text-gray-400 text-xs mb-4">Tap to choose one or more courses. Your exam questions will be personalised to your selection.</p>
+            {[['UG Programs','3–4 years',UG],['PG Programs','2 years',PG],['Professional Programs','3–5 years',PROF]].map(([label,dur,list])=>(
               <div key={label} className="mb-4">
                 <div className="flex items-center gap-2 mb-2">
                   <span className="text-xs font-bold text-blue-800">{label}</span>
@@ -222,7 +239,6 @@ export default function RegistrationPanel() {
               </div>
             ))}
           </div>
-
           {err && <p className="mb-3 text-sm text-red-600 bg-red-50 border border-red-200 rounded-lg px-3 py-2">{err}</p>}
           <div className="flex justify-between">
             <button onClick={()=>next(1)} className="border border-gray-300 text-gray-600 hover:border-blue-700 hover:text-blue-700 font-semibold px-5 py-2 rounded-lg text-sm transition">← Back</button>
@@ -236,14 +252,12 @@ export default function RegistrationPanel() {
         <div>
           <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 mb-4">
             <h3 className="text-blue-800 font-bold text-lg font-outfit mb-1">Exam Preference</h3>
-            <p className="text-gray-400 text-xs mb-4">Choose your preferred exam date, mode, and centre.</p>
+            <p className="text-gray-400 text-xs mb-4">Select your preferred exam date, mode and centre.</p>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
               <div><label className={lbl}>Exam Date <span className="text-red-500">*</span></label>
                 <select name="examdate" value={f.examdate} onChange={upd} className={inp}>
                   <option value="">-- Select --</option>
-                  <option>15 May 2026 (Morning)</option><option>15 May 2026 (Evening)</option>
-                  <option>22 May 2026 (Morning)</option><option>22 May 2026 (Evening)</option>
-                  <option>01 Jun 2026 (Morning)</option><option>15 Jun 2026 (Morning)</option>
+                  {EXAM_DATES.map(d=><option key={d}>{d}</option>)}
                 </select>
               </div>
               <div><label className={lbl}>Exam Mode</label>
@@ -262,7 +276,7 @@ export default function RegistrationPanel() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
               <div><label className={lbl}>Medium of Exam</label>
                 <select name="medium" value={f.medium} onChange={upd} className={inp}>
-                  <option>English</option><option>Hindi</option><option>Bilingual (Both)</option>
+                  <option>English</option><option>Hindi</option><option>Bilingual</option>
                 </select>
               </div>
               <div><label className={lbl}>Category</label>
@@ -272,20 +286,19 @@ export default function RegistrationPanel() {
               </div>
               <div><label className={lbl}>Scholarship Interest</label>
                 <select name="scholar" value={f.scholar} onChange={upd} className={inp}>
-                  <option>Yes, interested</option><option>No, not required</option>
+                  <option>Yes, very interested</option><option>No, not required</option>
                 </select>
               </div>
               <div><label className={lbl}>How did you hear about us?</label>
                 <select name="hearsrc" value={f.hearsrc} onChange={upd} className={inp}>
                   <option value="">-- Select --</option>
                   <option>School / College</option><option>Social Media</option><option>Friends / Family</option>
-                  <option>Newspaper / Magazine</option><option>Coaching Institute</option>
+                  <option>Newspaper</option><option>Coaching Institute</option>
                   <option>University Website</option><option>Other</option>
                 </select>
               </div>
             </div>
           </div>
-
           {err && <p className="mb-3 text-sm text-red-600 bg-red-50 border border-red-200 rounded-lg px-3 py-2">{err}</p>}
           <div className="flex justify-between">
             <button onClick={()=>next(2)} className="border border-gray-300 text-gray-600 hover:border-blue-700 hover:text-blue-700 font-semibold px-5 py-2 rounded-lg text-sm transition">← Back</button>

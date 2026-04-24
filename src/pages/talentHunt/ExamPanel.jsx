@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { getQuestions } from './thData';
+import { getQuestions, calcGrade, DATE_MAP } from './thData';
 
 const BASE = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 const API  = `${BASE}/registrations`;
@@ -76,15 +76,7 @@ export default function ExamPanel({ onShowResults }) {
       if (!r.examOverride) {
         const today = new Date();
         const examDateStr = r.examDate || '';
-        const dateMap = {
-          '15 May 2026 (Morning)':  { date: '2026-05-15', slot: 'Morning (9:00 AM - 10:30 AM)' },
-          '15 May 2026 (Evening)':  { date: '2026-05-15', slot: 'Evening (2:00 PM - 3:30 PM)' },
-          '22 May 2026 (Morning)':  { date: '2026-05-22', slot: 'Morning (9:00 AM - 10:30 AM)' },
-          '22 May 2026 (Evening)':  { date: '2026-05-22', slot: 'Evening (2:00 PM - 3:30 PM)' },
-          '01 Jun 2026 (Morning)':  { date: '2026-06-01', slot: 'Morning (9:00 AM - 10:30 AM)' },
-          '15 Jun 2026 (Morning)':  { date: '2026-06-15', slot: 'Morning (9:00 AM - 10:30 AM)' },
-        };
-        const mapped = dateMap[examDateStr];
+        const mapped = DATE_MAP[examDateStr];
         if (mapped) {
           const todayDate = new Date(today.getFullYear(), today.getMonth(), today.getDate());
           const examDateOnly = new Date(mapped.date);
@@ -101,7 +93,7 @@ export default function ExamPanel({ onShowResults }) {
       }
       setCandidate(r);
       setQuestions(getQuestions(r.courses || []));
-      setCurrentQ(0); setAnswers({}); setSkipped({}); setTimeLeft(1500); setSubmitted(false);
+      setCurrentQ(0); setAnswers({}); setSkipped({}); setTimeLeft(3600); setSubmitted(false);
       setScreen('exam');
     } catch { setLoginMsg({ type:'error', text:'Cannot connect to server. Make sure backend is running.' }); }
     setLoading(false);
@@ -116,26 +108,30 @@ export default function ExamPanel({ onShowResults }) {
     if (submitted) return;
     setSubmitted(true);
     clearInterval(timerRef.current);
-    let correct = 0;
+    let earnedMarks = 0;
+    let totalMarks = 0;
     const sectionData = {};
     questions.forEach((q, i) => {
-      if (!sectionData[q.sec]) sectionData[q.sec] = { total:0, correct:0 };
+      const qMarks = q.marks || 1;
+      totalMarks += qMarks;
+      if (!sectionData[q.sec]) sectionData[q.sec] = { total:0, correct:0, totalMarks:0, earnedMarks:0 };
       sectionData[q.sec].total++;
-      if (answers[i] === q.ans) { correct++; sectionData[q.sec].correct++; }
+      sectionData[q.sec].totalMarks += qMarks;
+      if (answers[i] === q.ans) {
+        earnedMarks += qMarks;
+        sectionData[q.sec].correct++;
+        sectionData[q.sec].earnedMarks += qMarks;
+      }
     });
-    const total = questions.length;
-    const pct = Math.round(correct / total * 100);
-    const grade = pct>=75?'A':pct>=55?'B':pct>=40?'C':'F';
-    const gColor = grade==='A'?'text-green-600':grade==='F'?'text-red-600':'text-blue-800';
+    const pct = Math.round(earnedMarks / totalMarks * 100);
+    const { grade, scholarship, color: gColor, bg: gBg } = calcGrade(pct);
     const attempted = Object.keys(answers).length;
     const skippedCount = Object.keys(skipped).length;
-    const notAttempted = total - attempted - skippedCount;
     const res = {
-      pct, correct,
-      wrong: attempted - correct,
+      pct, correct: earnedMarks, totalMarks,
+      wrong: attempted - Object.values(answers).filter((a,i) => questions[i] && a === questions[i].ans).length,
       skippedCount,
-      notAttempted,
-      grade, gColor, sectionData,
+      grade, gColor, gBg, scholarship, sectionData,
       questions, answers, skipped
     };
     setResult(res);
@@ -244,21 +240,24 @@ export default function ExamPanel({ onShowResults }) {
     return (
       <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
         <div className="text-center p-6 sm:p-8 border-b border-gray-100">
-          <p className="text-xs text-gray-400 mb-2">Talent Hunt Examination 2026-27 — Result</p>
+          <p className="text-xs text-gray-400 mb-2">SIUAT — Saroj International University Aptitude Test 2026-27 — Result</p>
           <p className="text-base sm:text-lg font-bold text-blue-800 mb-5">{candidate.firstName} {candidate.lastName} — {candidate.appId}</p>
           <div className={`w-28 h-28 sm:w-32 sm:h-32 rounded-full border-4 ${ringColor} flex flex-col items-center justify-center mx-auto mb-4`}>
             <span className={`text-3xl sm:text-4xl font-bold font-outfit ${result.gColor}`}>{result.pct}%</span>
             <span className="text-xs text-gray-400">Score</span>
           </div>
-          <span className={`inline-block px-6 py-2 rounded-full text-base font-bold mb-3 ${result.grade==='A'?'bg-green-100 text-green-700':result.grade==='B'?'bg-blue-100 text-blue-700':result.grade==='C'?'bg-amber-100 text-amber-700':'bg-red-100 text-red-700'}`}>
+          <span className={`inline-block px-6 py-2 rounded-full text-base font-bold mb-2 ${result.gBg}`}>
             Grade {result.grade}
           </span>
-          <p className="text-sm text-gray-500">{result.correct} correct out of {questions.length} questions</p>
+          {result.scholarship && (
+            <div className="text-sm font-bold text-green-700 mb-2">🏆 {result.scholarship}</div>
+          )}
+          <p className="text-sm text-gray-500">{result.correct} marks out of {result.totalMarks} total marks</p>
         </div>
 
         {/* Stats */}
         <div className="grid grid-cols-3 gap-3 p-4 sm:p-5 border-b border-gray-100">
-          <div className="bg-green-50 rounded-xl p-3 text-center"><div className="text-xl sm:text-2xl font-bold text-green-600 font-outfit">{result.correct}</div><div className="text-xs text-gray-500 mt-1">Correct</div></div>
+          <div className="bg-green-50 rounded-xl p-3 text-center"><div className="text-xl sm:text-2xl font-bold text-green-600 font-outfit">{result.correct}</div><div className="text-xs text-gray-500 mt-1">Marks Earned</div></div>
           <div className="bg-red-50 rounded-xl p-3 text-center"><div className="text-xl sm:text-2xl font-bold text-red-500 font-outfit">{result.wrong}</div><div className="text-xs text-gray-500 mt-1">Wrong</div></div>
           <div className="bg-amber-50 rounded-xl p-3 text-center"><div className="text-xl sm:text-2xl font-bold text-amber-600 font-outfit">{result.skippedCount}</div><div className="text-xs text-gray-500 mt-1">Skipped</div></div>
         </div>
@@ -283,12 +282,12 @@ export default function ExamPanel({ onShowResults }) {
         </div>
 
         {/* Scholarship Banner */}
-        {result.grade === 'A' && (
-          <div className="mx-4 sm:mx-5 mt-4 bg-gradient-to-r from-green-700 to-green-500 rounded-xl p-4 flex items-center gap-3 text-white">
+        {result.scholarship && (
+          <div className="mx-4 sm:mx-5 mt-4 bg-gradient-to-r from-yellow-600 to-yellow-400 rounded-xl p-4 flex items-center gap-3 text-white">
             <div className="w-10 h-10 bg-white bg-opacity-20 rounded-full flex items-center justify-center text-xl shrink-0">🏆</div>
             <div>
-              <p className="font-bold text-sm">Merit Scholarship Qualified!</p>
-              <p className="text-xs opacity-90 mt-0.5">You scored 75%+ and qualify for a merit scholarship at SIU for Session 2026-27. Our admissions team will contact you shortly.</p>
+              <p className="font-bold text-sm">Scholarship Qualified!</p>
+              <p className="text-xs opacity-90 mt-0.5">You qualify for <strong>{result.scholarship}</strong> at SIU for Session 2026-27. Our admissions team will contact you shortly.</p>
             </div>
           </div>
         )}
@@ -312,6 +311,7 @@ export default function ExamPanel({ onShowResults }) {
     const answered = Object.keys(answers).length;
     const skippedCount = Object.keys(skipped).length;
     const timerCls = timeLeft<=60?'text-red-400':timeLeft<=300?'text-amber-300':'text-orange-300';
+    const totalTime = 3600;
 
     return (
       <div>
@@ -329,7 +329,7 @@ export default function ExamPanel({ onShowResults }) {
           </div>
           {/* Progress bar */}
           <div className="h-1 bg-blue-600 rounded-full mt-3 overflow-hidden">
-            <div className="h-full bg-orange-400 rounded-full transition-all" style={{width:`${(timeLeft/1500)*100}%`}}/>
+            <div className="h-full bg-orange-400 rounded-full transition-all" style={{width:`${(timeLeft/totalTime)*100}%`}}/>
           </div>
         </div>
 
@@ -356,7 +356,7 @@ export default function ExamPanel({ onShowResults }) {
         {/* Question Card */}
         <div className="bg-white border border-gray-200 rounded-2xl p-4 sm:p-5 mb-3 shadow-sm">
           <div className="flex justify-between items-center mb-2">
-            <p className="text-xs font-bold text-orange-500 uppercase tracking-widest">Q{currentQ+1} of {questions.length} · {q.sec}</p>
+            <p className="text-xs font-bold text-orange-500 uppercase tracking-widest">Q{currentQ+1} of {questions.length} · {q.sec} · <span className="text-blue-600">{q.marks} mark{q.marks>1?'s':''}</span></p>
             {skipped[currentQ] && <span className="text-xs bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full font-semibold">Skipped</span>}
           </div>
           <p className="text-sm sm:text-base font-medium text-gray-800 leading-relaxed mb-4">{q.q}</p>
@@ -405,7 +405,7 @@ export default function ExamPanel({ onShowResults }) {
         <div className="text-center mb-6">
           <div className="w-16 h-16 bg-blue-700 rounded-full flex items-center justify-center mx-auto mb-3 text-white font-bold text-xl font-outfit">SIU</div>
           <h3 className="text-blue-800 font-bold text-xl font-outfit">Exam Portal Login</h3>
-          <p className="text-gray-400 text-xs mt-1">Session 2026-27 | Talent Hunt Examination</p>
+          <p className="text-gray-400 text-xs mt-1">Session 2026-27 | SIUAT — Saroj International University Aptitude Test</p>
         </div>
         <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3 pb-2 border-b border-gray-100">Candidate Login</p>
         <div className="mb-4">

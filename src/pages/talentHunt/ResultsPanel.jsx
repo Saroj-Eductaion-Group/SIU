@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { calcGrade } from './thData';
 
 const BASE = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 const API  = `${BASE}/registrations`;
@@ -26,14 +27,34 @@ export default function ResultsPanel() {
   const top      = scores.length ? Math.max(...scores) + '%' : '—';
   const avg      = scores.length ? Math.round(scores.reduce((a,b)=>a+b,0)/scores.length) + '%' : '—';
 
-  const gradeBadge = g => g==='A'?'bg-green-100 text-green-700':g==='B'?'bg-blue-100 text-blue-700':g==='C'?'bg-amber-100 text-amber-700':'bg-red-100 text-red-700';
+  const gradeBadge = g => {
+    if (g==='A+') return 'bg-yellow-100 text-yellow-700 border border-yellow-300';
+    if (g==='A')  return 'bg-green-100 text-green-700';
+    if (g==='B')  return 'bg-blue-100 text-blue-700';
+    if (g==='C')  return 'bg-amber-100 text-amber-700';
+    return 'bg-red-100 text-red-700';
+  };
+
+  const schText = (r) => {
+    const { scholarship } = calcGrade(r.score);
+    return scholarship;
+  };
 
   return (
     <div>
+      {/* Scholarship banner */}
+      <div className="flex items-center justify-between flex-wrap gap-2 bg-amber-50 border border-amber-200 rounded-xl px-4 py-3 mb-5 text-sm text-amber-700">
+        <span>🏆 Score 90%+ in the SIUAT Exam and win a <strong>100% Full Scholarship!</strong></span>
+        <button onClick={()=>window.dispatchEvent(new CustomEvent('th-tab',{detail:'registration'}))}
+          className="bg-yellow-500 hover:bg-yellow-600 text-blue-900 font-bold text-xs px-4 py-1.5 rounded-lg transition">
+          Register Now
+        </button>
+      </div>
+
       {/* Header */}
       <div className="bg-blue-800 rounded-2xl p-5 mb-5">
         <h2 className="text-white font-bold text-lg font-outfit">Official Result Sheet</h2>
-        <p className="text-blue-300 text-xs mt-1">Saroj International University — Talent Hunt Examination 2026-27</p>
+        <p className="text-blue-300 text-xs mt-1">Saroj International University — SIUAT 2026-27</p>
       </div>
 
       {/* Stats */}
@@ -54,9 +75,16 @@ export default function ResultsPanel() {
       {/* Table */}
       <div className="bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden">
         <div className="p-4 border-b border-gray-100 flex flex-wrap gap-2 items-center">
-          {[['all','All'],['A','Grade A'],['B','Grade B'],['C','Grade C'],['F','Not Qualified']].map(([val,label]) => (
+          {[
+            ['all','All'],
+            ['A+','100% Scholarship (A+)'],
+            ['A','50% Scholarship (A)'],
+            ['B','25% Scholarship (B)'],
+            ['C','Grade C'],
+            ['F','Not Qualified'],
+          ].map(([val,label]) => (
             <button key={val} onClick={()=>setFilter(val)}
-              className={`px-4 py-1.5 rounded-full text-xs font-semibold border transition ${filter===val?'bg-blue-700 text-white border-blue-700':'bg-white text-gray-500 border-gray-300 hover:border-blue-700 hover:text-blue-700'}`}>
+              className={`px-3 py-1.5 rounded-full text-xs font-semibold border transition ${filter===val?'bg-blue-700 text-white border-blue-700':'bg-white text-gray-500 border-gray-300 hover:border-blue-700 hover:text-blue-700'}`}>
               {label}
             </button>
           ))}
@@ -76,17 +104,27 @@ export default function ResultsPanel() {
               <tbody>
                 {filtered.length === 0 ? (
                   <tr><td colSpan={7} className="text-center py-12 text-gray-400 text-sm">No results available yet.</td></tr>
-                ) : filtered.map(r => (
-                  <tr key={r._id} className="border-b border-gray-100 hover:bg-blue-50 transition">
-                    <td className="px-4 py-3 font-bold text-blue-800 text-xs tracking-wide">{r.appId}</td>
-                    <td className="px-4 py-3 font-medium">{r.firstName} {r.lastName}</td>
-                    <td className="px-4 py-3 text-gray-500 text-xs">{(r.courses||[])[0]}</td>
-                    <td className="px-4 py-3 font-bold text-base text-blue-800">{r.score}%</td>
-                    <td className="px-4 py-3"><span className={`px-2 py-1 rounded-full text-xs font-bold ${gradeBadge(r.grade)}`}>Grade {r.grade}</span></td>
-                    <td className="px-4 py-3">{r.grade==='A'?<span className="px-2 py-1 bg-green-100 text-green-700 text-xs font-semibold rounded-full">Eligible</span>:<span className="text-gray-400 text-xs">—</span>}</td>
-                    <td className="px-4 py-3">{r.grade!=='F'?<span className="px-2 py-1 bg-green-100 text-green-700 text-xs font-semibold rounded-full">Qualified</span>:<span className="px-2 py-1 bg-red-100 text-red-600 text-xs font-semibold rounded-full">Not Qualified</span>}</td>
-                  </tr>
-                ))}
+                ) : filtered.map(r => {
+                  const sch = schText(r);
+                  return (
+                    <tr key={r._id} className="border-b border-gray-100 hover:bg-blue-50 transition">
+                      <td className="px-4 py-3 font-bold text-blue-800 text-xs tracking-wide">{r.appId}</td>
+                      <td className="px-4 py-3 font-medium">{r.firstName} {r.lastName}</td>
+                      <td className="px-4 py-3 text-gray-500 text-xs">{(r.courses||[])[0]}</td>
+                      <td className="px-4 py-3 font-bold text-base text-blue-800">{r.score}%</td>
+                      <td className="px-4 py-3"><span className={`px-2 py-1 rounded-full text-xs font-bold ${gradeBadge(r.grade)}`}>Grade {r.grade}</span></td>
+                      <td className="px-4 py-3">
+                        {sch ? <span className="px-2 py-1 bg-green-100 text-green-700 text-xs font-semibold rounded-full">{sch}</span>
+                              : <span className="text-gray-400 text-xs">—</span>}
+                      </td>
+                      <td className="px-4 py-3">
+                        {r.grade!=='F'
+                          ? <span className="px-2 py-1 bg-green-100 text-green-700 text-xs font-semibold rounded-full">Qualified</span>
+                          : <span className="px-2 py-1 bg-red-100 text-red-600 text-xs font-semibold rounded-full">Not Qualified</span>}
+                      </td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>

@@ -138,7 +138,7 @@ export default function AdminPanel() {
     </div>
   );
 
-  const rows = filter === 'all' ? regs : regs.filter(r => r.status === filter);
+  const rows = filter === 'all' ? regs : filter === 'ExamDone' ? regs.filter(r => r.score !== null && r.score !== undefined) : regs.filter(r => r.status === filter);
   const badge = s => s==='Pending'?'bg-amber-100 text-amber-700':s==='Approved'?'bg-green-100 text-green-700':'bg-red-100 text-red-700';
 
   return (
@@ -154,12 +154,13 @@ export default function AdminPanel() {
         </div>
       </div>
 
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-5">
+      <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 mb-5">
         {[
           ['Total', regs.length, 'text-blue-800'],
           ['Pending', regs.filter(r=>r.status==='Pending').length, 'text-amber-600'],
           ['Approved', regs.filter(r=>r.status==='Approved').length, 'text-green-600'],
           ['Rejected', regs.filter(r=>r.status==='Rejected').length, 'text-red-600'],
+          ['Exam Done', regs.filter(r=>r.score!==null && r.score!==undefined).length, 'text-purple-600'],
         ].map(([label, val, cls]) => (
           <div key={label} className="bg-white border border-gray-200 rounded-xl p-4 text-center shadow-sm">
             <div className={`text-3xl font-bold font-outfit ${cls}`}>{val}</div>
@@ -170,10 +171,10 @@ export default function AdminPanel() {
 
       <div className="bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden">
         <div className="p-4 border-b border-gray-100 flex flex-wrap gap-2 items-center">
-          {['all','Pending','Approved','Rejected'].map(f => (
+          {['all','Pending','Approved','Rejected','ExamDone'].map(f => (
             <button key={f} onClick={()=>setFilter(f)}
               className={`px-4 py-1.5 rounded-full text-xs font-semibold border transition ${filter===f?'bg-blue-700 text-white border-blue-700':'bg-white text-gray-500 border-gray-300 hover:border-blue-700 hover:text-blue-700'}`}>
-              {f==='all'?'All':f}
+              {f==='all'?'All':f==='ExamDone'?'Exam Done':f}
             </button>
           ))}
           <button onClick={approveAll} className="ml-auto bg-green-50 text-green-700 border border-green-200 hover:bg-green-100 text-xs font-semibold px-4 py-1.5 rounded-full transition">
