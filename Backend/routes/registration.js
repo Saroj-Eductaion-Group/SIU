@@ -2,6 +2,13 @@ const express = require('express');
 const router = express.Router();
 const Registration = require('../models/Registration');
 const auth = require('../middleware/auth');
+const cloudinary = require('cloudinary').v2;
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 // PUBLIC — Get seat availability
 router.get('/seats', async (req, res) => {
@@ -60,11 +67,21 @@ router.post('/forgot-appid', async (req, res) => {
 // PUBLIC — Register new candidate
 router.post('/register', async (req, res) => {
   try {
-    // Check duplicate mobile
     const existing = await Registration.findOne({ mobile: req.body.mobile });
-    if (existing) return res.status(400).json({ success: false, message: `You are already registered with this mobile number. Your Application ID is: ${existing.appId}` });
+    if (existing) return res.status(400).json({ success: false, message: `You are already registered. Your Application ID is: ${existing.appId}` });
+    
+    let idProofUrl = null;
+    if (req.body.idProof && req.body.idProof.startsWith('data:')) {
+      const uploaded = await cloudinary.uploader.upload(req.body.idProof, {
+        folder: 'siu-siuat-idproofs',
+        resource_type: 'auto',
+        public_id: `id_${Date.now()}`,
+      });
+      idProofUrl = uploaded.secure_url;
+    }
+    
     const appId = 'SIU' + String(Date.now()).slice(-6);
-    const reg = new Registration({ ...req.body, appId });
+    const reg = new Registration({ ...req.body, appId, idProof: idProofUrl });
     await reg.save();
     res.json({ success: true, appId });
   } catch (err) {
@@ -114,6 +131,20 @@ router.patch('/admin/status/:appId', auth, async (req, res) => {
     const reg = await Registration.findOneAndUpdate(
       { appId: req.params.appId },
       { status: req.body.status },
+      { new: true }
+    );
+    res.json(reg);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+// ADMIN PROTECTED — Verify/Reject ID proof
+router.patch('/admin/verify-id/:appId', auth, async (req, res) => {
+  try {
+    const reg = await Registration.findOneAndUpdate(
+      { appId: req.params.appId },
+      { idVerified: req.body.idVerified },
       { new: true }
     );
     res.json(reg);

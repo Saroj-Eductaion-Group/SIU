@@ -29,6 +29,8 @@ const registrationSchema = new mongoose.Schema({
   session:         { type: String, default: '2026-27' },
   // Status & Result
   status:          { type: String, default: 'Pending' },
+  idProof:         { type: String, default: null }, // base64 or filename
+  idVerified:      { type: Boolean, default: false },
   examOverride:    { type: Boolean, default: false },
   score:           { type: Number, default: null },
   grade:           { type: String, default: null },

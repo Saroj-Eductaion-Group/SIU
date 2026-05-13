@@ -66,14 +66,11 @@ const HeroSection = () => {
       <div className="relative z-10 w-full max-w-full mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-10 overflow-hidden">
         {/* Header with improved text rendering */}
         <header className="text-center mb-6 sm:mb-12">
-        <a 
-            href="https://docs.google.com/forms/d/e/1FAIpQLSeRz6xp5FxhMEHH-nh0G9lsNvH0m12dJbVk2gKjB0umw-qxZg/viewform" 
-            target="_blank"
-            rel="noopener noreferrer"
-            className="bg-red-600 inline-block md:hidden hover:bg-red-700 text-white px-4 py-1 rounded-md font-medium transition-all duration-300 shadow-lg hover:shadow-red-500/20 animate-[pulse_2s_infinite] whitespace-nowrap text-sm sm:text-base"
-            aria-label="Apply via SIUET Form"
+          <a 
+            href="/talent-hunt"
+            className="bg-red-600 inline-block md:hidden hover:bg-red-700 text-white px-4 py-1 rounded-md font-medium transition-all duration-300 shadow-lg hover:shadow-red-500/20 animate-[pulse_2s_infinite] whitespace-nowrap text-sm sm:text-base mb-2"
           >
-            SIUAT Application Form
+            🏆 Talent Hunt 2026-27
           </a>
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-2 sm:mb-4 text-blue-900">
             Saroj International University

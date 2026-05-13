@@ -13,38 +13,6 @@ const TABS = [
   { id: 'results',      label: 'Results',      icon: '🏆' },
 ];
 
-function CountdownTimer() {
-  const target = new Date('2026-05-03T09:00:00');
-  const [time, setTime] = useState({ days: 0, hours: 0, mins: 0, secs: 0 });
-  useEffect(() => {
-    const tick = () => {
-      const diff = target - new Date();
-      if (diff <= 0) return;
-      setTime({
-        days:  Math.floor(diff / (1000*60*60*24)),
-        hours: Math.floor((diff % (1000*60*60*24)) / (1000*60*60)),
-        mins:  Math.floor((diff % (1000*60*60)) / (1000*60)),
-        secs:  Math.floor((diff % (1000*60)) / 1000),
-      });
-    };
-    tick();
-    const id = setInterval(tick, 1000);
-    return () => clearInterval(id);
-  }, []);
-  return (
-    <div className="flex gap-2 justify-center">
-      {[['Days', time.days], ['Hours', time.hours], ['Mins', time.mins], ['Secs', time.secs]].map(([label, val]) => (
-        <div key={label} className="text-center">
-          <div className="bg-orange-500 rounded-xl px-3 py-2 min-w-[54px]">
-            <div className="text-xl font-bold text-white font-outfit">{String(val).padStart(2,'0')}</div>
-            <div className="text-orange-100 text-xs mt-0.5 font-semibold">{label}</div>
-          </div>
-        </div>
-      ))}
-    </div>
-  );
-}
-
 function ScholarshipPopup({ onClose, onRegister }) {
   const [timeLeft, setTimeLeft] = useState(3 * 24 * 60 * 60);
   useEffect(() => {
@@ -54,26 +22,22 @@ function ScholarshipPopup({ onClose, onRegister }) {
   const d = Math.floor(timeLeft/86400), h = Math.floor((timeLeft%86400)/3600),
         m = Math.floor((timeLeft%3600)/60), s = timeLeft%60;
   return createPortal(
-    <div style={{position:'fixed',inset:0,background:'rgba(5,15,50,0.72)',zIndex:9999,display:'flex',alignItems:'center',justifyContent:'center',padding:'16px'}}>
-      <div className="bg-white rounded-2xl w-full max-w-md overflow-hidden shadow-2xl relative">
-        {/* Close button */}
-        <button onClick={onClose} className="absolute top-3 right-3 w-8 h-8 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center text-gray-600 font-bold text-lg z-10 transition">
-          ×
-        </button>
-        {/* Ribbon */}
+    <div style={{position:'fixed',inset:0,background:'rgba(5,15,50,0.75)',zIndex:9999,display:'flex',alignItems:'center',justifyContent:'center',padding:'16px',overflowY:'auto'}}>
+      <div className="bg-white rounded-2xl w-full max-w-md shadow-2xl relative my-auto" style={{maxHeight:'90vh',overflowY:'auto'}}>
+        <button onClick={onClose} className="absolute top-3 right-3 w-8 h-8 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center text-gray-600 font-bold text-lg z-10 transition">×</button>
         <div className="bg-gradient-to-r from-yellow-500 via-yellow-400 to-yellow-500 py-2.5 text-center text-blue-900 text-xs font-black tracking-widest uppercase">
           🏆 SIU Special Merit Scholarship Drive 2026-27 🏆
         </div>
-        <div className="p-6">
+        <div className="p-5 sm:p-6">
           <div className="text-center mb-4">
-            <div className="text-3xl mb-2">⭐⭐⭐</div>
-            <h2 className="text-2xl font-black text-blue-900 mb-1">Win 100% Full Scholarship!</h2>
-            <p className="text-gray-500 text-sm leading-relaxed">Score <strong>90% or above</strong> in the SIUAT and get a complete fee waiver for your entire programme. Limited 500 seats!</p>
+            <img src="/download.png" alt="SIU" className="w-16 h-auto object-contain mx-auto mb-2"/>
+            <div className="text-2xl mb-2">⭐⭐⭐</div>
+            <h2 className="text-xl sm:text-2xl font-black text-blue-900 mb-1">Win 100% Full Scholarship!</h2>
+            <p className="text-gray-500 text-sm leading-relaxed">Score <strong>90% or above</strong> in the Saroj International University Aptitude Test (SIUAT) and get a complete fee waiver for your entire programme. Limited seats — register before they fill up!</p>
             <p className="text-red-600 text-xs font-bold mt-2">
               Offer closes in: {d}d {String(h).padStart(2,'0')}h {String(m).padStart(2,'0')}m {String(s).padStart(2,'0')}s
             </p>
           </div>
-          {/* Slabs */}
           <div className="grid grid-cols-2 gap-2 mb-4">
             {[
               ['🏆','100% Scholarship','Score 90% & above','bg-yellow-50 border-yellow-300 text-yellow-800'],
@@ -82,17 +46,16 @@ function ScholarshipPopup({ onClose, onRegister }) {
               ['📚','Merit Certificate','All qualifiers','bg-green-50 border-green-300 text-green-800'],
             ].map(([icon,title,sub,cls])=>(
               <div key={title} className={`flex items-center gap-2 p-2.5 rounded-xl border ${cls}`}>
-                <span className="text-xl shrink-0">{icon}</span>
-                <div><div className="text-sm font-bold">{title}</div><div className="text-xs opacity-75">{sub}</div></div>
+                <span className="text-lg shrink-0">{icon}</span>
+                <div><div className="text-xs font-bold">{title}</div><div className="text-xs opacity-75">{sub}</div></div>
               </div>
             ))}
           </div>
-          {/* Exam dates */}
-          <div className="bg-gray-50 rounded-xl p-3 mb-4">
-            <p className="text-xs font-bold text-gray-500 uppercase tracking-widest mb-2 text-center">4 Exam Opportunities</p>
-            <div className="flex justify-around text-center">
-              {[['3 May','Exam 1'],['10 May','Exam 2'],['24 May','Exam 3'],['7 Jun','Exam 4'],['21 Jun','Exam 5']].map(([d,l])=>(
-                <div key={d}><div className="text-blue-800 font-bold text-xs">{d}</div><div className="text-gray-400 text-xs">{l}</div></div>
+          <div className="mb-4">
+            <p className="text-xs font-bold text-gray-600 uppercase tracking-widest mb-2 text-center">Available Across All Programmes</p>
+            <div className="flex flex-wrap gap-1.5 justify-center">
+              {['B.Tech','BBA','BCA','B.Sc','B.Com','BA','MBA','M.Tech','MCA','M.Sc','M.Com','MA','LLB','LLM','B.Pharma','M.Pharma'].map(c=>(
+                <span key={c} className="bg-blue-50 border border-blue-200 text-blue-800 text-xs font-semibold px-2 py-0.5 rounded-full">{c}</span>
               ))}
             </div>
           </div>
@@ -114,7 +77,6 @@ export default function TalentHunt() {
   const [showSchPopup, setShowSchPopup] = useState(false);
 
   useEffect(() => {
-    // Show popup once on page load after 1.5s
     const t = setTimeout(() => setShowSchPopup(true), 1500);
     return () => clearTimeout(t);
   }, []);
@@ -125,7 +87,7 @@ export default function TalentHunt() {
     return () => window.removeEventListener('th-tab', handler);
   }, []);
 
-return (
+  return (
     <Layout>
       {showSchPopup && (
         <ScholarshipPopup
@@ -134,99 +96,112 @@ return (
         />
       )}
 
-      {/* Floating badge */}
+      {/* Floating badge — mobile only */}
       <button onClick={() => setShowSchPopup(true)}
-        className="fixed bottom-6 right-6 z-[400] bg-yellow-500 hover:bg-yellow-600 text-blue-900 font-black text-xs px-4 py-2.5 rounded-full shadow-lg transition animate-bounce hidden sm:block">
-        🏆 Win 100% Scholarship!
+        className="fixed bottom-5 right-5 z-[500] bg-yellow-500 hover:bg-yellow-600 text-blue-900 font-black text-xs px-4 py-2.5 rounded-full shadow-lg transition animate-bounce sm:hidden">
+        🏆 Scholarship!
       </button>
 
       <div className="bg-gray-50 min-h-screen font-outfit">
 
         {/* HERO */}
-        <div className="relative overflow-hidden" style={{background:'linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #1d4ed8 100%)'}}>
+        <div className="relative overflow-hidden" style={{background:'linear-gradient(135deg, #0a1f5c 0%, #0e2557 60%, #1a3a8a 100%)'}}>
+
+          {/* Decorative circles */}
           <div className="absolute inset-0 overflow-hidden pointer-events-none">
-            <div className="absolute -top-20 -right-20 w-96 h-96 bg-orange-500 opacity-10 rounded-full"/>
-            <div className="absolute -bottom-20 -left-20 w-80 h-80 bg-blue-400 opacity-10 rounded-full"/>
-            <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-orange-500 via-yellow-400 to-orange-500 opacity-60"/>
-            <div className="absolute inset-0" style={{backgroundImage:'radial-gradient(circle, rgba(255,255,255,0.03) 1px, transparent 1px)', backgroundSize:'30px 30px'}}/>
+            <div className="absolute -top-24 -right-24 w-96 h-96 bg-yellow-400 opacity-5 rounded-full"/>
+            <div className="absolute -bottom-24 -left-24 w-80 h-80 bg-blue-400 opacity-5 rounded-full"/>
+            <div className="absolute inset-0" style={{backgroundImage:'radial-gradient(circle, rgba(255,255,255,0.02) 1px, transparent 1px)',backgroundSize:'30px 30px'}}/>
           </div>
 
           {/* Gold ribbon */}
-          <div className="bg-gradient-to-r from-yellow-600 via-yellow-400 to-yellow-600 py-2 text-center text-blue-900 text-xs font-black tracking-widest uppercase">
+          <div className="bg-gradient-to-r from-yellow-600 via-yellow-400 to-yellow-600 py-2 text-center text-blue-900 text-xs font-black tracking-widest uppercase px-4">
             ★ Building Futures, Transforming Lives — SIUAT National Examination 2026 ★
           </div>
 
-          <div className="relative max-w-6xl mx-auto px-4 py-8 sm:py-12">
-            <div className="flex flex-col lg:flex-row items-center gap-8">
+          {/* Main content */}
+          <div className="relative max-w-5xl mx-auto px-4 sm:px-6 py-6 sm:py-10">
 
-              {/* Left */}
-              <div className="flex-1 text-center lg:text-left">
-                <div className="inline-flex items-center gap-2 bg-orange-500 bg-opacity-20 border border-orange-400 border-opacity-40 text-orange-300 text-xs font-semibold px-4 py-1.5 rounded-full mb-3">
-                  <span className="w-2 h-2 bg-orange-400 rounded-full animate-pulse"/>
-                  Registrations Open — Session 2026-27
-                </div>
-                <div className="text-yellow-400 text-xs font-black tracking-widest uppercase mb-1">★ A National Level Aptitude Test for Bright Young Minds ★</div>
-                <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-yellow-300 leading-tight mb-1 font-outfit">SIUAT</h1>
-                <p className="text-white text-base sm:text-lg font-light mb-1">Saroj International University Aptitude Test</p>
-                <p className="text-blue-300 text-xs italic mb-4">Discover Your Talent. Earn Your Scholarship. Shape Your Future.</p>
-
-                {/* Key Info chips */}
-                <div className="flex flex-wrap gap-2 justify-center lg:justify-start mb-5">
-                  {[
-                    ['📅', '3 May 2026', 'First Exam'],
-                    ['🏆', '100% Scholarship', 'Score 90%+'],
-                    ['📍', 'Online & Offline', 'Exam Mode'],
-                    ['🏛️', '5 Centres', 'Across UP'],
-                    ['🎓', '500 Seats', 'Total Capacity'],
-                  ].map(([icon, val, label]) => (
-                    <div key={label} className="flex items-center gap-2 bg-white rounded-xl px-3 py-1.5 shadow-md">
-                      <span className="text-base">{icon}</span>
-                      <div>
-                        <div className="text-blue-900 text-xs font-bold">{val}</div>
-                        <div className="text-gray-500 text-xs">{label}</div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-
-                <div className="flex flex-wrap gap-3 justify-center lg:justify-start">
-                  <button onClick={() => setActive('registration')}
-                    className="bg-orange-500 hover:bg-orange-600 text-white font-bold px-6 py-2.5 rounded-xl text-sm transition shadow-lg inline-flex items-center gap-2">
-                    ✎ Register Now →
-                  </button>
-                  <button onClick={() => setShowSchPopup(true)}
-                    className="bg-yellow-500 hover:bg-yellow-600 text-blue-900 font-bold px-6 py-2.5 rounded-xl text-sm transition inline-flex items-center gap-2">
-                    🏆 Win 100% Scholarship!
-                  </button>
-                </div>
+            {/* Win 100% button + 100% box — top right */}
+            <div className="absolute top-4 right-4 sm:right-6 hidden sm:flex flex-col items-end gap-2 z-10">
+              <button onClick={() => setShowSchPopup(true)}
+                className="bg-yellow-500 hover:bg-yellow-400 text-blue-900 font-black text-sm px-5 py-2.5 rounded-full shadow-lg transition flex items-center gap-1.5">
+                🏆 Win 100% Scholarship!
+              </button>
+              <div className="rounded-2xl px-5 py-4 text-center" style={{background:'rgba(255,255,255,0.05)',border:'2px solid rgba(201,168,76,0.5)'}}>
+                <div className="text-2xl mb-1">🏆</div>
+                <div className="text-3xl font-black text-yellow-300 font-outfit leading-none">100%</div>
+                <div className="text-yellow-200 text-xs font-bold tracking-widest uppercase mt-1">Scholarship</div>
+                <div className="text-yellow-300 text-xs mt-0.5">Score above 90%</div>
               </div>
+            </div>
 
-              {/* Right — Countdown + Stats */}
-              <div className="w-full lg:w-auto flex-shrink-0 text-center">
-                <div className="bg-blue-950 border border-blue-700 rounded-2xl p-5 w-full lg:w-auto">
-                  <div className="text-white text-sm font-bold mb-0.5">First Exam Starts In</div>
-                  <div className="text-orange-400 text-xs mb-3 font-bold">3 May 2026 — 9:00 AM</div>
-                  <CountdownTimer />
-                  {/* Exam dates row */}
-                  <div className="mt-4 pt-3 border-t border-blue-700 grid grid-cols-5 gap-1 text-center">
-                    {[['3 May','E1'],['10 May','E2'],['24 May','E3'],['7 Jun','E4'],['21 Jun','E5']].map(([d,l])=>(
-                      <div key={d}>
-                        <div className="text-yellow-300 font-bold text-xs">{d}</div>
-                        <div className="text-blue-400 text-xs">{l}</div>
-                      </div>
-                    ))}
-                  </div>
-                  <div className="mt-3 pt-3 border-t border-blue-700 grid grid-cols-3 gap-3 text-center">
-                    {[['500','Total Seats'],['₹50L+','Scholarships'],['4','Exam Dates']].map(([val,label])=>(
-                      <div key={label}>
-                        <div className="text-orange-400 font-bold text-base">{val}</div>
-                        <div className="text-white text-xs mt-0.5 font-semibold">{label}</div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
+            {/* Top label */}
+            <p className="text-yellow-400 text-sm font-black tracking-widest uppercase text-center mb-4 sm:mb-6">
+              ★ A National Level SIUAT for Bright Young Minds ★
+            </p>
+
+            {/* Title + 100% box */}
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-12 mb-6">
+              {/* Center — SIUAT text */}
+              <div className="text-center">
+                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-yellow-300 leading-none font-outfit tracking-wide">SIUAT</h1>
+                <p className="text-white text-lg sm:text-xl lg:text-2xl font-light mt-2">Saroj International University Aptitude Test</p>
+                <p className="text-blue-300 text-sm italic mt-2">Discover Your Talent. Earn Your Scholarship. Shape Your Future.</p>
               </div>
+            </div>
 
+            {/* Tags */}
+            <div className="flex flex-wrap gap-2 justify-center mb-6">
+              {[
+                ['🎯','National Recognition'],
+                ['🏆','Up to 100% Scholarship'],
+                ['📚','UG & PG Programs'],
+                ['🏫','Professional Courses'],
+                ['🏢','15+ Industry Partners'],
+                ['🏗️','IIIT Lucknow Collaboration'],
+                ['📅','5 Exam Opportunities'],
+                ['🌐','Online / Offline Mode'],
+              ].map(([icon,label]) => (
+                <span key={label}
+                  className="flex items-center gap-1.5 text-white text-sm font-medium px-4 py-2 rounded-full border border-white border-opacity-25"
+                  style={{background:'rgba(255,255,255,0.08)'}}>
+                  <span>{icon}</span>{label}
+                </span>
+              ))}
+            </div>
+
+            {/* CTA */}
+            <div className="flex flex-wrap gap-3 justify-center">
+              <button onClick={() => setActive('registration')}
+                className="bg-orange-500 hover:bg-orange-600 text-white font-bold px-8 py-3 rounded-xl text-sm transition shadow-lg">
+                ✎ Register Now →
+              </button>
+              {/* Mobile only — scholarship button */}
+              <button onClick={() => setShowSchPopup(true)}
+                className="sm:hidden bg-yellow-500 hover:bg-yellow-600 text-blue-900 font-bold px-6 py-3 rounded-xl text-sm transition">
+                🏆 Win 100% Scholarship!
+              </button>
+            </div>
+          </div>
+
+          {/* Bottom exam dates bar */}
+          <div style={{background:'rgba(0,0,0,0.3)',borderTop:'1px solid rgba(201,168,76,0.25)'}}>
+            <div className="max-w-5xl mx-auto px-4 py-3 flex items-center justify-around flex-wrap gap-x-2 gap-y-2">
+              {[['3 May','Exam 1'],['10 May','Exam 2'],['24 May','Exam 3'],['7 Jun','Exam 4'],['21 Jun','Exam 5']].map(([date,label],i,arr)=>(
+                <div key={date} className="flex items-center gap-3">
+                  <div className="text-center">
+                    <div className="text-yellow-300 font-bold text-base sm:text-lg font-outfit">{date}</div>
+                    <div className="text-blue-300 text-xs sm:text-sm uppercase tracking-widest">{label}</div>
+                  </div>
+                  {i < arr.length-1 && <div className="hidden sm:block" style={{width:'1px',height:'28px',background:'rgba(255,255,255,0.15)'}}/>}
+                </div>
+              ))}
+              <div className="hidden sm:block" style={{width:'1px',height:'28px',background:'rgba(255,255,255,0.15)'}}/>
+              <div className="text-center">
+                <div className="text-yellow-300 font-bold text-base sm:text-lg font-outfit">500</div>
+                <div className="text-blue-300 text-xs sm:text-sm uppercase tracking-widest">Seats Total</div>
+              </div>
             </div>
           </div>
         </div>
@@ -237,7 +212,7 @@ return (
             <div className="flex gap-0 overflow-x-auto">
               {TABS.map(t => (
                 <button key={t.id} onClick={() => setActive(t.id)}
-                  className={`flex items-center gap-2 px-5 py-4 text-sm font-semibold whitespace-nowrap border-b-2 transition-all ${
+                  className={`flex items-center gap-2 px-4 sm:px-5 py-4 text-xs sm:text-sm font-semibold whitespace-nowrap border-b-2 transition-all ${
                     active === t.id ? 'text-blue-700 border-orange-500 bg-blue-50' : 'text-gray-500 border-transparent hover:text-blue-700 hover:bg-gray-50'
                   }`}>
                   <span>{t.icon}</span>{t.label}
@@ -248,7 +223,7 @@ return (
         </div>
 
         {/* PANEL */}
-        <div className="max-w-6xl mx-auto px-4 py-8">
+        <div className="max-w-6xl mx-auto px-4 py-6 sm:py-8">
           {active === 'registration' && <RegistrationPanel onOpenScholarship={() => setShowSchPopup(true)} />}
           {active === 'admin'        && <AdminPanel />}
           {active === 'exam'         && <ExamPanel onShowResults={() => setActive('results')} />}

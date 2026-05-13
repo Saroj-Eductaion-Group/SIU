@@ -224,7 +224,6 @@ export function calcGrade(pct) {
 export const MAX_SEATS = 500;
 
 export const EXAM_DATES = [
-  '03 May 2026 (Morning)',
   '10 May 2026 (Morning)',
   '24 May 2026 (Morning)',
   '07 Jun 2026 (Morning)',
@@ -232,9 +231,10 @@ export const EXAM_DATES = [
 ];
 
 export const DATE_MAP = {
-  '03 May 2026 (Morning)': { date: '2026-05-03', slot: 'Morning (9:00 AM - 10:00 AM)' },
   '10 May 2026 (Morning)': { date: '2026-05-10', slot: 'Morning (9:00 AM - 10:00 AM)' },
   '24 May 2026 (Morning)': { date: '2026-05-24', slot: 'Morning (9:00 AM - 10:00 AM)' },
   '07 Jun 2026 (Morning)': { date: '2026-06-07', slot: 'Morning (9:00 AM - 10:00 AM)' },
   '21 Jun 2026 (Morning)': { date: '2026-06-21', slot: 'Morning (9:00 AM - 10:00 AM)' },
 };
+
+export const EXAM_START_DATE = '2026-05-10'; // Exam portal opens from 10 May

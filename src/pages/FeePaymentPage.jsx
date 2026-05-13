@@ -45,9 +45,16 @@ const CollegePaymentCard = ({ instituteName, location, code, contactEmail, onlin
             href={onlinePortalUrl || "#"}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center justify-center bg-blue-700 text-white font-bold py-3 px-6 rounded-full shadow-md hover:bg-blue-800 transition-colors w-full max-w-[200px]"
+            className="flex items-center justify-center bg-blue-700 text-white font-bold py-3 px-6 rounded-full shadow-md hover:bg-blue-800 transition-colors w-full max-w-[200px] mb-3"
           >
             <ExternalLink className="w-5 h-5 mr-2" /> Online Payment Portal
+          </a>
+          <a
+            href="/SIU-Deposit-Slip.pdf"
+            download="Cash Fee Deposit Challan"
+            className="flex items-center justify-center bg-orange-500 text-white font-bold py-3 px-6 rounded-full shadow-md hover:bg-orange-600 transition-colors w-full max-w-[200px]"
+          >
+            <Download className="w-5 h-5 mr-2" /> Cash Fee Deposit Challan
           </a>
         </div>
       </div>

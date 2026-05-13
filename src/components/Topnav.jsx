@@ -5,17 +5,9 @@ import SearchBar from './SearchBar';
 
 const TopNav = () => {
   return (
-    <div className="bg-gradient-to-r from-blue-900 z-[999] to-blue-800 text-white shadow-sm font-funneldisplay">
+    <div className="bg-[#1c2e4a] z-[999] text-white shadow-sm font-funneldisplay">
       <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Mobile — only Talent Hunt button */}
-        <div className="flex md:hidden justify-center py-1.5">
-          <a
-            href="/talent-hunt"
-            className="bg-yellow-500 hover:bg-yellow-600 text-blue-900 font-bold px-4 py-1.5 rounded-md text-xs whitespace-nowrap"
-          >
-            🏆 Talent Hunt 2026-27
-          </a>
-        </div>
+        {/* Mobile — Topnav hidden on mobile, button shown in HeroSection */}
 
         {/* Desktop */}
         <div className="md:flex md:flex-row hidden justify-between items-center py-1 gap-2 sm:gap-0">
@@ -69,20 +61,11 @@ href='/fee-payment'            target="_blank"
 
           </div>
 
-          {/* SIUET Form Button with Enhanced Blinking Effect */}
+          {/* Talent Hunt Button */}
           <div className="flex items-center gap-2">
             <a 
-              href="https://docs.google.com/forms/d/e/1FAIpQLSeRz6xp5FxhMEHH-nh0G9lsNvH0m12dJbVk2gKjB0umw-qxZg/viewform" 
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-red-600 hover:bg-red-700 text-white px-4 py-1 rounded-md font-medium transition-all duration-300 shadow-lg hover:shadow-red-500/20 animate-[pulse_2s_infinite] whitespace-nowrap text-sm sm:text-base"
-              aria-label="Apply via SIUAT Form"
-            >
-              SIUAT Application Form
-            </a>
-            <a 
               href="/talent-hunt"
-              className="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-1 rounded-md font-medium transition-all duration-300 shadow-lg animate-[pulse_2s_infinite] whitespace-nowrap text-sm sm:text-base"
+              className="bg-red-600 hover:bg-red-700 text-white px-4 py-1 rounded-md font-medium transition-all duration-300 shadow-lg animate-[pulse_2s_infinite] whitespace-nowrap text-sm sm:text-base"
               aria-label="Talent Hunt 2026-27"
             >
               Talent Hunt 2026-27

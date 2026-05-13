@@ -17,6 +17,7 @@ export default function RegistrationPanel({ onOpenScholarship }) {
   const [err, setErr]         = useState('');
   const [appId, setAppId]     = useState('');
   const [seatsLeft, setSeatsLeft] = useState(null);
+  const [idFile, setIdFile] = useState('');
   const [f, setF] = useState({
     fn:'', ln:'', dob:'', gender:'', mobile:'', email:'', city:'', state:'',
     qual:'', board:'', marks:'', yop:'',
@@ -24,11 +25,35 @@ export default function RegistrationPanel({ onOpenScholarship }) {
     categ:'General', scholar:'Yes, very interested', hearsrc:''
   });
 
-  useEffect(() => {
-    fetch(`${API}/seats`).then(r => r.json()).then(d => setSeatsLeft(d.left)).catch(() => {});
-  }, []);
+  // Seats counter removed from public view - admin only
 
   const upd = e => setF(p => ({ ...p, [e.target.name]: e.target.value }));
+  const [idPreview, setIdPreview] = useState('');
+
+  const handleIdUpload = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    if (file.size > 5 * 1024 * 1024) return setErr('ID proof must be less than 5MB.');
+    const reader = new FileReader();
+    reader.onload = () => { setIdFile(reader.result); setIdPreview(reader.result); };
+    reader.readAsDataURL(file);
+  };
+  useEffect(() => {
+    if (step > 1 && step < 4) {
+      window.history.pushState({ step }, '');
+    }
+  }, [step]);
+
+  useEffect(() => {
+    const handlePop = (e) => {
+      if (e.state && e.state.step) {
+        setStep(e.state.step - 1 < 1 ? 1 : e.state.step - 1);
+        setErr('');
+      }
+    };
+    window.addEventListener('popstate', handlePop);
+    return () => window.removeEventListener('popstate', handlePop);
+  }, []);
   const toggle = c => setCourses(p => p.includes(c) ? p.filter(x=>x!==c) : [...p,c]);
 
   const next = (n) => {
@@ -65,7 +90,7 @@ export default function RegistrationPanel({ onOpenScholarship }) {
           qual: f.qual, board: f.board, marks: f.marks, yop: f.yop,
           courses, examDate: f.examdate, examMode: f.exammode,
           centre: f.centre, medium: f.medium, category: f.categ,
-          scholar: f.scholar, source: f.hearsrc
+          scholar: f.scholar, source: f.hearsrc, idProof: idFile
         })
       });
       const data = await res.json();
@@ -128,14 +153,7 @@ export default function RegistrationPanel({ onOpenScholarship }) {
   return (
     <div>
       {/* Capacity Banner */}
-      {seatsLeft !== null && seatsLeft !== undefined && !isNaN(seatsLeft) && (
-        <div className={`flex items-center gap-2 px-4 py-2.5 rounded-xl mb-4 text-sm font-medium ${seatsLeft <= 50 ? 'bg-red-50 border border-red-200 text-red-700' : seatsLeft <= 150 ? 'bg-amber-50 border border-amber-200 text-amber-700' : 'bg-blue-50 border border-blue-200 text-blue-700'}`}>
-          <span className="text-lg">{seatsLeft <= 50 ? '🔥' : '⚠️'}</span>
-          {seatsLeft <= 0 ? 'Registrations FULL (500/500). No more seats available.' :
-           seatsLeft <= 50 ? `Only ${seatsLeft} seats remaining out of 500! Register immediately.` :
-           `${MAX_SEATS - seatsLeft}/500 seats filled. ${seatsLeft} seats available.`}
-        </div>
-      )}
+      {/* Seats counter hidden from public - admin only */}
 
       {/* Stepper */}
       <div className="flex items-center mb-6">
@@ -208,6 +226,8 @@ export default function RegistrationPanel({ onOpenScholarship }) {
               </select>
             </div>
           </div>
+
+
 
           {err && <p className="mt-3 text-sm text-red-600 bg-red-50 border border-red-200 rounded-lg px-3 py-2">{err}</p>}
           <div className="flex justify-end mt-5">

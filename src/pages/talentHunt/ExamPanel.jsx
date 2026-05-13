@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { getQuestions, calcGrade, DATE_MAP } from './thData';
+import { getQuestions, calcGrade, DATE_MAP, EXAM_START_DATE } from './thData';
 
 const BASE = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 const API  = `${BASE}/registrations`;
@@ -399,6 +399,39 @@ export default function ExamPanel({ onShowResults }) {
   }
 
   // ─── LOGIN SCREEN ───
+  const today = new Date();
+  const examOpenDate = new Date(EXAM_START_DATE);
+  examOpenDate.setHours(0,0,0,0);
+  const todayOnly = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+  const examPortalLocked = todayOnly < examOpenDate;
+
+  if (examPortalLocked) {
+    return (
+      <div className="max-w-md mx-auto py-8 px-4">
+        <div className="bg-white border border-gray-200 rounded-2xl shadow-sm p-8 text-center">
+          <div className="text-5xl mb-4">🔒</div>
+          <h3 className="text-blue-800 font-bold text-xl font-outfit mb-2">Exam Portal Opens on 10 May 2026</h3>
+          <p className="text-gray-500 text-sm mb-4">The exam portal will be accessible from <strong>10 May 2026</strong> as per scheduled slots.</p>
+          <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 mb-4">
+            <p className="text-xs font-bold text-blue-800 uppercase tracking-widest mb-2">Exam Schedule</p>
+            <div className="grid grid-cols-2 gap-2 text-xs">
+              {[['10 May','Slot 1'],['24 May','Slot 2'],['7 Jun','Slot 3'],['21 Jun','Slot 4']].map(([d,s])=>(
+                <div key={d} className="bg-white rounded-lg p-2 text-center border border-blue-100">
+                  <div className="font-bold text-blue-800">{d}</div>
+                  <div className="text-gray-400">{s}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+          <button onClick={()=>window.dispatchEvent(new CustomEvent('th-tab',{detail:'registration'}))}
+            className="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2.5 rounded-lg text-sm transition">
+            Register Now →
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="max-w-md mx-auto py-8 px-4">
       <div className="bg-white border border-gray-200 rounded-2xl shadow-sm p-6 sm:p-8">
@@ -433,17 +466,12 @@ export default function ExamPanel({ onShowResults }) {
             className="w-full text-xs text-gray-500 hover:text-blue-700 font-semibold transition">
             🔍 Forgot your Application ID?
           </button>
-
           {showForgot && (
             <div className="mt-3 bg-blue-50 border border-blue-200 rounded-xl p-4">
               <p className="text-xs font-bold text-blue-800 mb-3">Find your Application ID</p>
-              <input
-                value={forgotInput}
-                onChange={e=>setForgotInput(e.target.value)}
-                onKeyDown={e=>e.key==='Enter'&&findAppId()}
+              <input value={forgotInput} onChange={e=>setForgotInput(e.target.value)} onKeyDown={e=>e.key==='Enter'&&findAppId()}
                 placeholder="Enter registered mobile number"
-                className="w-full border border-gray-300 rounded-lg px-3 py-2 text-xs focus:outline-none focus:border-blue-700 mb-2"
-              />
+                className="w-full border border-gray-300 rounded-lg px-3 py-2 text-xs focus:outline-none focus:border-blue-700 mb-2"/>
               <button onClick={findAppId} disabled={forgotLoading}
                 className="w-full bg-blue-700 hover:bg-blue-800 text-white text-xs font-semibold py-2 rounded-lg transition disabled:opacity-60">
                 {forgotLoading ? 'Searching...' : 'Find My Application ID'}

@@ -127,7 +127,7 @@ function Header() {
 
   return (
     <div ref={navRef} className='sticky top-0 z-[999]'>
-      <nav className='  bg-white text-gray-600 shadow-md'>
+      <nav className='bg-[#112240] text-white shadow-md'>
         <div className='max-w-8xl mx-auto px-4 py-2'>
           <div className='flex items-center justify-between'>
             <Link to='/' className='flex items-center' onClick={closeAllMenus}>
@@ -135,7 +135,7 @@ function Header() {
             </Link>
 
             {/* Desktop Header UL */}
-            <ul className='xl:flex hidden font-outfit space-x-2 text-lg items-center' ref={menuRef}>
+            <ul className='xl:flex hidden font-outfit space-x-2 text-lg items-center text-[#c9a84c]' ref={menuRef}>
               {navItems.map((item, index) => (
                 <li key={`${item.path}-${index}`} className='relative' onMouseEnter={() => toggleSubmenu(index)} onMouseLeave={() => setOpenSubmenu(null)}>
                   {item.subItems || item.megaMenu ? (
@@ -358,7 +358,7 @@ function Header() {
               ))}
               {/* Apply Now Button - Desktop */}
               <li className='ml-4 flex items-center justify-center'>
-                <a href='https://siu.in8.nopaperforms.com/' target='_blank' rel='noopener noreferrer' className='flex items-center justify-center bg-blue-500 hover:bg-blue-600 text-white font-semibold px-6 py-2 rounded-md transition duration-300 cursor-pointer'>
+                <a href='https://siu.in8.nopaperforms.com/' target='_blank' rel='noopener noreferrer' className='flex items-center justify-center bg-[#c9a84c] hover:bg-[#b8963e] text-[#0a1f5c] font-semibold px-6 py-2 rounded-md transition duration-300 cursor-pointer'>
                  <span >Apply Now</span>
                <ArrowRight className="h-6 w-6 text-white ml-2" />
                 </a> 
@@ -368,25 +368,25 @@ function Header() {
                 
             </ul>
 
-            <button className='xl:hidden p-2 rounded-md hover:bg-gray-100' onClick={() => setMobileMenuOpen(!mobileMenuOpen)} aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}>
+            <button className='xl:hidden p-2 rounded-md hover:bg-[#1a3a8a] text-white' onClick={() => setMobileMenuOpen(!mobileMenuOpen)} aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}>
               {mobileMenuOpen ? <X className='w-6 h-6' /> : <Menu className='w-6 h-6' />}
             </button>
           </div>
 
           {/* Mobile Menu (unchanged for these specific requests) */}
-          <div className={`xl:hidden fixed inset-0 bg-white z-[888] transition-all duration-300 ease-in-out overflow-y-auto ${mobileMenuOpen ? "translate-y-20 opacity-100" : "-translate-y-full opacity-0 pointer-events-none"}`}>
-            <ul className='pt-4 pb-20 px-4 space-y-2 '>
+          <div className={`xl:hidden fixed inset-0 bg-[#112240] z-[888] transition-all duration-300 ease-in-out overflow-y-auto ${mobileMenuOpen ? "translate-y-20 opacity-100" : "-translate-y-full opacity-0 pointer-events-none"}`}>
+            <ul className='pt-4 pb-20 px-4 space-y-2 text-white'>
               {navItems.map((item, index) => (
                 <li key={`${item.path}-${index}-mobile`} className=''>
                   {/* For Programs (megaMenu), show as simple link */}
                   {item.megaMenu && item.title === "Programs" ? (
-                    <Link to={item.path} className='block px-3 py-3 hover:bg-gray-50 rounded-md transition-colors duration-200 font-medium' onClick={closeAllMenus}>
+                    <Link to={item.path} className='block px-3 py-3 hover:bg-[#1a3a6a] rounded-md transition-colors duration-200 font-medium' onClick={closeAllMenus}>
                       {item.title}
                     </Link>
                   ) : /* For Academics (megaMenu), show expanded menu */
                   item.megaMenu && item.title === "Academics" ? (
                     <>
-                      <button onClick={() => toggleMobileSubmenu(index)} className='flex items-center justify-between w-full px-3 py-3 hover:bg-gray-50 rounded-md transition-colors duration-200' aria-haspopup='true' aria-expanded={openMobileSubmenu === index}>
+                      <button onClick={() => toggleMobileSubmenu(index)} className='flex items-center justify-between w-full px-3 py-3 hover:bg-[#1a3a6a] rounded-md transition-colors duration-200' aria-haspopup='true' aria-expanded={openMobileSubmenu === index}>
                         <span className='font-medium'>{item.title}</span>
                         <ChevronDown className={`w-5 h-5 transition-transform duration-300 ${openMobileSubmenu === index ? "rotate-180" : ""}`} />
                       </button>
@@ -394,13 +394,13 @@ function Header() {
                         <div className='pl-4 mt-1 space-y-4'>
                           {item.columns.map((column, colIndex) => (
                             <div key={`${column.heading}-${colIndex}-mobile`} className='space-y-2'>
-                              <h4 className='font-bold text-sm text-blue-800 border-b border-orange-500 pb-1'>{column.heading}</h4>
+                              <h4 className='font-bold text-sm text-[#c9a84c] border-b border-orange-500 pb-1'>{column.heading}</h4>
                               <ul className='space-y-1'>
                                 {column.items.map((subItem, subItemIndex) => (
                                   <li key={`${subItem.path}-${subItemIndex}-mobile`}>
                                     <Link
                                       to={subItem.path || "#"} // Fallback to '#' if path is undefined
-                                      className='block px-3 py-2 hover:bg-gray-50 rounded-md transition-colors duration-200'
+                                      className='block px-3 py-2 hover:bg-[#1a3a6a] rounded-md transition-colors duration-200'
                                       onClick={closeAllMenus}>
                                       <div className='flex items-center justify-between'>
                                         <span>
@@ -421,7 +421,7 @@ function Header() {
                   ) : /* For regular items with submenus */
                   item.subItems ? (
                     <>
-                      <button onClick={() => toggleMobileSubmenu(index)} className='flex items-center justify-between w-full px-3 py-3 hover:bg-gray-50 rounded-md transition-colors duration-200' aria-haspopup='true' aria-expanded={openMobileSubmenu === index}>
+                      <button onClick={() => toggleMobileSubmenu(index)} className='flex items-center justify-between w-full px-3 py-3 hover:bg-[#1a3a6a] rounded-md transition-colors duration-200' aria-haspopup='true' aria-expanded={openMobileSubmenu === index}>
                         <span className='font-medium'>{item.title}</span>
                         <ChevronDown className={`w-5 h-5 transition-transform duration-300 ${openMobileSubmenu === index ? "rotate-180" : ""}`} />
                       </button>
@@ -430,11 +430,11 @@ function Header() {
                           {item.subItems.map((subItem, subIndex) => (
                             <li key={`${subItem.path}-${subIndex}-mobile`}>
                               {subItem.target ? (
-                                <a href={subItem.path} target={subItem.target} rel={subItem.rel} className='block px-3 py-2 hover:bg-gray-50 rounded-md transition-colors duration-200' onClick={closeAllMenus}>
+                                <a href={subItem.path} target={subItem.target} rel={subItem.rel} className='block px-3 py-2 hover:bg-[#1a3a6a] rounded-md transition-colors duration-200' onClick={closeAllMenus}>
                                   {subItem.title}
                                 </a>
                               ) : (
-                                <Link to={subItem.path} className='block px-3 py-2 hover:bg-gray-50 rounded-md transition-colors duration-200' onClick={closeAllMenus}>
+                                <Link to={subItem.path} className='block px-3 py-2 hover:bg-[#1a3a6a] rounded-md transition-colors duration-200' onClick={closeAllMenus}>
                                   {subItem.title}
                                 </Link>
                               )}
@@ -445,7 +445,7 @@ function Header() {
                     </>
                   ) : (
                     /* For simple items without submenus */
-                    <Link to={item.path} className='block px-3 py-3 hover:bg-gray-50 rounded-md transition-colors duration-200 font-medium' onClick={closeAllMenus}>
+                    <Link to={item.path} className='block px-3 py-3 hover:bg-[#1a3a6a] rounded-md transition-colors duration-200 font-medium' onClick={closeAllMenus}>
                       {item.title}
                     </Link>
                   )}
