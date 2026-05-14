@@ -44,17 +44,18 @@ export function Header({ activeTab, setActiveTab, onScholarship }: HeaderProps) 
           <div className="w-9 h-9 rounded-xl flex items-center justify-center text-xl flex-shrink-0"
             style={{ background: "rgba(255,255,255,0.15)", border: "1px solid rgba(255,255,255,0.25)" }}>📚</div>
           <div>
-            <div className="font-black text-white leading-none" style={{ fontSize: "18px", letterSpacing: "-0.3px" }}>
+            <div className="font-black text-white leading-none text-[15px] sm:text-[18px]" style={{ letterSpacing: "-0.3px" }}>
               CUET <span style={{ color: "#e8b840" }}>/</span> NEET
             </div>
             <div className="text-[9px] font-semibold tracking-[0.1em] uppercase mt-0.5" style={{ color: "rgba(255,255,255,0.55)" }}>
-              Talent Hunt · Saroj International University
+              <span className="sm:hidden">Talent Hunt · SIU</span>
+              <span className="hidden sm:inline">Talent Hunt · Saroj International University</span>
             </div>
           </div>
         </div>
 
         {/* Right actions */}
-        <div className="flex items-center gap-2 flex-shrink-0 ml-auto">
+        <div className="flex items-center gap-1.5 sm:gap-2 flex-shrink-0 ml-auto">
           {/* Live rankings pill */}
           <button onClick={() => setActiveTab('rankings')} className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] font-bold transition hover:brightness-110 active:scale-95"
             style={{ background: "rgba(255,255,255,0.15)", color: "#fff", border: "1px solid rgba(255,255,255,0.3)" }}>

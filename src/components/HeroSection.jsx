@@ -113,20 +113,6 @@ const HeroSection = () => {
                   size={16}
                 />
               </button>
-              <div className="flex gap-2 flex-wrap">
-                <a
-                  href="/cuet-neet-talent-hunt"
-                  className="flex-1 text-center bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-3 rounded-lg shadow-lg transition-all duration-300 text-sm animate-pulse"
-                >
-                  📚 CUET/NEET Talent Hunt
-                </a>
-                <a
-                  href="/talent-hunt"
-                  className="flex-1 text-center bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-3 rounded-lg shadow-lg transition-all duration-300 text-sm animate-pulse"
-                >
-                  🏆 Talent Hunt
-                </a>
-              </div>
             </div>
 
             {/* Stats Section */}
