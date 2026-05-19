@@ -1,7 +1,10 @@
 import { useState, useEffect, useRef } from "react";
-import { MOCK_TESTS, MOCK_QUESTIONS, Question, SEEDED_CUET_REGISTRATIONS, CUETRegistration } from "../lib/data";
+import { MOCK_TESTS, MOCK_QUESTIONS, Question, CUETRegistration } from "../lib/data";
 import { useLocalStorage } from "../hooks/use-local-storage";
 import { CuetAuthScreen, CuetWelcomeBanner } from "../components/CuetRegistration";
+
+const BASE = (import.meta as unknown as { env: Record<string, string> }).env?.VITE_API_URL || 'http://localhost:5000/api';
+const CUET_API = `${BASE}/cuet`;
 
 type ExamState = "list" | "instructions" | "active" | "result";
 type QStatus = "not-visited" | "answered" | "marked" | "not-answered";
@@ -70,10 +73,19 @@ export function MockTestsPanel() {
   const [result, setResult] = useState<ExamResult | null>(null);
   const [showSubmitWarning, setShowSubmitWarning] = useState(false);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
-  const [, setResults] = useLocalStorage<ExamResult[]>("mock_results", []);
   const [cuetActiveId, setCuetActiveId] = useLocalStorage("cuet_active_id", "");
-  const [cuetRegs] = useLocalStorage<CUETRegistration[]>("cuet_registrations", SEEDED_CUET_REGISTRATIONS);
-  const cuetCandidate = cuetRegs.find(r => r.id === cuetActiveId) ?? null;
+  const [cuetCandidate, setCuetCandidate] = useState<CUETRegistration | null>(null);
+
+  useEffect(() => {
+    if (!cuetActiveId) { setCuetCandidate(null); return; }
+    fetch(`${CUET_API}/login/${cuetActiveId}`)
+      .then(r => r.ok ? r.json() : null)
+      .then(data => {
+        if (!data) { setCuetCandidate(null); return; }
+        setCuetCandidate({ id: data.cuetId, firstName: data.firstName, lastName: data.lastName, mobile: data.mobile || '', email: data.email || '', city: data.city || '', state: data.state || '', qualification: data.qualification || '', board: data.board || '', marks: data.marks || '', year: data.year || '', languages: data.languages || [], domainSubjects: data.domainSubjects || [], generalTest: data.generalTest ?? true, testCity1: data.testCity1 || '', testCity2: data.testCity2 || '', testCity3: data.testCity3 || '', category: data.category || 'General', pwd: data.pwd || 'No', source: data.source || '', registeredAt: data.registeredAt || '' });
+      })
+      .catch(() => setCuetCandidate(null));
+  }, [cuetActiveId]);
 
   const filtered = MOCK_TESTS.filter(t => filter === "All" || t.subject === filter);
   const activeTest = MOCK_TESTS.find(t => t.id === activeTestId);
@@ -128,7 +140,13 @@ export function MockTestsPanel() {
     const pct = maxScore > 0 ? Math.max(0, Math.round((score / maxScore) * 100)) : 0;
     const r: ExamResult = { testId: activeTestId!, correct, wrong, skipped, score, maxScore, pct, answers };
     setResult(r);
-    setResults(prev => [...prev, r]);
+    // Save to backend
+    if (cuetActiveId) {
+      fetch(`${CUET_API}/result/${cuetActiveId}`, {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ testId: activeTestId, correct, wrong, skipped, score, maxScore, pct })
+      }).catch(() => {});
+    }
     setShowSubmitWarning(false);
     setExamState("result");
   };

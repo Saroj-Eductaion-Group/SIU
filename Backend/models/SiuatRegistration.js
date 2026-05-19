@@ -1,0 +1,36 @@
+const mongoose = require('mongoose');
+
+const siuatRegistrationSchema = new mongoose.Schema({
+  appId:        { type: String, unique: true },
+  firstName:    String,
+  lastName:     String,
+  email:        String,
+  mobile:       String,
+  dob:          String,
+  gender:       String,
+  city:         String,
+  state:        String,
+  qual:         String,
+  board:        String,
+  marks:        String,
+  yop:          String,
+  courses:      [String],
+  examDate:     String,
+  examMode:     String,
+  centre:       String,
+  medium:       String,
+  category:     String,
+  scholar:      String,
+  source:       String,
+  session:      { type: String, default: '2026-27' },
+  status:       { type: String, default: 'Pending' },
+  idProof:      { type: String, default: null },
+  idVerified:   { type: Boolean, default: false },
+  examOverride: { type: Boolean, default: false },
+  score:        { type: Number, default: null },
+  grade:        { type: String, default: null },
+  sectionData:  { type: Object, default: null },
+  registeredAt: { type: Date, default: Date.now },
+});
+
+module.exports = mongoose.model('SiuatRegistration', siuatRegistrationSchema);

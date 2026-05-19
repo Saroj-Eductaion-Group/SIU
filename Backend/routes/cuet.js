@@ -1,6 +1,17 @@
 const express = require('express');
 const router = express.Router();
 const CuetRegistration = require('../models/CuetRegistration');
+const auth = require('../middleware/auth');
+
+// ADMIN — Get all CUET registrations
+router.get('/admin/all', auth, async (req, res) => {
+  try {
+    const regs = await CuetRegistration.find().sort({ registeredAt: -1 });
+    res.json(regs);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
 
 // PUBLIC — Register new CUET candidate
 router.post('/register', async (req, res) => {

@@ -92,17 +92,17 @@ export function HomePanel({ setActiveTab, onScholarship }: HomePanelProps) {
               {/* Badge */}
               <div className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-bold mb-4"
                 style={{ background: "rgba(201,168,76,0.14)", border: "1px solid rgba(201,168,76,0.35)", color: "#f0d060" }}>
-                🇮🇳 &nbsp;India's #1 AI-Powered CUET Exam Portal
+                🇮🇳 &nbsp;India's #1 AI-Powered CUET & NEET Exam Portal
               </div>
 
               {/* Headline */}
               <h1 className="font-black leading-tight mb-3" style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(26px, 4vw, 44px)", color: "#ffffff" }}>
-                Practice Smart.<br />
-                <span style={{ color: "#e8b840" }}>Crack CUET 2026.</span>
+                Crack CUET / NEET 2026.<br />
+                <span style={{ color: "#e8b840" }}>Practice Smart. Score High.</span>
               </h1>
 
               <p className="text-sm leading-relaxed mb-6 max-w-lg" style={{ color: "rgba(255,255,255,0.6)" }}>
-                India's most trusted CUET preparation platform. Free NTA-pattern mock tests, live national rankings, AI mentor, and real ₹51,000 scholarship opportunities — all in one place.
+                India's most trusted CUET and NEET preparation platform. Free NTA-pattern mock tests, live national rankings, AI mentor, and real ₹51,000 scholarship opportunities — all in one place.
               </p>
 
               {/* CTAs */}

@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
-import { SIUAT_QUESTIONS, getGrade } from './thData';
+import { getQuestions, calcGrade as getGrade } from './thData';
 import { siuatLogin, siuatSubmitResult } from './api';
+
+const SIUAT_QUESTIONS = getQuestions(['default']);
 
 const EXAM_DURATION = 45 * 60;
 
@@ -63,7 +65,7 @@ export default function ExamPortal({ registrations, setRegistrations }) {
     questions.forEach((q, i) => {
       const a = answers[i];
       if (a === undefined) skipped++;
-      else if (a === q.correctOption) correct++;
+      else if (a === q.ans) correct++;
       else wrong++;
     });
     const score = correct * 4 - wrong * 1;
@@ -118,7 +120,7 @@ export default function ExamPortal({ registrations, setRegistrations }) {
         <div className="p-5 text-white" style={{ background: 'linear-gradient(135deg,#0a1f5c,#4c1d95)' }}>
           <div className="text-xs font-bold tracking-widest uppercase mb-1" style={{ color: 'rgba(255,255,255,0.5)' }}>SIU Talent Hunt Examination 2026-27</div>
           <h3 className="font-black text-xl text-white mb-1" style={{ fontFamily: "'Playfair Display', serif" }}>Exam Instructions</h3>
-          <p className="text-xs" style={{ color: 'rgba(255,255,255,0.6)' }}>Welcome, {candidate.firstName} {candidate.lastName} — App ID: {candidate.id}</p>
+          <p className="text-xs" style={{ color: 'rgba(255,255,255,0.6)' }}>Welcome, {candidate.firstName} {candidate.lastName} — App ID: {candidate.appId}</p>
         </div>
         <div className="p-5">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-5">
@@ -178,7 +180,7 @@ export default function ExamPortal({ registrations, setRegistrations }) {
         <div className="flex justify-between items-center flex-wrap gap-3 relative z-10">
           <div>
             <div className="text-white font-bold text-sm">SIU Talent Hunt Exam 2026-27</div>
-            <div className="text-xs mt-0.5" style={{ color: 'rgba(255,255,255,0.6)' }}>{candidate?.firstName} {candidate?.lastName} · App ID: {candidate?.id}</div>
+            <div className="text-xs mt-0.5" style={{ color: 'rgba(255,255,255,0.6)' }}>{candidate?.firstName} {candidate?.lastName} · App ID: {candidate?.appId}</div>
             <div className="text-xs font-semibold mt-1" style={{ color: violations > 0 ? '#fca5a5' : '#f0d060' }}>
               {violations > 0 ? `⚠ ${violations} violation${violations > 1 ? 's' : ''} recorded` : '✓ No violations'}
             </div>
@@ -218,12 +220,12 @@ export default function ExamPortal({ registrations, setRegistrations }) {
       <div className="bg-white border border-gray-200 rounded-xl p-6 mb-4">
         <div className="flex items-center gap-2 mb-3 flex-wrap">
           <span className="text-xs font-bold" style={{ color: '#c9a84c' }}>Q.{currentQ + 1} of {questions.length}</span>
-          <span className="px-2 py-0.5 rounded-full text-[10px] font-bold text-white bg-[#0a1f5c]">{q.section}</span>
+          <span className="px-2 py-0.5 rounded-full text-[10px] font-bold text-white bg-[#0a1f5c]">{q.sec}</span>
           <span className="px-2 py-0.5 rounded-lg text-[10px] text-green-700 bg-green-50 font-bold">+4 marks</span>
         </div>
-        <p className="text-base font-medium text-gray-900 leading-relaxed mb-5">{q.text}</p>
+        <p className="text-base font-medium text-gray-900 leading-relaxed mb-5">{q.q}</p>
         <div className="space-y-2.5">
-          {q.options.map((opt, oi) => (
+          {q.opts.map((opt, oi) => (
             <button key={oi} onClick={() => setAnswers(a => ({ ...a, [currentQ]: oi }))}
               className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm text-left transition"
               style={{
@@ -261,13 +263,13 @@ export default function ExamPortal({ registrations, setRegistrations }) {
         <div className="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-lg">
           <div className="p-8 text-center">
             <div className="text-xs text-gray-400 uppercase tracking-widest mb-2">SIU Talent Hunt Examination Result</div>
-            <div className="font-bold mb-4" style={{ color: '#0a1f5c' }}>{candidate?.firstName} {candidate?.lastName} — {candidate?.id}</div>
+            <div className="font-bold mb-4" style={{ color: '#0a1f5c' }}>{candidate?.firstName} {candidate?.lastName} — {candidate?.appId}</div>
             <div className="w-32 h-32 rounded-full mx-auto flex flex-col items-center justify-center mb-4 border-[6px]" style={{ borderColor: '#0a1f5c' }}>
               <div className="font-black text-3xl" style={{ fontFamily: "'Playfair Display', serif", color: '#0a1f5c' }}>{result.pct}%</div>
               <div className="text-xs text-gray-400 mt-0.5">Score</div>
             </div>
-            <div className="inline-block px-6 py-1.5 rounded-full text-base font-bold mb-3" style={{ background: g.bg, color: g.color }}>
-              Grade {g.grade} — {g.label}
+            <div className={`inline-block px-6 py-1.5 rounded-full text-base font-bold mb-3 border ${g.bg}`}>
+              Grade {g.grade} — {g.scholarship || 'Keep trying!'}
             </div>
             <div className="text-sm text-gray-500 mb-5">{result.score}/{questions.length * 4} marks</div>
             <div className="grid grid-cols-3 gap-3 mb-5">

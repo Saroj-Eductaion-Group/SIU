@@ -237,7 +237,7 @@ export default function AdminPanel() {
 
       {/* Top bar */}
       <div className="bg-green-50 border border-green-200 rounded-xl px-4 py-3 mb-5 flex items-center justify-between flex-wrap gap-3">
-        <span className="text-sm text-green-700 font-medium">🟢 Logged in as Administrator | Session 2026-27 | <strong>{regs.length > 0 ? 500 - regs.length : 500}</strong> seats remaining</span>
+        <span className="text-sm text-green-700 font-medium">🟢 Logged in as <strong>{adminName || 'Administrator'}</strong> | Session 2026-27 | <strong>{regs.length > 0 ? 500 - regs.length : 500}</strong> seats remaining</span>
         <div className="flex gap-2">
           <button onClick={()=>setShowChPwd(true)} className="text-xs font-semibold text-blue-700 hover:underline">✎ Change Password</button>
           <button onClick={logout} className="text-xs font-semibold text-red-600 hover:underline">🔓 Logout</button>
@@ -293,8 +293,9 @@ export default function AdminPanel() {
           <div className="text-center py-12 text-gray-400 text-sm">Loading...</div>
         ) : (
           <div className="overflow-x-auto">
+            <div className="overflow-y-auto" style={{maxHeight:'600px'}}>
             <table className="w-full text-sm" style={{minWidth:'1400px'}}>
-              <thead className="bg-blue-700 text-white">
+              <thead className="bg-blue-700 text-white sticky top-0 z-10">
                 <tr>{['#','App ID','Name','Mobile','Email','City','State','Qualification','Board','Marks','Year','Courses','Exam Date','Mode','Centre','Medium','Category','Source','Registered','Status','Score','Grade','Scholarship','Actions'].map(h=>(
                   <th key={h} className="px-3 py-3 text-left text-xs font-semibold tracking-wide whitespace-nowrap">{h}</th>
                 ))}</tr>
@@ -332,20 +333,26 @@ export default function AdminPanel() {
                     <td className="px-3 py-3 text-xs text-green-700 font-semibold whitespace-nowrap">{schText(r)}</td>
                     <td className="px-3 py-3">
                       {r.status === 'Pending' ? (
-                        <div className="flex gap-1">
+                        <div className="flex gap-1 flex-wrap">
                           <button onClick={()=>setStatus(r.appId,'Approved')} className="bg-green-600 hover:bg-green-700 text-white text-xs px-3 py-1 rounded-lg transition">Approve</button>
                           <button onClick={()=>setStatus(r.appId,'Rejected')} className="bg-red-500 hover:bg-red-600 text-white text-xs px-3 py-1 rounded-lg transition">Reject</button>
                         </div>
-                      ) : r.status === 'Approved' ? (
-                        <span className="text-green-600 text-xs font-semibold">✓ Approved</span>
                       ) : (
-                        <span className="text-red-500 text-xs font-semibold">✗ Rejected</span>
+                        <div className="flex gap-1 flex-wrap">
+                          <span className={`text-xs font-semibold ${r.status==='Approved'?'text-green-600':'text-red-500'}`}>
+                            {r.status==='Approved'?'✓ Approved':'✗ Rejected'}
+                          </span>
+                          {r.score !== null && r.score !== undefined && (
+                            <button onClick={()=>resetExam(r.appId)} className="bg-amber-500 hover:bg-amber-600 text-white text-xs px-2 py-0.5 rounded transition">Reset</button>
+                          )}
+                        </div>
                       )}
                     </td>
                   </tr>
                 ))}
               </tbody>
             </table>
+            </div>
           </div>
         )}
         <div className="px-4 py-3 text-xs text-gray-400 border-t border-gray-100">

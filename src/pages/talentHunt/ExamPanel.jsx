@@ -93,7 +93,7 @@ export default function ExamPanel({ onShowResults }) {
       }
       setCandidate(r);
       setQuestions(getQuestions(r.courses || []));
-      setCurrentQ(0); setAnswers({}); setSkipped({}); setTimeLeft(3600); setSubmitted(false);
+      setCurrentQ(0); setAnswers({}); setSkipped({}); setTimeLeft(1500); setSubmitted(false);
       setScreen('exam');
     } catch { setLoginMsg({ type:'error', text:'Cannot connect to server. Make sure backend is running.' }); }
     setLoading(false);
@@ -110,6 +110,7 @@ export default function ExamPanel({ onShowResults }) {
     clearInterval(timerRef.current);
     let earnedMarks = 0;
     let totalMarks = 0;
+    let wrongCount = 0;
     const sectionData = {};
     questions.forEach((q, i) => {
       const qMarks = q.marks || 1;
@@ -117,19 +118,22 @@ export default function ExamPanel({ onShowResults }) {
       if (!sectionData[q.sec]) sectionData[q.sec] = { total:0, correct:0, totalMarks:0, earnedMarks:0 };
       sectionData[q.sec].total++;
       sectionData[q.sec].totalMarks += qMarks;
-      if (answers[i] === q.ans) {
-        earnedMarks += qMarks;
-        sectionData[q.sec].correct++;
-        sectionData[q.sec].earnedMarks += qMarks;
+      if (answers[i] !== undefined) {
+        if (answers[i] === q.ans) {
+          earnedMarks += qMarks;
+          sectionData[q.sec].correct++;
+          sectionData[q.sec].earnedMarks += qMarks;
+        } else {
+          wrongCount++;
+        }
       }
     });
     const pct = Math.round(earnedMarks / totalMarks * 100);
     const { grade, scholarship, color: gColor, bg: gBg } = calcGrade(pct);
-    const attempted = Object.keys(answers).length;
     const skippedCount = Object.keys(skipped).length;
     const res = {
       pct, correct: earnedMarks, totalMarks,
-      wrong: attempted - Object.values(answers).filter((a,i) => questions[i] && a === questions[i].ans).length,
+      wrong: wrongCount,
       skippedCount,
       grade, gColor, gBg, scholarship, sectionData,
       questions, answers, skipped
@@ -311,7 +315,7 @@ export default function ExamPanel({ onShowResults }) {
     const answered = Object.keys(answers).length;
     const skippedCount = Object.keys(skipped).length;
     const timerCls = timeLeft<=60?'text-red-400':timeLeft<=300?'text-amber-300':'text-orange-300';
-    const totalTime = 3600;
+    const totalTime = 1500;
 
     return (
       <div>

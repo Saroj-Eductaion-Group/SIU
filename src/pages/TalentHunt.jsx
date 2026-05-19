@@ -172,7 +172,7 @@ export default function TalentHunt() {
 
           <div style={{background:'rgba(0,0,0,0.3)',borderTop:'1px solid rgba(201,168,76,0.25)'}}>
             <div className="max-w-5xl mx-auto px-4 py-3 flex items-center justify-around flex-wrap gap-x-2 gap-y-2">
-              {[['3 May','Exam 1'],['10 May','Exam 2'],['24 May','Exam 3'],['7 Jun','Exam 4'],['21 Jun','Exam 5']].map(([date,label],i,arr)=>(
+              {[['10 May','Exam 1'],['24 May','Exam 2'],['7 Jun','Exam 3'],['21 Jun','Exam 4']].map(([date,label],i,arr)=>(
                 <div key={date} className="flex items-center gap-3">
                   <div className="text-center">
                     <div className="text-yellow-300 font-bold text-base sm:text-lg font-outfit">{date}</div>

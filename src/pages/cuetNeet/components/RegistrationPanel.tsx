@@ -1,8 +1,9 @@
 import { useState, useEffect, useRef } from "react";
-import { useLocalStorage } from "../hooks/use-local-storage";
-import { SEEDED_REGISTRATIONS, SIUAT_QUESTIONS } from "../lib/data";
+import { SIUAT_QUESTIONS } from "../lib/data";
 
-type Registration = typeof SEEDED_REGISTRATIONS[number];
+const BASE = (import.meta as unknown as { env: Record<string, string> }).env?.VITE_API_URL || 'http://localhost:5000/api';
+const API = `${BASE}/siuat`;
+
 type SubTab = "register" | "exam";
 type ExamPhase = "login" | "instructions" | "active" | "submitted";
 
@@ -25,11 +26,13 @@ function getGrade(pct: number) {
 }
 
 /* ─────────────────────────────── EXAM PORTAL ─────────────────────────────── */
-function ExamPortal({ registrations, setRegistrations }: { registrations: Registration[]; setRegistrations: (fn: (prev: Registration[]) => Registration[]) => void }) {
+type CandidateData = { id: string; firstName: string; lastName: string; mobile: string; email: string; city: string; state: string; qualification: string; board: string; marks: string; year: string; courses: string[]; examDate: string; examMode: string; examCentre: string; medium: string; category: string; source: string; status: string; registeredAt: string; examCompleted: boolean; score: number | null; };
+
+function ExamPortal() {
   const [phase, setPhase] = useState<ExamPhase>("login");
   const [appId, setAppId] = useState("");
   const [loginError, setLoginError] = useState("");
-  const [candidate, setCandidate] = useState<Registration | null>(null);
+  const [candidate, setCandidate] = useState<CandidateData | null>(null);
   const [currentQ, setCurrentQ] = useState(0);
   const [answers, setAnswers] = useState<Record<number, number>>({});
   const [violations, setViolations] = useState(0);
@@ -57,16 +60,19 @@ function ExamPortal({ registrations, setRegistrations }: { registrations: Regist
     }, 1000);
   };
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     const trimmed = appId.trim().toUpperCase();
-    const reg = registrations.find(r => r.id === trimmed);
-    if (!reg) { setLoginError("Application ID not found. Please check and try again."); return; }
-    if (reg.status === "Pending") { setLoginError("Your application is still under review. Please wait for admin approval."); return; }
-    if (reg.status === "Rejected") { setLoginError("Your application has been rejected. Please contact SIU admissions."); return; }
-    if (reg.examCompleted) { setLoginError("You have already completed the Talent Hunt exam. Check your result in the Results tab."); return; }
-    setCandidate(reg);
-    setLoginError("");
-    setPhase("instructions");
+    try {
+      const res = await fetch(`${API}/${trimmed}`);
+      if (!res.ok) { setLoginError("Application ID not found. Please check and try again."); return; }
+      const reg = await res.json();
+      if (reg.status === "Pending") { setLoginError("Your application is still under review. Please wait for admin approval."); return; }
+      if (reg.status === "Rejected") { setLoginError("Your application has been rejected. Please contact SIU admissions."); return; }
+      if (reg.score !== null && reg.score !== undefined) { setLoginError("You have already completed the Talent Hunt exam. Check your result in the Results tab."); return; }
+      setCandidate({ id: reg.appId, firstName: reg.firstName, lastName: reg.lastName, mobile: reg.mobile, email: reg.email, city: reg.city, state: reg.state, qualification: reg.qual, board: reg.board, marks: reg.marks, year: reg.yop, courses: reg.courses || [], examDate: reg.examDate, examMode: reg.examMode, examCentre: reg.centre || '', medium: reg.medium, category: reg.category, source: reg.source, status: reg.status, registeredAt: reg.registeredAt, examCompleted: false, score: null });
+      setLoginError("");
+      setPhase("instructions");
+    } catch { setLoginError("Cannot connect to server. Please try again."); }
   };
 
   const startExam = () => {
@@ -89,7 +95,8 @@ function ExamPortal({ registrations, setRegistrations }: { registrations: Regist
     const pct = Math.max(0, Math.round((score / maxScore) * 100));
     setResult({ pct, correct, wrong, skipped, score });
     if (candidate) {
-      setRegistrations(prev => prev.map(r => r.id === candidate.id ? { ...r, examCompleted: true, score: pct } : r));
+      const grade = pct >= 90 ? 'A+' : pct >= 75 ? 'A' : pct >= 60 ? 'B' : pct >= 40 ? 'C' : 'F';
+      fetch(`${API}/result/${candidate.id}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ score: pct, grade }) }).catch(() => {});
     }
     setPhase("submitted");
   };
@@ -126,7 +133,7 @@ function ExamPortal({ registrations, setRegistrations }: { registrations: Regist
         <button onClick={handleLogin} data-testid="exam-portal-login" className="w-full py-3 rounded-xl text-sm font-bold text-white" style={{ background: "#0a1f5c" }}>
           Access Exam Portal →
         </button>
-        <p className="text-[10px] text-gray-400 text-center mt-3">Try App ID: SIU839201 or SIU472910 (Approved candidates)</p>
+        <p className="text-[10px] text-gray-400 text-center mt-3">Register first to get your Application ID, then come back here.</p>
       </div>
     </div>
   );
@@ -229,13 +236,13 @@ function ExamPortal({ registrations, setRegistrations }: { registrations: Regist
       </div>
 
       {/* Question Card */}
-      <div className="bg-white border border-gray-200 rounded-xl p-6 mb-4">
+      <div className="bg-white border border-gray-200 rounded-xl p-4 sm:p-6 mb-4">
         <div className="flex items-center gap-2 mb-3 flex-wrap">
           <span className="text-xs font-bold" style={{ color: "#c9a84c" }}>Q.{currentQ + 1} of {questions.length}</span>
           <span className="px-2 py-0.5 rounded-full text-[10px] font-bold text-white bg-[#0a1f5c]">{q.section}</span>
           <span className="px-2 py-0.5 rounded-lg text-[10px] text-green-700 bg-green-50 font-bold">+4 marks</span>
         </div>
-        <p className="text-base font-medium text-gray-900 leading-relaxed mb-5">{q.text}</p>
+        <p className="text-sm sm:text-base font-medium text-gray-900 leading-relaxed mb-5">{q.text}</p>
         <div className="space-y-2.5">
           {q.options.map((opt, oi) => (
             <button key={oi} onClick={() => setAnswers(a => ({ ...a, [currentQ]: oi }))} data-testid={`siuat-opt-${oi}`}
@@ -305,9 +312,10 @@ function ExamPortal({ registrations, setRegistrations }: { registrations: Regist
 export function RegistrationPanel() {
   const [subTab, setSubTab] = useState<SubTab>("register");
   const [step, setStep] = useState(1);
-  const [registrations, setRegistrations] = useLocalStorage<Registration[]>("siu_registrations", SEEDED_REGISTRATIONS);
   const [successId, setSuccessId] = useState<string | null>(null);
-
+  const [loading, setLoading] = useState(false);
+  const [submitErr, setSubmitErr] = useState("");
+  const [seatsLeft, setSeatsLeft] = useState<number | null>(null);
   const [form, setForm] = useState({
     firstName: "", lastName: "", dob: "", gender: "", mobile: "", email: "", city: "", state: "",
     qualification: "", board: "", marks: "", year: "",
@@ -316,8 +324,12 @@ export function RegistrationPanel() {
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
 
+  useEffect(() => {
+    fetch(`${API}/seats`).then(r => r.json()).then(d => setSeatsLeft(d.left)).catch(() => {});
+  }, []);
+
   const seats = 500;
-  const taken = registrations.length;
+  const taken = seatsLeft !== null ? seats - seatsLeft : 0;
   const pct = Math.round((taken / seats) * 100);
 
   const set = (k: string, v: string) => setForm(f => ({ ...f, [k]: v }));
@@ -351,20 +363,19 @@ export function RegistrationPanel() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const submit = () => {
+  const submit = async () => {
     if (!form.examDate) { setErrors({ examDate: "Select exam date" }); return; }
-    const id = `SIU${Math.floor(100000 + Math.random() * 900000)}`;
-    const reg: Registration = {
-      id, firstName: form.firstName, lastName: form.lastName, mobile: form.mobile, email: form.email,
-      city: form.city, state: form.state, qualification: form.qualification, board: form.board,
-      marks: form.marks, year: form.year, courses: form.courses, examDate: form.examDate,
-      examMode: form.examMode, examCentre: form.centre || CENTRES[0], medium: form.medium, category: form.category,
-      source: form.source, status: "Pending" as const,
-      registeredAt: new Date().toISOString(),
-      examCompleted: false, score: null
-    };
-    setRegistrations(r => [...r, reg]);
-    setSuccessId(id);
+    setLoading(true); setSubmitErr("");
+    try {
+      const res = await fetch(`${API}/register`, {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ firstName: form.firstName, lastName: form.lastName, dob: form.dob, gender: form.gender, mobile: form.mobile, email: form.email, city: form.city, state: form.state, qual: form.qualification, board: form.board, marks: form.marks, yop: form.year, courses: form.courses, examDate: form.examDate, examMode: form.examMode, centre: form.centre, medium: form.medium, category: form.category, scholar: form.scholar, source: form.source })
+      });
+      const data = await res.json();
+      if (res.ok) { setSuccessId(data.appId); setSeatsLeft(s => s !== null ? s - 1 : s); }
+      else setSubmitErr(data.message || 'Registration failed. Please try again.');
+    } catch { setSubmitErr('Cannot connect to server. Please make sure backend is running.'); }
+    setLoading(false);
   };
 
   const resetForm = () => {
@@ -457,7 +468,7 @@ export function RegistrationPanel() {
       </div>
 
       {/* Exam Portal sub-tab */}
-      {subTab === "exam" && <ExamPortal registrations={registrations} setRegistrations={setRegistrations} />}
+      {subTab === "exam" && <ExamPortal />}
 
       {/* Registration sub-tab */}
       {subTab === "register" && (
@@ -552,10 +563,11 @@ export function RegistrationPanel() {
               </div>
               <div className="flex justify-between mt-5 flex-wrap gap-3">
                 <button onClick={() => setStep(2)} className="px-4 py-2 rounded-lg border text-sm font-semibold text-gray-600 border-gray-300">← Back</button>
-                <button onClick={submit} data-testid="btn-submit-reg" className="px-8 py-3 rounded-xl text-base font-extrabold text-[#0a1f5c]" style={{ background: "linear-gradient(90deg,#c9a84c,#e8b840)" }}>
-                  ✓ Submit Registration
+                <button onClick={submit} disabled={loading} data-testid="btn-submit-reg" className="px-8 py-3 rounded-xl text-base font-extrabold text-[#0a1f5c]" style={{ background: "linear-gradient(90deg,#c9a84c,#e8b840)" }}>
+                  {loading ? 'Submitting...' : '✓ Submit Registration'}
                 </button>
               </div>
+              {submitErr && <p className="mt-3 text-sm text-red-600 bg-red-50 border border-red-200 rounded-lg px-3 py-2">{submitErr}</p>}
             </div>
           )}
         </div>

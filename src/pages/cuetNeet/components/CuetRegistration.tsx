@@ -1,9 +1,8 @@
 import { useState } from "react";
-import { useLocalStorage } from "../hooks/use-local-storage";
-import {
-  CUET_LANGUAGES, CUET_DOMAIN_SUBJECTS, CUET_TEST_CITIES,
-  SEEDED_CUET_REGISTRATIONS, CUETRegistration,
-} from "../lib/data";
+import { CUET_LANGUAGES, CUET_DOMAIN_SUBJECTS, CUET_TEST_CITIES, CUETRegistration } from "../lib/data";
+
+const BASE = (import.meta as unknown as { env: Record<string, string> }).env?.VITE_API_URL || 'http://localhost:5000/api';
+const CUET_API = `${BASE}/cuet`;
 
 const STATES = ["Uttar Pradesh","Delhi","Bihar","Madhya Pradesh","Rajasthan","Gujarat","Maharashtra","Punjab","Haryana","Uttarakhand","Jharkhand","West Bengal","Assam","Tamil Nadu","Telangana","Andhra Pradesh","Karnataka","Kerala","Odisha","Other"];
 const QUALIFICATIONS = ["Class 12 / Intermediate (Appearing 2026)","Class 12 / Intermediate (Passed)","Diploma","Other"];
@@ -80,24 +79,31 @@ interface CuetAuthProps {
 
 export function CuetAuthScreen({ onLogin }: CuetAuthProps) {
   const [tab, setTab] = useState<AuthTab>("login");
-  const [regs, setRegs] = useLocalStorage<CUETRegistration[]>("cuet_registrations", SEEDED_CUET_REGISTRATIONS);
 
   // ── Login state ──
   const [loginId, setLoginId] = useState("");
   const [loginError, setLoginError] = useState("");
+  const [loginLoading, setLoginLoading] = useState(false);
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     const id = loginId.trim().toUpperCase();
-    const found = regs.find(r => r.id === id);
-    if (!found) { setLoginError("Application ID not found. Please check or register first."); return; }
-    setLoginError("");
-    onLogin(id);
+    if (!id) { setLoginError("Please enter your CUET Application ID."); return; }
+    setLoginLoading(true);
+    try {
+      const res = await fetch(`${CUET_API}/login/${id}`);
+      if (!res.ok) { setLoginError("Application ID not found. Please check or register first."); setLoginLoading(false); return; }
+      setLoginError("");
+      onLogin(id);
+    } catch { setLoginError("Cannot connect to server. Please try again."); }
+    setLoginLoading(false);
   };
 
   // ── Registration state ──
   const [step, setStep] = useState<RegStep>(1);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [successId, setSuccessId] = useState<string | null>(null);
+  const [submitLoading, setSubmitLoading] = useState(false);
+  const [submitErr, setSubmitErr] = useState("");
 
   const [form, setForm] = useState({
     firstName: "", lastName: "", dob: "", gender: "", mobile: "", email: "", city: "", state: "",
@@ -153,20 +159,27 @@ export function CuetAuthScreen({ onLogin }: CuetAuthProps) {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const submitReg = () => {
+  const submitReg = async () => {
     if (!validateStep3()) return;
-    const id = `CUET2026${Math.floor(100000 + Math.random() * 900000)}`;
-    const reg: CUETRegistration = {
-      id, firstName: form.firstName, lastName: form.lastName, dob: form.dob, gender: form.gender,
-      mobile: form.mobile, email: form.email, city: form.city, state: form.state,
-      qualification: form.qualification, board: form.board, marks: form.marks, year: form.year,
-      languages: form.languages, domainSubjects: form.domainSubjects, generalTest: form.generalTest,
-      testCity1: form.testCity1, testCity2: form.testCity2, testCity3: form.testCity3,
-      category: form.category, pwd: form.pwd, source: form.source,
-      registeredAt: new Date().toISOString(),
-    };
-    setRegs(prev => [...prev, reg]);
-    setSuccessId(id);
+    setSubmitLoading(true); setSubmitErr("");
+    try {
+      const res = await fetch(`${CUET_API}/register`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          firstName: form.firstName, lastName: form.lastName, dob: form.dob, gender: form.gender,
+          mobile: form.mobile, email: form.email, city: form.city, state: form.state,
+          qualification: form.qualification, board: form.board, marks: form.marks, year: form.year,
+          languages: form.languages, domainSubjects: form.domainSubjects, generalTest: form.generalTest,
+          testCity1: form.testCity1, testCity2: form.testCity2, testCity3: form.testCity3,
+          category: form.category, pwd: form.pwd, source: form.source,
+        })
+      });
+      const data = await res.json();
+      if (data.success) { setSuccessId(data.cuetId); }
+      else setSubmitErr(data.message || 'Registration failed. Please try again.');
+    } catch { setSubmitErr('Cannot connect to server. Please try again.'); }
+    setSubmitLoading(false);
   };
 
   const stepDot = (n: RegStep, label: string) => (
@@ -256,14 +269,13 @@ export function CuetAuthScreen({ onLogin }: CuetAuthProps) {
               data-testid="cuet-login-id"
               className="w-full px-3 py-3 border border-gray-300 rounded-xl text-sm mb-3 focus:outline-none focus:border-blue-400 font-mono tracking-widest" />
             {loginError && <div className="text-red-600 text-xs mb-3 p-2 rounded-lg bg-red-50 border border-red-200">{loginError}</div>}
-            <button onClick={handleLogin} data-testid="cuet-login-btn"
-              className="w-full py-3 rounded-xl text-sm font-bold text-white"
+            <button onClick={handleLogin} disabled={loginLoading} data-testid="cuet-login-btn"
+              className="w-full py-3 rounded-xl text-sm font-bold text-white disabled:opacity-60"
               style={{ background: "linear-gradient(90deg,#0a1f5c,#4c1d95)" }}>
-              Login to Mock Tests →
+              {loginLoading ? 'Checking...' : 'Login to Mock Tests →'}
             </button>
             <div className="mt-3 pt-3 border-t border-gray-100 text-center text-xs text-gray-400">
-              Try: <button onClick={() => setLoginId("CUET2026847382")} className="text-[#0a1f5c] font-semibold hover:underline">CUET2026847382</button> or{" "}
-              <button onClick={() => setLoginId("CUET2026293847")} className="text-[#0a1f5c] font-semibold hover:underline">CUET2026293847</button>
+              Don't have an ID? Register above.
             </div>
           </div>
         </div>
@@ -437,12 +449,13 @@ export function CuetAuthScreen({ onLogin }: CuetAuthProps) {
 
               <div className="flex justify-between mt-5 flex-wrap gap-3">
                 <button onClick={() => setStep(2)} className="px-4 py-2 rounded-lg border text-sm font-semibold text-gray-600 border-gray-200">← Back</button>
-                <button onClick={submitReg} data-testid="cuet-submit-reg"
-                  className="px-8 py-3 rounded-xl text-sm font-extrabold text-[#0a1f5c]"
+                <button onClick={submitReg} disabled={submitLoading} data-testid="cuet-submit-reg"
+                  className="px-8 py-3 rounded-xl text-sm font-extrabold text-[#0a1f5c] disabled:opacity-60"
                   style={{ background: "linear-gradient(90deg,#c9a84c,#e8b840)" }}>
-                  ✓ Submit CUET Application
+                  {submitLoading ? 'Submitting...' : '✓ Submit CUET Application'}
                 </button>
               </div>
+              {submitErr && <p className="mt-3 text-sm text-red-600 bg-red-50 border border-red-200 rounded-lg px-3 py-2">{submitErr}</p>}
             </div>
           )}
         </div>

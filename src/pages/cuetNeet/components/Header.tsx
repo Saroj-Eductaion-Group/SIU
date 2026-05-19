@@ -1,6 +1,6 @@
 import { Bell, ChevronDown } from "lucide-react";
 import { cn } from "../lib/utils";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 
 export const TABS = [
   { id: "home",     label: "Home",            icon: "⊞" },
@@ -23,6 +23,18 @@ interface HeaderProps {
 export function Header({ activeTab, setActiveTab, onScholarship }: HeaderProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [showNotif, setShowNotif] = useState(false);
+  const notifRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!showNotif) return;
+    const handler = (e: MouseEvent) => {
+      if (notifRef.current && !notifRef.current.contains(e.target as Node)) {
+        setShowNotif(false);
+      }
+    };
+    document.addEventListener('mousedown', handler);
+    return () => document.removeEventListener('mousedown', handler);
+  }, [showNotif]);
 
   const NOTIFICATIONS = [
     { icon: "🏆", text: "SIUAT 2026-27 registrations open — only 500 seats!", time: "Just now" },
@@ -37,17 +49,17 @@ export function Header({ activeTab, setActiveTab, onScholarship }: HeaderProps) 
   return (
     <header className="sticky top-0 z-50 w-full" style={{ background: "linear-gradient(135deg, #064e3b 0%, #065f46 60%, #047857 100%)", boxShadow: "0 2px 20px rgba(0,0,0,0.4)" }}>
       {/* Top bar */}
-      <div className="flex h-[58px] items-center px-4 md:px-8 justify-between max-w-7xl mx-auto gap-4">
+      <div className="flex h-[58px] items-center px-2 md:px-8 justify-between max-w-7xl mx-auto">
 
         {/* Logo */}
-        <div className="flex items-center gap-3 flex-shrink-0">
-          <div className="w-9 h-9 rounded-xl flex items-center justify-center text-xl flex-shrink-0"
+        <div className="flex items-center gap-2 flex-shrink-0">
+          <div className="w-8 h-8 rounded-xl flex items-center justify-center text-lg flex-shrink-0"
             style={{ background: "rgba(255,255,255,0.15)", border: "1px solid rgba(255,255,255,0.25)" }}>📚</div>
           <div>
-            <div className="font-black text-white leading-none text-[15px] sm:text-[18px]" style={{ letterSpacing: "-0.3px" }}>
+            <div className="font-black text-white leading-none text-[14px] sm:text-[18px]" style={{ letterSpacing: "-0.3px" }}>
               CUET <span style={{ color: "#e8b840" }}>/</span> NEET
             </div>
-            <div className="text-[9px] font-semibold tracking-[0.1em] uppercase mt-0.5" style={{ color: "rgba(255,255,255,0.55)" }}>
+            <div className="text-[8px] sm:text-[9px] font-semibold tracking-[0.1em] uppercase mt-0.5" style={{ color: "rgba(255,255,255,0.55)" }}>
               <span className="sm:hidden">Talent Hunt · SIU</span>
               <span className="hidden sm:inline">Talent Hunt · Saroj International University</span>
             </div>
@@ -55,34 +67,34 @@ export function Header({ activeTab, setActiveTab, onScholarship }: HeaderProps) 
         </div>
 
         {/* Right actions */}
-        <div className="flex items-center gap-1.5 sm:gap-2 flex-shrink-0 ml-auto">
-          {/* Live rankings pill */}
-          <button onClick={() => setActiveTab('rankings')} className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] font-bold transition hover:brightness-110 active:scale-95"
+        <div className="flex items-center gap-1.5 sm:gap-2 flex-shrink-0">
+          {/* Live rankings pill - desktop only */}
+          <button onClick={() => setActiveTab('rankings')} className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] font-bold transition hover:brightness-110"
             style={{ background: "rgba(255,255,255,0.15)", color: "#fff", border: "1px solid rgba(255,255,255,0.3)" }}>
             <span className="h-1.5 w-1.5 rounded-full bg-white animate-pulse inline-block" />
             LIVE RANKINGS
           </button>
 
-          {/* Scholarship */}
+          {/* Scholarship - desktop only */}
           <button onClick={onScholarship} data-testid="header-scholarship-pill"
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] font-extrabold transition hover:brightness-110 active:scale-95"
+            className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] font-extrabold transition hover:brightness-110"
             style={{ background: "linear-gradient(90deg,#c9a84c,#e8b840)", color: "#064e3b" }}>
-            🏆 <span className="hidden sm:inline">Scholarship</span>
+            🏆 <span>Scholarship</span>
           </button>
 
-          {/* Bell */}
-          <div className="relative">
+          {/* Bell - always visible */}
+          <div className="relative" ref={notifRef}>
             <button onClick={() => setShowNotif(n => !n)} className="relative p-2 rounded-xl transition hover:bg-white/10"
               style={{ border: "1px solid rgba(255,255,255,0.12)" }}>
               <Bell className="h-4 w-4 text-white/70" />
               <span className="absolute top-1.5 right-1.5 h-1.5 w-1.5 rounded-full bg-red-400" />
             </button>
             {showNotif && (
-              <div className="absolute right-0 top-11 w-80 rounded-xl shadow-2xl z-50 overflow-hidden"
-                style={{ background: "#064e3b", border: "1px solid rgba(255,255,255,0.15)" }}>
-                <div className="px-4 py-3 flex items-center justify-between border-b" style={{ borderColor: "rgba(255,255,255,0.1)" }}>
-                  <span className="text-white text-xs font-bold uppercase tracking-widest">Notifications</span>
-                  <button onClick={() => setShowNotif(false)} className="text-white/40 hover:text-white text-lg leading-none">×</button>
+              <div className="fixed left-0 right-0 mx-3 sm:absolute sm:mx-0 sm:left-auto sm:right-0 sm:w-[320px] rounded-xl shadow-2xl overflow-hidden overflow-y-auto max-h-[70vh]"
+                style={{ top: '115px', zIndex: 9999, background: "#064e3b", border: "1px solid rgba(255,255,255,0.15)" }}>
+                <div className="px-4 py-3 flex items-center justify-between border-b sticky top-0" style={{ borderColor: "rgba(255,255,255,0.1)", background: "#064e3b" }}>
+                  <span className="text-white text-xs font-bold uppercase tracking-widest">🔔 Notifications</span>
+                  <button onClick={() => setShowNotif(false)} className="text-white/40 hover:text-white text-xl leading-none px-1">×</button>
                 </div>
                 <div className="divide-y" style={{ borderColor: "rgba(255,255,255,0.07)" }}>
                   {NOTIFICATIONS.map((n, i) => (
@@ -95,8 +107,8 @@ export function Header({ activeTab, setActiveTab, onScholarship }: HeaderProps) 
                     </div>
                   ))}
                 </div>
-                <div className="px-4 py-2.5 text-center border-t" style={{ borderColor: "rgba(255,255,255,0.1)" }}>
-                  <button className="text-[11px] font-semibold" style={{ color: "#e8b840" }}>Mark all as read</button>
+                <div className="px-4 py-2.5 text-center border-t sticky bottom-0" style={{ borderColor: "rgba(255,255,255,0.1)", background: "#064e3b" }}>
+                  <button onClick={() => setShowNotif(false)} className="text-[11px] font-semibold" style={{ color: "#e8b840" }}>Mark all as read</button>
                 </div>
               </div>
             )}
@@ -149,19 +161,19 @@ export function Header({ activeTab, setActiveTab, onScholarship }: HeaderProps) 
 
       {/* Mobile Nav Menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-t px-4 py-2" style={{ borderColor: "rgba(255,255,255,0.15)", background: "rgba(0,0,0,0.3)" }}>
-          <div className="grid grid-cols-2 gap-1">
+        <div className="md:hidden border-t px-4 py-3" style={{ borderColor: "rgba(255,255,255,0.15)", background: "rgba(0,0,0,0.95)" }}>
+          <div className="grid grid-cols-2 gap-2">
             {TABS.map(tab => (
               <button
                 key={tab.id}
                 onClick={() => { setActiveTab(tab.id); setMobileMenuOpen(false); }}
                 className={cn(
-                  "flex items-center gap-2 px-3 py-2.5 rounded-lg text-xs font-semibold transition text-left",
+                  "flex items-center gap-2 px-3 py-3 rounded-xl text-xs font-semibold transition text-left",
                   activeTab === tab.id
-                    ? "text-[#e8b840] bg-white/10"
-                    : "text-white/60 hover:text-white hover:bg-white/5"
+                    ? "text-[#e8b840] bg-white/15 border border-[#e8b840]/30"
+                    : "text-white/70 hover:text-white hover:bg-white/10 border border-white/10"
                 )}>
-                <span>{tab.icon}</span>
+                <span className="text-base">{tab.icon}</span>
                 {tab.label}
               </button>
             ))}

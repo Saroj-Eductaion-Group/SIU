@@ -256,78 +256,12 @@ export const SEEDED_LEADERBOARD = [
   { id: 15, name: "Vivek Chauhan", state: "Punjab", score: 65, testsTaken: 10, accuracy: 67, rank: 15 },
 ];
 
-export const SEEDED_REGISTRATIONS = [
-  {
-    id: "SIU104928",
-    firstName: "Riya", lastName: "Singh",
-    mobile: "9876543210", email: "riya.singh@example.com",
-    city: "Lucknow", state: "Uttar Pradesh",
-    qualification: "Class 12", board: "CBSE", marks: "88%", year: "2025",
-    courses: ["B.Tech", "BCA"],
-    examDate: "15 May 2026 (Morning)", examMode: "Online (CBT)", examCentre: "Lucknow Main Campus",
-    medium: "English", category: "General", source: "Social Media",
-    status: "Pending" as const,
-    registeredAt: new Date(Date.now() - 86400000 * 2).toISOString(),
-    examCompleted: false, score: null as number | null
-  },
-  {
-    id: "SIU839201",
-    firstName: "Kabir", lastName: "Das",
-    mobile: "9123456780", email: "kabir.das@example.com",
-    city: "Delhi", state: "Delhi",
-    qualification: "Class 12", board: "ICSE", marks: "92%", year: "2025",
-    courses: ["BBA"],
-    examDate: "15 May 2026 (Morning)", examMode: "Online (CBT)", examCentre: "Noida",
-    medium: "English", category: "OBC", source: "Google Search",
-    status: "Approved" as const,
-    registeredAt: new Date(Date.now() - 86400000 * 5).toISOString(),
-    examCompleted: true, score: 85 as number | null
-  },
-  {
-    id: "SIU472910",
-    firstName: "Meera", lastName: "Kapoor",
-    mobile: "9988776655", email: "meera.k@example.com",
-    city: "Kanpur", state: "Uttar Pradesh",
-    qualification: "Undergraduate", board: "Lucknow University", marks: "7.8 CGPA", year: "2025",
-    courses: ["MBA"],
-    examDate: "01 Jun 2026 (Morning)", examMode: "Offline (Pen & Paper)", examCentre: "Kanpur",
-    medium: "Hindi", category: "General", source: "Friend",
-    status: "Approved" as const,
-    registeredAt: new Date(Date.now() - 86400000 * 10).toISOString(),
-    examCompleted: true, score: 92 as number | null
-  },
-  {
-    id: "SIU293847",
-    firstName: "Dev", lastName: "Verma",
-    mobile: "8877665544", email: "dev.verma@example.com",
-    city: "Varanasi", state: "Uttar Pradesh",
-    qualification: "Class 12", board: "UP Board", marks: "75%", year: "2025",
-    courses: ["B.Sc", "BA"],
-    examDate: "22 May 2026 (Morning)", examMode: "Offline (Pen & Paper)", examCentre: "Varanasi",
-    medium: "Hindi", category: "SC", source: "Newspaper",
-    status: "Rejected" as const,
-    registeredAt: new Date(Date.now() - 86400000 * 15).toISOString(),
-    examCompleted: false, score: null as number | null
-  },
-  {
-    id: "SIU564738",
-    firstName: "Zara", lastName: "Khan",
-    mobile: "7766554433", email: "zara.k@example.com",
-    city: "Agra", state: "Uttar Pradesh",
-    qualification: "Class 12", board: "CBSE", marks: "95%", year: "2025",
-    courses: ["B.Pharma"],
-    examDate: "01 Jun 2026 (Morning)", examMode: "Online (CBT)", examCentre: "Agra",
-    medium: "English", category: "General", source: "Email",
-    status: "Approved" as const,
-    registeredAt: new Date(Date.now() - 86400000 * 1).toISOString(),
-    examCompleted: false, score: null as number | null
-  },
-];
-
 // ─── CUET Registration ───────────────────────────────────────────────────────
+// NOTE: SEEDED_REGISTRATIONS removed — all SIUAT data comes from /api/siuat (MongoDB)
+// NOTE: SEEDED_CUET_REGISTRATIONS removed — all CUET data comes from /api/cuet (MongoDB)
 
 export type CUETRegistration = {
-  id: string;
+  id: string;  // cuetId from MongoDB
   firstName: string;
   lastName: string;
   dob: string;
@@ -374,33 +308,3 @@ export const CUET_TEST_CITIES = [
   "Pune", "Guwahati",
 ];
 
-export const SEEDED_CUET_REGISTRATIONS: CUETRegistration[] = [
-  {
-    id: "CUET2026847382",
-    firstName: "Priya", lastName: "Sharma",
-    dob: "2007-03-15", gender: "Female",
-    mobile: "9876543200", email: "priya.sharma@example.com",
-    city: "Lucknow", state: "Uttar Pradesh",
-    qualification: "Class 12", board: "CBSE", marks: "92%", year: "Appearing 2026",
-    languages: ["English", "Hindi"],
-    domainSubjects: ["Physics", "Chemistry", "Mathematics"],
-    generalTest: true,
-    testCity1: "Lucknow", testCity2: "Kanpur", testCity3: "Agra",
-    category: "General", pwd: "No", source: "School / College",
-    registeredAt: new Date(Date.now() - 86400000 * 3).toISOString(),
-  },
-  {
-    id: "CUET2026293847",
-    firstName: "Aryan", lastName: "Mehta",
-    dob: "2006-11-20", gender: "Male",
-    mobile: "9123456789", email: "aryan.mehta@example.com",
-    city: "Delhi", state: "Delhi",
-    qualification: "Class 12", board: "CBSE", marks: "88%", year: "Appearing 2026",
-    languages: ["English"],
-    domainSubjects: ["Biology (Botany & Zoology)", "Chemistry", "Physics"],
-    generalTest: true,
-    testCity1: "Delhi", testCity2: "Noida", testCity3: "Gurgaon",
-    category: "OBC", pwd: "No", source: "Social Media",
-    registeredAt: new Date(Date.now() - 86400000 * 7).toISOString(),
-  },
-];
