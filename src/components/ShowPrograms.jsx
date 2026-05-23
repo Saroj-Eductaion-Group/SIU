@@ -359,20 +359,16 @@ const CoursePage = ({ universityData = { university: '', institutes: [] } }) => 
 
   const renderFees = (fees) => {
     if (!fees) return <span className="text-gray-500">Fee structure not available</span>;
-    
+    const semesterFee = fees.year1 ? fees.year1 / 2 : null;
     return (
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        {Object.entries(fees).map(([key, value]) => (
-          key !== 'total' && (
-            <div key={key} className="bg-gray-50 p-3 rounded-lg">
-              <div className="font-medium capitalize text-gray-700">{key.replace('year', 'Year ')}</div>
-              <div className="text-lg font-semibold text-blue-600">{formatCurrency(value)}</div>
-            </div>
-          )
-        ))}
-        <div className="sm:col-span-2 bg-blue-50 p-3 rounded-lg">
-          <div className="font-bold text-gray-800">Total Program Fees</div>
-          <div className="text-xl font-bold text-blue-700">{formatCurrency(fees.total)}</div>
+      <div className="space-y-3">
+        <div className="bg-blue-50 p-4 rounded-lg">
+          <div className="font-semibold text-gray-700">Fees per Semester</div>
+          <div className="text-2xl font-bold text-blue-600">{semesterFee ? `₹${semesterFee.toLocaleString('en-IN')}` : 'N/A'}</div>
+        </div>
+        <div className="bg-gray-50 p-4 rounded-lg">
+          <div className="font-semibold text-gray-700">Total Program Fees</div>
+          <div className="text-xl font-bold text-gray-800">{formatCurrency(fees.total)}</div>
         </div>
       </div>
     );
@@ -621,7 +617,7 @@ const CoursePage = ({ universityData = { university: '', institutes: [] } }) => 
                                 </div>
                                 <div className="flex items-center text-xs bg-gray-100 px-3 py-1.5 rounded-full">
                                   <IndianRupee className="mr-1 h-3 w-3 text-blue-500" />
-                                  Total: {formatCurrency(program.fees?.total || 0)}
+                                  {program.fees?.year1 ? `₹${(program.fees.year1 / 2).toLocaleString('en-IN')}/sem` : 'N/A'}
                                 </div>
                               </div>
                             </div>

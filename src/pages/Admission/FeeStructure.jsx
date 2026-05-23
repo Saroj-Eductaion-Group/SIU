@@ -191,7 +191,7 @@ const SIUFeeStructure = () => {
     }
 
     return currentPrograms;
-  }, [allPrograms, selectedMode, selectedDegree, selectedDomain, searchTerm]);
+  }, [allPrograms, selectedDegree, selectedDomain, searchTerm]);
 
   // Groups the filtered programs by mode and institute for structured rendering
   const groupedFilteredPrograms = useMemo(() => {
@@ -213,23 +213,11 @@ const SIUFeeStructure = () => {
     return grouped;
   }, [filteredPrograms]);
 
-  // Helper function to format fees and create table rows
   const transformProgramsToTableData = (programs) => {
     return programs.map(program => {
-      if (!program.fees) {
-        return [`${program.degree} (${program.specializations})`, "N/A", "N/A"];
-      }
-
-      const totalFee = program.fees.total ? `₹${program.fees.total.toLocaleString('en-IN')}` : "N/A";
-      let semesterFee = "N/A";
-      if (program.fees.year1) {
-        semesterFee = `₹${(program.fees.year1 / 2).toLocaleString('en-IN')}/semester`;
-      }
-      return [
-        `${program.degree} (${program.specializations})`,
-        totalFee,
-        semesterFee
-      ];
+      if (!program.fees) return [`${program.degree} (${program.specializations})`, "N/A"];
+      const semesterFee = program.fees.year1 ? `₹${(program.fees.year1 / 2).toLocaleString('en-IN')}` : "N/A";
+      return [`${program.degree} (${program.specializations})`, semesterFee];
     });
   };
 
@@ -250,16 +238,14 @@ const SIUFeeStructure = () => {
           <thead className="bg-gradient-to-r from-blue-900 to-blue-800 text-white uppercase text-xs">
             <tr>
               <th className="px-4 py-2 text-left">Programme</th>
-              <th className="px-4 py-2 text-left">Total Fees</th>
               <th className="px-4 py-2 text-left">Fees per Semester</th>
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
-            {transformProgramsToTableData(data).map(([course, total, tuition], i) => (
+            {transformProgramsToTableData(data).map(([course, tuition], i) => (
               <tr key={i} className='hover:bg-blue-100'>
-                <td className="px-4 py-2 text-gray-900 ">{course}</td>
-                <td className="px-4 py-2 text-gray-700  ">{total}</td>
-                <td className="px-4 py-2 text-gray-700 ">{tuition}</td>
+                <td className="px-4 py-2 text-gray-900">{course}</td>
+                <td className="px-4 py-2 text-gray-700 font-semibold">{tuition}</td>
               </tr>
             ))}
           </tbody>
