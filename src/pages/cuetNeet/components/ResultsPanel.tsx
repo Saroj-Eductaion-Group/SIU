@@ -91,9 +91,9 @@ export function ResultsPanel() {
         <div className="overflow-x-auto">
           <table className="w-full text-sm min-w-[700px]">
             <thead>
-              <tr className="border-b border-gray-200 text-left" style={{ background: "#f5f0ff" }}>
+              <tr className="border-b border-gray-200 text-left" style={{ background: "#4c1d95" }}>
                 {["App ID","Candidate","Course(s)","Score","Grade","Scholarship","Status"].map(h => (
-                  <th key={h} className="px-4 py-3 text-xs font-bold uppercase tracking-wider text-[#4c1d95]">{h}</th>
+                  <th key={h} className="px-4 py-3 text-xs font-bold uppercase tracking-wider text-white">{h}</th>
                 ))}
               </tr>
             </thead>
