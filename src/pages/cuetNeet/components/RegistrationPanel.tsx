@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { SIUAT_QUESTIONS } from "../lib/data";
 
 const BASE = (import.meta as unknown as { env: Record<string, string> }).env?.VITE_API_URL || 'http://localhost:5000/api';
-const API = `${BASE}/siuat`;
+const API = `${BASE}/registrations`;
 
 type SubTab = "register" | "exam";
 type ExamPhase = "login" | "instructions" | "active" | "submitted";

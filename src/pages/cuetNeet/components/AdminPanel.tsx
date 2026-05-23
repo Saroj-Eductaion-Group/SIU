@@ -12,7 +12,7 @@ type StatusFilter = "All" | "Pending" | "Approved" | "Rejected" | "Exam Done";
 
 const BASE = (import.meta as unknown as { env: Record<string, string> }).env?.VITE_API_URL || 'http://localhost:5000/api';
 const API_AUTH = `${BASE}/auth`;
-const API_ADMIN = `${BASE}/siuat/admin`;
+const API_ADMIN = `${BASE}/registrations/admin`;
 
 function getGradeBadge(score: number | null) {
   if (score === null) return null;

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 const BASE = (import.meta as unknown as { env: Record<string, string> }).env?.VITE_API_URL || 'http://localhost:5000/api';
-const API = `${BASE}/siuat`;
+const API = `${BASE}/registrations`;
 
 const FILTERS = ["All", "100% Scholarship (A+)", "50% Scholarship (A)", "25% Scholarship (B)", "Grade C", "Not Qualified"];
 

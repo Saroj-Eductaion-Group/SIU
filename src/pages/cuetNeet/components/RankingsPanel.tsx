@@ -29,7 +29,7 @@ export function RankingsPanel() {
 
   useEffect(() => {
     setLoading(true);
-    fetch(`${BASE}/siuat/results`)
+    fetch(`${BASE}/registrations/results`)
       .then(r => r.json())
       .then(data => setEntries(Array.isArray(data) ? data.filter((r: RankEntry) => r.score !== null) : []))
       .catch(() => setEntries([]))
