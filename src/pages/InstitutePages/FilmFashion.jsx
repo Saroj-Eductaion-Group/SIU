@@ -82,52 +82,12 @@ const InstituteFilmFashion = () => {
         fees: { year1: 100000, total: 100000 }
       },
       {
-        degree: "B.Design",
-        mode: "Global Mode",
-        level: "ug",
-        specializations: "Fashion Design, Interior Design, Visual Communication Design, Animation & Game Design",
-        duration_in_yrs: 4,
-        fees: { year1: 150000, year2: 150000, year3: 150000, year4: 150000, total: 600000 }
-      },
-      {
-        degree: "B.Sc",
-        mode: "Global Mode",
-        level: "ug",
-        specializations: "Film Making, Script, Direction, Audiography, Script Writing, Cinematography",
+        degree: "Ph.D",
+        mode: "Regular Mode",
+        level: "phd",
+        specializations: "Film Studies, Fashion Design, Media & Communication",
         duration_in_yrs: 3,
-        fees: { year1: 150000, year2: 150000, year3: 150000, total: 450000 }
-      },
-      {
-        degree: "BA",
-        mode: "Global Mode",
-        level: "ug",
-        specializations: "Acting & Drama, Advertising, Journalism, PR Events",
-        duration_in_yrs: 3,
-        fees: { year1: 150000, year2: 150000, year3: 150000, total: 450000 }
-      },
-      {
-        degree: "M.Design",
-        mode: "Global Mode",
-        level: "pg",
-        specializations: "Fashion Design, Visual Communication Design, Animation & Game Design",
-        duration_in_yrs: 2,
-        fees: { year1: 150000, year2: 150000, total: 300000 }
-      },
-      {
-        degree: "M.Sc",
-        mode: "Global Mode",
-        level: "pg",
-        specializations: "Film Making, Script Writing, Cinematography",
-        duration_in_yrs: 2,
-        fees: { year1: 150000, year2: 150000, total: 300000 }
-      },
-      {
-        degree: "MA",
-        mode: "Global Mode",
-        level: "pg",
-        specializations: "Acting & Drama, Advertising, Journalism, PR Events",
-        duration_in_yrs: 2,
-        fees: { year1: 150000, year2: 150000, total: 300000 }
+        fees: { year1: 110000, year2: 110000, year3: 110000, total: 330000 }
       }
     ],
     eligibility: {

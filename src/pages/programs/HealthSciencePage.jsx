@@ -7,7 +7,7 @@ const HealthSciencesPage = () => {
   const filteredData = {
     ...universityData,
     institutes: universityData.institutes.filter(i =>
-      i.name === 'Saroj Institute of Basic & Health Sciences'
+      i.name === 'Saroj Institute of Basic & Health Sciences with AI Integration (SIBHS)'
     )
   };
   return (

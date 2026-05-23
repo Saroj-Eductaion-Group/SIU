@@ -49,22 +49,6 @@ const InstituteArtificialIntelligence = () => {
         level: "phd",
         duration_in_yrs: 3,
         fees: { year1: 110000, year2: 110000, year3: 110000, total: 330000 }
-      },
-      {
-        degree: "B.Tech (Global AI Systems)",
-        mode: "Global Mode",
-        level: "ug",
-        specializations: "International AI Standards, Global AI Policy, Multinational AI Systems",
-        duration_in_yrs: 4,
-        fees: { year1: 160000, year2: 160000, year3: 160000, year4: 160000, total: 640000 }
-      },
-      {
-        degree: "M.Tech (Global AI Research)",
-        mode: "Global Mode",
-        level: "pg",
-        specializations: "Cross-border AI Ethics, International AI Collaboration, Global AI Infrastructure",
-        duration_in_yrs: 2,
-        fees: { year1: 175000, year2: 175000, total: 350000 }
       }
     ],
     eligibility: {

@@ -30,66 +30,43 @@ const InstituteBasicHealthSciences = () => {
         degree: "B.Sc (Basic Sciences)",
         mode: "Regular Mode",
         level: "ug",
-        specializations: "Physics, Chemistry, Mathematics, Biology",
+        specializations: "Physics, Chemistry, Biology, Mathematics",
         duration_in_yrs: 3,
-        fees: { year1: 80000, year2: 80000, year3: 80000, total: 240000 }
+        fees: { year1: 60000, year2: 60000, year3: 60000, total: 180000 }
       },
       {
-        degree: "BS (Health Sciences)",
+        degree: "B.Sc (Health Sciences)",
         mode: "Regular Mode",
         level: "ug",
-        specializations: "Physiotherapy, Radiology, Medical Lab Technology, Forensic Science",
+        specializations: "Data Sciences, Physiotherapy, Forensic Science, Radiology & Imaging",
         duration_in_yrs: 3,
-        fees: { year1: 85000, year2: 85000, year3: 85000, total: 255000 }
+        fees: { year1: 60000, year2: 60000, year3: 60000, total: 180000 }
+      },
+      {
+        degree: "Diploma (Public Health)",
+        mode: "Regular Mode",
+        level: "diploma",
+        duration_in_yrs: 1,
+        fees: { year1: 60000, total: 60000 }
       },
       {
         degree: "M.Sc (Basic Sciences)",
         mode: "Regular Mode",
         level: "pg",
-        specializations: "Advanced Physics, Organic Chemistry, Applied Mathematics, Molecular Biology",
+        specializations: "Physics, Biology, Chemistry, Mathematics",
         duration_in_yrs: 2,
-        fees: { year1: 90000, year2: 90000, total: 180000 }
+        fees: { year1: 80000, year2: 80000, total: 160000 }
       },
       {
-        degree: "MS (Health Sciences)",
+        degree: "M.Sc (Health Sciences)",
         mode: "Regular Mode",
         level: "pg",
-        specializations: "Clinical Research, Medical Imaging, Advanced Pathology, Public Health",
+        specializations: "Data Sciences, Physiotherapy, Forensic Science, Radiology & Imaging",
         duration_in_yrs: 2,
-        fees: { year1: 95000, year2: 95000, total: 190000 }
+        fees: { year1: 80000, year2: 80000, total: 160000 }
       },
       {
-        degree: "Diploma in Medical Lab Technology",
-        mode: "Regular Mode",
-        level: "diploma",
-        duration_in_yrs: 2,
-        fees: { year1: 60000, year2: 60000, total: 120000 }
-      },
-      {
-        degree: "B.Sc (Global Sciences)",
-        mode: "Global Mode",
-        level: "ug",
-        specializations: "Biotechnology, Environmental Science, Data Science in Biology",
-        duration_in_yrs: 3,
-        fees: { year1: 125000, year2: 125000, year3: 125000, total: 375000 }
-      },
-      {
-        degree: "BS (Global Health)",
-        mode: "Global Mode",
-        level: "ug",
-        specializations: "International Public Health, Global Epidemiology, Health Informatics",
-        duration_in_yrs: 3,
-        fees: { year1: 130000, year2: 130000, year3: 130000, total: 390000 }
-      },
-      {
-        degree: "Ph.D in Biological Sciences",
-        mode: "Regular Mode",
-        level: "phd",
-        duration_in_yrs: 3,
-        fees: { year1: 100000, year2: 100000, year3: 100000, total: 300000 }
-      },
-      {
-        degree: "Ph.D in Health Sciences",
+        degree: "Ph.D",
         mode: "Regular Mode",
         level: "phd",
         duration_in_yrs: 3,

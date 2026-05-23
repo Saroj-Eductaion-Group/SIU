@@ -85,11 +85,6 @@ const BBAPage = () => {
           modeName: 'Regular Mode',
           modeDescription: 'Totally domestic and Full-time - Offline',
           fees: { year1: 110000, year2: 110000, year3: 110000, total: 330000 }
-        },
-        {
-          modeName: 'Global Mode',
-          modeDescription: 'Students will be going to study in International Destination in each Year',
-          fees: { year1: 160000, year2: 160000, year3: 160000, total: 480000 }
         }
       ]
     },
@@ -117,11 +112,6 @@ const BBAPage = () => {
           modeName: 'Regular Mode',
           modeDescription: 'Totally domestic and Full-time - Offline',
           fees: { year1: 110000, year2: 110000, year3: 110000, total: 330000 }
-        },
-        {
-          modeName: 'Global Mode',
-          modeDescription: 'Students will be going to study in International Destination in each Year',
-          fees: { year1: 160000, year2: 160000, year3: 160000, total: 480000 }
         }
       ]
     },
@@ -148,11 +138,6 @@ const BBAPage = () => {
           modeName: 'Regular Mode',
           modeDescription: 'Totally domestic and Full-time - Offline',
           fees: { year1: 110000, year2: 110000, year3: 110000, total: 330000 }
-        },
-        {
-          modeName: 'Global Mode',
-          modeDescription: 'Students will be going to study in International Destination in each Year',
-          fees: { year1: 160000, year2: 160000, year3: 160000, total: 480000 }
         }
       ]
     }

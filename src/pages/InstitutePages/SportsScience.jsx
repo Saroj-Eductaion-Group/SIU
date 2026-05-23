@@ -39,7 +39,7 @@ const InstituteSportsScience = () => {
         level: "ug",
         specializations: "Sports Marketing, Event Management, Athlete Management",
         duration_in_yrs: 3,
-        fees: { year1: 95000, year2: 95000, year3: 95000, total: 285000 }
+        fees: { year1: 90000, year2: 90000, year3: 90000, total: 270000 }
       },
       {
         degree: "M.Sc in Sports Nutrition",
@@ -47,7 +47,7 @@ const InstituteSportsScience = () => {
         level: "pg",
         specializations: "Diet Planning, Supplementation, Weight Management",
         duration_in_yrs: 2,
-        fees: { year1: 110000, year2: 110000, total: 220000 }
+        fees: { year1: 90000, year2: 90000, total: 180000 }
       },
       {
         degree: "MS in Sports Analytics",
@@ -55,7 +55,7 @@ const InstituteSportsScience = () => {
         level: "pg",
         specializations: "Performance Metrics, Data Visualization, Talent Scouting",
         duration_in_yrs: 2,
-        fees: { year1: 120000, year2: 120000, total: 240000 }
+        fees: { year1: 90000, year2: 90000, total: 180000 }
       },
       {
         degree: "Diploma in Sports Coaching",
@@ -63,30 +63,14 @@ const InstituteSportsScience = () => {
         level: "diploma",
         specializations: "Technique Development, Tactical Training, Leadership",
         duration_in_yrs: 1,
-        fees: { total: 85000 }
-      },
-      {
-        degree: "BS in Sports Technology",
-        mode: "Global Mode",
-        level: "ug",
-        specializations: "Wearable Tech, Performance Tracking, Equipment Design",
-        duration_in_yrs: 3,
-        fees: { year1: 140000, year2: 140000, year3: 140000, total: 420000 }
-      },
-      {
-        degree: "MS in High Performance Coaching",
-        mode: "Global Mode",
-        level: "pg",
-        specializations: "Elite Athlete Development, Periodization, Recovery Science",
-        duration_in_yrs: 2,
-        fees: { year1: 160000, year2: 160000, total: 320000 }
+        fees: { total: 90000 }
       },
       {
         degree: "Ph.D in Sports Science",
         mode: "Regular Mode",
         level: "phd",
         duration_in_yrs: 3,
-        fees: { year1: 125000, year2: 125000, year3: 125000, total: 375000 }
+        fees: { year1: 110000, year2: 110000, year3: 110000, total: 330000 }
       }
     ],
     eligibility: {

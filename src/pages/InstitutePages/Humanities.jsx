@@ -27,69 +27,23 @@ const InstituteHumanitiesEducation = () => {
     description: "The Saroj Institute of Humanities and Education is dedicated to cultivating critical thinkers, educators, and scholars in the humanities. Our programs blend traditional wisdom with contemporary pedagogical approaches, preparing students to excel in education, research, and various humanities disciplines.",
     programs: [
       {
-        degree: "BA (Humanities)",
+        degree: "BA",
         mode: "Regular Mode",
         level: "ug",
-        specializations: "History, Philosophy, Literature, Cultural Studies",
+        specializations: "General, International Relations",
         duration_in_yrs: 3,
-        fees: { year1: 75000, year2: 75000, year3: 75000, total: 225000 }
+        fees: { year1: 60000, year2: 60000, year3: 60000, total: 180000 }
       },
       {
-        degree: "B.Ed",
-        mode: "Regular Mode",
-        level: "ug",
-        specializations: "Elementary Education, Special Education, Language Teaching",
-        duration_in_yrs: 2,
-        fees: { year1: 80000, year2: 80000, total: 160000 }
-      },
-      {
-        degree: "MA (Education)",
+        degree: "MA",
         mode: "Regular Mode",
         level: "pg",
-        specializations: "Educational Leadership, Curriculum Design, Assessment Methods",
+        specializations: "General, International Relations",
         duration_in_yrs: 2,
-        fees: { year1: 85000, year2: 85000, total: 170000 }
+        fees: { year1: 60000, year2: 60000, total: 120000 }
       },
       {
-        degree: "MA (Humanities)",
-        mode: "Regular Mode",
-        level: "pg",
-        specializations: "Comparative Literature, Modern History, Applied Philosophy",
-        duration_in_yrs: 2,
-        fees: { year1: 80000, year2: 80000, total: 160000 }
-      },
-      {
-        degree: "Diploma in Early Childhood Education",
-        mode: "Regular Mode",
-        level: "diploma",
-        duration_in_yrs: 1,
-        fees: { total: 60000 }
-      },
-      {
-        degree: "Certificate in Teaching Methods",
-        mode: "Regular Mode",
-        level: "certificate",
-        duration_in_yrs: 0.5,
-        fees: { total: 30000 }
-      },
-      {
-        degree: "BA (Global Humanities)",
-        mode: "Global Mode",
-        level: "ug",
-        specializations: "World History, International Relations, Global Literature",
-        duration_in_yrs: 3,
-        fees: { year1: 120000, year2: 120000, year3: 120000, total: 360000 }
-      },
-      {
-        degree: "MA (International Education)",
-        mode: "Global Mode",
-        level: "pg",
-        specializations: "Comparative Education, Global Pedagogy, Cross-Cultural Teaching",
-        duration_in_yrs: 2,
-        fees: { year1: 140000, year2: 140000, total: 280000 }
-      },
-      {
-        degree: "Ph.D in Education",
+        degree: "Ph.D",
         mode: "Regular Mode",
         level: "phd",
         duration_in_yrs: 3,

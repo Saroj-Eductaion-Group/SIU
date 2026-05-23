@@ -32,7 +32,7 @@ const InstitutePharmacy = () => {
         level: "ug",
         specializations: "Pharmacology, Pharmaceutical Chemistry, Pharmaceutics, Pharmaceutical Analysis, Clinical Pharmacy, Pharmaceutical Biotechnology, Regulatory Affairs",
         duration_in_yrs: 4,
-        fees: { year1: 100000, year2: 100000, year3: 100000, year4: 100000, total: 400000 }
+        fees: { year1: 100000, year2: 100000, total: 200000 }
       },
       {
         degree: "D.Pharm",
@@ -40,7 +40,7 @@ const InstitutePharmacy = () => {
         level: "diploma",
         specializations: "Pharmacology, Pharmaceutical Chemistry, Pharmaceutics, Pharmaceutical Analysis, Clinical Pharmacy, Pharmaceutical Biotechnology, Regulatory Affairs",
         duration_in_yrs: 2,
-        fees: { year1: 90000, year2: 90000, total: 180000 }
+        fees: { year1: 100000, year2: 100000, total: 200000 }
       },
       {
         degree: "M.Pharm (Pharmacology)",
@@ -54,51 +54,14 @@ const InstitutePharmacy = () => {
         mode: "Regular Mode",
         level: "pg",
         duration_in_yrs: 2,
-        fees: { year1: 90000, year2: 90000, total: 180000 }
+        fees: { year1: 100000, year2: 100000, total: 200000 }
       },
       {
         degree: "Ph.D",
         mode: "Regular Mode",
         level: "phd",
         duration_in_yrs: 3,
-        fees: { year1: 125000, year2: 125000, year3: 125000, total: 375000 }
-      },
-      {
-        degree: "B.Pharm",
-        mode: "Global Mode",
-        level: "ug",
-        specializations: "Pharmacology, Pharmaceutical Chemistry, Pharmaceutics, Pharmaceutical Analysis, Clinical Pharmacy, Pharmaceutical Biotechnology, Regulatory Affairs",
-        duration_in_yrs: 4,
-        fees: { year1: 150000, year2: 150000, year3: 150000, year4: 150000, total: 600000 }
-      },
-      {
-        degree: "D.Pharm",
-        mode: "Global Mode",
-        level: "diploma",
-        specializations: "Pharmacology, Pharmaceutical Chemistry, Pharmaceutics, Pharmaceutical Analysis, Clinical Pharmacy, Pharmaceutical Biotechnology, Regulatory Affairs",
-        duration_in_yrs: 2,
-        fees: { year1: 140000, year2: 140000, total: 280000 }
-      },
-      {
-        degree: "M.Pharm (Pharmacology)",
-        mode: "Global Mode",
-        level: "pg",
-        duration_in_yrs: 2,
-        fees: { year1: 150000, year2: 150000, total: 300000 }
-      },
-      {
-        degree: "M.Pharm (Medical Chemistry)",
-        mode: "Global Mode",
-        level: "pg",
-        duration_in_yrs: 2,
-        fees: { year1: 140000, year2: 140000, total: 280000 }
-      },
-      {
-        degree: "Ph.D",
-        mode: "Global Mode",
-        level: "phd",
-        duration_in_yrs: 3,
-        fees: { year1: 200000, year2: 200000, year3: 200000, total: 600000 }
+        fees: { year1: 110000, year2: 110000, year3: 110000, total: 330000 }
       }
     ],
     eligibility: {

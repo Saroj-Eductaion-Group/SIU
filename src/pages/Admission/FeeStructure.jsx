@@ -21,72 +21,77 @@ const SIUFeeStructure = () => {
   // Original data for Regular Mode programmes, memoized for performance
   const originalInstitutes = useMemo(() => [
     {
-      name: "Saroj Institute of Artificial Intelligence",
+      name: "Saroj Institute of Artificial Intelligence (SIAI)",
       domain: "Artificial Intelligence",
       programs: [
-        {
-          degree: "B.Tech",
-          specializations: "Artificial Intelligence & Machine Learning, Data Science, Robotics, Computer Science & Engineering",
-          fees: { year1: 110000, year2: 110000, year3: 110000, year4: 110000, total: 440000 }
-        },
-        {
-          degree: "M.Tech",
-          specializations: "Artificial Intelligence & Machine Learning, Data Science, Robotics, Computer Science & Engineering",
-          fees: { year1: 125000, year2: 125000, total: 250000 }
-        },
+        { degree: "B.Tech", specializations: "Artificial Intelligence & Machine Learning, Data Science, Robotics, Computer Science & Engineering", fees: { year1: 110000, year2: 110000, year3: 110000, year4: 110000, total: 440000 } },
+        { degree: "M.Tech", specializations: "Artificial Intelligence & Machine Learning, Data Science, Robotics, Computer Science & Engineering", fees: { year1: 125000, year2: 125000, total: 250000 } },
         { degree: "Ph.D", specializations: "Artificial Intelligence & Machine Learning, Data Science, Robotics, Computer Science & Engineering", fees: { year1: 110000, year2: 110000, year3: 110000, total: 330000 } }
-
       ]
     },
     {
-      name: "Saroj Institute of Management & Technology (Engineering)",
+      name: "Saroj Institute of Management & Technology with AI Integration (SIMT)",
       domain: "Engineering",
       programs: [
+        { degree: "Diploma Engg.", specializations: "All fields", fees: { year1: 60000, year2: 60000, year3: 60000, total: 180000 } },
         { degree: "B.Tech", specializations: "CSE, IT, Cyber Security, IOT, EC, ME, Civil, Mechatronics, Bio-Tech, Electrical Engg", fees: { year1: 110000, year2: 110000, year3: 110000, year4: 110000, total: 440000 } },
         { degree: "M.Tech", specializations: "CSE, IT, Cyber Security, IOT, EC, ME, Civil, Mechatronics, Bio-Tech, Electrical Engg", fees: { year1: 125000, year2: 125000, total: 250000 } },
         { degree: "BCA", specializations: "AI, ML, Cyber Security", fees: { year1: 100000, year2: 100000, year3: 100000, total: 300000 } },
         { degree: "MCA", specializations: "AI, ML, Cyber Security", fees: { year1: 120000, year2: 120000, total: 240000 } },
-        { degree: "Diploma Engg.", specializations: "All fields", fees: { year1: 60000, year2: 60000, year3: 60000, total: 180000 } },
         { degree: "Ph.D", specializations: "Computer Science, Information Technology, Engineering, Management", fees: { year1: 110000, year2: 110000, year3: 110000, total: 330000 } }
-
-      
       ]
     },
     {
-      name: "Saroj Institute of Basic & Health Sciences",
+      name: "Saroj Institute of Entrepreneurship & Business (SIEBI)",
+      domain: "Entrepreneurship and Business",
+      programs: [
+        { degree: "BBA", specializations: "General, Banking Finance, International Business, Marketing, Insurance, Digital Marketing, Logistics & SCM HR, IT, Entrepreneurship, Retail & Start-Ups", fees: { year1: 110000, year2: 110000, year3: 110000, total: 330000 } },
+        { degree: "BBA Hons", specializations: "General, Banking Finance, International Business", fees: { year1: 60000, year2: 60000, year3: 60000, total: 180000 } },
+        { degree: "MBA", specializations: "General Business Administration", fees: { year1: 120000, year2: 120000, total: 240000 } },
+        { degree: "Ph.D", specializations: "All disciplines", fees: { year1: 110000, year2: 110000, year3: 110000, total: 330000 } },
+        { degree: "B.Com", specializations: "Commerce", fees: { year1: 60000, year2: 60000, year3: 60000, total: 180000 } },
+        { degree: "M.Com", specializations: "Commerce", fees: { year1: 60000, year2: 60000, total: 120000 } },
+        { degree: "BA", specializations: "General", fees: { year1: 60000, year2: 60000, year3: 60000, total: 180000 } },
+        { degree: "MA", specializations: "General", fees: { year1: 60000, year2: 60000, total: 120000 } }
+      ]
+    },
+    {
+      name: "Saroj Institute of Humanities & Education with AI Integration (SIHE)",
+      domain: "Humanities & Education",
+      programs: [
+        { degree: "BA", specializations: "General, International Relations", fees: { year1: 60000, year2: 60000, year3: 60000, total: 180000 } },
+        { degree: "MA", specializations: "General, International Relations", fees: { year1: 60000, year2: 60000, total: 120000 } }
+      ]
+    },
+    {
+      name: "Saroj Institute of Basic & Health Sciences with AI Integration (SIBHS)",
       domain: "Health Sciences",
       programs: [
-        { degree: "B.Sc", specializations: "Physics, Chemistry, Biology, Mathematics", fees: { year1: 80000, year2: 80000, year3: 80000, total: 240000 } },
-        { degree: "BS", specializations: "Data Sciences, Physiotherapy, Forensic Science, Radiology & Imaging, Medical Lab Technology", fees: { year1: 80000, year2: 80000, year3: 80000, total: 240000 } },
-        { degree: "M.Sc", specializations: "Physics, Biology, Chemistry, Mathematics", fees: { year1: 80000, year2: 80000, total: 160000 } },
-        { degree: "MS", specializations: "Data Sciences, Physiotherapy, Forensic Science, Radiology & Imaging, Medical Lab Technology", fees: { year1: 80000, year2: 80000, total: 160000 } },
+        { degree: "B.Sc", specializations: "Physics, Chemistry, Biology, Mathematics", fees: { year1: 60000, year2: 60000, year3: 60000, total: 180000 } },
+        { degree: "B.Sc", specializations: "Data Sciences, Physiotherapy, Forensic Science, Radiology & Imaging", fees: { year1: 60000, year2: 60000, year3: 60000, total: 180000 } },
         { degree: "Diploma", specializations: "Public Health", fees: { year1: 60000, total: 60000 } },
-        { degree: "Ph.D", specializations: "Physics, Chemistry, Mathematics & Biology", fees: { year1: 110000, year2: 110000, year3: 110000, total: 330000 } },
-        { degree: "Ph.D", specializations: "Data Analytics", fees: { year1: 110000, year2: 110000, year3: 110000, total: 330000 } },
-        { degree: "Ph.D", specializations: "Basic Sciences, Health Sciences", fees: { year1: 110000, year2: 110000, year3: 110000, total: 330000 } },
-
-  
+        { degree: "M.Sc", specializations: "Physics, Biology, Chemistry, Mathematics", fees: { year1: 80000, year2: 80000, total: 160000 } },
+        { degree: "M.Sc", specializations: "Data Sciences, Physiotherapy, Forensic Science, Radiology & Imaging", fees: { year1: 80000, year2: 80000, total: 160000 } },
+        { degree: "Ph.D", specializations: "Basic Sciences, Health Sciences, Data Analytics", fees: { year1: 110000, year2: 110000, year3: 110000, total: 330000 } }
       ]
     },
     {
       name: "Lucknow Institute of Pharmacy",
       domain: "Pharmacy",
       programs: [
-        { degree: "B.Pharm", specializations: "Pharmacology, Pharmaceutical Chemistry, Pharmaceutics, Pharmaceutical Analysis, Clinical Pharmacy, Pharmaceutical Biotechnology, Regulatory Affairs", fees: { year1: 100000, year2: 100000, year3: 100000, year4: 100000, total: 400000 } },
         { degree: "D.Pharm", specializations: "General Diploma in Pharmacy", fees: { year1: 100000, year2: 100000, total: 200000 } },
-        { degree: "M.Pharm", specializations: "Pharmacology", fees: { year1: 100000, year2: 100000, total: 200000 } },
-        { degree: "M.Pharm", specializations: "Medical Chemistry", fees: { year1: 100000, year2: 100000, total: 200000 } },
+        { degree: "B.Pharm", specializations: "Pharmacology, Pharmaceutical Chemistry, Pharmaceutics, Pharmaceutical Analysis, Clinical Pharmacy, Pharmaceutical Biotechnology, Regulatory Affairs", fees: { year1: 100000, year2: 100000, year3: 100000, year4: 100000, total: 400000 } },
+        { degree: "M.Pharm", specializations: "Pharmacology, Medical Chemistry", fees: { year1: 100000, year2: 100000, total: 200000 } },
         { degree: "Ph.D", specializations: "Pharmaceutical Sciences", fees: { year1: 110000, year2: 110000, year3: 110000, total: 330000 } }
-  ]
+      ]
     },
     {
-      name: "Saroj Institute of Sports Science & Research",
-      domain: "Sports Science & Research",
+      name: "Saroj Institute of Law with AI Integration",
+      domain: "Law",
       programs: [
-        { degree: "BS", specializations: "Sports Management, Applied Sports Psychology, Sports Nutritionist, Sports Coaching & Fitness", fees: { year1: 90000, year2: 90000, year3: 90000, total: 270000 } },
-        { degree: "MS", specializations: "Sports Management, Applied Sports Psychology, Sports Nutritionist, Sports Coaching & Fitness", fees: { year1: 90000, year2: 90000, total: 180000 } },
-        { degree: "Ph.D", specializations: "Sports Science, Sports Management, Sports Psychology", fees: { year1: 110000, year2: 110000, year3: 110000, total: 330000 } }
-
+        { degree: "BA LLB", specializations: "Corporate Law, Intellectual Property Law, Human Rights Law, Criminal Law, Constitutional Law, Environment Law, Cyber Law, International Trade Law", fees: { year1: 75000, year2: 75000, year3: 75000, year4: 75000, year5: 75000, total: 375000 } },
+        { degree: "LLM", specializations: "Corporate Law, Intellectual Property Law, Human Rights Law, Criminal Law, Constitutional Law, Environment Law, Cyber Law, International Trade Law", fees: { year1: 75000, year2: 75000, total: 150000 } },
+        { degree: "Ph.D", specializations: "Legal Studies", fees: { year1: 110000, year2: 110000, year3: 110000, total: 330000 } }
       ]
     },
     {
@@ -94,251 +99,40 @@ const SIUFeeStructure = () => {
       domain: "Film & Fashion",
       programs: [
         { degree: "B.Design", specializations: "Fashion Design, Interior Design, Visual Communication Design, Animation & Game Design", fees: { year1: 100000, year2: 100000, year3: 100000, year4: 100000, total: 400000 } },
-        { degree: "B.Sc", specializations: "Film Making, Script, Direction, Audiography, Script Writing, Cinematography", fees: { year1: 100000, year2: 100000, year3: 100000, total: 300000 } },
-        { degree: "BA", specializations: "Acting & Drama, Advertising, Journalism, PR Events", fees: { year1: 100000, year2: 100000, year3: 100000, total: 300000 } },
+        { degree: "BFA", specializations: "Film Making", fees: { year1: 100000, year2: 100000, year3: 100000, total: 300000 } },
+        { degree: "BFA", specializations: "Acting & Drama", fees: { year1: 100000, year2: 100000, year3: 100000, total: 300000 } },
         { degree: "M.Design", specializations: "Fashion Design, Visual Communication Design, Animation & Game Design", fees: { year1: 100000, year2: 100000, total: 200000 } },
-        { degree: "M.Sc", specializations: "Film Making, Script Writing, Cinematography", fees: { year1: 100000, year2: 100000, total: 200000 } },
-        { degree: "MA", specializations: "Acting & Drama, Advertising, Journalism, PR Events", fees: { year1: 100000, year2: 100000, total: 200000 } },
+        { degree: "MFA", specializations: "Film Making", fees: { year1: 100000, year2: 100000, total: 200000 } },
+        { degree: "MFA", specializations: "Acting & Drama", fees: { year1: 100000, year2: 100000, total: 200000 } },
         { degree: "Diploma", specializations: "Film/Drama/Media", fees: { year1: 100000, total: 100000 } },
         { degree: "Ph.D", specializations: "Film Studies, Fashion Design, Media & Communication", fees: { year1: 110000, year2: 110000, year3: 110000, total: 330000 } }
-
       ]
     },
     {
-      name: "Saroj Institute of Humanities & Education",
-      domain: "Humanities & Education",
+      name: "Saroj Institute of Agriculture Sciences with AI Integration",
+      domain: "Agriculture",
       programs: [
-        {
-          degree: "BA/BS/B.Com",
-          specializations: "General, International Relations",
-          fees: { year1: 60000, year2: 60000, year3: 60000, total: 180000 }
-        },
-        {
-          degree: "B.Ed",
-          specializations: "Education",
-          fees: { year1: 60000, year2: 60000, year3: 60000, total: 180000 }
-        },
-        {
-          degree: "MA/MS/M.Com",
-          specializations: "General, International Relations",
-          fees: { year1: 60000, year2: 60000, total: 120000 },
-        },
-        {
-          degree: "M.Ed",
-          specializations: "Education",
-          fees: { year1: 60000, year2: 60000, total: 120000 },
-        },
-        { degree: "Ph.D", specializations: "Humanities, Education, International Relations, Liberal Arts, History, Economics, Language, Political Science, Commerce, Home Science", fees: { year1: 110000, year2: 110000, year3: 110000, total: 330000 } }
-
+        { degree: "B.Sc Agriculture (Hons)", specializations: "Agriculture", fees: { year1: 60000, year2: 60000, year3: 60000, year4: 60000, total: 240000 } },
+        { degree: "M.Sc Agriculture (Hons)", specializations: "Agriculture", fees: { year1: 60000, year2: 60000, total: 120000 } },
+        { degree: "Ph.D", specializations: "Agriculture", fees: { year1: 110000, year2: 110000, year3: 110000, total: 330000 } }
       ]
     },
     {
-      name: "Saroj Institute of Entrepreneurship and Business",
-      domain: "Entrepreneurship and Business",
+      name: "Saroj Institute of Sport Science & Research with AI Integration",
+      domain: "Sports Science & Research",
       programs: [
-        {
-          degree: "BBA",
-          specializations: "General, Banking Finance, International Business, Marketing, Insurance, Digital Marketing, Logistics & SCM HR, IT, Entrepreneurship, Retail & Start-Ups",
-          fees: { year1: 110000, year2: 110000, year3: 110000, total: 330000 }
-        },
-        {
-          degree: "MBA",
-          specializations: "General Business Administration",
-          fees: { year1: 120000, year2: 120000, total: 240000 }
-        },
-         { degree: "Ph.D", specializations: "All disciplines", fees: { year1: 110000, year2: 110000, year3: 110000, total: 330000 } }
-
+        { degree: "B.Sc", specializations: "Sports Management, Applied Sports Psychology, Sports Nutritionist, Sports Coaching & Fitness", fees: { year1: 90000, year2: 90000, year3: 90000, total: 270000 } },
+        { degree: "M.Sc", specializations: "Sports Management, Applied Sports Psychology, Sports Nutritionist, Sports Coaching & Fitness", fees: { year1: 90000, year2: 90000, total: 180000 } },
+        { degree: "Ph.D", specializations: "Sports Science, Sports Management, Sports Psychology", fees: { year1: 110000, year2: 110000, year3: 110000, total: 330000 } }
       ]
-    },
-     {
-        "name": "Saroj Institute of Law",
-        "domain": "Law",
-        "programs": [
-            {
-                "degree": "BA LLB",
-                "specializations": "Corporate Law, Intellectual Property (IP) Law, Human Rights Law, Criminal Law, Constitutional Law, Environment Law, Cyber Law/Technology Law, International Trade & Eco Law",
-                "fees": {
-                    "year1": 75000,
-                    "year2": 75000,
-                    "year3": 75000,
-                    "year4": 75000,
-                    "year5": 75000,
-                    "total": 375000
-                }
-            },
-            
-            {
-                "degree": "LLM",
-                "specializations": "Corporate Law, Intellectual Property (IP) Law, Human Rights Law, Criminal Law, Constitutional Law, Environment Law, Cyber Law/Technology Law, International Trade & Eco Law",
-                "fees": {
-                    "year1": 75000,
-                    "year2": 75000,
-                    "total": 150000
-                }
-            },
-            {
-                "degree": "Ph.D",
-                "specializations": "Corporate Law, Intellectual Property (IP) Law, Human Rights Law, Criminal Law, Constitutional Law, Environment Law, Cyber Law/Technology Law, International Trade & Eco Law, Legal Studies",
-                "fees": {
-                    "year1": 110000,
-                    "year2": 110000,
-                    "year3": 110000,
-                    "total": 330000
-                }
-            }
-        ]
-    },
-    {
-        "name": "Saroj Institute of Agriculture Science",
-        "domain": "Agriculture",
-        "programs": [
-            {
-                "degree": "B.Sc",
-                "specializations": "Agriculture",
-                "fees": {
-                    "year1": 35000,
-                    "year2": 35000,
-                    "year3": 35000,
-                    "year4": 35000,
-                    "total": 140000
-                }
-            },
-            {
-                "degree": "M.Sc",
-                "specializations": "Agriculture",
-                "fees": {
-                    "year1": 35000,
-                    "year2": 35000,
-                    "total": 70000
-                }
-            },
-            {
-                "degree": "Ph.D",
-                "specializations": "Agriculture",
-                "fees": {
-                    "year1": 110000,
-                    "year2": 110000,
-                    "year3": 110000,
-                    "total": 330000
-                }
-            }
-        ]
     }
   ], []);
 
-  // Original data for Global Mode programmes, memoized for performance
-  const originalGlobalInstitutes = useMemo(() => [
-    {
-      name: "Saroj Institute of Artificial Intelligence",
-      domain: "Artificial Intelligence",
-      programs: [
-        {
-          degree: "B.Tech",
-          specializations: "Artificial Intelligence & Machine Learning, Data Science, Robotics, Computer Science & Engineering",
-          fees: { year1: 160000, year2: 160000, year3: 160000, year4: 160000, total: 640000 }
-        },
-        {
-          degree: "M.Tech",
-          specializations: "Artificial Intelligence & Machine Learning, Data Science, Robotics, Computer Science & Engineering",
-          fees: { year1: 175000, year2: 175000, total: 350000 }
-        }
-      ]
-    },
-    {
-      name: "Saroj Institute of Management & Technology (Engineering)",
-      domain: "Engineering",
-      programs: [
-        { degree: "B.Tech", specializations: "CSE, IT, Cyber Security, IOT, EC, ME, Civil, Mechatronics, Bio-Tech, Electrical Engg", fees: { year1: 160000, year2: 160000, year3: 160000, year4: 160000, total: 640000 } },
-        { degree: "M.Tech / MCA", specializations: "M.Tech (CSE, IT, Cyber Security, IOT, EC, ME, Civil, Mechatronics, Bio-Tech, Electrical Engg), MCA (AI, ML, Cyber Security)", fees: { year1: 150000, year2: 150000, year3: 150000, total: 450000 } },
-        { degree: "BCA", specializations: "AI, ML, Cyber Security", fees: { year1: 150000, year2: 150000, total: 300000 } }
-      ]
-    },
-    {
-      name: "Saroj Institute of Basic & Health Sciences",
-      domain: "Health Sciences",
-      programs: [
-        { degree: "B.Sc", specializations: "Physics, Biology, Chemistry, Mathematics", fees: { year1: 125000, year2: 125000, year3: 125000, total: 375000 } },
-        { degree: "BS", specializations: "Data Sciences, Physiotherapy, Forensic Science, Radiology, Imaging, Medical Lab Technology", fees: { year1: 125000, year2: 125000, year3: 125000, total: 375000 } },
-        { degree: "M.Sc", specializations: "Physics, Biology, Chemistry, Mathematics", fees: { year1: 125000, year2: 125000, total: 250000 } },
-        { degree: "MS", specializations: "Data Sciences, Physiotherapy, Forensic Science, Radiology, Imaging, Medical Lab Technology", fees: { year1: 125000, year2: 125000, total: 250000 } },
-        { degree: "Ph.D", specializations: "Physics, Chemistry, Mathematics & Biology", fees: { year1: 150000, year2: 150000, year3: 150000, total: 450000 } },
-        { degree: "Ph.D", specializations: "Data Analytics", fees: { year1: 150000, year2: 150000, year3: 150000, total: 450000 } }
-      ]
-    },
-    {
-      name: "Lucknow Institute of Pharmacy",
-      domain: "Pharmacy",
-      programs: [
-        { degree: "B.Pharm", specializations: "Pharmacology, Pharmaceutical Chemistry, Pharmaceutics, Pharmaceutical Analysis, Clinical Pharmacy, Pharmaceutical Biotechnology, Regulatory Affairs", fees: { year1: 150000, year2: 150000, year3: 150000, year4: 150000, total: 600000 } },
-        { degree: "D.Pharm", specializations: "Pharmacology, Pharmaceutical Chemistry, Pharmaceutics, Pharmaceutical Analysis, Clinical Pharmacy, Pharmaceutical Biotechnology, Regulatory Affairs", fees: { year1: 140000, year2: 140000, total: 280000 } },
-        { degree: "M.Pharm", specializations: "Pharmacology", fees: { year1: 150000, year2: 150000, total: 300000 } },
-        { degree: "M.Pharm", specializations: "Medical Chemistry", fees: { year1: 140000, year2: 140000, total: 280000 } }
-      ]
-    },
-    {
-      name: "Saroj Institute of Sports Science & Research",
-      domain: "Sports Science & Research",
-      programs: [
-        { degree: "BS", specializations: "Sports Management, Applied Sports Psychology, Sports Nutritionist, Sports Coaching & Fitness", fees: { year1: 140000, year2: 140000, year3: 140000, total: 420000 } },
-        { degree: "MS", specializations: "Sports Management, Applied Sports Psychology, Sports Nutritionist, Sports Coaching & Fitness", fees: { year1: 140000, year2: 140000, total: 280000 } }
-      ]
-    },
-    {
-      name: "Saroj Institute of Film & Fashion",
-      domain: "Film & Fashion",
-      programs: [
-        { degree: "B.Design", specializations: "Fashion Design, Interior Design, Visual Communication Design, Animation & Game Design", fees: { year1: 150000, year2: 150000, year3: 150000, year4: 150000, total: 600000 } },
-        { degree: "B.Sc", specializations: "Film Making, Script, Direction, Audiography, Script Writing, Cinematography", fees: { year1: 150000, year2: 150000, year3: 150000, total: 450000 } },
-        { degree: "BA", specializations: "Acting & Drama, Advertising, Journalism, PR Events", fees: { year1: 150000, year2: 150000, year3: 150000, total: 450000 } },
-        { degree: "M.Design", specializations: "Fashion Design, Visual Communication Design, Animation & Game Design", fees: { year1: 150000, year2: 150000, total: 300000 } },
-        { degree: "M.Sc", specializations: "Film Making, Script Writing, Cinematography", fees: { year1: 150000, year2: 150000, total: 300000 } },
-        { degree: "MA", specializations: "Acting & Drama, Advertising, Journalism, PR Events", fees: { year1: 150000, year2: 150000, total: 300000 } }
-      ]
-    },
-    {
-      name: "Saroj Institute of Humanities & Education",
-      domain: "Humanities & Education",
-      programs: [
-        {
-          degree: "BA/BS/B.Com",
-          specializations: "General, International Relations",
-          fees: { year1: 110000, year2: 110000, year3: 110000, total: 330000 },
-          note: "Global mode details not specified in document",
-        },
-        {
-          degree: "MA/MS/M.Com",
-          specializations: "General, International Relations",
-          fees: { year1: 110000, year2: 110000, total: 220000 },
-          note: "Global mode details not specified in document"
-        }
-      ]
-    },
-    {
-      name: "Saroj Institute of Entrepreneurship and Business",
-      domain: "Entrepreneurship and Business",
-      programs: [
-        {
-          degree: "BBA",
-          specializations: "General, Banking Finance, International Business, Marketing, Insurance, Digital Marketing, Logistics & SCM HR, IT, Entrepreneurship, Retail & Start-Ups",
-          fees: { year1: 160000, year2: 160000, year3: 160000, total: 480000 }
-        },
-        {
-          degree: "MBA",
-          specializations: "General Business Administration",
-          fees: { year1: 170000, year2: 170000, total: 340000 },
-          note: "Global mode details not specified in document",
-        }
-      ]
-    },
-    
-  
-
-  ], []);
+  const originalGlobalInstitutes = useMemo(() => [], []);
 
   // State for search and filter controls
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedDegree, setSelectedDegree] = useState('All');
-  const [selectedMode, setSelectedMode] = useState('All');
   const [selectedDomain, setSelectedDomain] = useState('All');
 
   // Flattens and prepares all program data for filtering and searching
@@ -380,10 +174,6 @@ const SIUFeeStructure = () => {
   // Filters programs based on current state of search and filters
   const filteredPrograms = useMemo(() => {
     let currentPrograms = allPrograms;
-
-    if (selectedMode !== 'All') {
-      currentPrograms = currentPrograms.filter(program => program.mode === selectedMode);
-    }
 
     if (selectedDegree !== 'All') {
       currentPrograms = currentPrograms.filter(program => program.degree === selectedDegree);
@@ -431,14 +221,14 @@ const SIUFeeStructure = () => {
       }
 
       const totalFee = program.fees.total ? `₹${program.fees.total.toLocaleString('en-IN')}` : "N/A";
-      let annualFee = "N/A";
+      let semesterFee = "N/A";
       if (program.fees.year1) {
-        annualFee = `₹${program.fees.year1.toLocaleString('en-IN')}/year`;
+        semesterFee = `₹${(program.fees.year1 / 2).toLocaleString('en-IN')}/semester`;
       }
       return [
         `${program.degree} (${program.specializations})`,
         totalFee,
-        annualFee
+        semesterFee
       ];
     });
   };
@@ -461,7 +251,7 @@ const SIUFeeStructure = () => {
             <tr>
               <th className="px-4 py-2 text-left">Programme</th>
               <th className="px-4 py-2 text-left">Total Fees</th>
-              <th className="px-4 py-2 text-left">Annual/Tuition Fees</th>
+              <th className="px-4 py-2 text-left">Fees per Semester</th>
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
@@ -496,7 +286,7 @@ const SIUFeeStructure = () => {
                 
               </div>
               <h2 className="text-2xl text-blue-600 mt-2 font-semibold">
-                Fee Structure for Session 2025–2026
+                Fee Structure for Session 2026–2027
               </h2>
               <p className="text-gray-600 mt-2">
                 Chandsarai, Sultanpur Road, Gosaiganj, Lucknow | Phone: 9513731275
@@ -534,22 +324,7 @@ const SIUFeeStructure = () => {
                 </div>
               </div>
 
-              {/* Mode Filter */}
-              <div className="relative w-full md:w-1/4">
-                <Filter className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
-                <select
-                  value={selectedMode}
-                  onChange={(e) => setSelectedMode(e.target.value)}
-                  className="w-full pl-10 pr-4 py-1 border border-gray-300 rounded-md appearance-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 bg-white"
-                >
-                  <option value="All">All Modes</option>
-                  <option value="Regular">Regular Mode</option>
-                  <option value="Global">Global Mode</option>
-                </select>
-                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                  <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" /></svg>
-                </div>
-              </div>
+
 
               {/* Domain Filter (New) */}
               <div className="relative w-full md:w-1/4">
@@ -580,7 +355,6 @@ const SIUFeeStructure = () => {
             {/* Render Regular Mode Programmes if any exist */}
             {Object.keys(groupedFilteredPrograms.Regular).length > 0 && (
               <>
-                <h3 className="text-2xl font-bold text-gray-900 mb-6 border-b pb-2">Regular Mode Programmes</h3>
                 {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"> */}
                 <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8'>
                   {Object.entries(groupedFilteredPrograms.Regular).map(([instituteName, programs], index) => (
@@ -593,19 +367,7 @@ const SIUFeeStructure = () => {
               </>
             )}
 
-            {/* Render Global Mode Programmes if any exist */}
-            {Object.keys(groupedFilteredPrograms.Global).length > 0 && (
-              <>
-                <h3 className="text-2xl font-bold text-gray-900 mb-6 border-b pb-2 mt-10">Global Mode Programmes</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
-                  {Object.entries(groupedFilteredPrograms.Global).map(([instituteName, programs], index) => (
-                    <div key={`global-filtered-${index}`}>
-                      {renderTable(programs[0].domain, programs)}
-                    </div>
-                  ))}
-                </div>
-              </>
-            )}
+
 
             <div className="mt-8 p-6 bg-blue-50 rounded-lg border border-blue-100 shadow-md">
               <h4 className="text-lg font-semibold text-blue-800 mb-3">Note:</h4>

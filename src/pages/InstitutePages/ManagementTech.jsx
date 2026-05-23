@@ -40,7 +40,7 @@ const InstituteManagementTechnology = () => {
         level: "pg",
         specializations: "Finance, Marketing, HR, Operations, Business Analytics",
         duration_in_yrs: 2,
-        fees: { year1: 125000, year2: 125000, total: 250000 }
+        fees: { year1: 120000, year2: 120000, total: 240000 }
       },
       {
         degree: "MCA",
@@ -48,7 +48,7 @@ const InstituteManagementTechnology = () => {
         level: "pg",
         specializations: "Cloud Computing, Data Science, Cyber Security",
         duration_in_yrs: 2,
-        fees: { year1: 100000, year2: 100000, total: 200000 }
+        fees: { year1: 120000, year2: 120000, total: 240000 }
       },
       {
         degree: "BCA",
@@ -56,7 +56,7 @@ const InstituteManagementTechnology = () => {
         level: "ug",
         specializations: "AI, Machine Learning, Blockchain",
         duration_in_yrs: 3,
-        fees: { year1: 90000, year2: 90000, year3: 90000, total: 270000 }
+        fees: { year1: 100000, year2: 100000, year3: 100000, total: 300000 }
       },
       {
         degree: "M.Tech",
@@ -64,7 +64,7 @@ const InstituteManagementTechnology = () => {
         level: "pg",
         specializations: "Computer Science, Data Engineering, Robotics",
         duration_in_yrs: 2,
-        fees: { year1: 120000, year2: 120000, total: 240000 }
+        fees: { year1: 125000, year2: 125000, total: 250000 }
       },
       {
         degree: "Diploma in Engineering",
@@ -73,22 +73,6 @@ const InstituteManagementTechnology = () => {
         specializations: "Computer, Mechanical, Electrical, Civil",
         duration_in_yrs: 3,
         fees: { year1: 60000, year2: 60000, year3: 60000, total: 180000 }
-      },
-      {
-        degree: "B.Tech (Global)",
-        mode: "Global Mode",
-        level: "ug",
-        specializations: "IoT, Cyber Security, Cloud Technology",
-        duration_in_yrs: 4,
-        fees: { year1: 160000, year2: 160000, year3: 160000, year4: 160000, total: 640000 }
-      },
-      {
-        degree: "MBA (Global)",
-        mode: "Global Mode",
-        level: "pg",
-        specializations: "International Business, Digital Marketing, FinTech",
-        duration_in_yrs: 2,
-        fees: { year1: 150000, year2: 150000, total: 300000 }
       },
       {
         degree: "Ph.D in Computer Science",

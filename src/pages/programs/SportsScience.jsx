@@ -7,7 +7,7 @@ const SportsScience = () => {
   const filteredData = {
     ...universityData,
     institutes: universityData.institutes.filter(i =>
-      i.name === 'Saroj Institute of Sports Science & Research'
+      i.name === 'Saroj Institute of Sport Science & Research with AI Integration'
     )
   };
   return (

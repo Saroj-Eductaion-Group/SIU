@@ -7,7 +7,7 @@ const AiAndTechPage = () => {
   const filteredData = {
     ...universityData,
     institutes: universityData.institutes.filter(i =>
-      i.name === 'Saroj Institute of Artificial Intelligence'
+      i.name === 'Saroj Institute of Artificial Intelligence (SIAI)'
     )
   };
   return (

@@ -7,7 +7,7 @@ const EntrepreneurshipAndBusiness = () => {
   const filteredData = {
     ...universityData,
     institutes: universityData.institutes.filter(i =>
-      i.name === 'Saroj Institute of Entrepreneurship and Business'
+      i.name === 'Saroj Institute of Entrepreneurship & Business (SIEBI)'
     )
   };
   return (

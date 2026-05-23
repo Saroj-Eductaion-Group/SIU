@@ -53,16 +53,27 @@ const ScholarshipPage = () => {
               </p>
             </div>
 
-            {/* Card: Percentage-Based scholarships */}
-            <div className="bg-white shadow-xl rounded-xl p-6">
+            {/* Card: 100% Scholarship */}
+            <div className="bg-white shadow-xl rounded-xl p-6 border-t-4 border-green-500">
+              <div className='flex items-center justify-center mb-4'>
+              <Percent className='h-8 w-8 text-green-600 mr-3'/>
+              <h3 className="text-green-600 font-semibold text-2xl">100% Scholarship</h3>
+              </div>
+              <ul className="list-disc list-inside text-gray-600 space-y-2 text-lg">
+                <li>12th / UG Marks: <strong>75% or above</strong></li>
+                <li>SIUAT Score: <strong>90% or above</strong></li>
+              </ul>
+            </div>
+
+            {/* Card: 50% Scholarship */}
+            <div className="bg-white shadow-xl rounded-xl p-6 border-t-4 border-blue-500">
               <div className='flex items-center justify-center mb-4'>
               <Percent className='h-8 w-8 text-blue-600 mr-3'/>
-              <h3 className="text-blue-600 font-semibold text-2xl mb-2">Percentage-Based scholarships</h3>
+              <h3 className="text-blue-600 font-semibold text-2xl">50% Scholarship</h3>
               </div>
-              <ul className="list-disc list-inside text-gray-600 space-y-2 text-xl">
-                <p>Above 90%- <strong>100%</strong> tuition fee scholarship.
-                80%–90% marks- <strong>50%</strong> tuition fee scholarship.
-                75–80% marks- <strong>25%</strong> tuition fee scholarship.</p>
+              <ul className="list-disc list-inside text-gray-600 space-y-2 text-lg">
+                <li>12th / UG Marks: <strong>60% or above</strong></li>
+                <li>SIUAT Score: <strong>75%–89%</strong></li>
               </ul>
             </div>
 

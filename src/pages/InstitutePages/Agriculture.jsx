@@ -10,7 +10,7 @@ const allCourses = [
     name: 'B.Sc (Agriculture Science)',
     specializations: ['Crop Science', 'Soil Health', 'Agribusiness', 'Horticulture'],
     duration: '4 years',
-    fee: '₹35,000 per year',
+    fee: '₹60,000 per year',
     eligibility: '10+2 with Physics, Chemistry, and Biology (PCB) with a minimum of 50% marks.',
     mode: 'Regular Mode'
   },
@@ -20,7 +20,7 @@ const allCourses = [
     name: 'M.Sc (Agriculture Science)',
     specializations: ['Agronomy', 'Plant Pathology', 'Sustainable Agriculture', 'AgTech'],
     duration: '2 years',
-    fee: '₹35,000 per year',
+    fee: '₹60,000 per year',
     eligibility: 'B.Sc in Agriculture or related fields with a minimum of 55% marks.',
     mode: 'Regular Mode'
   },

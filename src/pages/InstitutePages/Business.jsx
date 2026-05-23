@@ -27,54 +27,63 @@ const InstituteEntrepreneurshipBusiness = () => {
     description: "The Saroj Institute of Entrepreneurship and Business is a dynamic learning hub that cultivates future business leaders and innovators. We offer industry-aligned programs combining theoretical knowledge with practical skills in entrepreneurship, management, and business strategy, fostering the next generation of business pioneers.",
     programs: [
       {
-        degree: "BBA (Entrepreneurship)",
+        degree: "BBA",
         mode: "Regular Mode",
         level: "ug",
-        specializations: "Startup Management, Family Business, Social Entrepreneurship, E-Commerce",
+        specializations: "General, Banking Finance, International Business, Marketing, Insurance, Digital Marketing, Logistics & SCM HR, IT, Entrepreneurship, Retail & Start-Ups",
         duration_in_yrs: 3,
-        fees: { year1: 95000, year2: 95000, year3: 95000, total: 285000 }
+        fees: { year1: 110000, year2: 110000, year3: 110000, total: 330000 }
       },
       {
-        degree: "MBA (Entrepreneurship & Innovation)",
+        degree: "BBA Hons",
+        mode: "Regular Mode",
+        level: "ug",
+        specializations: "General, Banking Finance, International Business",
+        duration_in_yrs: 3,
+        fees: { year1: 60000, year2: 60000, year3: 60000, total: 180000 }
+      },
+      {
+        degree: "B.Com",
+        mode: "Regular Mode",
+        level: "ug",
+        specializations: "Commerce",
+        duration_in_yrs: 3,
+        fees: { year1: 60000, year2: 60000, year3: 60000, total: 180000 }
+      },
+      {
+        degree: "BA",
+        mode: "Regular Mode",
+        level: "ug",
+        specializations: "General",
+        duration_in_yrs: 3,
+        fees: { year1: 60000, year2: 60000, year3: 60000, total: 180000 }
+      },
+      {
+        degree: "MBA",
         mode: "Regular Mode",
         level: "pg",
-        specializations: "Venture Creation, Business Analytics, Digital Marketing, Financial Management",
+        specializations: "General Business Administration",
         duration_in_yrs: 2,
         fees: { year1: 120000, year2: 120000, total: 240000 }
       },
       {
-        degree: "Diploma in Business Management",
+        degree: "M.Com",
         mode: "Regular Mode",
-        level: "diploma",
-        specializations: "Small Business Operations, Retail Management, Supply Chain Basics",
-        duration_in_yrs: 1,
-        fees: { total: 80000 }
-      },
-      {
-        degree: "Certificate in Startup Fundamentals",
-        mode: "Regular Mode",
-        level: "certificate",
-        duration_in_yrs: 0.5,
-        fees: { total: 35000 }
-      },
-      {
-        degree: "BBA (Global Business)",
-        mode: "Global Mode",
-        level: "ug",
-        specializations: "International Business, Cross-Cultural Management, Global Supply Chain",
-        duration_in_yrs: 3,
-        fees: { year1: 140000, year2: 140000, year3: 140000, total: 420000 }
-      },
-      {
-        degree: "MBA (Global Entrepreneurship)",
-        mode: "Global Mode",
         level: "pg",
-        specializations: "International Marketing, Global Finance, Business Expansion Strategies",
+        specializations: "Commerce",
         duration_in_yrs: 2,
-        fees: { year1: 160000, year2: 160000, total: 320000 }
+        fees: { year1: 60000, year2: 60000, total: 120000 }
       },
       {
-        degree: "Ph.D in Business Innovation",
+        degree: "MA",
+        mode: "Regular Mode",
+        level: "pg",
+        specializations: "General",
+        duration_in_yrs: 2,
+        fees: { year1: 60000, year2: 60000, total: 120000 }
+      },
+      {
+        degree: "Ph.D",
         mode: "Regular Mode",
         level: "phd",
         duration_in_yrs: 3,

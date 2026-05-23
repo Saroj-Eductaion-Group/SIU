@@ -7,7 +7,7 @@ const ManagementAndTechPage = () => {
   const filteredData = {
     ...universityData,
     institutes: universityData.institutes.filter(i =>
-      i.name === 'Saroj Institute of Management & Technology'
+      i.name === 'Saroj Institute of Management & Technology with AI Integration (SIMT)'
     )
   };
   return (

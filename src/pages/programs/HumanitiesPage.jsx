@@ -7,7 +7,7 @@ const HumanitiesPage = () => {
   const filteredData = {
     ...universityData,
     institutes: universityData.institutes.filter(i =>
-      i.name === 'Saroj Institute of Humanities & Education'
+      i.name === 'Saroj Institute of Humanities & Education with AI Integration (SIHE)'
     )
   };
 
