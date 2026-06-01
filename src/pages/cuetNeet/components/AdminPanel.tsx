@@ -367,7 +367,7 @@ export function AdminPanel() {
             <thead>
               <tr className="text-left border-b border-gray-200" style={{ background: "#f5f0ff" }}>
                 {["#", "App ID", "Name", "Mobile", "Email", "City/State", "Qualification", "Courses", "Exam Date", "Mode", "Status", "Score", "Grade", "Scholarship", "Actions"].map(h => (
-                  <th key={h} className="px-3 py-3 text-[10px] font-bold uppercase tracking-wider text-[#4c1d95] whitespace-nowrap">{h}</th>
+                  <th key={h} style={{ color: "#4c1d95" }} className="px-3 py-3 text-[10px] font-bold uppercase tracking-wider whitespace-nowrap">{h}</th>
                 ))}
               </tr>
             </thead>
