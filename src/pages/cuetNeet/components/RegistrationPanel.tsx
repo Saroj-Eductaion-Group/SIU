@@ -2,6 +2,8 @@ import { useState, useEffect, useRef } from "react";
 import { useLocalStorage } from "../hooks/use-local-storage";
 import { SIUAT_QUESTIONS } from "../lib/data";
 
+const BASE = import.meta.env.VITE_API_URL || `http://${typeof window !== 'undefined' ? window.location.hostname : 'localhost'}:5000/api`;
+
 export interface Registration {
   id: string;
   firstName: string;
@@ -522,7 +524,6 @@ export function RegistrationPanel() {
     setLoading(true);
 
     try {
-      const BASE = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
       const API = `${BASE}/registrations`;
 
       const res = await fetch(`${API}/register`, {

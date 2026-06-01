@@ -1,5 +1,7 @@
 import { useState, useMemo, useEffect } from "react";
 import { useLocalStorage } from "../hooks/use-local-storage";
+
+const BASE = import.meta.env.VITE_API_URL || `http://${typeof window !== 'undefined' ? window.location.hostname : 'localhost'}:5000/api`;
 export interface Registration {
   id: string;
   firstName: string;
@@ -81,7 +83,6 @@ export function AdminPanel() {
     const token = tokenOverride || sessionStorage.getItem("neet_admin_token");
     if (!token) return;
     try {
-      const BASE = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
       const res = await fetch(`${BASE}/registrations/admin/all`, {
         headers: {
           Authorization: `Bearer ${token}`
@@ -129,7 +130,6 @@ export function AdminPanel() {
     setLoginError("");
 
     try {
-      const BASE = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
       const res = await fetch(`${BASE}/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -186,7 +186,6 @@ export function AdminPanel() {
     const token = sessionStorage.getItem("neet_admin_token");
     if (token) {
       try {
-        const BASE = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
         await fetch(`${BASE}/registrations/admin/status/${id}`, {
           method: "PATCH",
           headers: {
@@ -207,7 +206,6 @@ export function AdminPanel() {
     const token = sessionStorage.getItem("neet_admin_token");
     if (token) {
       try {
-        const BASE = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
         await fetch(`${BASE}/registrations/admin/approve-all`, {
           method: "PATCH",
           headers: {

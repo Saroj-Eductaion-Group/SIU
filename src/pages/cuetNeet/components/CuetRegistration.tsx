@@ -5,6 +5,8 @@ import {
   CUETRegistration,
 } from "../lib/data";
 
+const BASE = import.meta.env.VITE_API_URL || `http://${typeof window !== 'undefined' ? window.location.hostname : 'localhost'}:5000/api`;
+
 const STATES = ["Uttar Pradesh","Delhi","Bihar","Madhya Pradesh","Rajasthan","Gujarat","Maharashtra","Punjab","Haryana","Uttarakhand","Jharkhand","West Bengal","Assam","Tamil Nadu","Telangana","Andhra Pradesh","Karnataka","Kerala","Odisha","Other"];
 const QUALIFICATIONS = ["Class 12 / Intermediate (Appearing 2026)","Class 12 / Intermediate (Passed)"];
 const BOARDS = ["CBSE","ICSE","UP Board","MP Board","Maharashtra Board","RBSE (Rajasthan)","State Board (Other)"];
@@ -101,7 +103,6 @@ export function CuetAuthScreen({ onLogin }: CuetAuthProps) {
 
     // Try to login via backend
     try {
-      const BASE = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
       const res = await fetch(`${BASE}/neet/login/${id}`);
       const data = await res.json();
       if (res.ok && data) {
@@ -237,7 +238,6 @@ export function CuetAuthScreen({ onLogin }: CuetAuthProps) {
 
     // 1. Attempt to register via backend MongoDB
     try {
-      const BASE = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
       const res = await fetch(`${BASE}/neet/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
