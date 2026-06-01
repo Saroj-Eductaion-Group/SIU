@@ -187,9 +187,102 @@ const seedMockCandidates = async () => {
   }
 };
 
-// Mongoose buffers commands, so we can trigger this safely on load
-seedDefaultAdmin();
-seedMockCandidates();
+const CuetRegistration = require('../models/CuetRegistration');
+const NeetRegistration = require('../models/NeetRegistration');
 
-module.exports = router;
+// Auto-seed default mock CUET/NEET candidates if none exists (for fresh localhost environments)
+const seedMockCuetNeetCandidates = async () => {
+  try {
+    const cuetCount = await CuetRegistration.countDocuments();
+    if (cuetCount === 0) {
+      const mockCuet = [
+        {
+          cuetId: 'CUET2026111111',
+          firstName: 'Aanya',
+          lastName: 'Verma',
+          dob: '2005-04-10',
+          gender: 'Female',
+          mobile: '9876543210',
+          email: 'aanya.verma@gmail.com',
+          city: 'Lucknow',
+          state: 'Uttar Pradesh',
+          qualification: 'Class 12 / Intermediate (Passed)',
+          board: 'CBSE',
+          marks: '92%',
+          year: '2025',
+          languages: ['English', 'Hindi'],
+          domainSubjects: ['Physics', 'Chemistry', 'Biology (Botany & Zoology)'],
+          generalTest: true,
+          testCity1: 'Lucknow',
+          testCity2: 'Delhi',
+          testCity3: 'Varanasi',
+          category: 'General',
+          pwd: 'No',
+          source: 'University Website',
+          mockResults: [
+            {
+              testId: 'p1',
+              correct: 12,
+              wrong: 2,
+              skipped: 1,
+              score: 46,
+              maxScore: 60,
+              pct: 77,
+              savedAt: new Date(Date.now() - 24 * 3600000)
+            }
+          ],
+          registeredAt: new Date(Date.now() - 72 * 3600000)
+        }
+      ];
+      await CuetRegistration.insertMany(mockCuet);
+      console.log('🟢 Default CUET mock candidate successfully seeded (CUET2026111111)');
+    }
+
+    const neetCount = await NeetRegistration.countDocuments();
+    if (neetCount === 0) {
+      const mockNeet = [
+        {
+          neetId: 'NEET2026222222',
+          firstName: 'Raj',
+          lastName: 'Sharma',
+          dob: '2004-12-20',
+          gender: 'Male',
+          mobile: '8085306346',
+          email: 'rajsharma74411@gmail.com',
+          city: 'Gwalior',
+          state: 'Madhya Pradesh',
+          qualification: 'Class 12 / Intermediate (Passed)',
+          board: 'CBSE',
+          marks: '78%',
+          year: '2025',
+          languages: ['English'],
+          mockResults: [
+            {
+              testId: 'b1',
+              correct: 14,
+              wrong: 1,
+              skipped: 0,
+              score: 55,
+              maxScore: 60,
+              pct: 92,
+              savedAt: new Date(Date.now() - 12 * 3600000)
+            }
+          ],
+          registeredAt: new Date(Date.now() - 48 * 3600000)
+        }
+      ];
+      await NeetRegistration.insertMany(mockNeet);
+      console.log('🟢 Default NEET mock candidate successfully seeded (NEET2026222222)');
+    }
+  } catch (err) {
+    console.error('❌ Failed to auto-seed mock CUET/NEET candidates:', err.message);
+  }
+};
+
+module.exports = {
+  router,
+  seedDefaultAdmin,
+  seedMockCandidates,
+  seedMockCuetNeetCandidates
+};
 
