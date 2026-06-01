@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export function useLocalStorage<T>(key: string, initialValue: T) {
   // State to store our value
@@ -31,6 +31,10 @@ export function useLocalStorage<T>(key: string, initialValue: T) {
       // Save to local storage
       if (typeof window !== "undefined") {
         window.localStorage.setItem(key, JSON.stringify(valueToStore));
+        // Dispatch custom sync event for other instances in the same window
+        window.dispatchEvent(
+          new CustomEvent("local-storage-sync", { detail: { key, newValue: valueToStore } })
+        );
       }
     } catch (error) {
       // A more advanced implementation would handle the error case
@@ -38,5 +42,36 @@ export function useLocalStorage<T>(key: string, initialValue: T) {
     }
   };
 
+  // Sync state when another component updates localStorage with the same key
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const handleSync = (e: Event) => {
+      const customEvent = e as CustomEvent<{ key: string; newValue: T }>;
+      if (customEvent.detail && customEvent.detail.key === key) {
+        setStoredValue(customEvent.detail.newValue);
+      }
+    };
+
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key === key && e.newValue) {
+        try {
+          setStoredValue(JSON.parse(e.newValue));
+        } catch {
+          // ignore
+        }
+      }
+    };
+
+    window.addEventListener("local-storage-sync", handleSync);
+    window.addEventListener("storage", handleStorageChange);
+
+    return () => {
+      window.removeEventListener("local-storage-sync", handleSync);
+      window.removeEventListener("storage", handleStorageChange);
+    };
+  }, [key]);
+
   return [storedValue, setValue] as const;
 }
+

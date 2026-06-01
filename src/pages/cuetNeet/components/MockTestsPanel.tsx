@@ -3,9 +3,6 @@ import { MOCK_TESTS, MOCK_QUESTIONS, Question, CUETRegistration } from "../lib/d
 import { useLocalStorage } from "../hooks/use-local-storage";
 import { CuetAuthScreen, CuetWelcomeBanner } from "../components/CuetRegistration";
 
-const BASE = (import.meta as unknown as { env: Record<string, string> }).env?.VITE_API_URL || 'http://localhost:5000/api';
-const CUET_API = `${BASE}/cuet`;
-
 type ExamState = "list" | "instructions" | "active" | "result";
 type QStatus = "not-visited" | "answered" | "marked" | "not-answered";
 
@@ -35,19 +32,19 @@ const SECTION_COLORS: Record<string, { bg: string; text: string }> = {
   "Section III": { bg: "#fef3c7", text: "#92400e" },
 };
 
-function cuetPercentile(pct: number): string {
-  if (pct >= 95) return "99+ (Top 1%)";
-  if (pct >= 85) return "95–99 (Top 5%)";
-  if (pct >= 75) return "85–95 (Top 15%)";
-  if (pct >= 60) return "70–85 (Top 30%)";
-  if (pct >= 40) return "50–70 (Average)";
+function neetPercentile(pct: number): string {
+  if (pct >= 95) return "99.8+ (Top 0.2%)";
+  if (pct >= 85) return "98.2–99.8 (Top 1.8%)";
+  if (pct >= 75) return "92.4–98.2 (Top 8%)";
+  if (pct >= 60) return "85.1–92.4 (Top 15%)";
+  if (pct >= 40) return "60.0–85.1 (Average)";
   return "Below 50";
 }
 
 function getGrade(pct: number) {
   if (pct >= 90) return { grade: "A+", label: "Outstanding — NTA Top Scorer!", color: "#7a5500", bg: "#fffbea" };
   if (pct >= 75) return { grade: "A", label: "Excellent — Well above average", color: "#0a1f5c", bg: "#dbeafe" };
-  if (pct >= 60) return { grade: "B+", label: "Good — Above CUET average", color: "#166534", bg: "#dcfce7" };
+  if (pct >= 60) return { grade: "B+", label: "Good — Above NEET average", color: "#166534", bg: "#dcfce7" };
   if (pct >= 40) return { grade: "B", label: "Average — Needs improvement", color: "#92400e", bg: "#fef3c7" };
   if (pct >= 20) return { grade: "C", label: "Below average — Revise syllabus", color: "#374151", bg: "#f3f4f6" };
   return { grade: "D", label: "Needs significant revision", color: "#dc2626", bg: "#fee2e2" };
@@ -73,22 +70,66 @@ export function MockTestsPanel() {
   const [result, setResult] = useState<ExamResult | null>(null);
   const [showSubmitWarning, setShowSubmitWarning] = useState(false);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const [results, setResults] = useLocalStorage<ExamResult[]>("mock_results", []);
   const [cuetActiveId, setCuetActiveId] = useLocalStorage("cuet_active_id", "");
-  const [cuetCandidate, setCuetCandidate] = useState<CUETRegistration | null>(null);
-
-  useEffect(() => {
-    if (!cuetActiveId) { setCuetCandidate(null); return; }
-    fetch(`${CUET_API}/login/${cuetActiveId}`)
-      .then(r => r.ok ? r.json() : null)
-      .then(data => {
-        if (!data) { setCuetCandidate(null); return; }
-        setCuetCandidate({ id: data.cuetId, firstName: data.firstName, lastName: data.lastName, mobile: data.mobile || '', email: data.email || '', city: data.city || '', state: data.state || '', qualification: data.qualification || '', board: data.board || '', marks: data.marks || '', year: data.year || '', languages: data.languages || [], domainSubjects: data.domainSubjects || [], generalTest: data.generalTest ?? true, testCity1: data.testCity1 || '', testCity2: data.testCity2 || '', testCity3: data.testCity3 || '', category: data.category || 'General', pwd: data.pwd || 'No', source: data.source || '', registeredAt: data.registeredAt || '' });
-      })
-      .catch(() => setCuetCandidate(null));
-  }, [cuetActiveId]);
+  const [cuetRegs] = useLocalStorage<CUETRegistration[]>("cuet_registrations", []);
+  const cuetCandidate = cuetRegs.find(r => r.id === cuetActiveId) ?? null;
 
   const filtered = MOCK_TESTS.filter(t => filter === "All" || t.subject === filter);
   const activeTest = MOCK_TESTS.find(t => t.id === activeTestId);
+
+  // ─── PROGRESS & RANK CALCULATIONS ───
+  const mockAttempts = results.length;
+  const avgPct = mockAttempts > 0 ? Math.round(results.reduce((acc, curr) => acc + curr.pct, 0) / mockAttempts) : 0;
+  const bestPct = mockAttempts > 0 ? Math.max(...results.map(r => r.pct)) : 0;
+  const latestPct = mockAttempts > 0 ? results[mockAttempts - 1].pct : 0;
+
+  let bioCorrect = 0, bioTotal = 0;
+  let physCorrect = 0, physTotal = 0;
+  let chemCorrect = 0, chemTotal = 0;
+
+  results.forEach(r => {
+    const test = MOCK_TESTS.find(t => t.id === r.testId);
+    if (!test) return;
+    const totalQ = test.attemptCount;
+    if (test.subject === "Biology") {
+      bioCorrect += r.correct;
+      bioTotal += totalQ;
+    } else if (test.subject === "Physics") {
+      physCorrect += r.correct;
+      physTotal += totalQ;
+    } else if (test.subject === "Chemistry") {
+      chemCorrect += r.correct;
+      chemTotal += totalQ;
+    }
+  });
+
+  const bioAcc = bioTotal > 0 ? Math.round((bioCorrect / bioTotal) * 100) : 0;
+  const physAcc = physTotal > 0 ? Math.round((physCorrect / physTotal) * 100) : 0;
+  const chemAcc = chemTotal > 0 ? Math.round((chemCorrect / chemTotal) * 100) : 0;
+
+  // Convert average percentage to estimated percentile
+  const getPercentileNum = (p: number) => {
+    if (p >= 95) return 99.8;
+    if (p >= 90) return 99.2;
+    if (p >= 85) return 98.5;
+    if (p >= 75) return 95.0;
+    if (p >= 60) return 88.0;
+    if (p >= 40) return 72.0;
+    if (p >= 20) return 45.0;
+    return 20.0;
+  };
+  const estPercentile = getPercentileNum(avgPct);
+  const estAIR = Math.max(10, Math.round((100 - estPercentile) * 15000));
+
+  // SVG Line Chart points
+  const chartAttempts = results.slice(-8);
+  const chartPoints = chartAttempts.map((r, idx) => {
+    const x = chartAttempts.length > 1 ? 40 + (idx * (420 / (chartAttempts.length - 1))) : 250;
+    const y = 120 - (r.pct * 100 / 100); // 120 (0%) to 20 (100%)
+    return { x, y, pct: r.pct, testId: r.testId };
+  });
+  const polylinePath = chartPoints.map(p => `${p.x},${p.y}`).join(" ");
 
   useEffect(() => {
     const handleVisibility = () => {
@@ -115,6 +156,15 @@ export function MockTestsPanel() {
   const startTest = () => {
     if (!activeTestId) return;
     const test = MOCK_TESTS.find(t => t.id === activeTestId)!;
+    
+    // Shuffle mock test questions to prevent cheating / keep attempts unique
+    const shuffled = [...questions];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    setQuestions(shuffled);
+
     setTimeLeft(test.durationMinutes * 60);
     setVisited({ 0: true });
     setExamState("active");
@@ -135,18 +185,12 @@ export function MockTestsPanel() {
       else if (ans === q.correctOption) correct++;
       else wrong++;
     });
-    const score = correct * 5 - wrong * 1;
-    const maxScore = test.attemptCount * 5;
+    const score = correct * 4 - wrong * 1;
+    const maxScore = test.attemptCount * 4;
     const pct = maxScore > 0 ? Math.max(0, Math.round((score / maxScore) * 100)) : 0;
     const r: ExamResult = { testId: activeTestId!, correct, wrong, skipped, score, maxScore, pct, answers };
     setResult(r);
-    // Save to backend
-    if (cuetActiveId) {
-      fetch(`${CUET_API}/result/${cuetActiveId}`, {
-        method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ testId: activeTestId, correct, wrong, skipped, score, maxScore, pct })
-      }).catch(() => {});
-    }
+    setResults(prev => [...prev, r]);
     setShowSubmitWarning(false);
     setExamState("result");
   };
@@ -178,14 +222,14 @@ export function MockTestsPanel() {
 
   /* ─── INSTRUCTIONS SCREEN ─── */
   if (examState === "instructions" && activeTest) {
-    const sc = SECTION_COLORS[activeTest.cuetSection] || { bg: "#f3e8ff", text: "#7c3aed" };
+    const sc = SECTION_COLORS[activeTest.cuetSection] || { bg: "#ccfbf1", text: "#0d9488" };
     return (
       <div className="max-w-2xl mx-auto">
         <div className="rounded-xl overflow-hidden border border-gray-200 bg-white shadow-sm">
-          <div className="p-5 text-white" style={{ background: "linear-gradient(135deg,#0a1f5c,#4c1d95)" }}>
+          <div className="p-5 text-white" style={{ background: "linear-gradient(135deg,#064e3b,#0d9488)" }}>
             <div className="flex items-center gap-2 mb-2 flex-wrap">
               <span className="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-widest" style={{ background: sc.bg, color: sc.text }}>{activeTest.cuetSection}</span>
-              <span className="text-[10px] font-bold tracking-widest uppercase text-white/40">CUET 2026 Pattern</span>
+              <span className="text-[10px] font-bold tracking-widest uppercase text-white/40">NEET 2026 Pattern</span>
             </div>
             <h3 className="font-serif font-black text-xl text-white mb-1">{activeTest.name}</h3>
             <p className="text-xs text-white/50">Paper Code: {activeTest.cuetCode}</p>
@@ -199,8 +243,8 @@ export function MockTestsPanel() {
                 { l: "Time Allotted", v: `${activeTest.durationMinutes} Min` },
                 { l: "Max Marks", v: `${activeTest.marks}` },
               ].map(s => (
-                <div key={s.l} className="rounded-xl p-3 text-center" style={{ background: "#f5f0ff" }}>
-                  <div className="font-serif font-black text-xl text-[#4c1d95]">{s.v}</div>
+                <div key={s.l} className="rounded-xl p-3 text-center" style={{ background: "#e6fffa" }}>
+                  <div className="font-serif font-black text-xl text-[#0d9488]">{s.v}</div>
                   <div className="text-[10px] text-gray-500 mt-0.5">{s.l}</div>
                 </div>
               ))}
@@ -209,7 +253,7 @@ export function MockTestsPanel() {
             {/* Marking scheme */}
             <div className="flex gap-2 mb-5 flex-wrap">
               <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold bg-green-50 text-green-700 border border-green-200">
-                <span>✓</span> Correct: <span>+5 Marks</span>
+                <span>✓</span> Correct: <span>+4 Marks</span>
               </div>
               <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold bg-red-50 text-red-700 border border-red-200">
                 <span>✗</span> Incorrect: <span>−1 Mark</span>
@@ -240,15 +284,15 @@ export function MockTestsPanel() {
             {/* Rules */}
             <div className="mb-5 space-y-1.5">
               {[
-                `You must attempt any ${activeTest.attemptCount} of the ${activeTest.questionsCount} questions. Attempting more than ${activeTest.attemptCount} is allowed but only first ${activeTest.attemptCount} extra attempts may matter — strategise!`,
-                "Marking Scheme: +5 for each correct answer, −1 for each incorrect answer, 0 for unattempted.",
+                `You must attempt all ${activeTest.attemptCount} of the ${activeTest.questionsCount} questions in the allocated time.`,
+                "Marking Scheme: +4 for each correct answer, −1 for each incorrect answer, 0 for unattempted.",
                 "Do NOT switch browser tabs or minimize the window. Every violation is recorded.",
                 `The timer is set to ${activeTest.durationMinutes} minutes. The exam auto-submits when the timer ends.`,
                 "You can mark questions for review and return to them. Use the navigator panel.",
-                "Your result and CUET estimated percentile will be shown immediately after submission.",
+                "Your result and NEET estimated percentile will be shown immediately after submission.",
               ].map((rule, i) => (
                 <div key={i} className="flex gap-2.5">
-                  <div className="w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold text-white flex-shrink-0 mt-0.5" style={{ background: "#0a1f5c" }}>{i + 1}</div>
+                  <div className="w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold text-white flex-shrink-0 mt-0.5" style={{ background: "#064e3b" }}>{i + 1}</div>
                   <p className="text-xs text-gray-700 leading-relaxed">{rule}</p>
                 </div>
               ))}
@@ -304,18 +348,18 @@ export function MockTestsPanel() {
         )}
 
         {/* Exam Header */}
-        <div className="rounded-xl p-4 mb-3 border-2 relative overflow-hidden" style={{ background: "linear-gradient(135deg,#0a1f5c,#4c1d95)", borderColor: "rgba(201,168,76,0.25)" }}>
+        <div className="rounded-xl p-4 mb-3 border-2 relative overflow-hidden text-white" style={{ background: "linear-gradient(135deg,#064e3b,#0d9488)", borderColor: "rgba(201,168,76,0.25)" }}>
           <div className="flex justify-between items-start flex-wrap gap-3 relative z-10">
             <div>
               <div className="flex items-center gap-2 mb-1">
-                <span className="text-[10px] font-extrabold tracking-widest uppercase px-2 py-0.5 rounded-full" style={{ background: "#c9a84c", color: "#0a1f5c" }}>NTA CUET 2026</span>
+                <span className="text-[10px] font-extrabold tracking-widest uppercase px-2 py-0.5 rounded-full" style={{ background: "#e8b840", color: "#064e3b" }}>NTA NEET 2026</span>
                 <span className="text-[10px] text-white/50 font-semibold">{activeTest.cuetCode}</span>
               </div>
               <div className="text-white font-bold text-sm mb-0.5">{activeTest.name}</div>
-              <div className="text-xs text-white/50">{activeTest.cuetSection} · +5 / −1 Marking</div>
+              <div className="text-xs text-white/50">{activeTest.cuetSection} · +4 / −1 Marking</div>
             </div>
             <div className="text-right">
-              <div className="font-serif font-black text-3xl" style={{ color: timeLeft < 300 ? "#fca5a5" : "#f0d060", fontFeatureSettings: '"tnum"' }}>{fmt(timeLeft)}</div>
+              <div className="font-serif font-black text-3xl text-teal-200" style={{ color: timeLeft < 300 ? "#fca5a5" : "#f0d060", fontFeatureSettings: '"tnum"' }}>{fmt(timeLeft)}</div>
               <div className="text-[10px] text-white/50">Time Remaining</div>
             </div>
           </div>
@@ -459,7 +503,7 @@ export function MockTestsPanel() {
         <div className="bg-white border border-gray-200 rounded-xl overflow-hidden shadow">
           {/* Header */}
           <div className="p-5 text-white text-center" style={{ background: "linear-gradient(135deg,#0a1f5c,#4c1d95)" }}>
-            <div className="text-[10px] font-bold tracking-widest uppercase text-white/40 mb-1">NTA CUET 2026 — Result</div>
+            <div className="text-[10px] font-bold tracking-widest uppercase text-white/40 mb-1">NTA NEET 2026 — Result</div>
             <div className="font-bold text-sm text-white">{activeTest.name}</div>
             <div className="text-[10px] text-white/40 mt-0.5">{activeTest.cuetSection} · {activeTest.cuetCode}</div>
           </div>
@@ -467,21 +511,21 @@ export function MockTestsPanel() {
           <div className="p-6">
             {/* Score ring */}
             <div className="flex flex-col items-center mb-5">
-              <div className="w-32 h-32 rounded-full flex flex-col items-center justify-center mb-3 border-[6px]" style={{ borderColor: result.pct >= 60 ? "#7c3aed" : result.pct >= 40 ? "#d97706" : "#dc2626" }}>
-                <div className="font-serif font-black text-3xl" style={{ color: "#0a1f5c" }}>{result.pct}%</div>
+              <div className="w-32 h-32 rounded-full flex flex-col items-center justify-center mb-3 border-[6px]" style={{ borderColor: result.pct >= 60 ? "#0d9488" : result.pct >= 40 ? "#d97706" : "#dc2626" }}>
+                <div className="font-serif font-black text-3xl" style={{ color: "#064e3b" }}>{result.pct}%</div>
                 <div className="text-[10px] text-gray-400">Score</div>
               </div>
               <div className="inline-block px-5 py-1 rounded-full text-sm font-bold mb-1" style={{ background: g.bg, color: g.color }}>{g.grade} — {g.label}</div>
-              <div className="text-xs text-gray-400">CUET Estimated Percentile: <strong className="text-gray-700">{cuetPercentile(result.pct)}</strong></div>
+              <div className="text-xs text-gray-400">NEET Estimated Percentile: <strong className="text-gray-700">{neetPercentile(result.pct)}</strong></div>
             </div>
 
             {/* Marks breakdown */}
-            <div className="rounded-xl p-4 mb-5 text-sm" style={{ background: "#f8f9ff", border: "1px solid #e0e7ff" }}>
-              <div className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-3">Marks Breakdown (+5 / −1)</div>
+            <div className="rounded-xl p-4 mb-5 text-sm" style={{ background: "#f0fdfa", border: "1px solid #ccfbf1" }}>
+              <div className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-3">Marks Breakdown (+4 / −1)</div>
               <div className="space-y-1.5">
                 <div className="flex justify-between">
-                  <span className="text-green-700">✓ {result.correct} Correct × 5</span>
-                  <span className="font-bold text-green-700">+{result.correct * 5}</span>
+                  <span className="text-green-700">✓ {result.correct} Correct × 4</span>
+                  <span className="font-bold text-green-700">+{result.correct * 4}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-red-600">✗ {result.wrong} Wrong × 1</span>
@@ -493,7 +537,7 @@ export function MockTestsPanel() {
                 </div>
                 <div className="border-t border-gray-200 pt-1.5 flex justify-between">
                   <span className="font-bold text-gray-800">Net Score</span>
-                  <span className="font-serif font-black text-[#0a1f5c]">{result.score} / {result.maxScore}</span>
+                  <span className="font-serif font-black text-[#064e3b]">{result.score} / {result.maxScore}</span>
                 </div>
               </div>
             </div>
@@ -564,21 +608,140 @@ export function MockTestsPanel() {
       {/* Logged-in candidate banner */}
       <CuetWelcomeBanner candidate={cuetCandidate} onLogout={() => setCuetActiveId("")} />
 
-      {/* CUET Pattern Banner */}
-      <div className="rounded-xl p-4 mb-5 flex items-center gap-4" style={{ background: "linear-gradient(135deg,#0a1f5c,#1e3a8a)" }}>
+      {/* NEET Pattern Banner */}
+      <div className="rounded-xl p-4 mb-5 flex items-center gap-4" style={{ background: "linear-gradient(135deg,#064e3b,#0d9488)" }}>
         <div className="text-3xl">📋</div>
         <div className="flex-1">
-          <div className="text-white font-bold text-sm mb-0.5">CUET 2026 — NTA Official Pattern</div>
+          <div className="text-white font-bold text-sm mb-0.5">NEET 2026 — NTA Official Pattern</div>
           <div className="text-xs leading-relaxed" style={{ color: "rgba(255,255,255,0.55)" }}>
-            All mock tests follow the official NTA CUET pattern · Section II Domain Subjects · Section III General Test · Section IA Language
+            All mock tests follow the official NTA NEET pattern · Physics, Chemistry, Botany, Zoology · NCERT Syllabus Focus
           </div>
         </div>
         <div className="flex-shrink-0 space-y-1 text-right text-[11px]">
-          <div className="font-bold text-green-300">+5 Correct</div>
+          <div className="font-bold text-green-300">+4 Correct</div>
           <div className="font-bold text-red-300">−1 Wrong</div>
           <div className="text-white/40">0 Skipped</div>
         </div>
       </div>
+
+      {/* ─── PERFORMANCE & RANK VISUALIZATION DASHBOARD ─── */}
+      {mockAttempts > 0 ? (
+        <div className="rounded-2xl p-5 mb-5 border shadow-sm bg-white" style={{ borderColor: "#c9a84c" }}>
+          <div className="flex items-center gap-2.5 mb-4">
+            <span className="text-xl">📊</span>
+            <div>
+              <h3 className="font-serif font-black text-base text-[#064e3b]">NEET Performance & National Rank Tracker</h3>
+              <p className="text-[10px] text-gray-500">Live preparation analytics computed from your completed mock attempts.</p>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
+            {/* Column 1: Score Trajectory Chart */}
+            <div className="bg-gray-50 border border-gray-150 rounded-xl p-3.5 flex flex-col justify-between">
+              <div>
+                <div className="text-xs font-bold text-gray-700 uppercase tracking-wider mb-1.5">📈 Score Trajectory</div>
+                <p className="text-[10px] text-gray-400 mb-2">Net score percentage across your last {chartAttempts.length} attempts.</p>
+              </div>
+              <div className="w-full relative mt-2">
+                <svg viewBox="0 0 500 150" className="w-full overflow-visible">
+                  <defs>
+                    <linearGradient id="chartGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" stopColor="#0d9488" />
+                      <stop offset="100%" stopColor="#c9a84c" />
+                    </linearGradient>
+                  </defs>
+                  {/* Grid Lines */}
+                  {[0, 25, 50, 75, 100].map(val => {
+                    const y = 120 - (val * 100 / 100);
+                    return (
+                      <g key={val}>
+                        <line x1="30" y1={y} x2="480" y2={y} stroke="#e5e7eb" strokeWidth="1" strokeDasharray="3,3" />
+                        <text x="5" y={y + 3} className="text-[9px] fill-gray-400 font-bold font-mono">{val}%</text>
+                      </g>
+                    );
+                  })}
+                  {/* Line Path */}
+                  {chartAttempts.length > 1 && (
+                    <polyline fill="none" stroke="url(#chartGrad)" strokeWidth="3" points={polylinePath} strokeLinecap="round" strokeLinejoin="round" />
+                  )}
+                  {/* Scatter Nodes */}
+                  {chartPoints.map((p, i) => (
+                    <g key={i} className="group cursor-pointer">
+                      <circle cx={p.x} cy={p.y} r="5" fill="#fff" stroke={i === chartPoints.length - 1 ? "#c9a84c" : "#0d9488"} strokeWidth="3" />
+                      <circle cx={p.x} cy={p.y} r="9" fill={i === chartPoints.length - 1 ? "#c9a84c" : "#0d9488"} opacity="0" className="hover:opacity-20 transition" />
+                      <text x={p.x} y={p.y - 10} textAnchor="middle" className="text-[9px] fill-[#064e3b] font-bold font-mono bg-white opacity-0 group-hover:opacity-100 transition-opacity duration-200">{p.pct}%</text>
+                      <text x={p.x} y={140} textAnchor="middle" className="text-[8px] fill-gray-400 font-bold font-mono">T{results.length - chartAttempts.length + i + 1}</text>
+                    </g>
+                  ))}
+                </svg>
+              </div>
+            </div>
+
+            {/* Column 2: Subject-wise Accuracy */}
+            <div className="bg-gray-50 border border-gray-150 rounded-xl p-3.5 flex flex-col justify-between">
+              <div>
+                <div className="text-xs font-bold text-gray-700 uppercase tracking-wider mb-1.5">🎯 Subject-wise Accuracy</div>
+                <p className="text-[10px] text-gray-400 mb-4">Precision accuracy and core weightage across attempted NEET modules.</p>
+              </div>
+              <div className="space-y-3">
+                {[
+                  { sub: "Biology", pct: bioAcc, col: "#10b981", bg: "#ecfdf5", icon: "🧬" },
+                  { sub: "Physics", pct: physAcc, col: "#3b82f6", bg: "#eff6ff", icon: "⚡" },
+                  { sub: "Chemistry", pct: chemAcc, col: "#0d9488", bg: "#f0fdfa", icon: "🧪" }
+                ].map(s => (
+                  <div key={s.sub}>
+                    <div className="flex justify-between items-center text-xs mb-1">
+                      <span className="font-semibold text-gray-700 flex items-center gap-1"><span>{s.icon}</span> {s.sub}</span>
+                      <span className="font-bold font-mono" style={{ color: s.col }}>{s.pct}%</span>
+                    </div>
+                    <div className="h-2.5 rounded-full overflow-hidden" style={{ background: "#e5e7eb" }}>
+                      <div className="h-full rounded-full transition-all duration-500" style={{ width: `${s.pct || 5}%`, background: s.col }} />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Column 3: National Rank Predictor */}
+            <div className="bg-gray-50 border border-gray-150 rounded-xl p-3.5 flex flex-col justify-between relative overflow-hidden">
+              <div className="absolute -top-6 -right-6 w-16 h-16 rounded-full flex items-center justify-center text-xl" style={{ background: "rgba(201,168,76,0.15)", color: "#c9a84c" }}>⭐</div>
+              <div>
+                <div className="text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">🏆 National Rank Predictor</div>
+                <p className="text-[10px] text-gray-400 mb-3">Estimated performance mapped to 1.5 million active national aspirants.</p>
+              </div>
+
+              <div className="space-y-2 mt-2">
+                <div className="p-2.5 rounded-lg border flex items-center justify-between" style={{ background: "rgba(201,168,76,0.06)", borderColor: "rgba(201,168,76,0.25)" }}>
+                  <div className="text-left">
+                    <div className="text-[9px] text-gray-400 uppercase font-bold tracking-wider">Estimated Percentile</div>
+                    <div className="text-base font-serif font-black text-[#064e3b] mt-0.5">{estPercentile} %ile</div>
+                  </div>
+                  <div className="text-right">
+                    <span className="text-[9px] px-2 py-0.5 rounded-full font-bold bg-[#c9a84c] text-[#064e3b]">Top {Math.max(0.1, Math.round((100 - estPercentile) * 10) / 10)}%</span>
+                  </div>
+                </div>
+
+                <div className="p-2.5 rounded-lg border flex items-center justify-between" style={{ background: "#f0fdfa", borderColor: "#ccfbf1" }}>
+                  <div className="text-left">
+                    <div className="text-[9px] text-teal-600 uppercase font-bold tracking-wider">Predicted All India Rank</div>
+                    <div className="text-base font-serif font-black text-teal-800 mt-0.5">AIR ~{estAIR.toLocaleString()}</div>
+                  </div>
+                  <div className="text-right">
+                    <span className="text-[10px] font-bold text-teal-700">✓ Highly Competitive</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      ) : (
+        <div className="rounded-xl p-4 mb-5 flex items-center gap-3 border shadow-sm" style={{ background: "#f9fafb", borderColor: "#e5e7eb" }}>
+          <span className="text-2xl animate-pulse">📈</span>
+          <div className="text-xs text-gray-500 font-medium">
+            <strong>Mock Performance Tracking Active:</strong> Complete any mock exam to unlock live score trend graphs, subject-wise accuracy meters, and your estimated NEET National Percentile & AIR Rank Predictor!
+          </div>
+        </div>
+      )}
 
       {/* Filter chips */}
       <div className="flex gap-2 flex-wrap mb-5">
@@ -619,7 +782,7 @@ export function MockTestsPanel() {
                   </div>
                   {/* Marking pills */}
                   <div className="flex gap-1.5 mt-2 flex-wrap">
-                    <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-green-50 text-green-700">+5 Correct</span>
+                    <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-green-50 text-green-700">+4 Correct</span>
                     <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-red-50 text-red-600">−1 Wrong</span>
                     <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-gray-100 text-gray-500">0 Skipped</span>
                     {test.questionsCount > test.attemptCount && (

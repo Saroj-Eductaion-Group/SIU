@@ -74,6 +74,26 @@ router.post('/setup', async (req, res) => {
   }
 });
 
+// Auto-seed default admin if none exists
+const seedDefaultAdmin = async () => {
+  try {
+    const count = await Admin.countDocuments();
+    if (count === 0) {
+      const defaultAdmin = new Admin({
+        email: 'admin@sarojuniversity.edu.in',
+        password: 'SIU@Admin2026',
+        name: 'System Administrator'
+      });
+      await defaultAdmin.save();
+      console.log('🟢 Default admin account successfully seeded (admin@sarojuniversity.edu.in)');
+    }
+  } catch (err) {
+    console.error('❌ Failed to auto-seed default admin:', err.message);
+  }
+};
 
+// Mongoose buffers commands, so we can trigger this safely on load
+seedDefaultAdmin();
 
 module.exports = router;
+
