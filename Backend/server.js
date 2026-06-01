@@ -37,6 +37,7 @@ app.use('/api/auth', adminRoutes.router);
 app.use('/api/registrations', require('./routes/registration')); // TalentHunt page (src/pages/TalentHunt.jsx)
 app.use('/api/siuat', require('./routes/siuat'));               // CuetNeet portal SIUAT tab
 app.use('/api/cuet', require('./routes/cuet'));                 // CUET mock test registrations
+app.use('/api/neet', require('./routes/neet'));                 // NEET mock test registrations
 
 app.get('/health', (req, res) => res.json({ status: 'ok' }));
 
