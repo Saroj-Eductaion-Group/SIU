@@ -221,9 +221,23 @@ function ExamPortal({ registrations, setRegistrations }: { registrations: Regist
     const score = correct * 4 - wrong * 1;
     const maxScore = questions.length * 4;
     const pct = Math.max(0, Math.round((score / maxScore) * 100));
+    const grade = getGrade(pct).grade;
+    
     setResult({ pct, correct, wrong, skipped, score });
+    
     if (candidate) {
-      setRegistrations(prev => prev.map(r => r.id === candidate.id ? { ...r, examCompleted: true, score: pct } : r));
+      // Save SIUAT exam results directly to MongoDB
+      fetch(`${BASE}/registrations/result/${candidate.id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          score: pct,
+          grade,
+          sectionData: { correct, wrong, skipped }
+        })
+      }).catch(err => console.error("Failed to save exam results in database:", err));
+
+      setRegistrations(prev => prev.map(r => r.id === candidate.id ? { ...r, examCompleted: true, score: pct, grade } : r));
     }
     setPhase("submitted");
   };

@@ -3,6 +3,8 @@ import { MOCK_TESTS, MOCK_QUESTIONS, Question, CUETRegistration } from "../lib/d
 import { useLocalStorage } from "../hooks/use-local-storage";
 import { CuetAuthScreen, CuetWelcomeBanner } from "../components/CuetRegistration";
 
+const BASE = import.meta.env.VITE_API_URL || `http://${typeof window !== 'undefined' ? window.location.hostname : 'localhost'}:5000/api`;
+
 type ExamState = "list" | "instructions" | "active" | "result";
 type QStatus = "not-visited" | "answered" | "marked" | "not-answered";
 
@@ -191,6 +193,26 @@ export function MockTestsPanel() {
     const r: ExamResult = { testId: activeTestId!, correct, wrong, skipped, score, maxScore, pct, answers };
     setResult(r);
     setResults(prev => [...prev, r]);
+
+    // Save mock test results directly to backend MongoDB database if logged in
+    if (cuetActiveId) {
+      const isNeet = cuetActiveId.startsWith("NEET");
+      const endpoint = isNeet ? `${BASE}/neet/result/${cuetActiveId}` : `${BASE}/cuet/result/${cuetActiveId}`;
+      fetch(endpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          testId: activeTestId,
+          correct,
+          wrong,
+          skipped,
+          score,
+          maxScore,
+          pct
+        })
+      }).catch(err => console.error("Failed to save mock test results in database:", err));
+    }
+
     setShowSubmitWarning(false);
     setExamState("result");
   };
