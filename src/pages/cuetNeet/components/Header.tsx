@@ -5,7 +5,6 @@ import { useState, useEffect, useRef } from "react";
 export const TABS = [
   { id: "home",     label: "Home",            icon: "⊞" },
   { id: "mocks",    label: "Mock Tests",       icon: "✏" },
-  { id: "siuat",    label: "SIUAT Talent Hunt",icon: "🏆" },
   { id: "rankings", label: "Rankings",         icon: "◈" },
   { id: "ai",       label: "AI Mentor",        icon: "✦" },
   { id: "results",  label: "Results",          icon: "▤" },
