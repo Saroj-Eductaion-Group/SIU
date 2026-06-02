@@ -376,16 +376,122 @@ export const MOCK_QUESTIONS: Record<string, Question[]> = {
   ],
 
   p2: [
-    { id: 1, text: "A car starts from rest and accelerates uniformly at 2 m/s² for 10 seconds. Its final velocity is:", options: ["10 m/s", "20 m/s", "5 m/s", "40 m/s"], correctOption: 1, section: "Kinematics", marks: 5, difficulty: "Easy" },
-    { id: 2, text: "The slope of a velocity-time (v-t) graph gives:", options: ["Displacement", "Acceleration", "Distance", "Speed"], correctOption: 1, section: "Kinematics", marks: 5, difficulty: "Easy" },
-    { id: 3, text: "A ball is dropped from a height of 20 m. Time to reach the ground (g = 10 m/s²) is:", options: ["1 s", "2 s", "3 s", "4 s"], correctOption: 1, section: "Free Fall", marks: 5, difficulty: "Easy" },
-    { id: 4, text: "The area under a velocity-time graph gives:", options: ["Acceleration", "Force", "Displacement", "Power"], correctOption: 2, section: "Kinematics", marks: 5, difficulty: "Easy" },
-    { id: 5, text: "A stone is thrown vertically upward with u = 20 m/s. Maximum height reached (g = 10 m/s²) is:", options: ["10 m", "20 m", "40 m", "5 m"], correctOption: 1, section: "Kinematics", marks: 5, difficulty: "Easy" },
-    { id: 6, text: "An object moves with uniform velocity. Its acceleration is:", options: ["Positive", "Negative", "Zero", "Variable"], correctOption: 2, section: "Kinematics", marks: 5, difficulty: "Easy" },
-    { id: 7, text: "The range of a projectile is maximum at a projection angle of:", options: ["30°", "45°", "60°", "90°"], correctOption: 1, section: "Projectile Motion", marks: 5, difficulty: "Easy" },
-    { id: 8, text: "A force of 10 N acts on a 5 kg body initially at rest for 2 seconds. Its final velocity is:", options: ["1 m/s", "2 m/s", "4 m/s", "5 m/s"], correctOption: 2, section: "Newton's Laws", marks: 5, difficulty: "Easy" },
-    { id: 9, text: "Relative velocity of two objects moving in the same direction at speeds v₁ and v₂ (v₁ > v₂) is:", options: ["v₁ + v₂", "v₁ – v₂", "v₁ × v₂", "v₁ / v₂"], correctOption: 1, section: "Relative Motion", marks: 5, difficulty: "Easy" },
-    { id: 10, text: "The first equation of motion is:", options: ["v = u + at", "s = ut + ½at²", "v² = u² + 2as", "s = vt – ½at²"], correctOption: 0, section: "Kinematics", marks: 5, difficulty: "Easy" },
+    // ── EASY (Q1–12) ──
+    { id: 1, text: "A car starts from rest and accelerates uniformly at 2 m/s² for 10 seconds. Its final velocity is:", options: ["10 m/s", "20 m/s", "5 m/s", "40 m/s"], correctOption: 1, section: "Kinematics", marks: 4, difficulty: "Easy" },
+    { id: 2, text: "The slope of a velocity-time (v-t) graph gives:", options: ["Displacement", "Acceleration", "Distance", "Speed"], correctOption: 1, section: "Kinematics", marks: 4, difficulty: "Easy" },
+    { id: 3, text: "A ball is dropped from a height of 20 m. Time to reach the ground (g = 10 m/s²) is:", options: ["1 s", "2 s", "3 s", "4 s"], correctOption: 1, section: "Free Fall", marks: 4, difficulty: "Easy" },
+    { id: 4, text: "The area under a velocity-time graph gives:", options: ["Acceleration", "Force", "Displacement", "Power"], correctOption: 2, section: "Kinematics", marks: 4, difficulty: "Easy" },
+    { id: 5, text: "A stone is thrown vertically upward with u = 20 m/s. Maximum height reached (g = 10 m/s²) is:", options: ["10 m", "20 m", "40 m", "5 m"], correctOption: 1, section: "Kinematics", marks: 4, difficulty: "Easy" },
+    { id: 6, text: "An object moves with uniform velocity. Its acceleration is:", options: ["Positive", "Negative", "Zero", "Variable"], correctOption: 2, section: "Kinematics", marks: 4, difficulty: "Easy" },
+    { id: 7, text: "The range of a projectile is maximum at a projection angle of:", options: ["30°", "45°", "60°", "90°"], correctOption: 1, section: "Projectile Motion", marks: 4, difficulty: "Easy" },
+    { id: 8, text: "A force of 10 N acts on a 5 kg body initially at rest for 2 seconds. Its final velocity is:", options: ["1 m/s", "2 m/s", "4 m/s", "5 m/s"], correctOption: 2, section: "Newton's Laws", marks: 4, difficulty: "Easy" },
+    { id: 9, text: "Relative velocity of two objects moving in the same direction at speeds v₁ and v₂ (v₁ > v₂) is:", options: ["v₁ + v₂", "v₁ – v₂", "v₁ × v₂", "v₁ / v₂"], correctOption: 1, section: "Relative Motion", marks: 4, difficulty: "Easy" },
+    { id: 10, text: "The first equation of motion is:", options: ["v = u + at", "s = ut + ½at²", "v² = u² + 2as", "s = vt – ½at²"], correctOption: 0, section: "Kinematics", marks: 4, difficulty: "Easy" },
+    { id: 11, text: "The SI unit of frequency is:", options: ["Hertz", "Second", "Meter", "Newton"], correctOption: 0, section: "Waves", marks: 4, difficulty: "Easy" },
+    { id: 12, text: "Sound waves are examples of:", options: ["Transverse waves", "Longitudinal waves", "Electromagnetic waves", "Matter waves"], correctOption: 1, section: "Waves", marks: 4, difficulty: "Easy" },
+
+    // ── MODERATE (Q13–25) ──
+    { id: 13, text: "A body of mass 2 kg collides elastically with another body at rest. If the collision is head-on:", options: ["Both bodies stick together", "Kinetic energy is conserved", "Momentum is not conserved", "Both bodies come to rest"], correctOption: 1, section: "Collisions", marks: 4, difficulty: "Medium" },
+    { id: 14, text: "The moment of inertia of a circular ring of mass M and radius R about its central axis is:", options: ["MR²", "½MR²", "¼MR²", "2MR²"], correctOption: 0, section: "Rotational Motion", marks: 4, difficulty: "Medium" },
+    { id: 15, text: "A satellite is orbiting very close to the Earth's surface. Its orbital speed is approximately:", options: ["8 km/s", "11.2 km/s", "5.6 km/s", "7.9 km/s"], correctOption: 3, section: "Gravitation", marks: 4, difficulty: "Medium" },
+    { id: 16, text: "The time period of a simple pendulum on the Moon:", options: ["Increases", "Decreases", "Remains same", "Becomes zero"], correctOption: 0, section: "Oscillations", marks: 4, difficulty: "Medium" },
+    { id: 17, text: "A wave is represented by y = A sin(kx - ωt). The wave velocity is:", options: ["ω/k", "k/ω", "ω·k", "1/(ω·k)"], correctOption: 0, section: "Waves", marks: 4, difficulty: "Medium" },
+    { id: 18, text: "The pitch of sound depends on its:", options: ["Amplitude", "Frequency", "Velocity", "Waveform"], correctOption: 1, section: "Waves", marks: 4, difficulty: "Medium" },
+    { id: 19, text: "For a particle executing SHM, the acceleration is maximum at:", options: ["Mean position", "Extreme position", "Midway between mean and extreme", "None of these"], correctOption: 1, section: "Oscillations", marks: 4, difficulty: "Medium" },
+    { id: 20, text: "The potential energy of a spring of constant k stretched by distance x is:", options: ["½kx", "½kx²", "kx²", "2kx²"], correctOption: 1, section: "Work Energy Power", marks: 4, difficulty: "Medium" },
+    { id: 21, text: "When a sound wave travels from air to water, which of the following remains constant?", options: ["Wavelength", "Velocity", "Frequency", "Amplitude"], correctOption: 2, section: "Waves", marks: 4, difficulty: "Medium" },
+    { id: 22, text: "The escape velocity from the surface of Earth is approx:", options: ["9.8 km/s", "11.2 km/s", "7.9 km/s", "42 km/s"], correctOption: 1, section: "Gravitation", marks: 4, difficulty: "Medium" },
+    { id: 23, text: "Two waves of same frequency and amplitude interfere. Maximum intensity is proportional to:", options: ["A", "2A", "A²", "4A²"], correctOption: 3, section: "Waves", marks: 4, difficulty: "Medium" },
+    { id: 24, text: "The centripetal acceleration of a body moving in a circle of radius r with speed v is:", options: ["v²/r", "v/r", "v²/r²", "v·r"], correctOption: 0, section: "Circular Motion", marks: 4, difficulty: "Medium" },
+    { id: 25, text: "If the kinetic energy of a body becomes 4 times, its momentum becomes:", options: ["2 times", "4 times", "8 times", "Remains same"], correctOption: 0, section: "Work Energy Power", marks: 4, difficulty: "Medium" },
+
+    // ── HARD (Q26–38) ──
+    { id: 26, text: "A progressive wave is y = 0.5 sin(10πt - 0.1πx). The phase difference between two points 5m apart is:", options: ["π/2", "π", "2π", "0"], correctOption: 0, section: "Waves", marks: 4, difficulty: "Hard" },
+    { id: 27, text: "In SHM, the ratio of kinetic energy to potential energy at half of the amplitude is:", options: ["1:1", "3:1", "1:3", "2:1"], correctOption: 1, section: "Oscillations", marks: 4, difficulty: "Hard" },
+    { id: 28, text: "A whistle giving sound of frequency 450 Hz is moving towards a stationary observer with speed 33 m/s. (v = 330 m/s). Heard frequency:", options: ["450 Hz", "500 Hz", "400 Hz", "480 Hz"], correctOption: 1, section: "Waves", marks: 4, difficulty: "Hard" },
+    { id: 29, type: "AR", text: "Assertion (A): Resonance is a special case of forced oscillations.\nReason (R): In resonance, the frequency of driving force equals natural frequency of system.", options: AR_OPTIONS, correctOption: 0, section: "Oscillations", marks: 4, difficulty: "Hard" },
+    { id: 30, type: "AR", text: "Assertion (A): Reversible processes do not exist in nature.\nReason (R): All natural processes involve dissipative forces like friction.", options: AR_OPTIONS, correctOption: 0, section: "Thermodynamics", marks: 4, difficulty: "Hard" },
+    { id: 31, text: "An engine works between 100 K and 400 K. Its maximum efficiency is:", options: ["25%", "50%", "75%", "100%"], correctOption: 2, section: "Thermodynamics", marks: 4, difficulty: "Hard" },
+    { id: 32, text: "The work done in blowing a soap bubble of radius r and surface tension T is:", options: ["4πr²T", "8πr²T", "2πr²T", "None"], correctOption: 1, section: "Properties of Matter", marks: 4, difficulty: "Hard" },
+    { id: 33, text: "A fluid is flowing through a tube of non-uniform cross-section. Velocity is maximum where:", options: ["Area is maximum", "Area is minimum", "Pressure is maximum", "None of these"], correctOption: 1, section: "Fluid Mechanics", marks: 4, difficulty: "Hard" },
+    { id: 34, text: "The terminal velocity of a small spherical ball of radius r falling through a viscous liquid is proportional to:", options: ["r", "r²", "1/r", "1/r²"], correctOption: 1, section: "Fluid Mechanics", marks: 4, difficulty: "Hard" },
+    { id: 35, text: "A block of mass m is placed on a smooth wedge of inclination θ. What acceleration must wedge have so that block stays at rest relative to wedge?", options: ["g sinθ", "g cosθ", "g tanθ", "g cotθ"], correctOption: 2, section: "Newton's Laws", marks: 4, difficulty: "Hard" },
+    { id: 36, text: "The length of a second's pendulum on Earth is approx:", options: ["0.5 m", "1.0 m", "2.0 m", "1.5 m"], correctOption: 1, section: "Oscillations", marks: 4, difficulty: "Hard" },
+    { id: 37, text: "A shell at rest explodes into three equal fragments. Two fragments fly off perpendicular to each other with speed v. Speed of third fragment:", options: ["v", "v√2", "2v", "v/√2"], correctOption: 1, section: "Collisions", marks: 4, difficulty: "Hard" },
+    { id: 38, text: "If speed of wave is 340 m/s and frequency is 1700 Hz, wavelength is:", options: ["20 cm", "2 cm", "0.2 cm", "20 m"], correctOption: 0, section: "Waves", marks: 4, difficulty: "Hard" },
+
+    // ── ADVANCED / CONCEPTUAL (Q39–50) ──
+    { id: 39, text: "A disc of mass M and radius R rolls without slipping down an inclined plane. Fraction of its total KE that is rotational:", options: ["1/3", "1/2", "2/3", "1/4"], correctOption: 0, section: "Rotational Motion", marks: 4, difficulty: "JEE Level" },
+    { id: 40, text: "A particle executes SHM of amplitude A. At what displacement from mean position is its speed half of max speed?", options: ["A/2", "A√3/2", "A/√2", "A/4"], correctOption: 1, section: "Oscillations", marks: 4, difficulty: "JEE Level" },
+    { id: 41, text: "A sonometer wire of length l vibrates in fundamental mode. If tension is doubled, fundamental frequency changes by factor of:", options: ["2", "√2", "1/2", "1/√2"], correctOption: 1, section: "Waves", marks: 4, difficulty: "JEE Level" },
+    { id: 42, text: "A solid sphere is rolling on a horizontal surface. Ratio of rotational KE to translational KE is:", options: ["2:5", "5:2", "2:7", "7:2"], correctOption: 0, section: "Rotational Motion", marks: 4, difficulty: "JEE Level" },
+    { id: 43, text: "Two satellites of masses m and 9m are orbiting Earth in same circular orbit of radius r. Ratio of orbital speeds (m:9m):", options: ["1:1", "1:3", "3:1", "1:9"], correctOption: 0, section: "Gravitation", marks: 4, difficulty: "JEE Level" },
+    { id: 44, text: "The acceleration of a solid cylinder of mass m and radius r rolling down a plane of inclination θ is:", options: ["g sinθ", "⅔g sinθ", "½g sinθ", "¾g sinθ"], correctOption: 1, section: "Rotational Motion", marks: 4, difficulty: "JEE Level" },
+    { id: 45, text: "For a gas expanding under adiabatic conditions, which of the following is true?", options: ["Work is done at the cost of internal energy", "Temperature rises", "Heat is absorbed", "None of these"], correctOption: 0, section: "Thermodynamics", marks: 4, difficulty: "JEE Level" },
+    { id: 46, text: "A uniform string of length L and mass M hangs vertically. Speed of transverse wave at distance x from bottom is:", options: ["√(gx)", "√(gL)", "g/x", "x/g"], correctOption: 0, section: "Waves", marks: 4, difficulty: "JEE Level" },
+    { id: 47, text: "A block of mass m is suspended by a spring of constant k. If it is pulled down and released, frequency of oscillation is:", options: ["1/2π √(k/m)", "1/2π √(m/k)", "2π √(k/m)", "2π √(m/k)"], correctOption: 0, section: "Oscillations", marks: 4, difficulty: "JEE Level" },
+    { id: 48, text: "The equation of SHM is x = A cos(ωt + φ). At t=0, x=A/2. The phase constant φ is:", options: ["π/6", "π/3", "π/2", "π/4"], correctOption: 1, section: "Oscillations", marks: 4, difficulty: "JEE Level" },
+    { id: 49, text: "Sound waves cannot travel through:", options: ["Air", "Water", "Steel", "Vacuum"], correctOption: 3, section: "Waves", marks: 4, difficulty: "JEE Level" },
+    { id: 50, text: "An object is executing SHM. Its velocity and displacement are out of phase by:", options: ["0", "π/2", "π", "π/4"], correctOption: 1, section: "Oscillations", marks: 4, difficulty: "JEE Level" }
+  ],
+  c2: [
+    // ── EASY (Q1–12) ──
+    { id: 1, text: "The functional group in alcohol is:", options: ["–OH", "–CHO", "–COOH", "–CO–"], correctOption: 0, section: "Organic Basics", marks: 4, difficulty: "Easy" },
+    { id: 2, text: "The IUPAC name of CH₃-CH₂-CH₂-CH₃ is:", options: ["Propane", "Butane", "Pentane", "Hexane"], correctOption: 1, section: "Nomenclature", marks: 4, difficulty: "Easy" },
+    { id: 3, text: "Which of the following is an aromatic compound?", options: ["Benzene", "Cyclohexane", "Hexane", "Ethene"], correctOption: 0, section: "Aromatic Chemistry", marks: 4, difficulty: "Easy" },
+    { id: 4, text: "The hybridization of carbon in ethane is:", options: ["sp", "sp²", "sp³", "dsp²"], correctOption: 2, section: "Structure & Bonding", marks: 4, difficulty: "Easy" },
+    { id: 5, text: "Which acid is present in vinegar?", options: ["Formic acid", "Acetic acid", "Citric acid", "Lactic acid"], correctOption: 1, section: "Carboxylic Acids", marks: 4, difficulty: "Easy" },
+    { id: 6, text: "The molecular formula of acetone is:", options: ["CH₃COCH₃", "CH₃CHO", "C₂H₅OH", "CH₃COOH"], correctOption: 0, section: "Carbonyl Compounds", marks: 4, difficulty: "Easy" },
+    { id: 7, text: "Which gas is used for artificial ripening of green fruits?", options: ["Ethylene", "Ethane", "Methane", "Carbon dioxide"], correctOption: 0, section: "Alkenes", marks: 4, difficulty: "Easy" },
+    { id: 8, text: "The functional group in aldehydes is:", options: ["–OH", "–CHO", "–COOH", "–NH₂"], correctOption: 1, section: "Organic Basics", marks: 4, difficulty: "Easy" },
+    { id: 9, text: "Which of the following is a primary alcohol?", options: ["Ethanol", "Propan-2-ol", "2-Methylpropan-2-ol", "Phenol"], correctOption: 0, section: "Alcohols", marks: 4, difficulty: "Easy" },
+    { id: 10, text: "The formula C₆H₆ represents:", options: ["Cyclohexane", "Benzene", "Hexene", "Hexyne"], correctOption: 1, section: "Aromatic Chemistry", marks: 4, difficulty: "Easy" },
+    { id: 11, text: "Which of the following is a saturated hydrocarbon?", options: ["Ethane", "Ethene", "Ethyne", "Benzene"], correctOption: 0, section: "Hydrocarbons", marks: 4, difficulty: "Easy" },
+    { id: 12, text: "The IUPAC name of HCHO is:", options: ["Methanol", "Methanal", "Ethanal", "Formaldehyde"], correctOption: 1, section: "Nomenclature", marks: 4, difficulty: "Easy" },
+
+    // ── MODERATE (Q13–25) ──
+    { id: 13, text: "Lassaigne's test is used to detect nitrogen, sulfur and:", options: ["Halogens", "Oxygen", "Phosphorus", "Carbon"], correctOption: 0, section: "Qualitative Analysis", marks: 4, difficulty: "Medium" },
+    { id: 14, text: "The reaction of methyl bromide with sodium in dry ether is called:", options: ["Wurtz reaction", "Fittig reaction", "Frankland reaction", "Friedel-Crafts reaction"], correctOption: 0, section: "Named Reactions", marks: 4, difficulty: "Medium" },
+    { id: 15, text: "Lucas reagent is a mixture of anhydrous ZnCl₂ and:", options: ["Conc. HCl", "Conc. HNO₃", "Conc. H₂SO₄", "Dil. HCl"], correctOption: 0, section: "Alcohols", marks: 4, difficulty: "Medium" },
+    { id: 16, text: "Which of the following undergoes Aldol condensation?", options: ["Formaldehyde", "Acetaldehyde", "Benzaldehyde", "Trimethylacetaldehyde"], correctOption: 1, section: "Carbonyl Compounds", marks: 4, difficulty: "Medium" },
+    { id: 17, text: "Phenol reacts with neutral FeCl₃ to give a violet color due to formation of:", options: ["Iron complex", "Benzene ring oxidation product", "Ester", "None of these"], correctOption: 0, section: "Phenols", marks: 4, difficulty: "Medium" },
+    { id: 18, text: "The chief constituent of natural gas is:", options: ["Methane", "Ethane", "Propane", "Butane"], correctOption: 0, section: "Hydrocarbons", marks: 4, difficulty: "Medium" },
+    { id: 19, text: "Which of the following is the most stable carbocation?", options: ["Primary carbocation", "Secondary carbocation", "Tertiary carbocation", "Methyl carbocation"], correctOption: 2, section: "Reaction Mechanisms", marks: 4, difficulty: "Medium" },
+    { id: 20, text: "The main product obtained by heating ethanol with conc. H₂SO₄ at 443K is:", options: ["Ethene", "Diethyl ether", "Ethyl hydrogen sulfate", "Ethane"], correctOption: 0, section: "Alcohols", marks: 4, difficulty: "Medium" },
+    { id: 21, text: "Which of the following is a nucleophile?", options: ["H⁺", "AlCl₃", "NH₃", "BF₃"], correctOption: 2, section: "Organic Basics", marks: 4, difficulty: "Medium" },
+    { id: 22, text: "Electrophilic substitution in benzene occurs at which position in nitrobenzene?", options: ["Ortho", "Para", "Meta", "Ortho & Para"], correctOption: 2, section: "Aromatic Chemistry", marks: 4, difficulty: "Medium" },
+    { id: 23, text: "Carbylamine test is given by:", options: ["Primary amines only", "Secondary amines only", "Tertiary amines only", "All amines"], correctOption: 0, section: "Amines", marks: 4, difficulty: "Medium" },
+    { id: 24, text: "The general formula of alkenes is:", options: ["CnH2n+2", "CnH2n", "CnH2n-2", "CnH2n-1"], correctOption: 1, section: "Organic Basics", marks: 4, difficulty: "Medium" },
+    { id: 25, text: "A solution of sucrose is dextrorotatory, but after hydrolysis it becomes laevorotatory. This is called:", options: ["Inversion", "Retention", "Racemisation", "Mutarotation"], correctOption: 0, section: "Biomolecules", marks: 4, difficulty: "Medium" },
+
+    // ── HARD (Q26–38) ──
+    { id: 26, text: "Benzaldehyde reacts with concentrated NaOH to give benzyl alcohol and sodium benzoate. This is:", options: ["Aldol condensation", "Cannizzaro reaction", "Perkin reaction", "Benzoin condensation"], correctOption: 1, section: "Named Reactions", marks: 4, difficulty: "Hard" },
+    { id: 27, text: "Which of the following is the strongest acid?", options: ["CH₃COOH", "Cl-CH₂COOH", "Cl₂-CHCOOH", "F₃C-COOH"], correctOption: 3, section: "Acids & Bases", marks: 4, difficulty: "Hard" },
+    { id: 28, text: "In an SN1 reaction, the racemisation occurs because of the intermediate formation of:", options: ["Carbocation", "Carbanion", "Free radical", "Transition state"], correctOption: 0, section: "Alkyl Halides", marks: 4, difficulty: "Hard" },
+    { id: 29, type: "AR", text: "Assertion (A): Phenol is more acidic than ethanol.\nReason (R): Phenoxide ion is stabilized by resonance while ethoxide ion is not.", options: AR_OPTIONS, correctOption: 0, section: "Phenols", marks: 4, difficulty: "Hard" },
+    { id: 30, type: "AR", text: "Assertion (A): Aniline does not undergo Friedel-Crafts reaction.\nReason (R): The amino group in aniline is highly activating.", options: AR_OPTIONS, correctOption: 1, section: "Amines", marks: 4, difficulty: "Hard" },
+    { id: 31, text: "Reaction of phenol with chloroform in presence of aqueous NaOH at 340K followed by hydrolysis gives:", options: ["Salicylaldehyde", "Salicylic acid", "Benzaldehyde", "Chlorobenzene"], correctOption: 0, section: "Named Reactions", marks: 4, difficulty: "Hard" },
+    { id: 32, text: "In SN2 reaction of alkyl halides, the rate of reaction depends on:", options: ["Concentration of alkyl halide only", "Concentration of nucleophile only", "Both alkyl halide and nucleophile", "None"], correctOption: 2, section: "Alkyl Halides", marks: 4, difficulty: "Hard" },
+    { id: 33, text: "Hinsberg's reagent reacts with primary amine to give a product which is:", options: ["Soluble in alkali", "Insoluble in alkali", "Soluble in acid", "Liquid at room temperature"], correctOption: 0, section: "Amines", marks: 4, difficulty: "Hard" },
+    { id: 34, text: "In Carius method, organic compound is heated with fuming HNO₃ in presence of:", options: ["AgNO₃", "BaCl₂", "H₂SO₄", "FeSO₄"], correctOption: 0, section: "Quantitative Analysis", marks: 4, difficulty: "Hard" },
+    { id: 35, text: "The major product of acid-catalyzed dehydration of 2-butanol is:", options: ["1-Butene", "trans-2-Butene", "cis-2-Butene", "None"], correctOption: 1, section: "Alcohols", marks: 4, difficulty: "Hard" },
+    { id: 36, text: "Which of the following compounds does NOT reduce Tollens reagent?", options: ["Acetaldehyde", "Benzaldehyde", "Acetone", "Glucose"], correctOption: 2, section: "Carbonyl Compounds", marks: 4, difficulty: "Hard" },
+    { id: 37, text: "The boiling points of alcohols are higher than ethers of comparable molecular masses due to:", options: ["Hydrogen bonding", "Van der Waals forces", "Dipole-dipole interactions", "Covalent bonding"], correctOption: 0, section: "Alcohols", marks: 4, difficulty: "Hard" },
+    { id: 38, text: "The process of conversion of an optically active compound into racemic mixture is called:", options: ["Racemisation", "Asymmetric synthesis", "Resolution", "Inversion"], correctOption: 0, section: "Stereochemistry", marks: 4, difficulty: "Hard" },
+
+    // ── ADVANCED / CONCEPTUAL (Q39–50) ──
+    { id: 39, text: "The correct order of basic strength of methyl substituted amines in aqueous solution is:", options: ["(CH₃)₂NH > CH₃NH₂ > (CH₃)₃N > NH₃", "(CH₃)₂NH > (CH₃)₃N > CH₃NH₂ > NH₃", "(CH₃)₃N > (CH₃)₂NH > CH₃NH₂ > NH₃", "CH₃NH₂ > (CH₃)₂NH > (CH₃)₃N > NH₃"], correctOption: 0, section: "Amines", marks: 4, difficulty: "JEE Level" },
+    { id: 40, text: "In the reaction: Benzene + CO + HCl in presence of anhydrous AlCl₃/CuCl gives benzaldehyde. This is:", options: ["Gattermann-Koch reaction", "Rosenmund reduction", "Stephen reaction", "Etard reaction"], correctOption: 0, section: "Named Reactions", marks: 4, difficulty: "JEE Level" },
+    { id: 41, text: "Ozonolysis of 2-methylbutene-2 gives:", options: ["Acetone & Acetaldehyde", "Acetone & Formaldehyde", "Acetaldehyde only", "Propanal & Formaldehyde"], correctOption: 0, section: "Alkenes", marks: 4, difficulty: "JEE Level" },
+    { id: 42, text: "Which of the following is antiaromatic?", options: ["Cyclooctatetraene", "Cyclobutadiene", "Benzene", "Naphthalene"], correctOption: 1, section: "Aromatic Chemistry", marks: 4, difficulty: "JEE Level" },
+    { id: 43, text: "In the hydroboration-oxidation of propene, the final product is:", options: ["Propan-1-ol", "Propan-2-ol", "Propane-1,2-diol", "Propanone"], correctOption: 0, section: "Alcohols", marks: 4, difficulty: "JEE Level" },
+    { id: 44, text: "Reaction of aniline with NaNO₂ and HCl at 273K followed by warming with water gives:", options: ["Phenol", "Chlorobenzene", "Nitrobenzene", "Benzene"], correctOption: 0, section: "Named Reactions", marks: 4, difficulty: "JEE Level" },
+    { id: 45, text: "Which conformational form of n-butane is the most stable?", options: ["Anti-conformation", "Gauche-conformation", "Eclipsed", "Fully eclipsed"], correctOption: 0, section: "Stereochemistry", marks: 4, difficulty: "JEE Level" },
+    { id: 46, text: "A compound has molecular formula C₄H₈O. It does not reduce Tollens reagent but forms oxime. It is:", options: ["Butanal", "Butanone", "But-3-en-1-ol", "Ethoxyethene"], correctOption: 1, section: "Carbonyl Compounds", marks: 4, difficulty: "JEE Level" },
+    { id: 47, text: "The configuration of the chiral carbon in D-glyceraldehyde is:", options: ["R-configuration", "S-configuration", "E-configuration", "Z-configuration"], correctOption: 0, section: "Stereochemistry", marks: 4, difficulty: "JEE Level" },
+    { id: 48, text: "Sodamide in liquid ammonia (NaNH₂ / liq. NH₃) reacts with bromobenzene to give aniline via intermediate:", options: ["Benzyne", "Carbocation", "Carbanion", "Free radical"], correctOption: 0, section: "Reaction Mechanisms", marks: 4, difficulty: "JEE Level" },
+    { id: 49, text: "The primary structure of a protein refers to:", options: ["Alpha-helix structure", "Sequence of amino acids", "Beta-pleated sheet", "Three dimensional structure"], correctOption: 1, section: "Biomolecules", marks: 4, difficulty: "JEE Level" },
+    { id: 50, text: "Which of the following acts as the monomer of Neoprene?", options: ["Chloroprene", "Isoprene", "Butadiene", "Tetrafluoroethylene"], correctOption: 0, section: "Polymers", marks: 4, difficulty: "JEE Level" }
   ],
 };
 
@@ -519,4 +625,12 @@ export const CUET_TEST_CITIES = [
   "Kolkata", "Jaipur", "Chandigarh", "Patna", "Bhopal", "Ahmedabad",
   "Pune", "Guwahati",
 ];
+
+// Dynamically generate 180 questions for the NEET Full Mock (f1) by combining subjects
+MOCK_QUESTIONS.f1 = [
+  ...MOCK_QUESTIONS.p1,
+  ...MOCK_QUESTIONS.c1,
+  ...MOCK_QUESTIONS.b1,
+  ...MOCK_QUESTIONS.b2.slice(0, 30)
+].map((q, idx) => ({ ...q, id: idx + 1 }));
 

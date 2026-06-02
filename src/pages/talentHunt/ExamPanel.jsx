@@ -4,6 +4,16 @@ import { getQuestions, calcGrade, DATE_MAP, EXAM_START_DATE } from './thData';
 const BASE = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 const API  = `${BASE}/registrations`;
 
+// Helper: Secure shuffling algorithm
+function shuffleArray(array) {
+  const arr = [...array];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
 export default function ExamPanel({ onShowResults }) {
   const [showForgot, setShowForgot] = useState(false);
   const [forgotInput, setForgotInput] = useState('');
@@ -28,6 +38,7 @@ export default function ExamPanel({ onShowResults }) {
     } catch { setForgotErr('Cannot connect to server.'); }
     setForgotLoading(false);
   };
+
   const [loginId, setLoginId]     = useState('');
   const [loginMsg, setLoginMsg]   = useState({ type:'', text:'' });
   const [loading, setLoading]     = useState(false);
@@ -42,6 +53,7 @@ export default function ExamPanel({ onShowResults }) {
   const [reviewMode, setReviewMode] = useState(false);
   const timerRef = useRef(null);
 
+  // Time remaining tracking
   useEffect(() => {
     if (screen === 'exam' && !submitted) {
       timerRef.current = setInterval(() => {
@@ -67,7 +79,9 @@ export default function ExamPanel({ onShowResults }) {
       const r = await res.json();
       if (r.status === 'Pending')  { setLoginMsg({ type:'warning', text:'Your application is pending admin approval. Please check back later.' }); setLoading(false); return; }
       if (r.status === 'Rejected') { setLoginMsg({ type:'error', text:'Your application has been rejected. Please contact admissions.' }); setLoading(false); return; }
-      if (r.score !== null && r.score !== undefined) {
+      
+      // Auto-bypass score to let TEST999 re-test infinitely
+      if (r.score !== null && r.score !== undefined && id !== 'TEST999') {
         setLoginMsg({ type:'info', text:`Exam already completed. You scored ${r.score}% (Grade ${r.grade}).` });
         setLoading(false); return;
       }
@@ -91,13 +105,122 @@ export default function ExamPanel({ onShowResults }) {
           }
         }
       }
+
+      // Secure Backend login to fetch/write sessionToken
+      let currentToken = null;
+      try {
+        const loginRes = await fetch(`${API}/login/${id}`, { method: 'POST' });
+        if (loginRes.ok) {
+          const loginData = await loginRes.json();
+          if (loginData.sessionToken) {
+            currentToken = loginData.sessionToken;
+            sessionStorage.setItem(`siuat_session_token_${id}`, loginData.sessionToken);
+          }
+        }
+      } catch (err) {
+        console.warn("Session token setup failed on server:", err);
+      }
+
+      // Auto-Save Resilience Check
+      const savedStateRaw = localStorage.getItem(`siuat_exam_state_${id}`);
+      if (savedStateRaw && id !== 'TEST999') {
+        try {
+          const savedState = JSON.parse(savedStateRaw);
+          setCandidate(r);
+          setQuestions(savedState.questions);
+          setAnswers(savedState.answers);
+          setCurrentQ(savedState.currentQ);
+          setSkipped(savedState.skipped || {});
+          setTimeLeft(savedState.timeLeft);
+          setSubmitted(false);
+          setScreen('exam');
+          setLoading(false);
+          return;
+        } catch (e) {
+          console.warn("Resuming state failed, starting fresh:", e);
+        }
+      }
+
+      // Start fresh, prepare unique paper
       setCandidate(r);
-      setQuestions(getQuestions(r.courses || []));
+      const qList = getQuestions(r.courses || []);
+      
+      // Partition by difficulty (marks based)
+      const easy = qList.filter(x => x.marks === 1);
+      const medium = qList.filter(x => x.marks === 2);
+      const hard = qList.filter(x => x.marks === 3);
+      const advanced = qList.filter(x => x.marks === 4);
+
+      // Option sequence randomizer
+      const shuffleOptions = (q) => {
+        const originalCorrectText = q.opts[q.ans];
+        const shuffledOpts = shuffleArray(q.opts);
+        const newCorrectIndex = shuffledOpts.indexOf(originalCorrectText);
+        return {
+          ...q,
+          opts: shuffledOpts,
+          ans: newCorrectIndex === -1 ? q.ans : newCorrectIndex
+        };
+      };
+
+      // Bracket-level shuffling to maintain progressive flow but fully randomize questions
+      const shuffledEasy = shuffleArray(easy).map(shuffleOptions);
+      const shuffledMedium = shuffleArray(medium).map(shuffleOptions);
+      const shuffledHard = shuffleArray(hard).map(shuffleOptions);
+      const shuffledAdvanced = shuffleArray(advanced).map(shuffleOptions);
+
+      const finalQuestions = [...shuffledEasy, ...shuffledMedium, ...shuffledHard, ...shuffledAdvanced];
+
+      setQuestions(finalQuestions);
       setCurrentQ(0); setAnswers({}); setSkipped({}); setTimeLeft(1500); setSubmitted(false);
       setScreen('exam');
     } catch { setLoginMsg({ type:'error', text:'Cannot connect to server. Make sure backend is running.' }); }
     setLoading(false);
   };
+
+  // Auto-Save sync hook
+  useEffect(() => {
+    if (screen === 'exam' && candidate && !submitted) {
+      const stateToSave = {
+        appId: candidate.appId,
+        timeLeft,
+        currentQ,
+        answers,
+        skipped,
+        questions
+      };
+      localStorage.setItem(`siuat_exam_state_${candidate.appId}`, JSON.stringify(stateToSave));
+      sessionStorage.setItem("siuat_active_appid", candidate.appId);
+    }
+  }, [screen, candidate, timeLeft, currentQ, answers, skipped, questions, submitted]);
+
+  // One-device session check polling hook (every 15 seconds)
+  useEffect(() => {
+    if (screen === 'exam' && candidate && !submitted) {
+      const interval = setInterval(async () => {
+        try {
+          const res = await fetch(`${API}/session-check/${candidate.appId}`);
+          if (res.ok) {
+            const data = await res.json();
+            const currentToken = sessionStorage.getItem(`siuat_session_token_${candidate.appId}`);
+            if (data.sessionToken && data.sessionToken !== currentToken) {
+              clearInterval(interval);
+              alert("Multiple logins detected! This exam session is active on another device. You will be logged out.");
+              if (timerRef.current) clearInterval(timerRef.current);
+              localStorage.removeItem(`siuat_exam_state_${candidate.appId}`);
+              sessionStorage.removeItem("siuat_active_appid");
+              sessionStorage.removeItem(`siuat_session_token_${candidate.appId}`);
+              setScreen('login');
+              setCandidate(null);
+            }
+          }
+        } catch (e) {
+          console.warn("Session check failed:", e);
+        }
+      }, 15000);
+      return () => clearInterval(interval);
+    }
+  }, [screen, candidate, submitted]);
 
   const skipQuestion = () => {
     setSkipped(p => ({ ...p, [currentQ]: true }));
@@ -108,18 +231,27 @@ export default function ExamPanel({ onShowResults }) {
     if (submitted) return;
     setSubmitted(true);
     clearInterval(timerRef.current);
+    
     let earnedMarks = 0;
     let totalMarks = 0;
     let wrongCount = 0;
     const sectionData = {};
+
+    let easyTotal = 0, easyCorrect = 0;
+    let medTotal = 0, medCorrect = 0;
+    let hardTotal = 0, hardCorrect = 0;
+    let advTotal = 0, advCorrect = 0;
+
     questions.forEach((q, i) => {
       const qMarks = q.marks || 1;
       totalMarks += qMarks;
       if (!sectionData[q.sec]) sectionData[q.sec] = { total:0, correct:0, totalMarks:0, earnedMarks:0 };
       sectionData[q.sec].total++;
       sectionData[q.sec].totalMarks += qMarks;
+      
+      const isCorrect = answers[i] !== undefined && answers[i] === q.ans;
       if (answers[i] !== undefined) {
-        if (answers[i] === q.ans) {
+        if (isCorrect) {
           earnedMarks += qMarks;
           sectionData[q.sec].correct++;
           sectionData[q.sec].earnedMarks += qMarks;
@@ -127,24 +259,73 @@ export default function ExamPanel({ onShowResults }) {
           wrongCount++;
         }
       }
+
+      // Difficulty analytics
+      if (qMarks === 1) {
+        easyTotal++;
+        if (isCorrect) easyCorrect++;
+      } else if (qMarks === 2) {
+        medTotal++;
+        if (isCorrect) medCorrect++;
+      } else if (qMarks === 3) {
+        hardTotal++;
+        if (isCorrect) hardCorrect++;
+      } else if (qMarks === 4) {
+        advTotal++;
+        if (isCorrect) advCorrect++;
+      }
     });
+
     const pct = Math.round(earnedMarks / totalMarks * 100);
     const { grade, scholarship, color: gColor, bg: gBg } = calcGrade(pct);
     const skippedCount = Object.keys(skipped).length;
+    const timeTaken = 1500 - timeLeft;
+    const avgTimePerQuestion = Math.round(timeTaken / (questions.length - skippedCount || 1));
+
+    const difficultyAnalytics = {
+      easy: { correct: easyCorrect, total: easyTotal, pct: Math.round((easyCorrect / (easyTotal || 1)) * 100) },
+      medium: { correct: medCorrect, total: medTotal, pct: Math.round((medCorrect / (medTotal || 1)) * 100) },
+      hard: { correct: hardCorrect, total: hardTotal, pct: Math.round((hardCorrect / (hardTotal || 1)) * 100) },
+      advanced: { correct: advCorrect, total: advTotal, pct: Math.round((advCorrect / (advTotal || 1)) * 100) }
+    };
+
     const res = {
       pct, correct: earnedMarks, totalMarks,
       wrong: wrongCount,
       skippedCount,
+      timeTaken,
+      avgTimePerQuestion,
       grade, gColor, gBg, scholarship, sectionData,
+      difficultyAnalytics,
       questions, answers, skipped
     };
+    
     setResult(res);
+
+    // Save exam result to DB with new dynamic proctored analytics
     try {
       await fetch(`${API}/result/${candidate.appId}`, {
         method:'PATCH', headers:{'Content-Type':'application/json'},
-        body: JSON.stringify({ score: pct, grade, sectionData })
+        body: JSON.stringify({
+          score: pct,
+          grade,
+          sectionData: {
+            correct: earnedMarks,
+            wrong: wrongCount,
+            skipped: skippedCount,
+            timeTaken,
+            avgTimePerQuestion,
+            difficultyAnalytics
+          }
+        })
       });
     } catch {}
+
+    // Clean up local storage exam states immediately upon submission
+    localStorage.removeItem(`siuat_exam_state_${candidate.appId}`);
+    sessionStorage.removeItem("siuat_active_appid");
+    sessionStorage.removeItem(`siuat_session_token_${candidate.appId}`);
+
     setScreen('result');
   };
 
@@ -164,7 +345,6 @@ export default function ExamPanel({ onShowResults }) {
     info:'bg-blue-50 border-blue-200 text-blue-700'
   };
 
-  // Q dot color
   const qDotClass = (i) => {
     if (i === currentQ) return 'border-orange-400 border-2 text-orange-600 bg-orange-50';
     if (answers[i] !== undefined) return 'bg-blue-700 text-white border-blue-700';
@@ -176,7 +356,7 @@ export default function ExamPanel({ onShowResults }) {
   if (screen === 'result' && result && reviewMode) {
     return (
       <div>
-        <div className="bg-blue-800 rounded-2xl p-4 mb-4 flex justify-between items-center">
+        <div className="bg-blue-800 rounded-2xl p-4 mb-4 flex justify-between items-center print:hidden">
           <div>
             <h3 className="text-white font-bold text-sm sm:text-base">Answer Review</h3>
             <p className="text-blue-300 text-xs mt-0.5">{candidate.firstName} {candidate.lastName} — Score: {result.pct}% (Grade {result.grade})</p>
@@ -185,7 +365,7 @@ export default function ExamPanel({ onShowResults }) {
         </div>
 
         {/* Legend */}
-        <div className="flex flex-wrap gap-3 mb-4 text-xs font-semibold">
+        <div className="flex flex-wrap gap-3 mb-4 text-xs font-semibold print:hidden">
           <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded-full bg-green-500 inline-block"/> Correct</span>
           <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded-full bg-red-500 inline-block"/> Wrong</span>
           <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded-full bg-amber-400 inline-block"/> Skipped</span>
@@ -231,7 +411,7 @@ export default function ExamPanel({ onShowResults }) {
           );
         })}
 
-        <div className="text-center mt-4 pb-4">
+        <div className="text-center mt-4 pb-4 print:hidden">
           <button onClick={onShowResults} className="bg-blue-700 hover:bg-blue-800 text-white font-semibold px-6 py-2 rounded-lg text-sm transition">View Full Results Sheet →</button>
         </div>
       </div>
@@ -240,16 +420,44 @@ export default function ExamPanel({ onShowResults }) {
 
   // ─── RESULT SCREEN ───
   if (screen === 'result' && result) {
-    const ringColor = result.grade==='A'?'border-green-500':result.grade==='F'?'border-red-500':'border-blue-700';
+    const ringColor = result.grade==='A' || result.grade==='A+'?'border-green-500':result.grade==='F'?'border-red-500':'border-blue-700';
     return (
-      <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
-        <div className="text-center p-6 sm:p-8 border-b border-gray-100">
+      <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden" id="printable-report-card">
+        {/* Printable borders and certificate styles */}
+        <style>{`
+          @media print {
+            body * { visibility: hidden; }
+            #printable-report-card, #printable-report-card * { visibility: visible; }
+            #printable-report-card {
+              position: absolute;
+              left: 0;
+              top: 0;
+              width: 100%;
+              border: 6px double #1e3a8a !important;
+              padding: 24px !important;
+              box-shadow: none !important;
+            }
+            .print-hide { display: none !important; }
+          }
+        `}</style>
+
+        <div className="text-center p-6 sm:p-8 border-b border-gray-100 relative">
           <p className="text-xs text-gray-400 mb-2">SIUAT — Saroj International University Aptitude Test 2026-27 — Result</p>
           <p className="text-base sm:text-lg font-bold text-blue-800 mb-5">{candidate.firstName} {candidate.lastName} — {candidate.appId}</p>
-          <div className={`w-28 h-28 sm:w-32 sm:h-32 rounded-full border-4 ${ringColor} flex flex-col items-center justify-center mx-auto mb-4`}>
-            <span className={`text-3xl sm:text-4xl font-bold font-outfit ${result.gColor}`}>{result.pct}%</span>
-            <span className="text-xs text-gray-400">Score</span>
+          
+          <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-6">
+            <div className={`w-28 h-28 sm:w-32 sm:h-32 rounded-full border-4 ${ringColor} flex flex-col items-center justify-center`}>
+              <span className={`text-3xl sm:text-4xl font-bold font-outfit ${result.gColor}`}>{result.pct}%</span>
+              <span className="text-xs text-gray-400">Score</span>
+            </div>
+            
+            <div className="text-left bg-blue-50 border border-blue-200 rounded-xl p-4 min-w-[200px]">
+              <p className="text-xs text-blue-800 font-bold uppercase tracking-widest mb-1.5">Time Metrics</p>
+              <div className="text-sm font-semibold text-gray-700">⏱ Time Spent: {Math.floor(result.timeTaken/60)}m {result.timeTaken%60}s</div>
+              <div className="text-sm font-semibold text-gray-700 mt-1">⚡ Avg Speed: {result.avgTimePerQuestion}s / Q</div>
+            </div>
           </div>
+
           <span className={`inline-block px-6 py-2 rounded-full text-base font-bold mb-2 ${result.gBg}`}>
             Grade {result.grade}
           </span>
@@ -266,10 +474,11 @@ export default function ExamPanel({ onShowResults }) {
           <div className="bg-amber-50 rounded-xl p-3 text-center"><div className="text-xl sm:text-2xl font-bold text-amber-600 font-outfit">{result.skippedCount}</div><div className="text-xs text-gray-500 mt-1">Skipped</div></div>
         </div>
 
-        {/* Section Performance */}
+        {/* Section-wise performance */}
         <div className="p-4 sm:p-5 border-b border-gray-100">
-          <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">Section-wise Performance</p>
+          <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">Section Performance</p>
           {Object.entries(result.sectionData).map(([sec, d]) => {
+            if (sec === 'correct' || sec === 'wrong' || sec === 'skipped' || sec === 'timeTaken' || sec === 'avgTimePerQuestion' || sec === 'difficultyAnalytics') return null;
             const sp = Math.round(d.correct/d.total*100);
             const bc = sp>=75?'bg-green-500':sp>=50?'bg-blue-700':sp>=40?'bg-amber-500':'bg-red-500';
             return (
@@ -280,6 +489,25 @@ export default function ExamPanel({ onShowResults }) {
                     <span className="text-white text-xs font-bold">{sp}%</span>
                   </div>
                 </div>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Difficulty accuracy analytics */}
+        <div className="p-4 sm:p-5 border-b border-gray-100">
+          <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">Difficulty Accuracy Analytics</p>
+          {Object.entries(result.difficultyAnalytics).map(([diff, d]) => {
+            const bc = d.pct>=75?'bg-green-500':d.pct>=50?'bg-blue-700':d.pct>=40?'bg-amber-500':'bg-red-500';
+            return (
+              <div key={diff} className="flex items-center gap-3 mb-2">
+                <span className="text-xs text-gray-500 w-20 sm:w-24 text-right shrink-0 capitalize">{diff}</span>
+                <div className="flex-1 h-4 bg-gray-100 rounded-full overflow-hidden">
+                  <div className={`h-full ${bc} rounded-full flex items-center justify-end pr-2`} style={{width:`${d.pct}%`}}>
+                    <span className="text-white text-xs font-bold">{d.pct}%</span>
+                  </div>
+                </div>
+                <span className="text-xs text-gray-400 shrink-0 min-w-[40px] text-right">{d.correct}/{d.total}</span>
               </div>
             );
           })}
@@ -297,9 +525,12 @@ export default function ExamPanel({ onShowResults }) {
         )}
 
         {/* Action Buttons */}
-        <div className="p-4 sm:p-5 flex flex-col sm:flex-row gap-3 justify-center">
+        <div className="p-4 sm:p-5 flex flex-col sm:flex-row gap-3 justify-center print-hide">
           <button onClick={() => setReviewMode(true)} className="bg-orange-500 hover:bg-orange-600 text-white font-semibold px-6 py-2.5 rounded-lg text-sm transition flex items-center justify-center gap-2">
             📋 Review Answers
+          </button>
+          <button onClick={() => window.print()} className="bg-green-600 hover:bg-green-700 text-white font-semibold px-6 py-2.5 rounded-lg text-sm transition flex items-center justify-center gap-2">
+            🖨️ Download PDF Report Card
           </button>
           <button onClick={onShowResults} className="bg-blue-700 hover:bg-blue-800 text-white font-semibold px-6 py-2.5 rounded-lg text-sm transition flex items-center justify-center gap-2">
             🏆 View Full Results Sheet
