@@ -164,13 +164,30 @@ export function MockTestsPanel() {
     
     requestFullscreen();
     
-    // Shuffle mock test questions to prevent cheating / keep attempts unique
+    // Fully shuffle all questions to prevent cheating / keep attempts unique
     const shuffled = [...questions];
     for (let i = shuffled.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
     }
-    setQuestions(shuffled);
+
+    // Shuffle the options of each question dynamically!
+    const fullyShuffled = shuffled.map(q => {
+      const originalCorrectText = q.options[q.correctOption];
+      const shuffledOptions = [...q.options];
+      for (let i = shuffledOptions.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffledOptions[i], shuffledOptions[j]] = [shuffledOptions[j], shuffledOptions[i]];
+      }
+      const newCorrectIndex = shuffledOptions.indexOf(originalCorrectText);
+      return {
+        ...q,
+        options: shuffledOptions,
+        correctOption: newCorrectIndex === -1 ? q.correctOption : newCorrectIndex
+      };
+    });
+    
+    setQuestions(fullyShuffled);
 
     setTimeLeft(test.durationMinutes * 60);
     setVisited({ 0: true });
