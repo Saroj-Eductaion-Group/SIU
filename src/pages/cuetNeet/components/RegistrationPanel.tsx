@@ -172,9 +172,53 @@ function ExamPortal({ registrations, setRegistrations }: { registrations: Regist
     }, 1000);
   };
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     const trimmed = appId.trim().toUpperCase();
-    const reg = registrations.find(r => r.id === trimmed);
+    setLoginError("");
+
+    let reg = registrations.find(r => r.id === trimmed);
+
+    // Dynamic database fetch to support login from any device/browser
+    try {
+      const res = await fetch(`${BASE}/registrations/${trimmed}`);
+      if (res.ok) {
+        const data = await res.json();
+        if (data) {
+          const mapped: Registration = {
+            id: data.appId,
+            firstName: data.firstName,
+            lastName: data.lastName,
+            mobile: data.mobile,
+            email: data.email,
+            city: data.city,
+            state: data.state,
+            qualification: data.qual || data.qualification || "—",
+            board: data.board || "—",
+            marks: data.marks || "—",
+            year: data.yop || data.year || "—",
+            courses: data.courses || [],
+            examDate: data.examDate || "—",
+            examMode: data.examMode || "Online (CBT)",
+            examCentre: data.centre || data.examCentre || "—",
+            medium: data.medium || "English",
+            category: data.category || "General",
+            source: data.source || "Database Sync",
+            status: data.status || "Pending",
+            registeredAt: data.registeredAt || new Date().toISOString(),
+            examCompleted: data.score !== null && data.score !== undefined,
+            score: data.score,
+            grade: data.grade || null
+          };
+          reg = mapped;
+
+          // Sync to local registrations state to update Cache
+          setRegistrations(prev => [...prev.filter(x => x.id !== trimmed), mapped]);
+        }
+      }
+    } catch (e) {
+      console.warn("Failed to fetch candidate from backend:", e);
+    }
+
     if (!reg) { setLoginError("Application ID not found. Please check and try again."); return; }
 
     // Special reset for test ID to allow infinite re-testing
@@ -187,6 +231,7 @@ function ExamPortal({ registrations, setRegistrations }: { registrations: Regist
     if (reg.status === "Pending") { setLoginError("Your application is still under review. Please wait for admin approval."); return; }
     if (reg.status === "Rejected") { setLoginError("Your application has been rejected. Please contact SIU admissions."); return; }
     if (reg.examCompleted) { setLoginError("You have already completed the Talent Hunt exam. Check your result in the Results tab."); return; }
+    
     setCandidate(reg);
     setLoginError("");
     setPhase("instructions");
