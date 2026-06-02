@@ -146,7 +146,7 @@ export function AIMentorPanel() {
       </div>
 
       {/* Stats */}
-      <div className="mt-4 grid grid-cols-3 gap-3">
+      <div className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-3">
         {[
           { num: "2,34,891", label: "Questions answered this month" },
           { num: "1.2s", label: "Average response time" },

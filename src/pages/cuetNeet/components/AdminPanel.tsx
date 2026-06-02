@@ -158,7 +158,7 @@ export function AdminPanel() {
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-3 gap-3 mb-5">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-5">
         {[
           { num: stats.total,    label: "Total Registered", color: "#6c3fc7", bg: "#f5f0ff" },
           { num: stats.examDone, label: "Took Mock Test",   color: "#16a34a", bg: "#ecfdf5" },

@@ -714,7 +714,7 @@ function ExamPortal({ registrations, setRegistrations }: { registrations: Regist
               Grade {g.grade} — {g.label}
             </div>
             <div className="text-sm text-gray-500 mb-5">{result.score}/{questions.length * 4} marks</div>
-            <div className="grid grid-cols-3 gap-3 mb-5">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-5">
               {[{ n: result.correct, l: "Correct", c: "#16a34a" }, { n: result.wrong, l: "Wrong", c: "#dc2626" }, { n: result.skipped, l: "Skipped", c: "#d97706" }].map(s => (
                 <div key={s.l} className="bg-gray-50 rounded-xl p-4 text-center">
                   <div className="font-serif font-bold text-2xl" style={{ color: s.c }}>{s.n}</div>

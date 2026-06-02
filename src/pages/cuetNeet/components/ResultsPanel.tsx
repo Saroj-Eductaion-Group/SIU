@@ -229,27 +229,29 @@ export function ResultsPanel() {
         const sd = getAnalyticData(activeReport);
         const g = getGrade(activeReport.score);
         return (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-950/70 backdrop-blur-sm p-4 overflow-y-auto no-print">
-            <div className="bg-white border border-gray-200 rounded-2xl w-full max-w-4xl shadow-2xl relative overflow-hidden animate-scale-up my-8">
+          <div className="fixed inset-0 z-[1000] flex items-center justify-center bg-gray-950/70 backdrop-blur-sm p-3 md:p-4 no-print">
+            <div className="bg-white border border-gray-200 rounded-2xl w-full max-w-4xl shadow-2xl relative flex flex-col max-h-[92vh] sm:max-h-[90vh] overflow-hidden animate-scale-up my-auto">
               
+              {/* Absolute Top-Right Close Button */}
+              <button onClick={() => setActiveReport(null)} className="absolute top-4 right-4 z-50 w-7 h-7 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-sm font-bold text-gray-500 border border-gray-200 transition no-print shadow-sm">
+                ✕
+              </button>
+
               {/* Modal Header */}
-              <div className="px-6 py-4 bg-gray-50 border-b border-gray-100 flex justify-between items-center no-print">
+              <div className="px-6 py-4 bg-gray-50 border-b border-gray-100 flex justify-between items-center pr-12 no-print">
                 <div>
-                  <h3 className="font-serif font-black text-lg text-[#0a1f5c]">Scholarship Certificate & Report</h3>
-                  <p className="text-xs text-gray-400">Official candidate assessment for {activeReport.firstName} {activeReport.lastName}</p>
+                  <h3 className="font-serif font-black text-base md:text-lg text-[#0a1f5c]">Scholarship Certificate & Report</h3>
+                  <p className="text-[10px] md:text-xs text-gray-400">Official candidate assessment for {activeReport.firstName} {activeReport.lastName}</p>
                 </div>
-                <div className="flex items-center gap-2">
-                  <button onClick={() => window.print()} className="px-4 py-2 text-xs font-bold text-white bg-amber-500 rounded-lg hover:bg-amber-600 transition flex items-center gap-1">
-                    🖨️ Export to PDF / Print
-                  </button>
-                  <button onClick={() => setActiveReport(null)} className="px-3.5 py-2 text-xs font-semibold text-gray-500 bg-gray-100 hover:bg-gray-200 rounded-lg transition">
-                    Close
+                <div className="flex items-center gap-2 mr-2">
+                  <button onClick={() => window.print()} className="px-3 py-1.5 text-xs font-bold text-white bg-amber-500 rounded-lg hover:bg-amber-600 transition flex items-center gap-1">
+                    🖨️ Print
                   </button>
                 </div>
               </div>
 
               {/* Printable Area */}
-              <div id="print-root" className="p-8 max-w-4xl mx-auto bg-white text-gray-800">
+              <div id="print-root" className="p-4 md:p-8 max-w-4xl mx-auto bg-white text-gray-800 overflow-y-auto flex-1 w-full">
                 <div className="border-[8px] border-double border-amber-300 p-6 md:p-8 rounded-xl bg-amber-50/10 cert-border relative">
                   
                   {/* Decorative corner accents */}
@@ -302,7 +304,7 @@ export function ResultsPanel() {
                     {/* Left: General Stats */}
                     <div className="border border-gray-200 rounded-xl p-4">
                       <h4 className="font-serif font-bold text-sm text-[#0a1f5c] mb-3 pb-1 border-b border-gray-100">Sectional Statistics</h4>
-                      <div className="grid grid-cols-3 gap-2 text-center text-xs">
+                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-center text-xs">
                         <div className="bg-green-50 p-2.5 rounded-lg border border-green-100">
                           <div className="text-green-700 font-serif font-black text-lg">{sd.correct}</div>
                           <div className="text-gray-500 mt-0.5">Correct</div>

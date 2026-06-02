@@ -151,17 +151,17 @@ export function HomePanel({ setActiveTab, onScholarship }: HomePanelProps) {
           ⚡ &nbsp;SIUAT 2026 Registrations Open — Direct Seat Allocation on Merit!&nbsp; ⚡
         </div>
 
-        <div className="relative z-10 px-6 md:px-10 pt-8 pb-7">
-          <div className="flex flex-col lg:flex-row gap-8 items-start">
+        <div className="relative z-10 px-4 sm:px-6 md:px-10 pt-6 pb-6">
+          <div className="flex flex-col lg:flex-row gap-6 items-start">
             
             {/* Left: Branding & Core Headline */}
             <div className="flex-1 min-w-0">
-              <div className="inline-flex items-center gap-2 rounded-full px-4.5 py-1.5 text-[11px] font-extrabold mb-4"
+              <div className="inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-[10px] font-extrabold mb-3"
                 style={{ background: "rgba(16,185,129,0.15)", border: "1px solid rgba(16,185,129,0.35)", color: "#34d399" }}>
                 🏥 &nbsp;CRACK NEET 2026 · ELITE AI PREPARATION PLATFORM
               </div>
 
-              <h1 className="font-serif font-black leading-tight mb-3 text-white" style={{ fontSize: "clamp(28px, 4vw, 42px)" }}>
+              <h1 className="font-serif font-black leading-tight mb-3 text-white" style={{ fontSize: "clamp(22px, 4vw, 42px)" }}>
                 Master Your NEET 2026 Goals.<br />
                 <span className="text-amber-400">Score 680+ with AI Precision.</span>
               </h1>
@@ -171,12 +171,12 @@ export function HomePanel({ setActiveTab, onScholarship }: HomePanelProps) {
               </p>
 
               {/* Action Buttons */}
-              <div className="flex gap-3.5 flex-wrap mb-6">
-                <button onClick={() => setActiveTab("mocks")} className="flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-bold text-[#064e3b] transition hover:brightness-105 active:scale-97 shadow-lg"
+              <div className="flex gap-2 flex-wrap mb-4">
+                <button onClick={() => setActiveTab("mocks")} className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold text-[#064e3b] transition hover:brightness-105 shadow-lg"
                   style={{ background: "linear-gradient(90deg,#fbbf24,#ffd700)", boxShadow: "0 4px 18px rgba(251,191,36,0.4)" }}>
                   🧬 Practice Mock Tests →
                 </button>
-                <button onClick={() => setActiveTab("siuat")} className="flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold transition hover:bg-white/10 active:scale-97 text-white"
+                <button onClick={() => setActiveTab("siuat")} className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition hover:bg-white/10 text-white"
                   style={{ border: "1.5px solid rgba(255,255,255,0.3)" }}>
                   Register for SIUAT 🎓
                 </button>
@@ -194,7 +194,7 @@ export function HomePanel({ setActiveTab, onScholarship }: HomePanelProps) {
             </div>
 
             {/* Right: NEET 2026 Calendar Widget */}
-            <div className="w-full lg:w-72 flex-shrink-0">
+            <div className="w-full lg:w-64 flex-shrink-0">
               <div className="rounded-xl overflow-hidden shadow-md" style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)" }}>
                 <div className="px-4.5 py-3 text-[10px] font-extrabold uppercase tracking-widest text-emerald-200" style={{ background: "rgba(0,0,0,0.3)" }}>
                   📅 NEET UG 2026 Calendar
@@ -216,19 +216,19 @@ export function HomePanel({ setActiveTab, onScholarship }: HomePanelProps) {
           </div>
 
           {/* Core Analytics Counters */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-2 mt-5">
             {[
               { val: `${studentsCount.toLocaleString()}+`, label: "NEET Competitors", icon: "🩺", color: "#fbbf24" },
               { val: "50,000+", label: "Daily PYQ Solved", icon: "✏️", color: "#60a5fa" },
               { val: "99.8%", label: "Platform Uptime", icon: "⚡", color: "#34d399" },
               { val: `${successRate}%`, label: "Scholarship Index", icon: "📈", color: "#f472b6" }
             ].map(s => (
-              <div key={s.label} className="rounded-xl px-4 py-3.5 flex items-center gap-3"
+              <div key={s.label} className="rounded-xl px-3 py-3 flex items-center gap-2"
                 style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.08)" }}>
-                <span className="text-2xl">{s.icon}</span>
-                <div>
-                  <div className="font-serif font-black text-lg leading-none" style={{ color: s.color }}>{s.val}</div>
-                  <div className="text-[10px] mt-1 uppercase tracking-wider text-white/40">{s.label}</div>
+                <span className="text-xl flex-shrink-0">{s.icon}</span>
+                <div className="min-w-0">
+                  <div className="font-serif font-black text-base leading-none truncate" style={{ color: s.color }}>{s.val}</div>
+                  <div className="text-[9px] mt-0.5 uppercase tracking-wide text-white/40 truncate">{s.label}</div>
                 </div>
               </div>
             ))}

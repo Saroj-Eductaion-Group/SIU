@@ -47,18 +47,34 @@ export function NeetWelcomeBanner({ candidate, onLogout }: { candidate: CUETRegi
   const [expanded, setExpanded] = useState(false);
   return (
     <div className="rounded-xl mb-4 overflow-hidden border" style={{ borderColor: "#c9a84c" }}>
-      <div className="flex items-center gap-3 px-4 py-3" style={{ background: "linear-gradient(90deg,#064e3b,#0d9488)" }}>
-        <div className="w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm text-[#064e3b] flex-shrink-0" style={{ background: "#c9a84c" }}>
-          {candidate.firstName[0]}{candidate.lastName[0]}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-4 py-3" style={{ background: "linear-gradient(90deg,#064e3b,#0d9488)", display: 'flex', flexDirection: 'column', gap: '12px' }}>
+        
+        {/* Left: Avatar & Candidate Info */}
+        <div className="flex items-center gap-3 min-w-0" style={{ display: 'flex', alignItems: 'center', gap: '12px', minWidth: 0, width: '100%' }}>
+          <div className="w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm text-[#064e3b] flex-shrink-0" style={{ background: "#c9a84c", width: '40px', height: '40px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+            {candidate.firstName[0]}{candidate.lastName[0]}
+          </div>
+          <div className="min-w-0" style={{ minWidth: 0, flex: 1 }}>
+            <div className="text-white font-bold text-sm truncate" style={{ color: '#fff', fontWeight: 'bold', fontSize: '14px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: '100%' }}>
+              {candidate.firstName} {candidate.lastName}
+            </div>
+            <div className="text-[11px] font-mono" style={{ color: "#c9a84c", fontSize: '11px', fontFamily: 'monospace', opacity: 0.85 }}>
+              {candidate.id}
+            </div>
+          </div>
         </div>
-        <div className="flex-1 min-w-0">
-          <div className="text-white font-bold text-sm">{candidate.firstName} {candidate.lastName}</div>
-          <div className="text-[11px] font-mono" style={{ color: "#c9a84c" }}>{candidate.id}</div>
-        </div>
-        <div className="flex items-center gap-2">
-          <span className="text-[10px] px-2 py-0.5 rounded-full font-bold text-[#064e3b] bg-[#c9a84c]">✓ NEET Registered</span>
-          <button onClick={() => setExpanded(e => !e)} className="text-white/40 hover:text-white/80 text-xs px-2">{expanded ? "▲" : "▼"}</button>
-          <button onClick={onLogout} data-testid="neet-logout" className="text-[11px] font-semibold px-2.5 py-1 rounded-lg border border-white/20 text-white/60 hover:text-white/90 transition">Logout</button>
+
+        {/* Right: Status Pill & Logout Action */}
+        <div className="flex items-center gap-2 w-full sm:w-auto justify-end sm:justify-start border-t border-white/10 pt-2 sm:pt-0 sm:border-0 flex-shrink-0" style={{ display: 'flex', alignItems: 'center', gap: '8px', flexShrink: 0, width: '100%', justifyContent: 'flex-end', borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '8px' }}>
+          <span className="text-[10px] px-2 py-0.5 rounded-full font-bold text-[#064e3b] bg-[#c9a84c] whitespace-nowrap" style={{ fontSize: '10px', padding: '2px 8px', borderRadius: '9999px', fontWeight: 'bold', color: '#064e3b', backgroundColor: '#c9a84c', whiteSpace: 'nowrap' }}>
+            ✓ NEET Registered
+          </span>
+          <button onClick={() => setExpanded(e => !e)} className="text-white/40 hover:text-white/80 text-xs px-2" style={{ color: 'rgba(255,255,255,0.4)', padding: '0 8px', fontSize: '12px', background: 'none', border: 'none', cursor: 'pointer' }}>
+            {expanded ? "▲" : "▼"}
+          </button>
+          <button onClick={onLogout} data-testid="neet-logout" className="text-[11px] font-semibold px-2.5 py-1 rounded-lg border border-white/20 text-white/60 hover:text-white/90 transition" style={{ fontSize: '11px', padding: '4px 10px', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.2)', color: 'rgba(255,255,255,0.6)', cursor: 'pointer', background: 'none' }}>
+            Logout
+          </button>
         </div>
       </div>
       {expanded && (

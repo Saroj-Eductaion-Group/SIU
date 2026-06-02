@@ -89,8 +89,8 @@ export function Header({ activeTab, setActiveTab, onScholarship }: HeaderProps) 
               <span className="absolute top-1.5 right-1.5 h-1.5 w-1.5 rounded-full bg-red-400" />
             </button>
             {showNotif && (
-              <div className="fixed left-0 right-0 mx-3 sm:absolute sm:mx-0 sm:left-auto sm:right-0 sm:w-[320px] rounded-xl shadow-2xl overflow-hidden overflow-y-auto max-h-[70vh]"
-                style={{ top: '115px', zIndex: 9999, background: "#064e3b", border: "1px solid rgba(255,255,255,0.15)" }}>
+              <div className="fixed top-[62px] left-0 right-0 mx-3 sm:absolute sm:top-[45px] sm:mx-0 sm:left-auto sm:right-0 sm:w-[320px] rounded-xl shadow-2xl overflow-hidden overflow-y-auto max-h-[70vh]"
+                style={{ zIndex: 9999, background: "#064e3b", border: "1px solid rgba(255,255,255,0.15)" }}>
                 <div className="px-4 py-3 flex items-center justify-between border-b sticky top-0" style={{ borderColor: "rgba(255,255,255,0.1)", background: "#064e3b" }}>
                   <span className="text-white text-xs font-bold uppercase tracking-widest">🔔 Notifications</span>
                   <button onClick={() => setShowNotif(false)} className="text-white/40 hover:text-white text-xl leading-none px-1">×</button>

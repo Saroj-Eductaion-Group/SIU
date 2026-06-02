@@ -99,7 +99,7 @@ export default function TalentHunt() {
         🏆 Scholarship!
       </button>
 
-      <div className="bg-gray-50 min-h-screen font-outfit">
+      <div className="bg-gray-50 min-h-screen font-outfit overflow-x-hidden">
 
         {/* HERO */}
         <div className="relative overflow-hidden" style={{background:'linear-gradient(135deg, #0a1f5c 0%, #0e2557 60%, #1a3a8a 100%)'}}>

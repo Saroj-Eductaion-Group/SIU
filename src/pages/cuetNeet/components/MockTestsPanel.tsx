@@ -75,7 +75,8 @@ export function MockTestsPanel() {
   const [results, setResults] = useLocalStorage<ExamResult[]>("mock_results", []);
   const [cuetActiveId, setCuetActiveId] = useLocalStorage("cuet_active_id", "");
   const [cuetRegs] = useLocalStorage<CUETRegistration[]>("cuet_registrations", []);
-  const cuetCandidate = cuetRegs.find(r => r.id === cuetActiveId) ?? null;
+  const [neetRegs] = useLocalStorage<CUETRegistration[]>("neet_registrations", []);
+  const cuetCandidate = [...cuetRegs, ...neetRegs].find(r => r.id === cuetActiveId) ?? null;
 
   const requestFullscreen = () => {
     const elem = document.documentElement as any;
@@ -387,27 +388,27 @@ export function MockTestsPanel() {
         )}
 
         {/* Exam Header */}
-        <div className="rounded-xl p-4 mb-3 border-2 relative overflow-hidden text-white" style={{ background: "linear-gradient(135deg,#064e3b,#0d9488)", borderColor: "rgba(201,168,76,0.25)" }}>
-          <div className="flex justify-between items-start flex-wrap gap-3 relative z-10">
-            <div>
-              <div className="flex items-center gap-2 mb-1">
-                <span className="text-[10px] font-extrabold tracking-widest uppercase px-2 py-0.5 rounded-full" style={{ background: "#e8b840", color: "#064e3b" }}>NTA NEET 2026</span>
-                <span className="text-[10px] text-white/50 font-semibold">{activeTest.cuetCode}</span>
+        <div className="rounded-xl p-3 mb-3 border-2 relative overflow-hidden text-white" style={{ background: "linear-gradient(135deg,#064e3b,#0d9488)", borderColor: "rgba(201,168,76,0.25)" }}>
+          <div className="flex justify-between items-start flex-wrap gap-2 relative z-10">
+            <div className="min-w-0 flex-1">
+              <div className="flex items-center gap-2 mb-1 flex-wrap">
+                <span className="text-[9px] font-extrabold tracking-widest uppercase px-2 py-0.5 rounded-full flex-shrink-0" style={{ background: "#e8b840", color: "#064e3b" }}>NTA NEET 2026</span>
+                <span className="text-[9px] text-white/50 font-semibold">{activeTest.cuetCode}</span>
               </div>
-              <div className="text-white font-bold text-sm mb-0.5">{activeTest.name}</div>
-              <div className="text-xs text-white/50">{activeTest.cuetSection} · +4 / −1 Marking</div>
+              <div className="text-white font-bold text-xs mb-0.5 truncate">{activeTest.name}</div>
+              <div className="text-[10px] text-white/50">{activeTest.cuetSection} · +4 / −1</div>
             </div>
-            <div className="text-right">
-              <div className="font-serif font-black text-3xl text-teal-200" style={{ color: timeLeft < 300 ? "#fca5a5" : "#f0d060", fontFeatureSettings: '"tnum"' }}>{fmt(timeLeft)}</div>
-              <div className="text-[10px] text-white/50">Time Remaining</div>
+            <div className="text-right flex-shrink-0">
+              <div className="font-serif font-black text-2xl" style={{ color: timeLeft < 300 ? "#fca5a5" : "#f0d060", fontFeatureSettings: '"tnum"' }}>{fmt(timeLeft)}</div>
+              <div className="text-[9px] text-white/50">Time Remaining</div>
             </div>
           </div>
 
           {/* Attempt progress bar */}
-          <div className="mt-3 flex items-center gap-3 relative z-10">
-            <div className="text-xs font-bold" style={{ color: isOverAttempted ? "#fca5a5" : attemptedCount >= activeTest.attemptCount ? "#86efac" : "#f0d060" }}>
-              Answered: {attemptedCount} / {activeTest.attemptCount} required
-              {isOverAttempted && <span className="ml-1">(⚠ over-attempted)</span>}
+          <div className="mt-2 flex items-center gap-2 relative z-10">
+            <div className="text-[10px] font-bold flex-shrink-0" style={{ color: isOverAttempted ? "#fca5a5" : attemptedCount >= activeTest.attemptCount ? "#86efac" : "#f0d060" }}>
+              {attemptedCount}/{activeTest.attemptCount}
+              {isOverAttempted && <span className="ml-1">⚠</span>}
             </div>
             <div className="flex-1 h-1.5 rounded-full overflow-hidden" style={{ background: "rgba(255,255,255,0.15)" }}>
               <div className="h-full rounded-full transition-all" style={{ width: `${Math.min(100, (attemptedCount / activeTest.attemptCount) * 100)}%`, background: attemptedCount >= activeTest.attemptCount ? "#86efac" : "#c9a84c" }} />
@@ -508,16 +509,16 @@ export function MockTestsPanel() {
             </div>
 
             {/* Nav buttons */}
-            <div className="flex items-center gap-2 flex-wrap">
-              <button onClick={() => navigateTo(Math.max(0, currentQ - 1))} disabled={currentQ === 0} data-testid="btn-prev" className="px-3 py-2 rounded-lg border text-xs font-semibold text-gray-600 border-gray-300 disabled:opacity-40">← Prev</button>
+            <div className="flex items-center gap-1.5 flex-wrap">
+              <button onClick={() => navigateTo(Math.max(0, currentQ - 1))} disabled={currentQ === 0} data-testid="btn-prev" className="px-2.5 py-2 rounded-lg border text-xs font-semibold text-gray-600 border-gray-300 disabled:opacity-40">← Prev</button>
               <button onClick={() => setMarked(m => ({ ...m, [currentQ]: !m[currentQ] }))} data-testid="btn-mark"
-                className="px-3 py-2 rounded-lg border text-xs font-semibold"
+                className="px-2.5 py-2 rounded-lg border text-xs font-semibold"
                 style={{ background: marked[currentQ] ? "#fef3c7" : "#fff", borderColor: marked[currentQ] ? "#d97706" : "#e5e7eb", color: marked[currentQ] ? "#92400e" : "#6b7280" }}>
-                {marked[currentQ] ? "⭐ Marked" : "☆ Mark for Review"}
+                {marked[currentQ] ? "⭐" : "☆ Mark"}
               </button>
               <div className="flex-1" />
-              <button onClick={() => navigateTo(Math.min(questions.length - 1, currentQ + 1))} disabled={currentQ === questions.length - 1} data-testid="btn-next" className="px-3 py-2 rounded-lg border text-xs font-semibold text-gray-600 border-gray-300 disabled:opacity-40">Next →</button>
-              <button onClick={trySubmit} data-testid="btn-submit" className="px-5 py-2 rounded-lg text-xs font-bold text-[#0a1f5c]" style={{ background: "linear-gradient(90deg,#c9a84c,#e8b840)" }}>Submit Paper ✓</button>
+              <button onClick={() => navigateTo(Math.min(questions.length - 1, currentQ + 1))} disabled={currentQ === questions.length - 1} data-testid="btn-next" className="px-2.5 py-2 rounded-lg border text-xs font-semibold text-gray-600 border-gray-300 disabled:opacity-40">Next →</button>
+              <button onClick={trySubmit} data-testid="btn-submit" className="px-4 py-2 rounded-lg text-xs font-bold text-[#0a1f5c]" style={{ background: "linear-gradient(90deg,#c9a84c,#e8b840)" }}>Submit ✓</button>
             </div>
           </div>
         </div>
@@ -582,7 +583,7 @@ export function MockTestsPanel() {
             </div>
 
             {/* Stat pills */}
-            <div className="grid grid-cols-3 gap-3 mb-5">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-5">
               {[{ num: result.correct, label: "Correct", color: "#16a34a" }, { num: result.wrong, label: "Wrong", color: "#dc2626" }, { num: result.skipped, label: "Skipped", color: "#d97706" }].map(s => (
                 <div key={s.label} className="rounded-xl p-3 text-center bg-gray-50">
                   <div className="font-serif font-bold text-2xl" style={{ color: s.color }}>{s.num}</div>
@@ -648,15 +649,17 @@ export function MockTestsPanel() {
       <NeetWelcomeBanner candidate={cuetCandidate} onLogout={() => setCuetActiveId("")} />
 
       {/* NEET Pattern Banner */}
-      <div className="rounded-xl p-4 mb-5 flex items-center gap-4" style={{ background: "linear-gradient(135deg,#064e3b,#0d9488)" }}>
-        <div className="text-3xl">📋</div>
-        <div className="flex-1">
-          <div className="text-white font-bold text-sm mb-0.5">NEET 2026 — NTA Official Pattern</div>
-          <div className="text-xs leading-relaxed" style={{ color: "rgba(255,255,255,0.55)" }}>
-            All mock tests follow the official NTA NEET pattern · Physics, Chemistry, Botany, Zoology · NCERT Syllabus Focus
+      <div className="rounded-xl p-4 mb-5 flex flex-col sm:flex-row sm:items-center gap-4" style={{ background: "linear-gradient(135deg,#064e3b,#0d9488)" }}>
+        <div className="flex items-center gap-3">
+          <div className="text-3xl flex-shrink-0">📋</div>
+          <div className="flex-1">
+            <div className="text-white font-bold text-sm mb-0.5">NEET 2026 — NTA Official Pattern</div>
+            <div className="text-xs leading-relaxed" style={{ color: "rgba(255,255,255,0.55)" }}>
+              All mock tests follow the official NTA NEET pattern · Physics, Chemistry, Botany, Zoology · NCERT Syllabus Focus
+            </div>
           </div>
         </div>
-        <div className="flex-shrink-0 space-y-1 text-right text-[11px]">
+        <div className="flex sm:flex-col gap-3 sm:gap-1 text-[11px] flex-wrap sm:text-right flex-shrink-0 border-t border-white/10 pt-2.5 sm:pt-0 sm:border-0">
           <div className="font-bold text-green-300">+4 Correct</div>
           <div className="font-bold text-red-300">−1 Wrong</div>
           <div className="text-white/40">0 Skipped</div>
@@ -800,37 +803,39 @@ export function MockTestsPanel() {
           return (
             <div key={test.id} data-testid={`test-card-${test.id}`}
               className="bg-white border border-gray-200 rounded-xl p-4 hover:border-[#0a1f5c] hover:shadow-md transition group">
-              <div className="flex items-start gap-4">
-                <div className={`w-12 h-12 rounded-xl flex items-center justify-center text-2xl flex-shrink-0 ${test.iconColor}`}>
-                  {ICON[test.subject] || "📚"}
-                </div>
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2 mb-1 flex-wrap">
-                    <span className="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider" style={{ background: sc.bg, color: sc.text }}>{test.cuetSection}</span>
-                    <span className="px-2 py-0.5 rounded-full text-[10px] font-bold text-white" style={{ background: DIFF_COLORS[test.difficulty] }}>{test.difficulty}</span>
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div className="flex items-start gap-4 flex-1 min-w-0">
+                  <div className={`w-12 h-12 rounded-xl flex items-center justify-center text-2xl flex-shrink-0 ${test.iconColor}`}>
+                    {ICON[test.subject] || "📚"}
                   </div>
-                  <div className="font-bold text-gray-900 text-sm mb-1.5">{test.name}</div>
-                  <div className="flex items-center gap-3 flex-wrap text-[11px] text-gray-500">
-                    <span className="flex items-center gap-1">⏱ <strong>{test.durationMinutes} min</strong></span>
-                    <span>·</span>
-                    <span>❓ <strong>{test.questionsCount}</strong> Qs</span>
-                    <span>·</span>
-                    <span>✏️ Attempt any <strong>{test.attemptCount}</strong></span>
-                    <span>·</span>
-                    <span>📊 Max <strong>{test.marks}</strong> marks</span>
-                  </div>
-                  {/* Marking pills */}
-                  <div className="flex gap-1.5 mt-2 flex-wrap">
-                    <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-green-50 text-green-700">+4 Correct</span>
-                    <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-red-50 text-red-600">−1 Wrong</span>
-                    <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-gray-100 text-gray-500">0 Skipped</span>
-                    {test.questionsCount > test.attemptCount && (
-                      <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-50 text-amber-700">Choice-based</span>
-                    )}
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 mb-1 flex-wrap">
+                      <span className="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider" style={{ background: sc.bg, color: sc.text }}>{test.cuetSection}</span>
+                      <span className="px-2 py-0.5 rounded-full text-[10px] font-bold text-white" style={{ background: DIFF_COLORS[test.difficulty] }}>{test.difficulty}</span>
+                    </div>
+                    <div className="font-bold text-gray-900 text-sm mb-1.5">{test.name}</div>
+                    <div className="flex items-center gap-3 flex-wrap text-[11px] text-gray-500">
+                      <span className="flex items-center gap-1">⏱ <strong>{test.durationMinutes} min</strong></span>
+                      <span>·</span>
+                      <span>❓ <strong>{test.questionsCount}</strong> Qs</span>
+                      <span>·</span>
+                      <span>✏️ Attempt any <strong>{test.attemptCount}</strong></span>
+                      <span>·</span>
+                      <span>📊 Max <strong>{test.marks}</strong> marks</span>
+                    </div>
+                    {/* Marking pills */}
+                    <div className="flex gap-1.5 mt-2 flex-wrap">
+                      <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-green-50 text-green-700">+4 Correct</span>
+                      <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-red-50 text-red-600">−1 Wrong</span>
+                      <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-gray-100 text-gray-500">0 Skipped</span>
+                      {test.questionsCount > test.attemptCount && (
+                        <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-50 text-amber-700">Choice-based</span>
+                      )}
+                    </div>
                   </div>
                 </div>
                 <button onClick={() => openInstructions(test.id)} data-testid={`start-${test.id}`}
-                  className="flex-shrink-0 px-4 py-2 rounded-lg text-xs font-bold text-white transition hover:brightness-110 self-center"
+                  className="w-full sm:w-auto px-5 py-2.5 sm:py-2 rounded-lg text-xs font-bold text-white transition hover:brightness-110 text-center sm:self-center flex-shrink-0"
                   style={{ background: "linear-gradient(135deg,#0a1f5c,#4c1d95)" }}>
                   Start →
                 </button>
