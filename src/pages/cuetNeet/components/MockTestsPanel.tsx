@@ -77,6 +77,17 @@ export function MockTestsPanel() {
   const [cuetRegs] = useLocalStorage<CUETRegistration[]>("cuet_registrations", []);
   const cuetCandidate = cuetRegs.find(r => r.id === cuetActiveId) ?? null;
 
+  const requestFullscreen = () => {
+    const elem = document.documentElement as any;
+    if (elem.requestFullscreen) {
+      elem.requestFullscreen().catch((err: any) => console.log('Fullscreen error:', err));
+    } else if (elem.webkitRequestFullscreen) { /* Safari */
+      elem.webkitRequestFullscreen();
+    } else if (elem.msRequestFullscreen) { /* IE11 */
+      elem.msRequestFullscreen();
+    }
+  };
+
   const filtered = MOCK_TESTS.filter(t => filter === "All" || t.subject === filter);
   const activeTest = MOCK_TESTS.find(t => t.id === activeTestId);
 
@@ -133,15 +144,7 @@ export function MockTestsPanel() {
   });
   const polylinePath = chartPoints.map(p => `${p.x},${p.y}`).join(" ");
 
-  useEffect(() => {
-    const handleVisibility = () => {
-      if (document.hidden && examState === "active") {
-        setViolations(v => { const nv = v + 1; setShowViolation(true); setTimeout(() => setShowViolation(false), 3000); return nv; });
-      }
-    };
-    document.addEventListener("visibilitychange", handleVisibility);
-    return () => document.removeEventListener("visibilitychange", handleVisibility);
-  }, [examState]);
+  // Visibility monitoring removed for mock practice to prevent annoying violation warnings
 
   const openInstructions = (testId: string) => {
     const qs = MOCK_QUESTIONS[testId] || [];
@@ -158,6 +161,8 @@ export function MockTestsPanel() {
   const startTest = () => {
     if (!activeTestId) return;
     const test = MOCK_TESTS.find(t => t.id === activeTestId)!;
+    
+    requestFullscreen();
     
     // Shuffle mock test questions to prevent cheating / keep attempts unique
     const shuffled = [...questions];
@@ -180,6 +185,10 @@ export function MockTestsPanel() {
   const doSubmit = () => {
     if (timerRef.current) clearInterval(timerRef.current);
     const test = MOCK_TESTS.find(t => t.id === activeTestId)!;
+
+    if (document.fullscreenElement || document.webkitFullscreenElement) {
+      document.exitFullscreen().catch(err => console.log('Error exiting fullscreen:', err));
+    }
     let correct = 0, wrong = 0, skipped = 0;
     questions.forEach((q, i) => {
       const ans = answers[i];
@@ -340,16 +349,7 @@ export function MockTestsPanel() {
 
     return (
       <div>
-        {/* Violation Overlay */}
-        {showViolation && (
-          <div className="fixed inset-0 z-[100] flex items-center justify-center" style={{ background: "rgba(120,0,0,0.88)" }}>
-            <div className="text-white text-center p-8 max-w-sm">
-              <div className="text-5xl mb-3">⚠️</div>
-              <div className="text-xl font-bold mb-2">Tab Switch Detected!</div>
-              <div className="text-sm opacity-75">This is Violation #{violations}. Continued violations may be reported to the exam authority.</div>
-            </div>
-          </div>
-        )}
+        {/* Violation Overlay removed for mock practice */}
 
         {/* Submit Warning Modal */}
         {showSubmitWarning && (
