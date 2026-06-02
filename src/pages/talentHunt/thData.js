@@ -1,6 +1,6 @@
 export const QB = {
 "B.Tech": [
-  // EASY (1 mark each) - 10 questions
+  // EASY (1 mark each) - 15 questions
   {q:"What is 15 + 27?",opts:["40","42","44","46"],ans:1,sec:"Maths",marks:1},
   {q:"Which planet is closest to the Sun?",opts:["Venus","Mars","Mercury","Earth"],ans:2,sec:"Science",marks:1},
   {q:"What does CPU stand for?",opts:["Central Processing Unit","Computer Personal Unit","Core Processing Unit","Central Peripheral Unit"],ans:0,sec:"Computers",marks:1},
@@ -11,7 +11,12 @@ export const QB = {
   {q:"Chemical formula of common salt is:",opts:["NaOH","NaCl","KCl","CaCl2"],ans:1,sec:"Chemistry",marks:1},
   {q:"Choose the correct spelling:",opts:["Recieve","Receive","Receve","Receeve"],ans:1,sec:"English",marks:1},
   {q:"ISRO stands for:",opts:["Indian Space Research Organisation","Indian Science Research Org","International Space Research Org","None"],ans:0,sec:"GK",marks:1},
-  // MEDIUM (2 marks each) - 10 questions
+  {q:"What is the value of 2³ + 5?",opts:["11","13","15","17"],ans:1,sec:"Maths",marks:1},
+  {q:"Which of the following is an input device?",opts:["Monitor","Printer","Keyboard","Speaker"],ans:2,sec:"Computers",marks:1},
+  {q:"SI unit of resistance is:",opts:["Volt","Ampere","Ohm","Watt"],ans:2,sec:"Physics",marks:1},
+  {q:"Which element has the atomic number 1?",opts:["Helium","Hydrogen","Lithium","Oxygen"],ans:1,sec:"Chemistry",marks:1},
+  {q:"Synonym of 'Benevolent' is:",opts:["Cruel","Kind","Selfish","Angry"],ans:1,sec:"English",marks:1},
+  // MEDIUM (2 marks each) - 15 questions
   {q:"If 2x + 5 = 17, find x.",opts:["4","5","6","7"],ans:2,sec:"Maths",marks:2},
   {q:"A train travels 150 km in 2.5 hours. Speed in km/h?",opts:["55","60","65","70"],ans:1,sec:"Maths",marks:2},
   {q:"Ohm's Law: V=12V, R=4Ω. Find I.",opts:["2A","3A","4A","6A"],ans:1,sec:"Physics",marks:2},
@@ -22,21 +27,36 @@ export const QB = {
   {q:"Binary 1010 in decimal is:",opts:["8","9","10","11"],ans:2,sec:"Computers",marks:2},
   {q:"Time complexity of linear search is:",opts:["O(1)","O(log n)","O(n)","O(n²)"],ans:2,sec:"Computers",marks:2},
   {q:"Which gas is used in electric bulbs?",opts:["Oxygen","Nitrogen","Argon","Carbon dioxide"],ans:2,sec:"Chemistry",marks:2},
-  // HARD (3 marks each) - 5 questions
+  {q:"If log₁₀(x) = 3, then x is:",opts:["30","100","1000","10000"],ans:2,sec:"Maths",marks:2},
+  {q:"Acceleration due to gravity on Earth is approx:",opts:["9.8 m/s²","8.9 m/s²","10.8 m/s²","6.7 m/s²"],ans:0,sec:"Physics",marks:2},
+  {q:"Which of the following is a volatile memory?",opts:["ROM","RAM","SSD","Hard Disk"],ans:1,sec:"Computers",marks:2},
+  {q:"The process of rust formation on iron is:",opts:["Reduction","Oxidation","Sublimation","Condensation"],ans:1,sec:"Chemistry",marks:2},
+  {q:"A rectangle has length 8 cm and width 5 cm. Its area is:",opts:["26 cm²","40 cm²","13 cm²","20 cm²"],ans:1,sec:"Maths",marks:2},
+  // HARD (3 marks each) - 10 questions
   {q:"If A={1,2,3,4,5} and B={3,4,5,6,7}, find |A∪B|.",opts:["5","6","7","8"],ans:2,sec:"Maths",marks:3},
   {q:"Particle with v=3t²-6t. Acceleration at t=2s?",opts:["0 m/s²","6 m/s²","12 m/s²","18 m/s²"],ans:1,sec:"Physics",marks:3},
   {q:"Time complexity of binary search?",opts:["O(n)","O(n²)","O(log n)","O(n log n)"],ans:2,sec:"Computers",marks:3},
   {q:"Hybridisation of carbon in CH4?",opts:["sp","sp²","sp³","sp³d"],ans:2,sec:"Chemistry",marks:3},
   {q:"Determinant of [[3,1],[5,2]] = ?",opts:["1","2","11","16"],ans:0,sec:"Maths",marks:3},
-  // JEE LEVEL (4 marks each) - 5 questions
+  {q:"If f(x) = 3x² + 2x + 1, find f'(2).",opts:["12","14","16","18"],ans:1,sec:"Maths",marks:3},
+  {q:"Escape velocity from Earth's surface is approximately:",opts:["11.2 km/s","9.8 km/s","7.9 km/s","42 km/s"],ans:0,sec:"Physics",marks:3},
+  {q:"Which protocol is used to securely transfer web pages?",opts:["HTTP","FTP","HTTPS","SMTP"],ans:2,sec:"Computers",marks:3},
+  {q:"The molecular formula of Benzene is:",opts:["C6H12","C6H6","C5H5","C6H5"],ans:1,sec:"Chemistry",marks:3},
+  {q:"If a coin is tossed twice, probability of getting at least one head is:",opts:["1/4","1/2","3/4","1"],ans:2,sec:"Maths",marks:3},
+  // JEE LEVEL (4 marks each) - 10 questions
   {q:"Ball thrown upward at 20 m/s (g=10). Max height?",opts:["10 m","15 m","20 m","25 m"],ans:2,sec:"Physics",marks:4},
   {q:"∫(2x+3)dx from 0 to 2 = ?",opts:["8","10","12","14"],ans:1,sec:"Maths",marks:4},
   {q:"pH of 0.01 M HCl solution?",opts:["1","2","3","4"],ans:1,sec:"Chemistry",marks:4},
   {q:"Rank of matrix [[1,2,3],[4,5,6],[7,8,9]] = ?",opts:["1","2","3","0"],ans:1,sec:"Maths",marks:4},
-  {q:"Photon energy with λ=600nm (h=6.626×10⁻³⁴ Js, c=3×10⁸ m/s) ≈",opts:["2.07 eV","3.1 eV","1.5 eV","4.2 eV"],ans:0,sec:"Physics",marks:4}
+  {q:"Photon energy with λ=600nm (h=6.626×10⁻³⁴ Js, c=3×10⁸ m/s) ≈",opts:["2.07 eV","3.1 eV","1.5 eV","4.2 eV"],ans:0,sec:"Physics",marks:4},
+  {q:"The limit of (sin x)/x as x approaches 0 is:",opts:["0","1","undefined","infinity"],ans:1,sec:"Maths",marks:4},
+  {q:"An object has work function of 2.0 eV. If light of 3.0 eV strikes it, stopping potential is:",opts:["1.0 V","2.0 V","3.0 V","5.0 V"],ans:0,sec:"Physics",marks:4},
+  {q:"Number of nodes in a complete binary tree of height h is:",opts:["2^h","2^(h+1) - 1","2^h - 1","2^(h-1)"],ans:1,sec:"Computers",marks:4},
+  {q:"Which of the following has the highest electronegativity?",opts:["Oxygen","Fluorine","Chlorine","Nitrogen"],ans:1,sec:"Chemistry",marks:4},
+  {q:"The distance of point (1, 2) from the line 3x + 4y - 6 = 0 is:",opts:["1","2","3","4"],ans:0,sec:"Maths",marks:4}
 ],
 "BBA": [
-  // EASY (1 mark each) - 10 questions
+  // EASY (1 mark each) - 15 questions
   {q:"Full form of CEO?",opts:["Chief Executive Officer","Central Executive Officer","Chief External Officer","Corporate Executive Officer"],ans:0,sec:"Business",marks:1},
   {q:"Profit = Revenue minus?",opts:["Sales","Expenses","Taxes","Investment"],ans:1,sec:"Accounts",marks:1},
   {q:"Which records all daily transactions?",opts:["Ledger","Journal","Trial Balance","Balance Sheet"],ans:1,sec:"Accounts",marks:1},
@@ -47,7 +67,12 @@ export const QB = {
   {q:"The CEO __ the report yesterday.",opts:["submit","submits","submitted","submitting"],ans:2,sec:"English",marks:1},
   {q:"GST stands for:",opts:["General Sales Tax","Goods and Services Tax","Government Supply Tax","General Supply Tax"],ans:1,sec:"GK",marks:1},
   {q:"Largest stock exchange in India?",opts:["NSE","BSE","MSE","CSE"],ans:1,sec:"Finance",marks:1},
-  // MEDIUM (2 marks each) - 10 questions
+  {q:"First central bank in the world was established in which country?",opts:["USA","UK","Sweden","India"],ans:2,sec:"Finance",marks:1},
+  {q:"Who is known as the father of scientific management?",opts:["Peter Drucker","F.W. Taylor","Henry Fayol","Max Weber"],ans:1,sec:"Management",marks:1},
+  {q:"Which of the following is a direct tax?",opts:["GST","Excise Duty","Income Tax","Customs Duty"],ans:2,sec:"Economics",marks:1},
+  {q:"In English, the plural of 'child' is:",opts:["Childs","Children","Childrens","Childes"],ans:1,sec:"English",marks:1},
+  {q:"What is the currency of United Kingdom?",opts:["Euro","Dollar","Pound","Yen"],ans:2,sec:"GK",marks:1},
+  // MEDIUM (2 marks each) - 15 questions
   {q:"GDP stands for:",opts:["Gross Domestic Product","General Domestic Production","Gross Development Plan","Global Demand Price"],ans:0,sec:"Economics",marks:2},
   {q:"Break-Even Point is where:",opts:["Revenue > Cost","Revenue = Cost","Revenue < Cost","Profit is maximum"],ans:1,sec:"Accounts",marks:2},
   {q:"Cheque valid for how many months from issue?",opts:["1","3","6","12"],ans:1,sec:"Finance",marks:2},
@@ -58,20 +83,36 @@ export const QB = {
   {q:"PESTLE analysis T stands for:",opts:["Trade","Technological","Time","Tax"],ans:1,sec:"Strategy",marks:2},
   {q:"Which ratio measures short-term liquidity?",opts:["Debt-equity ratio","Current ratio","P/E ratio","ROE"],ans:1,sec:"Finance",marks:2},
   {q:"BCG Matrix was created by:",opts:["McKinsey","Boston Consulting Group","Harvard","Bain & Co"],ans:1,sec:"Strategy",marks:2},
-  // HARD (3 marks each) - 5 questions
+  {q:"Under inflation, purchasing power of money:",opts:["Increases","Decreases","Stays constant","Fluctuates rapidly"],ans:1,sec:"Economics",marks:2},
+  {q:"Fayol's principles of management are how many in number?",opts:["10","12","14","16"],ans:2,sec:"Management",marks:2},
+  {q:"Debit the receiver, credit the giver is rule of:",opts:["Real Account","Personal Account","Nominal Account","Impersonal Account"],ans:1,sec:"Accounts",marks:2},
+  {q:"What is 15% of 1200?",opts:["150","180","200","220"],ans:1,sec:"Maths",marks:2},
+  {q:"Which P of marketing mix is concerned with distribution channels?",opts:["Product","Price","Place","Promotion"],ans:2,sec:"Marketing",marks:2},
+  // HARD (3 marks each) - 10 questions
   {q:"Revenue=Rs.8L, Total Cost=Rs.5.5L. Gross Profit Margin?",opts:["25.5%","31.25%","28%","33%"],ans:1,sec:"Accounts",marks:3},
   {q:"Hawthorne Effect: productivity increases when workers are:",opts:["Paid more","Given more breaks","Being observed","Given better workplace"],ans:2,sec:"HR",marks:3},
   {q:"Modigliani-Miller: capital structure irrelevant when:",opts:["Markets are perfect","Taxes exist","Bankruptcy costs exist","Information asymmetry"],ans:0,sec:"Finance",marks:3},
   {q:"In perfectly competitive market, firm's demand curve is:",opts:["Downward sloping","Upward sloping","Perfectly elastic (horizontal)","Perfectly inelastic"],ans:2,sec:"Economics",marks:3},
   {q:"EBITDA = Earnings before Interest, Tax, Depreciation and:",opts:["Amortization","Assets","Administration","Accumulation"],ans:0,sec:"Finance",marks:3},
-  // JEE LEVEL (4 marks each) - 5 questions
+  {q:"The process of dividing a potential market into distinct groups is:",opts:["Positioning","Targeting","Segmentation","Branding"],ans:2,sec:"Marketing",marks:3},
+  {q:"Which represents a high market growth and high market share product in BCG Matrix?",opts:["Cash Cow","Star","Question Mark","Dog"],ans:1,sec:"Strategy",marks:3},
+  {q:"If assets are Rs.5,00,000 and liabilities are Rs.2,00,000, what is owner's equity?",opts:["Rs.7,00,000","Rs.3,00,000","Rs.5,00,000","Rs.2,00,000"],ans:1,sec:"Accounts",marks:3},
+  {q:"Which curve shows the relationship between unemployment and inflation?",opts:["Phillips Curve","Laffer Curve","Lorenz Curve","Engel Curve"],ans:0,sec:"Economics",marks:3},
+  {q:"What is the average of first 50 natural numbers?",opts:["25","25.5","26","26.5"],ans:1,sec:"Maths",marks:3},
+  // ADVANCED LEVEL (4 marks each) - 10 questions
   {q:"Fixed costs Rs.1L, variable cost/unit Rs.40, price Rs.60. Break-even units?",opts:["3,000","4,000","5,000","6,000"],ans:2,sec:"Accounts",marks:4},
   {q:"PED=-2, price increases 5%. Quantity demanded changes by?",opts:["-5%","-10%","-15%","-20%"],ans:1,sec:"Economics",marks:4},
   {q:"NPV = PV of inflows minus?",opts:["Depreciation","Initial investment","Operating cost","Tax"],ans:1,sec:"Finance",marks:4},
   {q:"In Black-Scholes, increasing volatility σ generally:",opts:["Decreases call price","Increases call price","Has no effect","Decreases put price"],ans:1,sec:"Finance",marks:4},
-  {q:"Contribution Margin Ratio = 1 - (Variable Cost / ?)",opts:["Fixed Cost","Total Cost","Revenue","Operating Profit"],ans:2,sec:"Accounts",marks:4}
+  {q:"Contribution Margin Ratio = 1 - (Variable Cost / ?)",opts:["Fixed Cost","Total Cost","Revenue","Operating Profit"],ans:2,sec:"Accounts",marks:4},
+  {q:"If current ratio is 2.5:1 and current liabilities are Rs.40,000, what is current assets?",opts:["Rs.1,00,000","Rs.16,000","Rs.80,000","Rs.50,000"],ans:0,sec:"Finance",marks:4},
+  {q:"In oligopoly, kinked demand curve explains:",opts:["Price rigidity","Collusion","Product differentiation","Barriers to entry"],ans:0,sec:"Economics",marks:4},
+  {q:"Double entry system was introduced by:",opts:["Luca Pacioli","Adam Smith","Alfred Marshall","F.W. Taylor"],ans:0,sec:"Accounts",marks:4},
+  {q:"What is the future value of Rs.1,00,000 invested for 2 years at 10% compound interest?",opts:["Rs.1,20,000","Rs.1,21,000","Rs.1,10,000","Rs.1,25,000"],ans:1,sec:"Finance",marks:4},
+  {q:"Theory X and Theory Y of motivation was proposed by:",opts:["Abraham Maslow","Douglas McGregor","Frederick Herzberg","David McClelland"],ans:1,sec:"Management",marks:4}
 ],
 "MBA": [
+  // EASY (1 mark each) - 15 questions
   {q:"Management primarily involves:",opts:["Only finance","Planning, Organizing, Leading, Controlling","Only marketing","Only production"],ans:1,sec:"Management",marks:1},
   {q:"HRM stands for:",opts:["Human Resource Management","High Revenue Model","Human Restructuring Method","Hybrid Resource Management"],ans:0,sec:"HR",marks:1},
   {q:"GST in India replaced which tax?",opts:["Income tax","Multiple indirect taxes","Corporate tax","Capital gains tax"],ans:1,sec:"GK",marks:1},
@@ -82,6 +123,12 @@ export const QB = {
   {q:"The manager __ the report last week.",opts:["submits","submitted","will submit","submitting"],ans:1,sec:"English",marks:1},
   {q:"Marketing Mix has how many Ps?",opts:["2","3","4","5"],ans:2,sec:"Marketing",marks:1},
   {q:"RBI regulates:",opts:["Stock markets","Banks and monetary policy","Insurance sector","Import-export"],ans:1,sec:"Finance",marks:1},
+  {q:"What is the primary goal of financial management?",opts:["Profit maximization","Wealth maximization","Sales maximization","Cost minimization"],ans:1,sec:"Finance",marks:1},
+  {q:"In marketing, the acronym CRM stands for:",opts:["Customer Relationship Management","Customer Retention Model","Corporate Resource Management","None"],ans:0,sec:"Marketing",marks:1},
+  {q:"Who is known as the father of modern management?",opts:["Peter Drucker","F.W. Taylor","Henry Fayol","Elton Mayo"],ans:0,sec:"Management",marks:1},
+  {q:"The word 'Aesthetic' is related to:",opts:["Sound","Beauty","Movement","Weight"],ans:1,sec:"English",marks:1},
+  {q:"World Bank headquarters is located in:",opts:["Geneva","New York","Washington D.C.","London"],ans:2,sec:"GK",marks:1},
+  // MEDIUM (2 marks each) - 15 questions
   {q:"SWOT: Strengths, Weaknesses, Opportunities, and?",opts:["Tactics","Threats","Trends","Technology"],ans:1,sec:"Strategy",marks:2},
   {q:"Blue Ocean Strategy involves:",opts:["Competing in existing markets","Creating uncontested market space","Price cutting","Imitating competitors"],ans:1,sec:"Strategy",marks:2},
   {q:"ROE = Net Income ÷ Shareholders' Equity × 100. If Net Income=Rs.5L and Equity=Rs.25L, ROE=?",opts:["10%","15%","20%","25%"],ans:2,sec:"Finance",marks:2},
@@ -92,18 +139,36 @@ export const QB = {
   {q:"Top level of Maslow's hierarchy?",opts:["Safety","Love","Esteem","Self-Actualization"],ans:3,sec:"HR",marks:2},
   {q:"Porter's Generic Strategies do NOT include:",opts:["Cost Leadership","Differentiation","Focus","Diversification"],ans:3,sec:"Strategy",marks:2},
   {q:"EBITDA excludes all EXCEPT:",opts:["Interest","Tax","Depreciation","Revenue"],ans:3,sec:"Finance",marks:2},
+  {q:"Which of the following is NOT an intangible asset?",opts:["Goodwill","Patent","Machinery","Trademark"],ans:2,sec:"Accounts",marks:2},
+  {q:"Herzberg's two-factor theory divides factors into Hygiene factors and:",opts:["Motivators","Satisfiers","Social factors","Safety factors"],ans:0,sec:"HR",marks:2},
+  {q:"What is the term for a market structure with only two sellers?",opts:["Monopoly","Duopoly","Oligopoly","Monopsony"],ans:1,sec:"Economics",marks:2},
+  {q:"If sales are Rs.10,00,000 and gross profit is 25%, cost of goods sold is:",opts:["Rs.2,50,000","Rs.7,50,000","Rs.5,00,000","Rs.8,00,000"],ans:1,sec:"Accounts",marks:2},
+  {q:"First-in-first-out (FIFO) is a method of:",opts:["Inventory valuation","Quality control","Project planning","Employee recruitment"],ans:0,sec:"Operations",marks:2},
+  // HARD (3 marks each) - 10 questions
   {q:"Modigliani-Miller (perfect markets):",opts:["Debt is always better","Capital structure is irrelevant","Dividends increase value","Equity is cheaper"],ans:1,sec:"Finance",marks:3},
   {q:"Agency theory: conflict between?",opts:["Customers & suppliers","Shareholders & managers","Govt & businesses","Employees & HR"],ans:1,sec:"Finance",marks:3},
   {q:"R-squared in regression represents:",opts:["Correlation coefficient","Proportion of variance explained","Slope of line","Standard error"],ans:1,sec:"Analytics",marks:3},
   {q:"Balanced Scorecard includes ALL EXCEPT:",opts:["Financial","Customer","Internal Processes","Competitive Intelligence"],ans:3,sec:"Strategy",marks:3},
   {q:"Schumpeter's Creative Destruction means:",opts:["Destroying old factories","Innovation replacing obsolete products/firms","Breaking monopolies","Cost-cutting"],ans:1,sec:"Economics",marks:3},
+  {q:"An offering of shares to existing shareholders in proportion to their holding is called:",opts:["IPO","Right Issue","Bonus Issue","Private Placement"],ans:1,sec:"Finance",marks:3},
+  {q:"In supply chain management, JIT stands for:",opts:["Just In Time","Just In Track","Joint Inventory Tech","None"],ans:0,sec:"Operations",marks:3},
+  {q:"Under the Ansoff Matrix, introducing new products to existing markets is:",opts:["Market Penetration","Market Development","Product Development","Diversification"],ans:2,sec:"Strategy",marks:3},
+  {q:"A company has debt of Rs.6L and equity of Rs.4L. What is debt-to-total-assets ratio if assets = Rs.10L?",opts:["40%","60%","50%","30%"],ans:1,sec:"Finance",marks:3},
+  {q:"Which statistical test is used to compare means of more than two groups?",opts:["t-test","Z-test","ANOVA","Chi-Square"],ans:2,sec:"Analytics",marks:3},
+  // ADVANCED LEVEL (4 marks each) - 10 questions
   {q:"EBIT=Rs.5L, Interest=Rs.1L, Tax=30%. Net Profit?",opts:["Rs.2.4L","Rs.2.8L","Rs.3.0L","Rs.3.5L"],ans:1,sec:"Finance",marks:4},
   {q:"Debt/Equity=2, Total Equity=Rs.10L. Total Debt?",opts:["Rs.5L","Rs.10L","Rs.20L","Rs.30L"],ans:2,sec:"Finance",marks:4},
   {q:"Nash Equilibrium in Game Theory occurs when:",opts:["One player dominates","No player benefits from unilaterally changing strategy","Both cooperate","Govt intervenes"],ans:1,sec:"Economics",marks:4},
   {q:"EMH strong form states:",opts:["Only public info priced in","All public & private info priced in","Historical data predicts prices","Markets are irrational"],ans:1,sec:"Finance",marks:4},
-  {q:"CAPM: Rf=5%, β=1.2, Rm=12%. Expected Return?",opts:["11.4%","13.4%","10.4%","14.4%"],ans:1,sec:"Finance",marks:4}
+  {q:"CAPM: Rf=5%, β=1.2, Rm=12%. Expected Return?",opts:["11.4%","13.4%","10.4%","14.4%"],ans:1,sec:"Finance",marks:4},
+  {q:"In corporate finance, WACC stands for:",opts:["Weighted Average Cost of Capital","Weighted Asset Capital Cost","Weekly Average Capital Cost","None"],ans:0,sec:"Finance",marks:4},
+  {q:"If a project has NPV = 0, its IRR is:",opts:["Equal to cost of capital","Greater than cost of capital","Less than cost of capital","Zero"],ans:0,sec:"Finance",marks:4},
+  {q:"The concept of 'bounded rationality' was introduced by:",opts:["Herbert Simon","Max Weber","Chester Barnard","F.W. Taylor"],ans:0,sec:"Management",marks:4},
+  {q:"A call option has strike price of Rs.100. Stock price is Rs.120. The option is:",opts:["In the money","Out of the money","At the money","None"],ans:0,sec:"Finance",marks:4},
+  {q:"In linear programming, the area containing all feasible solutions is called:",opts:["Optimal region","Feasible region","Boundary region","None"],ans:1,sec:"Analytics",marks:4}
 ],
 "LLB": [
+  // EASY (1 mark each) - 15 questions
   {q:"Highest court in India?",opts:["High Court","District Court","Supreme Court","Lok Adalat"],ans:2,sec:"Legal Basics",marks:1},
   {q:"FIR stands for:",opts:["First Information Report","Final Investigation Report","Formal Inquiry Record","First Inquiry Report"],ans:0,sec:"Criminal Law",marks:1},
   {q:"Indian Penal Code enacted in:",opts:["1857","1860","1872","1947"],ans:1,sec:"Criminal Law",marks:1},
@@ -114,8 +179,14 @@ export const QB = {
   {q:"RTI Act was passed in:",opts:["2000","2003","2005","2007"],ans:2,sec:"Law",marks:1},
   {q:"Correct sentence:",opts:["Court has gave verdict","Court had give verdict","Court has given verdict","Court have given verdict"],ans:2,sec:"English",marks:1},
   {q:"Jurisdiction means:",opts:["Law library","Power of court to hear a case","Legal document type","Lawyer's fee"],ans:1,sec:"Legal Basics",marks:1},
+  {q:"The Chief Justice of India is appointed by:",opts:["Prime Minister","President","Parliament","Law Minister"],ans:1,sec:"Constitutional Law",marks:1},
+  {q:"Who is known as the father of Indian Constitution?",opts:["Mahatma Gandhi","Dr. B.R. Ambedkar","Jawaharlal Nehru","Sardar Patel"],ans:1,sec:"Constitutional Law",marks:1},
+  {q:"The minimum age to vote in India is:",opts:["16 years","18 years","21 years","25 years"],ans:1,sec:"GK",marks:1},
+  {q:"Which of the following is NOT a fundamental right in India?",opts:["Right to Equality","Right to Property","Right to Freedom of Speech","Right to Education"],ans:1,sec:"Constitutional Law",marks:1},
+  {q:"What is the synonym of 'Acquit'?",opts:["Convict","Exonerate","Sentence","Blame"],ans:1,sec:"English",marks:1},
+  // MEDIUM (2 marks each) - 15 questions
   {q:"Article 21 guarantees:",opts:["Right to Equality","Right to Freedom of Speech","Right to Life and Personal Liberty","Right to Education"],ans:2,sec:"Constitutional Law",marks:2},
-  {q:"Valid contract requires:",opts:["Offer only","Offer+Acceptance","Offer+Acceptance+Consideration+Competency","Written document only"],ans:2,sec:"Contract Law",marks:2},
+  {q:"Valid contract requires:",opts:["Offer only","Offer+Acceptance","Offer+Acceptance+Consider+Competent","Written document only"],ans:2,sec:"Contract Law",marks:2},
   {q:"Habeas Corpus literally means:",opts:["You have the evidence","You have the body","Produce the document","Show the cause"],ans:1,sec:"Constitutional Law",marks:2},
   {q:"Res Judicata means:",opts:["Can be tried again","Already judged cannot be re-tried","Evidence is conclusive","Judgment is final"],ans:1,sec:"Civil Law",marks:2},
   {q:"IPC Section 302 relates to:",opts:["Theft","Cheating","Murder","Defamation"],ans:2,sec:"Criminal Law",marks:2},
@@ -124,18 +195,36 @@ export const QB = {
   {q:"Consumer Protection Act 2019 complaint limit:",opts:["1 year","2 years","3 years","5 years"],ans:1,sec:"Consumer Law",marks:2},
   {q:"IPR does NOT cover:",opts:["Patents","Trademarks","Copyrights","Land ownership"],ans:3,sec:"IPR",marks:2},
   {q:"Nemo debet esse judex in propria causa means:",opts:["No one shall judge their own cause","Every man innocent until proved guilty","Evidence is king","Law is supreme"],ans:0,sec:"Legal Maxims",marks:2},
+  {q:"Under Law of Torts, negligence is:",opts:["A crime","A civil wrong","A contract breach","A constitutional violation"],ans:1,sec:"Tort Law",marks:2},
+  {q:"The age of majority in India is generally:",opts:["16 years","18 years","21 years","25 years"],ans:1,sec:"Contract Law",marks:2},
+  {q:"A contract with a minor in India is:",opts:["Voidable","Void ab initio","Valid","Enforceable"],ans:1,sec:"Contract Law",marks:2},
+  {q:"The head of state in India is:",opts:["Prime Minister","President","Chief Justice","Home Minister"],ans:1,sec:"Constitutional Law",marks:2},
+  {q:"How many fundamental duties are listed in the Indian Constitution?",opts:["10","11","12","9"],ans:1,sec:"Constitutional Law",marks:2},
+  // HARD (3 marks each) - 10 questions
   {q:"Promissory Estoppel prevents:",opts:["Making new promise","Going back on a promise relied upon by another","Entering a contract","Suing for breach"],ans:1,sec:"Contract Law",marks:3},
   {q:"Colourable Legislation means:",opts:["Colourful language","Seems within power but actually exceeds it","Favours minorities","Emergency legislation"],ans:1,sec:"Constitutional Law",marks:3},
   {q:"FEMA 1999 — foreign exchange regulated by:",opts:["SEBI","RBI","Ministry of Finance","CBI"],ans:1,sec:"Corporate Law",marks:3},
   {q:"Judicial review in India derived from:",opts:["UK Constitution","US Constitution","Indian Constitution — Articles 13 & 32","French Constitution"],ans:2,sec:"Constitutional Law",marks:3},
   {q:"Vienna Convention 1969 governs:",opts:["International trade","International treaties between states","Human rights","IP globally"],ans:1,sec:"International Law",marks:3},
+  {q:"The term 'De Jure' means:",opts:["In fact","By law","For the time being","None"],ans:1,sec:"Legal Maxims",marks:3},
+  {q:"Which amendment is known as the 'Mini Constitution' of India?",opts:["42nd Amendment","44th Amendment","86th Amendment","73rd Amendment"],ans:0,sec:"Constitutional Law",marks:3},
+  {q:"The concept of Directive Principles of State Policy is borrowed from which country?",opts:["USA","USSR","Ireland","UK"],ans:2,sec:"Constitutional Law",marks:3},
+  {q:"Defamation can be of two types: Slander and:",opts:["Libel","Assault","Battery","Trespass"],ans:0,sec:"Tort Law",marks:3},
+  {q:"Which article empowers the President to declare national emergency?",opts:["Article 352","Article 356","Article 360","Article 368"],ans:0,sec:"Constitutional Law",marks:3},
+  // ADVANCED LEVEL (4 marks each) - 10 questions
   {q:"Basic Structure doctrine established in:",opts:["A.K. Gopalan case","Kesavananda Bharati case","Maneka Gandhi case","Golaknath case"],ans:1,sec:"Constitutional Law",marks:4},
   {q:"Which writ can Supreme Court issue under Article 32? (All can be issued)",opts:["Habeas Corpus only","Mandamus only","Certiorari only","All writs can be issued"],ans:3,sec:"Constitutional Law",marks:4},
   {q:"Ubi Jus Ibi Remedium means:",opts:["Where there is a right, there is a remedy","Justice delayed is justice denied","All are equal before law","No crime without law"],ans:0,sec:"Legal Maxims",marks:4},
   {q:"Privacy as Fundamental Right established in:",opts:["M.C. Mehta case","Justice K.S. Puttaswamy case","ADM Jabalpur case","Maneka Gandhi case"],ans:1,sec:"Constitutional Law",marks:4},
-  {q:"IPC Section for attempt to commit offence?",opts:["Section 302","Section 307","Section 376","Section 420"],ans:1,sec:"Criminal Law",marks:4}
+  {q:"IPC Section for attempt to commit offence?",opts:["Section 302","Section 307","Section 376","Section 420"],ans:1,sec:"Criminal Law",marks:4},
+  {q:"The doctrine of 'Pleasure' is contained in which Article of Indian Constitution?",opts:["Article 310","Article 311","Article 312","Article 309"],ans:0,sec:"Constitutional Law",marks:4},
+  {q:"The 'Rule against Perpetuity' is defined in which section of Transfer of Property Act?",opts:["Section 14","Section 13","Section 15","Section 18"],ans:0,sec:"Property Law",marks:4},
+  {q:"The term 'Audi Alteram Partem' is a rule of:",opts:["Criminal Law","Natural Justice","Contract Law","International Law"],ans:1,sec:"Legal Maxims",marks:4},
+  {q:"The doctrine of 'Stare Decisis' relates to:",opts:["Statutory interpretation","Precedents","Delegated legislation","Writs"],ans:1,sec:"Legal Basics",marks:4},
+  {q:"Which case established the doctrine of 'Absolute Liability' in India?",opts:["Rylands v. Fletcher","M.C. Mehta v. Union of India","Donoghue v. Stevenson","State of Rajasthan v. Vidyawati"],ans:1,sec:"Tort Law",marks:4}
 ],
 "B.Pharma": [
+  // EASY (1 mark each) - 15 questions
   {q:"Pharmacology is study of:",opts:["Food","Drugs and their effects","Surgery","Diseases only"],ans:1,sec:"Basics",marks:1},
   {q:"Main function of kidney?",opts:["Pumping blood","Filtering waste from blood","Digesting food","Producing insulin"],ans:1,sec:"Anatomy",marks:1},
   {q:"Penicillin is a type of:",opts:["Antiviral","Analgesic","Antibiotic","Antifungal"],ans:2,sec:"Pharmacology",marks:1},
@@ -146,6 +235,12 @@ export const QB = {
   {q:"DNA stands for:",opts:["Deoxyribonucleic Acid","Diribonucleic Acid","Deoxyribonuclear Acid","None"],ans:0,sec:"Biology",marks:1},
   {q:"Correct spelling:",opts:["Presciption","Prescription","Priscription","Prescreption"],ans:1,sec:"English",marks:1},
   {q:"DCGI stands for:",opts:["Drug Controller General of India","Drug Central Governing Institution","Department of Clinical & General Investigation","None"],ans:0,sec:"GK",marks:1},
+  {q:"Which organ is responsible for producing bile?",opts:["Stomach","Liver","Pancreas","Gallbladder"],ans:1,sec:"Anatomy",marks:1},
+  {q:"The main source of Vitamin C is:",opts:["Milk","Citrus fruits","Egg","Meat"],ans:1,sec:"Biochemistry",marks:1},
+  {q:"The normal range of pH for blood is:",opts:["6.5 - 7.0","7.35 - 7.45","7.8 - 8.2","5.5 - 6.5"],ans:1,sec:"Physiology",marks:1},
+  {q:"Which of the following is a primary lymphoid organ?",opts:["Spleen","Thymus","Lymph Node","Tonsils"],ans:1,sec:"Anatomy",marks:1},
+  {q:"Synonym of 'Chronic' is:",opts:["Temporary","Persistent","Acute","Mild"],ans:1,sec:"English",marks:1},
+  // MEDIUM (2 marks each) - 15 questions
   {q:"Drug half-life: time to reduce plasma concentration by?",opts:["25%","50%","75%","100%"],ans:1,sec:"Pharmacokinetics",marks:2},
   {q:"NSAIDs work by inhibiting:",opts:["ACE","COX","MAO","Cholinesterase"],ans:1,sec:"Pharmacology",marks:2},
   {q:"Bioavailability of IV drug is:",opts:["50%","75%","90%","100%"],ans:3,sec:"Pharmacokinetics",marks:2},
@@ -156,18 +251,36 @@ export const QB = {
   {q:"Normal fasting blood glucose?",opts:["50-70 mg/dL","70-100 mg/dL","120-150 mg/dL","150-200 mg/dL"],ans:1,sec:"Biochemistry",marks:2},
   {q:"Warfarin inhibits:",opts:["Thrombin directly","Vitamin K-dependent clotting factors","Platelet aggregation","Fibrinogen"],ans:1,sec:"Pharmacology",marks:2},
   {q:"Therapeutic Index TI = TD50 / ?",opts:["LD50","ED50","ID50","BD50"],ans:1,sec:"Pharmacology",marks:2},
+  {q:"The first-pass metabolism of a drug occurs mainly in the:",opts:["Kidney","Liver","Stomach","Lungs"],ans:1,sec:"Pharmacokinetics",marks:2},
+  {q:"Which of the following is a H2 receptor antagonist?",opts:["Omeprazole","Ranitidine","Metoclopramide","Domperidone"],ans:1,sec:"Pharmacology",marks:2},
+  {q:"The standard unit of volume in metric system is:",opts:["Gram","Litre","Metre","Kilogram"],ans:1,sec:"Basics",marks:2},
+  {q:"Insulin is secreted by which cells of the pancreas?",opts:["Alpha cells","Beta cells","Delta cells","F cells"],ans:1,sec:"Physiology",marks:2},
+  {q:"A drug that increases the rate of urine flow is called a:",opts:["Antidiuretic","Diuretic","Analgesic","Antipyretic"],ans:1,sec:"Pharmacology",marks:2},
+  // HARD (3 marks each) - 10 questions
   {q:"Competitive antagonism overcome by:",opts:["Removing antagonist","Increasing agonist concentration","Decreasing agonist","Blocking receptor permanently"],ans:1,sec:"Pharmacology",marks:3},
   {q:"Vd = Amount in body / ?",opts:["Rate of elimination","Plasma drug concentration","Protein binding fraction","Bioavailability"],ans:1,sec:"Pharmacokinetics",marks:3},
   {q:"pH = pKa + log([A⁻]/[HA]). pKa=4.8, [A⁻]/[HA]=10. pH?",opts:["4.8","5.8","3.8","6.8"],ans:1,sec:"Biochemistry",marks:3},
   {q:"A prodrug is:",opts:["Active on administration","Inactive until metabolised to active form","No side effects","Cannot cross BBB"],ans:1,sec:"Pharmacology",marks:3},
   {q:"CYP2D6 poor metabolisers show:",opts:["Reduced toxicity","Increased toxicity at normal doses","No change","Faster clearance"],ans:1,sec:"Pharmacogenomics",marks:3},
+  {q:"The mechanism of action of Sulfonamides is inhibition of:",opts:["Cell wall synthesis","Dihydropteroate synthase","Protein synthesis","DNA gyrase"],ans:1,sec:"Pharmacology",marks:3},
+  {q:"Which of the following is a natural polymer used in pharmacy?",opts:["Gelatin","Nylon","PVP","PEG"],ans:0,sec:"Pharmaceutics",marks:3},
+  {q:"The rate of drug dissolution is described by:",opts:["Fick's Law","Noyes-Whitney Equation","Henderson-Hasselbalch Equation","Michaelis-Menten Equation"],ans:1,sec:"Pharmaceutics",marks:3},
+  {q:"Which schedule of Drugs and Cosmetics Act governs clinical trials in India?",opts:["Schedule M","Schedule Y","Schedule H","Schedule X"],ans:1,sec:"Jurisprudence",marks:3},
+  {q:"What is the concentration of normal saline?",opts:["0.9% w/v","9.0% w/v","0.09% w/v","5.0% w/v"],ans:0,sec:"Pharmaceutics",marks:3},
+  // ADVANCED LEVEL (4 marks each) - 10 questions
   {q:"Michaelis-Menten: when [S] >> Km, reaction order is:",opts:["Zero-order","First-order","Second-order","Mixed-order"],ans:0,sec:"Pharmacokinetics",marks:4},
   {q:"Drug with t½=6h. After 24 hours, fraction remaining?",opts:["1/2","1/4","1/8","1/16"],ans:3,sec:"Pharmacokinetics",marks:4},
   {q:"Inverse agonist at receptor level:",opts:["Activates like full agonist","Blocks without activity","Produces opposite effect to agonist","Only active at high concentration"],ans:2,sec:"Pharmacology",marks:4},
   {q:"Loading dose = Vd × ?",opts:["Half-life","Desired plasma concentration","Bioavailability","Clearance"],ans:1,sec:"Pharmacokinetics",marks:4},
-  {q:"CYP2C19 ultrarapid metaboliser shows:",opts:["Drug toxicity at normal doses","Sub-therapeutic levels at normal doses","No change","Slower clearance"],ans:1,sec:"Pharmacogenomics",marks:4}
+  {q:"CYP2C19 ultrarapid metaboliser shows:",opts:["Drug toxicity at normal doses","Sub-therapeutic levels at normal doses","No change","Slower clearance"],ans:1,sec:"Pharmacogenomics",marks:4},
+  {q:"The HLB value of an emulsifying agent for W/O emulsion is:",opts:["3 - 6","8 - 16","16 - 18","0 - 3"],ans:0,sec:"Pharmaceutics",marks:4},
+  {q:"A dry solid that absorbs moisture from the atmosphere to form a solution is:",opts:["Efflorescent","Deliquescent","Hygroscopic","Anhydrous"],ans:1,sec:"Pharmaceutics",marks:4},
+  {q:"Which equation describes the relationship between pH and pKa of a weak acid?",opts:["Henderson-Hasselbalch","Noyes-Whitney","Arrhenius","Michaelis-Menten"],ans:0,sec:"Biochemistry",marks:4},
+  {q:"The primary mechanism of action of Local Anesthetics is blockade of:",opts:["Calcium channels","Sodium channels","Potassium channels","Chloride channels"],ans:1,sec:"Pharmacology",marks:4},
+  {q:"A standard container of Type I glass is highly resistant to:",opts:["Water attack","Alkali attack","Acid attack","Thermal shock"],ans:0,sec:"Pharmaceutics",marks:4}
 ],
 "default": [
+  // EASY (1 mark each) - 15 questions
   {q:"What is 5 × 12?",opts:["55","60","65","70"],ans:1,sec:"Maths",marks:1},
   {q:"Largest ocean?",opts:["Atlantic","Indian","Arctic","Pacific"],ans:3,sec:"GK",marks:1},
   {q:"Days in a leap year?",opts:["360","365","366","367"],ans:2,sec:"General",marks:1},
@@ -178,6 +291,12 @@ export const QB = {
   {q:"Correct spelling:",opts:["Recieve","Receive","Receve","Receeve"],ans:1,sec:"English",marks:1},
   {q:"1 kilogram = ? grams",opts:["10","100","1000","10000"],ans:2,sec:"General",marks:1},
   {q:"Sun rises in the:",opts:["West","North","East","South"],ans:2,sec:"GK",marks:1},
+  {q:"What is 25 × 4?",opts:["80","90","100","110"],ans:2,sec:"Maths",marks:1},
+  {q:"Which planet is known as the Red Planet?",opts:["Venus","Mars","Jupiter","Saturn"],ans:1,sec:"GK",marks:1},
+  {q:"The primary source of energy on Earth is:",opts:["Electricity","Wind","Sun","Coal"],ans:2,sec:"Science",marks:1},
+  {q:"What is the opposite of 'Stout'?",opts:["Heavy","Thin","Strong","Fat"],ans:1,sec:"English",marks:1},
+  {q:"Which is the national animal of India?",opts:["Lion","Tiger","Elephant","Peacock"],ans:1,sec:"GK",marks:1},
+  // MEDIUM (2 marks each) - 15 questions
   {q:"20% off on Rs.500. Final price?",opts:["Rs.380","Rs.400","Rs.420","Rs.450"],ans:1,sec:"Maths",marks:2},
   {q:"Series: 2, 6, 18, 54, ?",opts:["108","162","216","270"],ans:1,sec:"Reasoning",marks:2},
   {q:"Antonym of Abundant?",opts:["Plentiful","Scarce","Rich","Ample"],ans:1,sec:"English",marks:2},
@@ -188,16 +307,33 @@ export const QB = {
   {q:"Odd one out: 64, 125, 216, 343, 400",opts:["64","125","400","343"],ans:2,sec:"Reasoning",marks:2},
   {q:"India's HDI 2023 approximate rank?",opts:["100","120","132","150"],ans:2,sec:"GK",marks:2},
   {q:"Log₂(64) = ?",opts:["4","5","6","7"],ans:2,sec:"Maths",marks:2},
+  {q:"If 3x - 7 = 14, find x.",opts:["6","7","8","9"],ans:1,sec:"Maths",marks:2},
+  {q:"Which state is known as the Spice Garden of India?",opts:["Karnataka","Kerala","Tamil Nadu","Andhra Pradesh"],ans:1,sec:"GK",marks:2},
+  {q:"Series: 1, 4, 9, 16, 25, ?",opts:["30","32","36","40"],ans:2,sec:"Reasoning",marks:2},
+  {q:"In which year did India win its first Cricket World Cup?",opts:["1983","1975","2011","1999"],ans:0,sec:"GK",marks:2},
+  {q:"Which organ purifies blood in the human body?",opts:["Heart","Lungs","Kidneys","Liver"],ans:2,sec:"Science",marks:2},
+  // HARD (3 marks each) - 10 questions
   {q:"P(A)=0.4, P(B)=0.3, independent. P(A∩B)?",opts:["0.7","0.12","0.1","0.04"],ans:1,sec:"Maths",marks:3},
   {q:"Train 300m long crosses 200m bridge in 25s. Speed?",opts:["18 m/s","20 m/s","22 m/s","25 m/s"],ans:1,sec:"Maths",marks:3},
   {q:"Log(x²) = ?",opts:["log(x)/2","2×log(x)","log(2x)","log(x+2)"],ans:1,sec:"Maths",marks:3},
   {q:"Article abolishing untouchability?",opts:["Article 14","Article 15","Article 17","Article 19"],ans:2,sec:"GK",marks:3},
   {q:"Quantum computing uses:",opts:["Only 0s","Only 1s","Qubits (0,1 or both)","Analog signals"],ans:2,sec:"Tech",marks:3},
+  {q:"The compound interest on Rs.10,000 for 2 years at 10% per annum is:",opts:["Rs.2,000","Rs.2,100","Rs.1,00,000","Rs.2,200"],ans:1,sec:"Maths",marks:3},
+  {q:"Which is the largest fresh water lake in India?",opts:["Wular Lake","Chilika Lake","Dal Lake","Vembanad Lake"],ans:0,sec:"GK",marks:3},
+  {q:"Synonym of 'Pragmatic' is:",opts:["Unrealistic","Practical","Idealistic","Vague"],ans:1,sec:"English",marks:3},
+  {q:"If A and B are two sets such that n(A)=15, n(B)=20, and n(A∩B)=5, find n(A∪B).",opts:["30","35","40","25"],ans:0,sec:"Maths",marks:3},
+  {q:"Who wrote the national anthem of India?",opts:["Bankim Chandra Chattopadhyay","Rabindranath Tagore","Sarojini Naidu","Sri Aurobindo"],ans:1,sec:"GK",marks:3},
+  // ADVANCED LEVEL (4 marks each) - 10 questions
   {q:"∫₀²(3x²+2x)dx = ?",opts:["10","12","14","16"],ans:1,sec:"Maths",marks:4},
   {q:"Projectile at 45°, speed 20 m/s (g=10). Range?",opts:["20 m","30 m","40 m","50 m"],ans:2,sec:"Physics",marks:4},
   {q:"pH of 0.001 M NaOH?",opts:["3","11","10","12"],ans:1,sec:"Chemistry",marks:4},
   {q:"Eigenvalues of [[2,1],[0,3]]?",opts:["1 and 2","2 and 3","1 and 3","0 and 5"],ans:1,sec:"Maths",marks:4},
-  {q:"Energy of electron in nth Bohr orbit ∝",opts:["n","n²","1/n","1/n²"],ans:3,sec:"Physics",marks:4}
+  {q:"Energy of electron in nth Bohr orbit ∝",opts:["n","n²","1/n","1/n²"],ans:3,sec:"Physics",marks:4},
+  {q:"A car travels at 60 km/h for first half of distance and 40 km/h for second half. Average speed?",opts:["50 km/h","48 km/h","45 km/h","52 km/h"],ans:1,sec:"Maths",marks:4},
+  {q:"In which part of Indian Constitution are Fundamental Rights detailed?",opts:["Part II","Part III","Part IV","Part IX"],ans:1,sec:"GK",marks:4},
+  {q:"If log x + log y = log(x + y), then:",opts:["y = x/(x-1)","y = x/(1-x)","y = (x-1)/x","y = x/(x+1)"],ans:0,sec:"Maths",marks:4},
+  {q:"Which gas is most abundant in Earth's atmosphere?",opts:["Oxygen","Nitrogen","Carbon dioxide","Argon"],ans:1,sec:"Science",marks:4},
+  {q:"If a card is drawn from a well-shuffled deck of 52 cards, probability that it is a red face card is:",opts:["3/13","3/26","6/13","1/26"],ans:1,sec:"Maths",marks:4}
 ]
 };
 
