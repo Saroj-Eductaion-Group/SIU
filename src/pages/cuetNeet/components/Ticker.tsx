@@ -2,14 +2,14 @@ import { motion } from "framer-motion";
 
 const TICKER_ITEMS = [
   "🏆 SIUAT 2026-27 registrations OPEN — Only 500 seats! Register now",
-  "✏ New CUET mock added: Biology Genetics & Biotech Full Mock 2026",
-  "🥇 Rahul Sharma, Lucknow — CUET Physics mock score: 98/100",
+  "✏ New NEET mock added: Biology Genetics & Evolution Full Mock 2026",
+  "🥇 Rahul Sharma, Lucknow — NEET Physics mock score: 178/180",
   "💰 Win ₹51,000 merit award — appear in SIUAT Talent Hunt 2026",
-  "📢 CUET UG 2026 city allotment: 96.6% candidates got preferred city",
+  "📢 NEET UG 2026 city allotment: 98.4% candidates got preferred city",
   "🤖 AI Mentor now supports Hindi · Hinglish queries",
-  "🎓 SIU Lucknow admissions open for B.Tech, B.Pharma & 40+ courses",
+  "🎓 SIU Lucknow admissions open for B.Pharma, Pre-Medical & 40+ courses",
   "📊 Over 2.4 lakh students now on AdmissionX — join the community!",
-  "✨ CUET 2026 exam dates announced: May 14–30, 2026",
+  "✨ NEET 2026 exam dates announced: May 3, 2026",
 ];
 
 export function Ticker() {

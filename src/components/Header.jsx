@@ -451,11 +451,11 @@ function Header() {
                   )}
                 </li>
               ))}
-              {/* CUET/NEET Talent Hunt Button - Mobile */}
+              {/* NEET Talent Hunt Button - Mobile */}
               <li className='mt-2'>
-                <a href='/cuet-neet-talent-hunt'>
+                <a href='/neet-talent-hunt'>
                   <button className='w-full bg-green-600 hover:bg-green-700 text-white font-semibold px-6 py-3 rounded-md transition duration-300 flex items-center justify-center gap-2'>
-                    📚 CUET/NEET Talent Hunt
+                    📚 NEET Talent Hunt
                   </button>
                 </a>
               </li>

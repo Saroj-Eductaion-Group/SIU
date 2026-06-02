@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useLocalStorage } from "../hooks/use-local-storage";
 import {
-  CUET_LANGUAGES, CUET_TEST_CITIES,
+  CUET_TEST_CITIES,
   CUETRegistration,
 } from "../lib/data";
 
@@ -21,7 +21,7 @@ function InputField({ label, k, value, onChange, type = "text", placeholder = ""
       <label className="block text-xs font-semibold text-gray-700 mb-1">{label}{required && <span className="text-red-500 ml-0.5">*</span>}</label>
       <input type={type} value={value} onChange={e => onChange(e.target.value)} placeholder={placeholder}
         className="w-full px-3 py-2.5 border rounded-lg text-sm focus:outline-none transition"
-        style={{ borderColor: error ? "#dc2626" : "#e5e7eb" }} data-testid={`cuet-input-${k}`} />
+        style={{ borderColor: error ? "#dc2626" : "#e5e7eb" }} data-testid={`neet-input-${k}`} />
       {error && <p className="text-red-500 text-xs mt-0.5">{error}</p>}
     </div>
   );
@@ -33,7 +33,7 @@ function SelectField({ label, k, value, onChange, opts, required = true, error }
       <label className="block text-xs font-semibold text-gray-700 mb-1">{label}{required && <span className="text-red-500 ml-0.5">*</span>}</label>
       <select value={value} onChange={e => onChange(e.target.value)}
         className="w-full px-3 py-2.5 border rounded-lg text-sm bg-white focus:outline-none"
-        style={{ borderColor: error ? "#dc2626" : "#e5e7eb" }} data-testid={`cuet-select-${k}`}>
+        style={{ borderColor: error ? "#dc2626" : "#e5e7eb" }} data-testid={`neet-select-${k}`}>
         <option value="">-- Select --</option>
         {opts.map(o => <option key={o}>{o}</option>)}
       </select>
@@ -43,7 +43,7 @@ function SelectField({ label, k, value, onChange, opts, required = true, error }
 }
 
 /* ─── Welcome Banner shown after login ─── */
-export function CuetWelcomeBanner({ candidate, onLogout }: { candidate: CUETRegistration; onLogout: () => void }) {
+export function NeetWelcomeBanner({ candidate, onLogout }: { candidate: CUETRegistration; onLogout: () => void }) {
   const [expanded, setExpanded] = useState(false);
   return (
     <div className="rounded-xl mb-4 overflow-hidden border" style={{ borderColor: "#c9a84c" }}>
@@ -58,7 +58,7 @@ export function CuetWelcomeBanner({ candidate, onLogout }: { candidate: CUETRegi
         <div className="flex items-center gap-2">
           <span className="text-[10px] px-2 py-0.5 rounded-full font-bold text-[#064e3b] bg-[#c9a84c]">✓ NEET Registered</span>
           <button onClick={() => setExpanded(e => !e)} className="text-white/40 hover:text-white/80 text-xs px-2">{expanded ? "▲" : "▼"}</button>
-          <button onClick={onLogout} data-testid="cuet-logout" className="text-[11px] font-semibold px-2.5 py-1 rounded-lg border border-white/20 text-white/60 hover:text-white/90 transition">Logout</button>
+          <button onClick={onLogout} data-testid="neet-logout" className="text-[11px] font-semibold px-2.5 py-1 rounded-lg border border-white/20 text-white/60 hover:text-white/90 transition">Logout</button>
         </div>
       </div>
       {expanded && (
@@ -74,13 +74,13 @@ export function CuetWelcomeBanner({ candidate, onLogout }: { candidate: CUETRegi
 }
 
 /* ─── Auth / Registration Gate ─── */
-interface CuetAuthProps {
+interface NeetAuthProps {
   onLogin: (id: string) => void;
 }
 
-export function CuetAuthScreen({ onLogin }: CuetAuthProps) {
+export function NeetAuthScreen({ onLogin }: NeetAuthProps) {
   const [tab, setTab] = useState<AuthTab>("login");
-  const [regs, setRegs] = useLocalStorage<CUETRegistration[]>("cuet_registrations", []);
+  const [regs, setRegs] = useLocalStorage<CUETRegistration[]>("neet_registrations", []);
   const [siuRegs, setSiuRegs] = useLocalStorage<any[]>("siu_registrations", []);
 
   // Automatically clear out any residual TEST999 or test candidates from local storage
@@ -362,7 +362,7 @@ export function CuetAuthScreen({ onLogin }: CuetAuthProps) {
           <span className="px-2 py-0.5 bg-amber-100 text-amber-700 rounded text-xs font-semibold">Medium: {form.languageMedium}</span>
         </div>
       </div>
-      <button onClick={() => onLogin(successId)} data-testid="cuet-reg-login"
+      <button onClick={() => onLogin(successId)} data-testid="neet-reg-login"
         className="w-full py-3 rounded-xl text-base font-extrabold text-white"
         style={{ background: "linear-gradient(90deg,#064e3b,#0d9488)" }}>
         Enter Mock Test Portal →
@@ -391,7 +391,7 @@ export function CuetAuthScreen({ onLogin }: CuetAuthProps) {
       {/* Tab toggle */}
       <div className="flex gap-1 bg-gray-100 rounded-xl p-1 mb-5">
         {([["login", "🔑 Login", "Already registered? Enter App ID"], ["register", "📝 New Registration", "Get your mock portal login credentials"]] as const).map(([id, label, desc]) => (
-          <button key={id} onClick={() => setTab(id)} data-testid={`cuet-tab-${id}`}
+          <button key={id} onClick={() => setTab(id)} data-testid={`neet-tab-${id}`}
             className="flex-1 py-2.5 px-3 rounded-lg text-left transition"
             style={{ background: tab === id ? "#fff" : "transparent", boxShadow: tab === id ? "0 1px 4px rgba(0,0,0,0.1)" : "none" }}>
             <div className={`text-sm font-bold ${tab === id ? "text-[#064e3b]" : "text-gray-500"}`}>{label}</div>
@@ -414,10 +414,10 @@ export function CuetAuthScreen({ onLogin }: CuetAuthProps) {
             <label className="block text-xs font-semibold text-gray-700 mb-1">NEET Application ID <span className="text-red-500">*</span></label>
             <input value={loginId} onChange={e => setLoginId(e.target.value)} onKeyDown={e => e.key === "Enter" && handleLogin()}
               placeholder="e.g. NEET2026847382"
-              data-testid="cuet-login-id"
+              data-testid="neet-login-id"
               className="w-full px-3 py-3 border border-gray-300 rounded-xl text-sm mb-3 focus:outline-none focus:border-teal-700 font-mono tracking-widest uppercase" />
             {loginError && <div className="text-red-600 text-xs mb-3 p-2 rounded-lg bg-red-50 border border-red-200">{loginError}</div>}
-            <button onClick={handleLogin} data-testid="cuet-login-btn"
+            <button onClick={handleLogin} data-testid="neet-login-btn"
               className="w-full py-3 rounded-xl text-sm font-bold text-white shadow-md bg-teal-800 hover:bg-teal-900"
               style={{ background: "linear-gradient(90deg,#064e3b,#0d9488)" }}>
               Login to NEET Portal →
@@ -465,7 +465,7 @@ export function CuetAuthScreen({ onLogin }: CuetAuthProps) {
               </div>
 
               <div className="flex justify-end mt-5">
-                <button onClick={() => goStep(2)} data-testid="cuet-step2"
+                <button onClick={() => goStep(2)} data-testid="neet-step2"
                   className="px-6 py-2.5 rounded-lg text-sm font-bold text-white bg-teal-800 hover:bg-teal-900 transition shadow-sm"
                   style={{ background: "#064e3b" }}>
                   Next: Exam Preferences →
@@ -501,7 +501,7 @@ export function CuetAuthScreen({ onLogin }: CuetAuthProps) {
 
               <div className="flex justify-between mt-6">
                 <button onClick={() => setStep(1)} className="px-4 py-2.5 rounded-lg border text-xs font-semibold text-gray-600 border-gray-200 bg-white">← Back</button>
-                <button onClick={submitReg} data-testid="cuet-submit-reg"
+                <button onClick={submitReg} data-testid="neet-submit-reg"
                   className="px-8 py-2.5 rounded-xl text-xs font-extrabold text-[#064e3b] shadow-md transition"
                   style={{ background: "linear-gradient(90deg,#c9a84c,#e8b840)" }}>
                   ✓ Submit NEET Registration

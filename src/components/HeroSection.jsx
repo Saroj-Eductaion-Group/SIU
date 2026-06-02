@@ -68,10 +68,10 @@ const HeroSection = () => {
         <header className="text-center mb-6 sm:mb-12">
           <div className="inline-flex md:hidden gap-2 mb-2 flex-wrap justify-center">
             <a
-              href="/cuet-neet-talent-hunt"
+              href="/neet-talent-hunt"
               className="bg-green-600 hover:bg-green-700 text-white px-4 py-1 rounded-md font-medium transition-all duration-300 shadow-lg animate-[pulse_2s_infinite] whitespace-nowrap text-sm"
             >
-              📚 CUET/NEET Talent Hunt
+              📚 NEET Talent Hunt
             </a>
             <a
               href="/talent-hunt"

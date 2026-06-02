@@ -5,8 +5,8 @@ type Message = { role: "user" | "ai"; text: string; ts: number };
 
 const SUGGESTIONS = [
   "Explain photoelectric effect",
-  "CUET Maths syllabus 2026",
-  "How to score 95+ in CUET?",
+  "NEET Biology syllabus 2026",
+  "How to score 680+ in NEET?",
   "SIUAT scholarship criteria",
   "Organic chemistry tips",
   "Revision strategy for 30 days",
@@ -15,15 +15,15 @@ const SUGGESTIONS = [
 const AI_RESPONSES: Array<{ keys: string[]; reply: string }> = [
   {
     keys: ["photoelectric", "photo electric"],
-    reply: "The Photoelectric Effect (Einstein, 1905): When light of sufficient frequency strikes a metal surface, electrons are emitted. Key points:\n\n📌 Threshold frequency (ν₀): minimum frequency needed to emit electrons.\n📌 KE_max = hν − hν₀ = hν − φ (where φ = work function)\n📌 KE depends ONLY on frequency, NOT intensity.\n📌 Number of electrons emitted depends on intensity.\n📌 Effect is instantaneous — no time delay.\n\nFor CUET: Focus on the equation KE_max = eV₀ (stopping potential) and comparisons between classical wave theory (wrong predictions) vs Einstein's photon theory. This is a frequent 4-mark question! 🎯"
+    reply: "The Photoelectric Effect (Einstein, 1905): When light of sufficient frequency strikes a metal surface, electrons are emitted. Key points:\n\n📌 Threshold frequency (ν₀): minimum frequency needed to emit electrons.\n📌 KE_max = hν − hν₀ = hν − φ (where φ = work function)\n📌 KE depends ONLY on frequency, NOT intensity.\n📌 Number of electrons emitted depends on intensity.\n📌 Effect is instantaneous — no time delay.\n\nFor NEET: Focus on the equation KE_max = eV₀ (stopping potential) and comparisons between classical wave theory (wrong predictions) vs Einstein's photon theory. This is a highly frequent 4-mark question! 🎯"
   },
   {
-    keys: ["maths", "math", "mathematics", "syllabus"],
-    reply: "CUET Mathematics Syllabus 2026 (Detailed):\n\n📐 Section A (Mandatory):\n• Relations & Functions\n• Algebra (Matrices, Determinants)\n• Calculus (Differentiation, Integration, Differential Equations)\n• Vectors & 3D Geometry\n• Linear Programming\n• Probability\n\n📐 Section B (Optional, any 3 from 5):\n• Inverse Trigonometric Functions\n• Continuity & Differentiability\n• Application of Integrals\n• Statistics\n• Mathematical Reasoning\n\n🎯 High-weightage topics: Definite Integration, Vectors, Probability, Matrices. Aim for 100% accuracy in Algebra and Calculus for a 90+ score!"
+    keys: ["biology", "bio", "zoology", "botany", "syllabus"],
+    reply: "NEET Biology High-Weightage Syllabus 2026 (NCERT Focus):\n\n🌿 Botany:\n• Genetics & Evolution (Principles of Inheritance, Molecular Basis)\n• Plant Physiology (Photosynthesis, Respiration, Growth)\n• Plant Anatomy & Diversity\n• Ecology & Environment\n\n🐾 Zoology:\n• Human Physiology (Digestion, Circulation, Nervous System)\n• Human Reproduction & Reproductive Health\n• Animal Kingdom & Structural Organisation\n• Biotechnology (Principles & Processes, Applications)\n\n🎯 High-weightage topics: Genetics (molecular basis), Biotechnology, and Human Physiology are top priorities. Master NCERT diagrams completely!"
   },
   {
-    keys: ["score", "95", "crack", "strategy", "tips", "study", "preparation", "how to"],
-    reply: "Scoring 95+ in CUET — AdmissionX Proven Strategy:\n\n✅ Month 1 (Foundation): Complete NCERT thoroughly for each subject. Solve all in-chapter and chapter-end exercises.\n\n✅ Month 2 (Practice): Take 2 subject mock tests per day on AdmissionX. Focus on weak areas identified from results.\n\n✅ Month 3 (Revision): Daily 3-hour revision. 1 full mock test every alternate day. Analyse errors pattern.\n\n📊 Score Distribution Strategy:\n• General Aptitude: Target 100% (Reasoning + English)\n• Domain Subjects: Target 85%+ (choose 3 strong subjects)\n• Language: Target 90%+\n\n⚡ Quick wins: PYQ analysis shows 60% questions repeat from NCERT exemplar. Don't skip those!"
+    keys: ["score", "680", "crack", "strategy", "tips", "study", "preparation", "how to"],
+    reply: "Scoring 680+ in NEET — AdmissionX Proven Strategy:\n\n✅ Month 1 (NCERT Line-by-line): Read and highlight every line of NCERT Biology, Chemistry, and Physics exemplars.\n\n✅ Month 2 (High-Frequency Practice): Solve at least 150 MCQs daily, focusing on active NEET mock tests on AdmissionX.\n\n✅ Month 3 (Mistake Book & Time Speed): Maintain a mistakes log. Solve full-length 3-hour mocks to build muscle memory.\n\n📊 NEET Target Score Distribution:\n• Biology: 340+ (out of 360)\n• Chemistry: 160+ (out of 180)\n• Physics: 160+ (out of 180)\n• Overall Target: 660–680+ for top Government Medical Colleges!"
   },
   {
     keys: ["scholarship", "siuat", "talent hunt", "100%", "51000", "₹51"],
@@ -31,15 +31,15 @@ const AI_RESPONSES: Array<{ keys: string[]; reply: string }> = [
   },
   {
     keys: ["organic", "chemistry", "reaction"],
-    reply: "Organic Chemistry CUET Quick Mastery:\n\n🧪 Must-Know Reactions:\n1. Aldol Condensation: Aldehydes/Ketones with base → β-hydroxy carbonyl\n2. Cannizzaro Reaction: Non-enolizable aldehydes + NaOH → alcohol + carboxylate\n3. Friedel-Crafts: Aromatic ring + alkyl/acyl halide (Lewis acid cat.)\n4. Grignard Reaction: RMgX + carbonyl → alcohol (after hydrolysis)\n5. Diazotization: Primary amine + NaNO₂/HCl → diazonium salt\n\n🎯 CUET Focus Areas:\n• Named reactions (always asked, 2-3 questions)\n• Functional group identification & interconversion\n• IUPAC nomenclature (medium difficulty)\n• Stereochemistry basics (optical isomers)\n\n⚡ Tip: Make a reaction chart with substrates → reagents → products. Visual memory helps more than rote learning!"
+    reply: "Organic Chemistry NEET Quick Mastery:\n\n🧪 Must-Know Reactions:\n1. Aldol Condensation: Aldehydes/Ketones with base → β-hydroxy carbonyl\n2. Cannizzaro Reaction: Non-enolizable aldehydes + NaOH → alcohol + carboxylate\n3. Friedel-Crafts: Aromatic ring + alkyl/acyl halide (Lewis acid cat.)\n4. Grignard Reaction: RMgX + carbonyl → alcohol (after hydrolysis)\n5. Diazotization: Primary amine + NaNO₂/HCl → diazonium salt\n\n🎯 NEET Focus Areas:\n• Named reactions (always asked, 2-3 questions)\n• Functional group identification & interconversion\n• IUPAC nomenclature (medium difficulty)\n• Stereochemistry basics (optical isomers)\n\n⚡ Tip: Make a reaction chart with substrates → reagents → products. Visual memory helps more than rote learning!"
   },
   {
     keys: ["30 days", "one month", "revision", "last minute"],
-    reply: "30-Day CUET Sprint Plan by AdmissionX AI Mentor:\n\n📅 Week 1 (Days 1–7): Rapid NCERT Revision\n• 2 chapters/day per subject\n• Mark all diagrams, definitions, key formulas\n• No new topics — only NCERT revision\n\n📅 Week 2 (Days 8–14): Mock Test Marathon\n• 1 subject mock test daily on AdmissionX\n• Review every wrong answer before bed\n• Target: finish at least 6 full mocks\n\n📅 Week 3 (Days 15–21): Weak Area Blitz\n• Use your mock test results to find weak chapters\n• Spend 3 hrs/day on lowest-scoring sections\n• Redo those chapter tests\n\n📅 Week 4 (Days 22–28): Full Mocks + Mental Prep\n• 1 full 3-hour CUET simulation daily\n• Practice time management — don't spend >2 min/question\n• Sleep 7-8 hours. No all-nighters!\n\n🏁 Days 29–30: Light revision only. Confidence-building. You've got this! 💪"
+    reply: "30-Day NEET Sprint Plan by AdmissionX AI Mentor:\n\n📅 Week 1 (Days 1–7): Rapid NCERT Revision\n• 2 chapters/day per subject\n• Mark all diagrams, definitions, key formulas\n• No new topics — only NCERT revision\n\n📅 Week 2 (Days 8–14): Mock Test Marathon\n• 1 subject mock test daily on AdmissionX\n• Review every wrong answer before bed\n• Target: finish at least 6 full mocks\n\n📅 Week 3 (Days 15–21): Weak Area Blitz\n• Use your mock test results to find weak chapters\n• Spend 3 hrs/day on lowest-scoring sections\n• Redo those chapter tests\n\n📅 Week 4 (Days 22–28): Full Mocks + Mental Prep\n• 1 full 3-hour NEET simulation daily\n• Practice time management — don't spend >2 min/question\n• Sleep 7-8 hours. No all-nighters!\n\n🏁 Days 29–30: Light revision only. Confidence-building. You've got this! 💪"
   },
 ];
 
-const DEFAULT_REPLY = "Great question! For CUET 2026 preparation, I recommend focusing on NCERT first — it covers 60–70% of the actual exam. Then solve PYQs (Previous Year Questions) from 2022–2025 for pattern recognition.\n\nYour target score should be:\n• 85%+ for top NLUs and DU colleges\n• 90%+ for SIUAT 100% scholarship eligibility\n\nWould you like me to create a personalised subject-wise study plan based on your weak areas? Just tell me your strongest and weakest subjects! 😊";
+const DEFAULT_REPLY = "Great question! For NEET 2026 preparation, I recommend focusing on NCERT line-by-line first — it covers 95% of Biology and 85% of Chemistry. Then solve PYQs (Previous Year Questions) from 2016–2025 for high-speed pattern recognition.\n\nYour target score should be:\n• 650+ for top MBBS seats\n• 90%+ in SIUAT for 100% scholarship eligibility\n\nWould you like me to create a personalised subject-wise study plan based on your weak areas? Just tell me your strongest and weakest subjects! 😊";
 
 function getAIReply(text: string): string {
   const lower = text.toLowerCase();
@@ -57,7 +57,7 @@ export function AIMentorPanel() {
 
   const initMessages: Message[] = messages.length === 0 ? [{
     role: "ai",
-    text: "👋 Namaste! I'm your AdmissionX AI Mentor, powered by Saroj International University.\n\nI can help you with:\n• CUET preparation strategies and study plans\n• Subject-wise doubts (Physics, Maths, Chemistry, Biology, English)\n• SIUAT scholarship information\n• Revision tips and mock test analysis\n\nWhat would you like to learn today?",
+    text: "👋 Namaste! I'm your AdmissionX AI Mentor, powered by Saroj International University.\n\nI can help you with:\n• NEET preparation strategies and study plans\n• Subject-wise doubts (Physics, Chemistry, Biology, English)\n• SIUAT scholarship information\n• Revision tips and mock test analysis\n\nWhat would you like to learn today?",
     ts: Date.now()
   }] : messages;
 
@@ -68,63 +68,47 @@ export function AIMentorPanel() {
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages, loading]);
+  }, [messages]);
 
-  const send = (text: string) => {
-    if (!text.trim() || loading) return;
-    const userMsg: Message = { role: "user", text: text.trim(), ts: Date.now() };
-    setMessages(prev => [...prev.slice(-49), userMsg]);
+  const send = (txt: string) => {
+    if (!txt.trim() || loading) return;
+    const userMsg: Message = { role: "user", text: txt, ts: Date.now() };
+    setMessages(prev => [...prev, userMsg]);
     setInput("");
     setLoading(true);
+
     setTimeout(() => {
-      const aiMsg: Message = { role: "ai", text: getAIReply(text), ts: Date.now() };
-      setMessages(prev => [...prev.slice(-49), aiMsg]);
+      const replyText = getAIReply(txt);
+      const aiMsg: Message = { role: "ai", text: replyText, ts: Date.now() };
+      setMessages(prev => [...prev, aiMsg]);
       setLoading(false);
-    }, 1200);
+    }, 800);
   };
 
-  const displayMessages = messages.length === 0 ? initMessages : messages;
-
   return (
-    <div className="max-w-3xl mx-auto">
+    <div className="flex flex-col h-[520px] max-w-2xl mx-auto border border-gray-200 rounded-2xl shadow-sm overflow-hidden bg-white">
       {/* Header */}
-      <div className="rounded-t-xl p-4 flex items-center justify-between" style={{ background: "linear-gradient(135deg,#4c1d95,#0a1f5c)" }}>
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl flex items-center justify-center text-xl flex-shrink-0" style={{ background: "rgba(255,255,255,0.15)" }}>🤖</div>
-          <div>
-            <div className="font-bold text-white text-sm">AdmissionX AI Mentor</div>
-            <div className="text-xs" style={{ color: "rgba(255,255,255,0.55)" }}>Powered by Saroj International University</div>
-          </div>
-        </div>
-        <div className="flex items-center gap-1.5 text-xs font-bold" style={{ color: "#86efac" }}>
-          <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-          Online
+      <div className="p-4 border-b border-gray-100 flex items-center gap-3 bg-gradient-to-r from-[#6c3fc7] to-[#4c1d95] text-white">
+        <span className="text-2xl">🤖</span>
+        <div>
+          <h3 className="font-serif font-black text-sm text-white">SIU AI Mentor</h3>
+          <p className="text-[10px] text-white/70">Powered by Saroj International University</p>
         </div>
       </div>
 
-      {/* Chat Window */}
-      <div className="bg-gray-50 border-x border-gray-200 overflow-y-auto p-4 space-y-4" style={{ height: "420px" }}>
-        {displayMessages.map((msg, i) => (
-          <div key={i} className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`} data-testid={`msg-${i}`}>
-            {msg.role === "ai" && (
-              <div className="mr-2 w-8 h-8 rounded-full flex items-center justify-center text-sm flex-shrink-0 self-end" style={{ background: "linear-gradient(135deg,#4c1d95,#6c3fc7)", color: "#fff" }}>AI</div>
-            )}
-            <div className="max-w-[80%] rounded-2xl px-4 py-3 text-sm leading-relaxed whitespace-pre-wrap"
-              style={msg.role === "ai"
-                ? { background: "#fff", color: "#1f2937", border: "1px solid #e5e7eb", borderBottomLeftRadius: "4px" }
-                : { background: "linear-gradient(135deg,#6c3fc7,#4c1d95)", color: "#fff", borderBottomRightRadius: "4px" }
-              }>
-              {msg.text}
+      {/* Messages */}
+      <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50/50">
+        {messages.map((m, i) => (
+          <div key={i} className={`flex ${m.role === "user" ? "justify-end" : "justify-start"}`}>
+            <div className={`max-w-[80%] rounded-2xl px-4 py-3 text-xs leading-relaxed ${m.role === "user" ? "bg-[#6c3fc7] text-white rounded-tr-none" : "bg-white border border-gray-100 text-gray-800 rounded-tl-none shadow-sm"}`} style={{ whiteSpace: "pre-wrap" }}>
+              {m.text}
             </div>
           </div>
         ))}
         {loading && (
           <div className="flex justify-start">
-            <div className="mr-2 w-8 h-8 rounded-full flex items-center justify-center text-sm flex-shrink-0" style={{ background: "linear-gradient(135deg,#4c1d95,#6c3fc7)", color: "#fff" }}>AI</div>
-            <div className="bg-white border border-gray-200 rounded-2xl rounded-bl-sm px-4 py-3 flex items-center gap-1.5">
-              {[0, 1, 2].map(i => (
-                <div key={i} className="w-2 h-2 rounded-full animate-bounce" style={{ background: "#6c3fc7", animationDelay: `${i * 0.15}s` }} />
-              ))}
+            <div className="bg-white border border-gray-100 rounded-2xl rounded-tl-none px-4 py-3 text-xs text-gray-400 italic">
+              AI Mentor is typing...
             </div>
           </div>
         )}
@@ -132,11 +116,9 @@ export function AIMentorPanel() {
       </div>
 
       {/* Suggestions */}
-      <div className="bg-gray-50 border-x border-gray-200 px-4 py-2 flex gap-2 overflow-x-auto" style={{ scrollbarWidth: "none" }}>
+      <div className="p-2.5 bg-gray-50 border-t border-gray-100 flex gap-1.5 overflow-x-auto whitespace-nowrap scrollbar-none no-print">
         {SUGGESTIONS.map(s => (
-          <button key={s} onClick={() => send(s)} data-testid={`suggestion-${s.slice(0, 10)}`}
-            className="whitespace-nowrap px-3 py-1.5 rounded-full text-xs font-medium border transition flex-shrink-0"
-            style={{ background: "#fff", borderColor: "#e5e7eb", color: "#6c3fc7" }}>
+          <button key={s} onClick={() => send(s)} className="px-3 py-1.5 bg-white border border-gray-200 rounded-full text-[10px] font-semibold text-gray-600 hover:border-purple-300 transition">
             {s}
           </button>
         ))}
@@ -148,7 +130,7 @@ export function AIMentorPanel() {
           value={input}
           onChange={e => setInput(e.target.value)}
           onKeyDown={e => e.key === "Enter" && !e.shiftKey && send(input)}
-          placeholder="Ask me anything about CUET, SIUAT, scholarship or study tips..."
+          placeholder="Ask me anything about NEET, SIUAT, scholarship or study tips..."
           data-testid="chat-input"
           className="flex-1 px-4 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:border-purple-400 transition"
         />

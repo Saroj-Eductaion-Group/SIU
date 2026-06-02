@@ -14,16 +14,16 @@ import { AdminPanel } from './cuetNeet/components/AdminPanel';
 
 const queryClient = new QueryClient();
 
-function CuetNeetApp() {
+function NeetApp() {
   const [activeTab, setActiveTab] = useState('home');
   const [showScholarshipModal, setShowScholarshipModal] = useState(false);
 
   useEffect(() => {
-    const seen = sessionStorage.getItem('cuet_sch_modal_seen');
+    const seen = sessionStorage.getItem('neet_sch_modal_seen');
     if (!seen) {
       const timer = setTimeout(() => {
         setShowScholarshipModal(true);
-        sessionStorage.setItem('cuet_sch_modal_seen', '1');
+        sessionStorage.setItem('neet_sch_modal_seen', '1');
       }, 1500);
       return () => clearTimeout(timer);
     }
@@ -70,11 +70,11 @@ function CuetNeetApp() {
   );
 }
 
-export default function CuetNeetTalentHunt() {
+export default function NeetTalentHunt() {
   return (
     <Layout>
       <QueryClientProvider client={queryClient}>
-        <CuetNeetApp />
+        <NeetApp />
       </QueryClientProvider>
     </Layout>
   );

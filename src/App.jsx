@@ -103,7 +103,7 @@ import CryptographyPage from "./pages/tcs/Cryptography";
 import FeePaymentPage from "./pages/FeePaymentPage";
 import OrientationPage from "./pages/Admission/OrientationPage";
 import TalentHunt from "./pages/TalentHunt";
-import CuetNeetTalentHunt from "./pages/CuetNeetTalentHunt";
+import NeetTalentHunt from "./pages/NeetTalentHunt";
 import InstituteAgriculture from "./pages/InstitutePages/Agriculture";
 import Research from "./pages/ResearchPage";
 
@@ -121,7 +121,7 @@ function App() {
 
       {/* Talent Hunt */}
       <Route path='/talent-hunt' element={<TalentHunt />} />
-      <Route path='/cuet-neet-talent-hunt' element={<CuetNeetTalentHunt />} />
+      <Route path='/neet-talent-hunt' element={<NeetTalentHunt />} />
 
       {/* Programs Overview */}
       <Route path='/programs' element={<Courses />} />

@@ -39,7 +39,7 @@ export function Header({ activeTab, setActiveTab, onScholarship }: HeaderProps) 
     { icon: "🏆", text: "SIUAT 2026-27 registrations open — only 500 seats!", time: "Just now" },
     { icon: "✏", text: "New mock test added: Biology Genetics & Biotech", time: "2h ago" },
     { icon: "💰", text: "Win ₹51,000 merit award — appear in SIUAT Talent Hunt", time: "5h ago" },
-    { icon: "📢", text: "CUET UG 2026 exam dates: May 14–30, 2026", time: "1d ago" },
+    { icon: "📢", text: "NEET UG 2026 exam dates: May 3, 2026", time: "1d ago" },
     { icon: "🤖", text: "AI Mentor now supports Hindi & Hinglish queries", time: "2d ago" },
   ];
 
@@ -56,7 +56,7 @@ export function Header({ activeTab, setActiveTab, onScholarship }: HeaderProps) 
             style={{ background: "rgba(255,255,255,0.15)", border: "1px solid rgba(255,255,255,0.25)" }}>📚</div>
           <div>
             <div className="font-black text-white leading-none text-[14px] sm:text-[18px]" style={{ letterSpacing: "-0.3px" }}>
-              CUET <span style={{ color: "#e8b840" }}>/</span> NEET
+              NEET
             </div>
             <div className="text-[8px] sm:text-[9px] font-semibold tracking-[0.1em] uppercase mt-0.5" style={{ color: "rgba(255,255,255,0.55)" }}>
               <span className="sm:hidden">Talent Hunt · SIU</span>

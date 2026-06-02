@@ -64,11 +64,11 @@ href='/fee-payment'            target="_blank"
           {/* Talent Hunt Buttons */}
           <div className="flex items-center gap-2">
             <a 
-              href="/cuet-neet-talent-hunt"
+              href="/neet-talent-hunt"
               className="bg-green-600 hover:bg-green-700 text-white px-4 py-1 rounded-md font-medium transition-all duration-300 shadow-lg animate-pulse whitespace-nowrap text-sm sm:text-base"
-              aria-label="CUET/NEET Talent Hunt"
+              aria-label="NEET Talent Hunt"
             >
-              📚 CUET/NEET Talent Hunt
+              📚 NEET Talent Hunt
             </a>
             <a 
               href="/talent-hunt"

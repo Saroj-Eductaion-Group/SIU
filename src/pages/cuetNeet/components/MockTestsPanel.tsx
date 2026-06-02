@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { MOCK_TESTS, MOCK_QUESTIONS, Question, CUETRegistration } from "../lib/data";
 import { useLocalStorage } from "../hooks/use-local-storage";
-import { CuetAuthScreen, CuetWelcomeBanner } from "../components/CuetRegistration";
+import { NeetAuthScreen, NeetWelcomeBanner } from "./NeetRegistration";
 
 const BASE = import.meta.env.VITE_API_URL || `http://${typeof window !== 'undefined' ? window.location.hostname : 'localhost'}:5000/api`;
 
@@ -620,7 +620,7 @@ export function MockTestsPanel() {
   if (!cuetCandidate) {
     return (
       <div>
-        <CuetAuthScreen onLogin={setCuetActiveId} />
+        <NeetAuthScreen onLogin={setCuetActiveId} />
       </div>
     );
   }
@@ -628,7 +628,7 @@ export function MockTestsPanel() {
   return (
     <div>
       {/* Logged-in candidate banner */}
-      <CuetWelcomeBanner candidate={cuetCandidate} onLogout={() => setCuetActiveId("")} />
+      <NeetWelcomeBanner candidate={cuetCandidate} onLogout={() => setCuetActiveId("")} />
 
       {/* NEET Pattern Banner */}
       <div className="rounded-xl p-4 mb-5 flex items-center gap-4" style={{ background: "linear-gradient(135deg,#064e3b,#0d9488)" }}>
