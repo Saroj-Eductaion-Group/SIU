@@ -167,6 +167,34 @@ router.patch('/admin/approve-all', auth, async (req, res) => {
 });
 
 // PUBLIC — Get single by appId (exam login)
+// PUBLIC — Login candidate and generate session token
+router.post('/login/:appId', async (req, res) => {
+  try {
+    const crypto = require('crypto');
+    const sessionToken = crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).substring(2) + Date.now().toString(36);
+    const reg = await Registration.findOneAndUpdate(
+      { appId: req.params.appId.toUpperCase() },
+      { sessionToken },
+      { new: true }
+    );
+    if (!reg) return res.status(404).json({ message: 'Not found' });
+    res.json(reg);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+// PUBLIC — Check session status
+router.get('/session-check/:appId', async (req, res) => {
+  try {
+    const reg = await Registration.findOne({ appId: req.params.appId.toUpperCase() });
+    if (!reg) return res.status(404).json({ message: 'Not found' });
+    res.json({ sessionToken: reg.sessionToken });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
 // NOTE: This wildcard must stay AFTER all specific GET/PATCH routes
 router.get('/:appId', async (req, res) => {
   try {

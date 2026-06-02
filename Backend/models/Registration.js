@@ -35,6 +35,7 @@ const registrationSchema = new mongoose.Schema({
   score:           { type: Number, default: null },
   grade:           { type: String, default: null },
   sectionData:     { type: Object, default: null },
+  sessionToken:    { type: String, default: null },
   registeredAt:    { type: Date, default: Date.now },
 });
 

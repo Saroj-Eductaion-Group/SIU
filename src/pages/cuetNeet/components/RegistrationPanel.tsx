@@ -180,7 +180,10 @@ function ExamPortal({ registrations, setRegistrations }: { registrations: Regist
 
     // Dynamic database fetch to support login from any device/browser
     try {
-      const res = await fetch(`${BASE}/registrations/${trimmed}`);
+      const res = await fetch(`${BASE}/registrations/login/${trimmed}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" }
+      });
       if (res.ok) {
         const data = await res.json();
         if (data) {
@@ -211,6 +214,11 @@ function ExamPortal({ registrations, setRegistrations }: { registrations: Regist
           };
           reg = mapped;
 
+          // Save session token returned from server
+          if (data.sessionToken) {
+            sessionStorage.setItem(`siuat_session_token_${data.appId}`, data.sessionToken);
+          }
+
           // Sync to local registrations state to update Cache
           setRegistrations(prev => [...prev.filter(x => x.id !== trimmed), mapped]);
         }
@@ -230,6 +238,32 @@ function ExamPortal({ registrations, setRegistrations }: { registrations: Regist
 
     if (reg.status === "Pending") { setLoginError("Your application is still under review. Please wait for admin approval."); return; }
     if (reg.status === "Rejected") { setLoginError("Your application has been rejected. Please contact SIU admissions."); return; }
+
+    // Check if there is a saved state for this candidate (Auto-Save Resilience)
+    const savedStateRaw = localStorage.getItem(`siuat_exam_state_${trimmed}`);
+    if (savedStateRaw && !reg.examCompleted) {
+      try {
+        const savedState = JSON.parse(savedStateRaw);
+        setCandidate(reg);
+        setExamQuestions(savedState.questions);
+        setAnswers(savedState.answers);
+        setCurrentQ(savedState.currentQ);
+        setViolations(savedState.violations);
+        setTimeLeft(savedState.timeLeft);
+        setPhase("active");
+        setLoginError("");
+
+        requestFullscreen();
+        if (timerRef.current) clearInterval(timerRef.current);
+        timerRef.current = setInterval(() => {
+          setTimeLeft(t => { if (t <= 1) { clearInterval(timerRef.current!); handleSubmit(); return 0; } return t - 1; });
+        }, 1000);
+        return;
+      } catch (err) {
+        console.error("Failed to restore saved exam state:", err);
+      }
+    }
+
     if (reg.examCompleted) { setLoginError("You have already completed the Talent Hunt exam. Check your result in the Results tab."); return; }
     
     setCandidate(reg);
@@ -239,13 +273,44 @@ function ExamPortal({ registrations, setRegistrations }: { registrations: Regist
 
   const startExam = () => {
     requestFullscreen();
-    // Shuffle the exam questions to prevent cheating (Fisher-Yates Shuffle)
-    const shuffled = [...SIUAT_QUESTIONS];
-    for (let i = shuffled.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+
+    // Group questions by progressive difficulty levels
+    const easy = SIUAT_QUESTIONS.filter(q => q.difficulty === "Easy");
+    const medium = SIUAT_QUESTIONS.filter(q => q.difficulty === "Medium");
+    const hard = SIUAT_QUESTIONS.filter(q => q.difficulty === "Hard");
+    const advanced = SIUAT_QUESTIONS.filter(q => q.difficulty === "JEE Level");
+
+    // Fisher-Yates Shuffling helper
+    function shuffleArray<T>(arr: T[]): T[] {
+      const copy = [...arr];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
     }
-    setExamQuestions(shuffled);
+
+    // Shuffles options and dynamically maps the correctOption index
+    const shuffleOptions = (q: typeof SIUAT_QUESTIONS[0]) => {
+      const originalCorrect = q.options[q.correctOption];
+      const shuffledOpts = shuffleArray(q.options);
+      const newCorrectIndex = shuffledOpts.indexOf(originalCorrect);
+      return {
+        ...q,
+        options: shuffledOpts,
+        correctOption: newCorrectIndex === -1 ? q.correctOption : newCorrectIndex
+      };
+    };
+
+    // Shuffle questions *within* each bracket to maintain progressive flow but fully randomize questions
+    const shuffledEasy = shuffleArray(easy).map(shuffleOptions);
+    const shuffledMedium = shuffleArray(medium).map(shuffleOptions);
+    const shuffledHard = shuffleArray(hard).map(shuffleOptions);
+    const shuffledAdvanced = shuffleArray(advanced).map(shuffleOptions);
+
+    const finalQuestions = [...shuffledEasy, ...shuffledMedium, ...shuffledHard, ...shuffledAdvanced];
+
+    setExamQuestions(finalQuestions);
     setPhase("active");
     setTimeLeft(EXAM_DURATION);
     startTimer();
@@ -256,29 +321,83 @@ function ExamPortal({ registrations, setRegistrations }: { registrations: Regist
     if (document.fullscreenElement || document.webkitFullscreenElement) {
       document.exitFullscreen().catch(err => console.log('Error exiting fullscreen:', err));
     }
+    
     let correct = 0, wrong = 0, skipped = 0;
+    let easyTotal = 0, easyCorrect = 0;
+    let medTotal = 0, medCorrect = 0;
+    let hardTotal = 0, hardCorrect = 0;
+    let advTotal = 0, advCorrect = 0;
+
     questions.forEach((q, i) => {
       const a = answers[i];
+      const isCorrect = a !== undefined && a === q.correctOption;
+
+      if (q.difficulty === "Easy") {
+        easyTotal++;
+        if (isCorrect) easyCorrect++;
+      } else if (q.difficulty === "Medium") {
+        medTotal++;
+        if (isCorrect) medCorrect++;
+      } else if (q.difficulty === "Hard") {
+        hardTotal++;
+        if (isCorrect) hardCorrect++;
+      } else if (q.difficulty === "JEE Level") {
+        advTotal++;
+        if (isCorrect) advCorrect++;
+      }
+
       if (a === undefined) skipped++;
-      else if (a === q.correctOption) correct++;
+      else if (isCorrect) correct++;
       else wrong++;
     });
+
     const score = correct * 4 - wrong * 1;
     const maxScore = questions.length * 4;
     const pct = Math.max(0, Math.round((score / maxScore) * 100));
     const grade = getGrade(pct).grade;
-    
-    setResult({ pct, correct, wrong, skipped, score });
-    
+
+    const timeTaken = EXAM_DURATION - timeLeft;
+    const avgTimePerQuestion = Math.round(timeTaken / (questions.length - skipped || 1));
+
+    const difficultyAnalytics = {
+      easy: { correct: easyCorrect, total: easyTotal, pct: Math.round((easyCorrect / (easyTotal || 1)) * 100) },
+      medium: { correct: medCorrect, total: medTotal, pct: Math.round((medCorrect / (medTotal || 1)) * 100) },
+      hard: { correct: hardCorrect, total: hardTotal, pct: Math.round((hardCorrect / (hardTotal || 1)) * 100) },
+      advanced: { correct: advCorrect, total: advTotal, pct: Math.round((advCorrect / (advTotal || 1)) * 100) },
+    };
+
+    setResult({
+      pct,
+      correct,
+      wrong,
+      skipped,
+      score,
+      timeTaken,
+      avgTimePerQuestion,
+      difficultyAnalytics
+    } as any);
+
     if (candidate) {
-      // Save SIUAT exam results directly to MongoDB
+      // Clean up local storage exam states immediately upon submission
+      localStorage.removeItem(`siuat_exam_state_${candidate.id}`);
+      sessionStorage.removeItem("siuat_active_appid");
+      sessionStorage.removeItem(`siuat_session_token_${candidate.id}`);
+
+      // Save SIUAT exam results with analytics directly to MongoDB
       fetch(`${BASE}/registrations/result/${candidate.id}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           score: pct,
           grade,
-          sectionData: { correct, wrong, skipped }
+          sectionData: {
+            correct,
+            wrong,
+            skipped,
+            timeTaken,
+            avgTimePerQuestion,
+            difficultyAnalytics
+          }
         })
       }).catch(err => console.error("Failed to save exam results in database:", err));
 
@@ -286,6 +405,110 @@ function ExamPortal({ registrations, setRegistrations }: { registrations: Regist
     }
     setPhase("submitted");
   };
+
+  // 1. Auto-Save state hook
+  useEffect(() => {
+    if (phase === "active" && candidate) {
+      const stateToSave = {
+        appId: candidate.id,
+        timeLeft,
+        currentQ,
+        violations,
+        answers,
+        questions: examQuestions
+      };
+      localStorage.setItem(`siuat_exam_state_${candidate.id}`, JSON.stringify(stateToSave));
+      sessionStorage.setItem("siuat_active_appid", candidate.id);
+    }
+  }, [phase, candidate, timeLeft, currentQ, violations, answers, examQuestions]);
+
+  // 2. One-device session check polling hook (every 15 seconds)
+  useEffect(() => {
+    if (phase === "active" && candidate) {
+      const interval = setInterval(async () => {
+        try {
+          const res = await fetch(`${BASE}/registrations/session-check/${candidate.id}`);
+          if (res.ok) {
+            const data = await res.json();
+            const currentToken = sessionStorage.getItem(`siuat_session_token_${candidate.id}`);
+            if (data.sessionToken && data.sessionToken !== currentToken) {
+              clearInterval(interval);
+              alert("Multiple logins detected! This exam session is active on another device. You will be logged out.");
+              if (timerRef.current) clearInterval(timerRef.current);
+              localStorage.removeItem(`siuat_exam_state_${candidate.id}`);
+              sessionStorage.removeItem("siuat_active_appid");
+              sessionStorage.removeItem(`siuat_session_token_${candidate.id}`);
+              setPhase("login");
+              setCandidate(null);
+            }
+          }
+        } catch (e) {
+          console.warn("Session check failed:", e);
+        }
+      }, 15000);
+      return () => clearInterval(interval);
+    }
+  }, [phase, candidate]);
+
+  // 3. Auto-Resume on Mount hook
+  useEffect(() => {
+    const activeAppId = sessionStorage.getItem("siuat_active_appid");
+    if (activeAppId && phase === "login") {
+      const savedStateRaw = localStorage.getItem(`siuat_exam_state_${activeAppId}`);
+      if (savedStateRaw) {
+        try {
+          const savedState = JSON.parse(savedStateRaw);
+          fetch(`${BASE}/registrations/${activeAppId}`)
+            .then(res => res.json())
+            .then(data => {
+              if (data && data.status === "Approved" && !data.score) {
+                const mapped: Registration = {
+                  id: data.appId,
+                  firstName: data.firstName,
+                  lastName: data.lastName,
+                  mobile: data.mobile,
+                  email: data.email,
+                  city: data.city,
+                  state: data.state,
+                  qualification: data.qual || data.qualification || "—",
+                  board: data.board || "—",
+                  marks: data.marks || "—",
+                  year: data.yop || data.year || "—",
+                  courses: data.courses || [],
+                  examDate: data.examDate || "—",
+                  examMode: data.examMode || "Online (CBT)",
+                  examCentre: data.centre || data.examCentre || "—",
+                  medium: data.medium || "English",
+                  category: data.category || "General",
+                  source: data.source || "Database Sync",
+                  status: data.status || "Approved",
+                  registeredAt: data.registeredAt || new Date().toISOString(),
+                  examCompleted: false,
+                  score: null,
+                  grade: null
+                };
+                setCandidate(mapped);
+                setExamQuestions(savedState.questions);
+                setAnswers(savedState.answers);
+                setCurrentQ(savedState.currentQ);
+                setViolations(savedState.violations);
+                setTimeLeft(savedState.timeLeft);
+                setPhase("active");
+                
+                requestFullscreen();
+                if (timerRef.current) clearInterval(timerRef.current);
+                timerRef.current = setInterval(() => {
+                  setTimeLeft(t => { if (t <= 1) { clearInterval(timerRef.current!); handleSubmit(); return 0; } return t - 1; });
+                }, 1000);
+              }
+            })
+            .catch(err => console.error("Error auto-resuming on mount:", err));
+        } catch (e) {
+          console.error("Error parsing saved state on mount:", e);
+        }
+      }
+    }
+  }, []);
 
   const fmt = (s: number) => `${String(Math.floor(s / 60)).padStart(2, "0")}:${String(s % 60).padStart(2, "0")}`;
   const timerPct = (timeLeft / EXAM_DURATION) * 100;
