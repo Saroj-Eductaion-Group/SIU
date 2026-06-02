@@ -1,6 +1,17 @@
 const express = require('express');
 const router = express.Router();
 const NeetRegistration = require('../models/NeetRegistration');
+const auth = require('../middleware/auth');
+
+// ADMIN — Get all NEET registrations
+router.get('/admin/all', auth, async (req, res) => {
+  try {
+    const regs = await NeetRegistration.find().sort({ registeredAt: -1 });
+    res.json(regs);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
 
 // PUBLIC — Register new NEET candidate
 router.post('/register', async (req, res) => {

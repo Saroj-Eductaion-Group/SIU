@@ -533,14 +533,11 @@ export function RegistrationPanel() {
   };
 
   const submit = async () => {
-    if (!form.examDate) { setErrors({ examDate: "Select exam date" }); return; }
     setErrorMsg("");
     setLoading(true);
 
     try {
-      const API = `${BASE}/registrations`;
-
-      const res = await fetch(`${API}/register`, {
+      const res = await fetch(`${BASE}/neet/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -552,82 +549,23 @@ export function RegistrationPanel() {
           email: form.email,
           city: form.city,
           state: form.state,
-          qual: form.qualification,
+          qualification: form.qualification,
           board: form.board,
           marks: form.marks,
-          yop: form.year,
-          courses: form.courses,
-          examDate: form.examDate,
-          examMode: form.examMode,
-          centre: form.centre || CENTRES[0],
-          medium: form.medium,
-          category: form.category,
-          scholar: form.scholar || "Yes, very interested",
+          year: form.year,
+          languages: form.courses,
           source: form.source || "NEET AI Portal"
         })
       });
 
       const data = await res.json();
       if (res.ok && data.success) {
-        const appId = data.appId;
-        const reg: Registration = {
-          id: appId,
-          firstName: form.firstName,
-          lastName: form.lastName,
-          mobile: form.mobile,
-          email: form.email,
-          city: form.city,
-          state: form.state,
-          qualification: form.qualification,
-          board: form.board,
-          marks: form.marks,
-          year: form.year,
-          courses: form.courses,
-          examDate: form.examDate,
-          examMode: form.examMode,
-          examCentre: form.centre || CENTRES[0],
-          medium: form.medium,
-          category: form.category,
-          source: form.source || "NEET AI Portal",
-          status: "Pending" as const,
-          registeredAt: new Date().toISOString(),
-          examCompleted: false,
-          score: null
-        };
-        setRegistrations(r => [...r.filter(x => x.id !== appId), reg]);
-        setSuccessId(appId);
+        setSuccessId(data.neetId);
       } else {
         setErrorMsg(data.message || "Registration failed. Please check your inputs.");
       }
     } catch (e) {
-      console.warn("Failed to submit registration to database, falling back to local storage", e);
-      const appId = `SIU${Math.floor(100000 + Math.random() * 900000)}`;
-      const reg: Registration = {
-        id: appId,
-        firstName: form.firstName,
-        lastName: form.lastName,
-        mobile: form.mobile,
-        email: form.email,
-        city: form.city,
-        state: form.state,
-        qualification: form.qualification,
-        board: form.board,
-        marks: form.marks,
-        year: form.year,
-        courses: form.courses,
-        examDate: form.examDate,
-        examMode: form.examMode,
-        examCentre: form.centre || CENTRES[0],
-        medium: form.medium,
-        category: form.category,
-        source: form.source || "NEET AI Portal (Local)",
-        status: "Pending" as const,
-        registeredAt: new Date().toISOString(),
-        examCompleted: false,
-        score: null
-      };
-      setRegistrations(r => [...r, reg]);
-      setSuccessId(appId);
+      setErrorMsg("Cannot connect to server. Please make sure the backend is running.");
     } finally {
       setLoading(false);
     }
