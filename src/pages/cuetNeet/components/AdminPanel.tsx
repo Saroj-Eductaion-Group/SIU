@@ -1,6 +1,15 @@
 import { useState, useMemo, useEffect } from "react";
 
-const BASE = import.meta.env.VITE_API_URL || `http://${typeof window !== 'undefined' ? window.location.hostname : 'localhost'}:5000/api`;
+const BASE = import.meta.env.VITE_API_URL && import.meta.env.VITE_API_URL !== "http://localhost:5000/api"
+  ? import.meta.env.VITE_API_URL
+  : (typeof window !== 'undefined' && 
+     window.location.hostname !== 'localhost' && 
+     window.location.hostname !== '127.0.0.1' && 
+     !window.location.hostname.startsWith('192.168.') && 
+     !window.location.hostname.startsWith('10.') && 
+     !window.location.hostname.startsWith('172.')
+      ? '/api'
+      : `http://${typeof window !== 'undefined' ? window.location.hostname : 'localhost'}:5000/api`);
 
 type NeetReg = {
   _id: string;

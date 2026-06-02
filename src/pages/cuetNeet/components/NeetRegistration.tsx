@@ -5,7 +5,16 @@ import {
   CUETRegistration,
 } from "../lib/data";
 
-const BASE = import.meta.env.VITE_API_URL || `http://${typeof window !== 'undefined' ? window.location.hostname : 'localhost'}:5000/api`;
+const BASE = import.meta.env.VITE_API_URL && import.meta.env.VITE_API_URL !== "http://localhost:5000/api"
+  ? import.meta.env.VITE_API_URL
+  : (typeof window !== 'undefined' && 
+     window.location.hostname !== 'localhost' && 
+     window.location.hostname !== '127.0.0.1' && 
+     !window.location.hostname.startsWith('192.168.') && 
+     !window.location.hostname.startsWith('10.') && 
+     !window.location.hostname.startsWith('172.')
+      ? '/api'
+      : `http://${typeof window !== 'undefined' ? window.location.hostname : 'localhost'}:5000/api`);
 
 const STATES = ["Uttar Pradesh","Delhi","Bihar","Madhya Pradesh","Rajasthan","Gujarat","Maharashtra","Punjab","Haryana","Uttarakhand","Jharkhand","West Bengal","Assam","Tamil Nadu","Telangana","Andhra Pradesh","Karnataka","Kerala","Odisha","Other"];
 const QUALIFICATIONS = ["Class 12 / Intermediate (Appearing 2026)","Class 12 / Intermediate (Passed)"];

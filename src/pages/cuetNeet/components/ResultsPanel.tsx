@@ -1,6 +1,15 @@
 import { useState, useEffect } from "react";
 
-const BASE = (import.meta as unknown as { env: Record<string, string> }).env?.VITE_API_URL || `http://${typeof window !== 'undefined' ? window.location.hostname : 'localhost'}:5000/api`;
+const BASE = import.meta.env.VITE_API_URL && import.meta.env.VITE_API_URL !== "http://localhost:5000/api"
+  ? import.meta.env.VITE_API_URL
+  : (typeof window !== 'undefined' && 
+     window.location.hostname !== 'localhost' && 
+     window.location.hostname !== '127.0.0.1' && 
+     !window.location.hostname.startsWith('192.168.') && 
+     !window.location.hostname.startsWith('10.') && 
+     !window.location.hostname.startsWith('172.')
+      ? '/api'
+      : `http://${typeof window !== 'undefined' ? window.location.hostname : 'localhost'}:5000/api`);
 const API = `${BASE}/registrations`;
 
 const FILTERS = ["All", "100% Scholarship (A+)", "50% Scholarship (A)", "25% Scholarship (B)", "Grade C", "Not Qualified"];
