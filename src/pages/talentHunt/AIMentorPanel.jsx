@@ -77,34 +77,34 @@ export default function AIMentorPanel() {
   };
 
   return (
-    <div className="max-w-3xl mx-auto">
+    <div className="w-full max-w-5xl mx-auto px-2 sm:px-4">
       {/* Header */}
-      <div className="rounded-t-xl p-4 flex items-center justify-between"
+      <div className="rounded-t-2xl px-5 py-4 flex items-center justify-between"
         style={{ background: "linear-gradient(135deg,#4c1d95,#0a1f5c)" }}>
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl flex items-center justify-center text-xl flex-shrink-0"
+          <div className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl flex-shrink-0"
             style={{ background: "rgba(255,255,255,0.15)" }}>🤖</div>
           <div>
-            <div className="font-bold text-white text-sm">AdmissionX AI Mentor</div>
-            <div className="text-xs" style={{ color: "rgba(255,255,255,0.55)" }}>Powered by Saroj International University</div>
+            <div className="font-bold text-white text-base sm:text-lg">SIU AI Mentor</div>
+            <div className="text-xs sm:text-sm" style={{ color: "rgba(255,255,255,0.65)" }}>Powered by Saroj International University</div>
           </div>
         </div>
-        <div className="flex items-center gap-1.5 text-xs font-bold" style={{ color: "#86efac" }}>
-          <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
+        <div className="flex items-center gap-2 text-sm font-bold" style={{ color: "#86efac" }}>
+          <span className="w-2.5 h-2.5 rounded-full bg-green-400 animate-pulse" />
           Online
         </div>
       </div>
 
       {/* Chat Window */}
-      <div className="bg-gray-50 border-x border-gray-200 overflow-y-auto p-4 space-y-4"
-        style={{ height: "420px" }}>
+      <div className="bg-gray-50 border-x border-gray-200 overflow-y-auto p-4 sm:p-5 space-y-4"
+        style={{ minHeight: "420px", height: "clamp(420px, 55vh, 600px)" }}>
         {messages.map((msg, i) => (
           <div key={i} className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}>
             {msg.role === "ai" && (
-              <div className="mr-2 w-8 h-8 rounded-full flex items-center justify-center text-sm flex-shrink-0 self-end"
+              <div className="mr-2 w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 self-end"
                 style={{ background: "linear-gradient(135deg,#4c1d95,#6c3fc7)", color: "#fff" }}>AI</div>
             )}
-            <div className="max-w-[80%] rounded-2xl px-4 py-3 text-sm leading-relaxed whitespace-pre-wrap"
+            <div className="max-w-[85%] sm:max-w-[75%] rounded-2xl px-4 py-3 text-sm sm:text-base leading-relaxed whitespace-pre-wrap"
               style={msg.role === "ai"
                 ? { background: "#fff", color: "#1f2937", border: "1px solid #e5e7eb", borderBottomLeftRadius: "4px" }
                 : { background: "linear-gradient(135deg,#6c3fc7,#4c1d95)", color: "#fff", borderBottomRightRadius: "4px" }
@@ -115,11 +115,11 @@ export default function AIMentorPanel() {
         ))}
         {loading && (
           <div className="flex justify-start">
-            <div className="mr-2 w-8 h-8 rounded-full flex items-center justify-center text-sm flex-shrink-0"
+            <div className="mr-2 w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0"
               style={{ background: "linear-gradient(135deg,#4c1d95,#6c3fc7)", color: "#fff" }}>AI</div>
-            <div className="bg-white border border-gray-200 rounded-2xl rounded-bl-sm px-4 py-3 flex items-center gap-1.5">
+            <div className="bg-white border border-gray-200 rounded-2xl rounded-bl-sm px-4 py-3 flex items-center gap-2">
               {[0,1,2].map(i => (
-                <div key={i} className="w-2 h-2 rounded-full animate-bounce"
+                <div key={i} className="w-2.5 h-2.5 rounded-full animate-bounce"
                   style={{ background: "#6c3fc7", animationDelay: `${i * 0.15}s` }} />
               ))}
             </div>
@@ -129,43 +129,43 @@ export default function AIMentorPanel() {
       </div>
 
       {/* Suggestions */}
-      <div className="bg-gray-50 border-x border-gray-200 px-4 py-2 flex gap-2 overflow-x-auto"
+      <div className="bg-gray-50 border-x border-gray-200 px-4 py-2.5 flex gap-2 overflow-x-auto"
         style={{ scrollbarWidth: "none" }}>
         {SUGGESTIONS.map(s => (
           <button key={s} onClick={() => send(s)}
-            className="whitespace-nowrap px-3 py-1.5 rounded-full text-xs font-medium border transition flex-shrink-0"
-            style={{ background: "#fff", borderColor: "#e5e7eb", color: "#6c3fc7" }}>
+            className="whitespace-nowrap px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-medium border transition flex-shrink-0 hover:bg-purple-50"
+            style={{ background: "#fff", borderColor: "#d8b4fe", color: "#6c3fc7" }}>
             {s}
           </button>
         ))}
       </div>
 
       {/* Input */}
-      <div className="bg-white border border-gray-200 rounded-b-xl p-3 flex gap-2 items-center">
+      <div className="bg-white border border-gray-200 rounded-b-2xl px-4 py-3 flex gap-3 items-center">
         <input
           value={input}
           onChange={e => setInput(e.target.value)}
           onKeyDown={e => e.key === "Enter" && !e.shiftKey && send(input)}
-          placeholder="Ask me anything about CUET, SIUAT, scholarship or study tips..."
-          className="flex-1 px-4 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:border-purple-400 transition"
+          placeholder="Ask me anything about NEET, SIUAT, scholarship or study tips..."
+          className="flex-1 px-4 py-3 rounded-xl border border-gray-200 text-sm sm:text-base focus:outline-none focus:border-purple-400 transition"
         />
         <button onClick={() => send(input)} disabled={!input.trim() || loading}
-          className="w-10 h-10 rounded-full flex items-center justify-center text-white transition disabled:opacity-40 flex-shrink-0"
+          className="w-11 h-11 rounded-full flex items-center justify-center text-white transition disabled:opacity-40 flex-shrink-0 text-lg"
           style={{ background: "linear-gradient(135deg,#6c3fc7,#4c1d95)" }}>
           ➤
         </button>
       </div>
 
       {/* Stats */}
-      <div className="mt-4 grid grid-cols-3 gap-3">
+      <div className="mt-4 grid grid-cols-3 gap-3 sm:gap-4">
         {[
           { num: "2,34,891", label: "Questions answered this month" },
           { num: "1.2s",     label: "Average response time" },
           { num: "847",      label: "Topics covered" },
         ].map(s => (
-          <div key={s.label} className="bg-white border border-gray-200 rounded-xl p-3 text-center">
-            <div className="font-bold text-base" style={{ fontFamily: "'Playfair Display', serif", color: "#6c3fc7" }}>{s.num}</div>
-            <div className="text-[10px] text-gray-400 mt-0.5">{s.label}</div>
+          <div key={s.label} className="bg-white border border-gray-200 rounded-xl p-4 text-center">
+            <div className="font-bold text-lg sm:text-xl" style={{ color: "#6c3fc7" }}>{s.num}</div>
+            <div className="text-xs sm:text-sm text-gray-400 mt-1">{s.label}</div>
           </div>
         ))}
       </div>

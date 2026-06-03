@@ -39,6 +39,8 @@ app.use('/api/siuat', require('./routes/siuat'));               // CuetNeet port
 app.use('/api/cuet', require('./routes/cuet'));                 // CUET mock test registrations
 app.use('/api/neet', require('./routes/neet'));                 // NEET mock test registrations
 
+app.use('/api/gemini', require('./routes/gemini'));
+
 app.get('/health', (req, res) => res.json({ status: 'ok' }));
 
 // Resilient fallback connection string to support quick local setups out-of-the-box

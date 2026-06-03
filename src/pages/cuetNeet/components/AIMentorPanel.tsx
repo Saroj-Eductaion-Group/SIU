@@ -86,75 +86,90 @@ export function AIMentorPanel() {
   };
 
   return (
-    <div className="flex flex-col h-[520px] max-w-2xl mx-auto border border-gray-200 rounded-2xl shadow-sm overflow-hidden bg-white">
-      {/* Header */}
-      <div className="p-4 border-b border-gray-100 flex items-center gap-3 bg-gradient-to-r from-[#6c3fc7] to-[#4c1d95] text-white">
-        <span className="text-2xl">🤖</span>
-        <div>
-          <h3 className="font-serif font-black text-sm text-white">SIU AI Mentor</h3>
-          <p className="text-[10px] text-white/70">Powered by Saroj International University</p>
+    <div className="w-full max-w-5xl mx-auto px-2 sm:px-0">
+      {/* Chat Card */}
+      <div className="flex flex-col border border-gray-200 rounded-2xl shadow-sm overflow-hidden bg-white">
+        {/* Header */}
+        <div className="px-5 py-4 flex items-center justify-between bg-gradient-to-r from-[#6c3fc7] to-[#4c1d95] text-white">
+          <div className="flex items-center gap-3">
+            <div className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl flex-shrink-0" style={{ background: "rgba(255,255,255,0.15)" }}>🤖</div>
+            <div>
+              <h3 className="font-bold text-base sm:text-lg text-white">SIU AI Mentor</h3>
+              <p className="text-xs sm:text-sm text-white/70">Powered by Saroj International University</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-2 text-sm font-bold text-green-300">
+            <span className="w-2.5 h-2.5 rounded-full bg-green-400 animate-pulse" />
+            Online
+          </div>
+        </div>
+
+        {/* Messages */}
+        <div className="overflow-y-auto p-4 sm:p-5 space-y-4 bg-gray-50/50" style={{ minHeight: "400px", height: "clamp(400px, 52vh, 580px)" }}>
+          {messages.map((m, i) => (
+            <div key={i} className={`flex ${m.role === "user" ? "justify-end" : "justify-start"}`}>
+              {m.role === "ai" && (
+                <div className="mr-2 w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 self-end" style={{ background: "linear-gradient(135deg,#4c1d95,#6c3fc7)", color: "#fff" }}>AI</div>
+              )}
+              <div className={`max-w-[85%] sm:max-w-[75%] rounded-2xl px-4 py-3 text-sm sm:text-base leading-relaxed ${m.role === "user" ? "bg-[#6c3fc7] text-white rounded-tr-none" : "bg-white border border-gray-100 text-gray-800 rounded-tl-none shadow-sm"}`} style={{ whiteSpace: "pre-wrap" }}>
+                {m.text}
+              </div>
+            </div>
+          ))}
+          {loading && (
+            <div className="flex justify-start">
+              <div className="mr-2 w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0" style={{ background: "linear-gradient(135deg,#4c1d95,#6c3fc7)", color: "#fff" }}>AI</div>
+              <div className="bg-white border border-gray-100 rounded-2xl rounded-tl-none px-4 py-3 flex items-center gap-2">
+                {[0,1,2].map(i => (
+                  <div key={i} className="w-2.5 h-2.5 rounded-full animate-bounce" style={{ background: "#6c3fc7", animationDelay: `${i * 0.15}s` }} />
+                ))}
+              </div>
+            </div>
+          )}
+          <div ref={bottomRef} />
+        </div>
+
+        {/* Suggestions */}
+        <div className="px-4 py-2.5 bg-gray-50 border-t border-gray-100 flex gap-2 overflow-x-auto" style={{ scrollbarWidth: "none" }}>
+          {SUGGESTIONS.map(s => (
+            <button key={s} onClick={() => send(s)} className="whitespace-nowrap px-3.5 py-1.5 bg-white border border-purple-200 rounded-full text-xs sm:text-sm font-medium text-purple-700 hover:bg-purple-50 transition flex-shrink-0">
+              {s}
+            </button>
+          ))}
+        </div>
+
+        {/* Input */}
+        <div className="bg-white border-t border-gray-200 px-4 py-3 flex gap-3 items-center">
+          <input
+            value={input}
+            onChange={e => setInput(e.target.value)}
+            onKeyDown={e => e.key === "Enter" && !e.shiftKey && send(input)}
+            placeholder="Ask me anything about NEET, SIUAT, scholarship or study tips..."
+            data-testid="chat-input"
+            className="flex-1 px-4 py-3 rounded-xl border border-gray-200 text-sm sm:text-base focus:outline-none focus:border-purple-400 transition"
+          />
+          <button
+            onClick={() => send(input)}
+            disabled={!input.trim() || loading}
+            data-testid="chat-send"
+            className="w-11 h-11 rounded-full flex items-center justify-center text-white text-lg transition disabled:opacity-40 flex-shrink-0"
+            style={{ background: "linear-gradient(135deg,#6c3fc7,#4c1d95)" }}
+          >
+            ➤
+          </button>
         </div>
       </div>
 
-      {/* Messages */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50/50">
-        {messages.map((m, i) => (
-          <div key={i} className={`flex ${m.role === "user" ? "justify-end" : "justify-start"}`}>
-            <div className={`max-w-[80%] rounded-2xl px-4 py-3 text-xs leading-relaxed ${m.role === "user" ? "bg-[#6c3fc7] text-white rounded-tr-none" : "bg-white border border-gray-100 text-gray-800 rounded-tl-none shadow-sm"}`} style={{ whiteSpace: "pre-wrap" }}>
-              {m.text}
-            </div>
-          </div>
-        ))}
-        {loading && (
-          <div className="flex justify-start">
-            <div className="bg-white border border-gray-100 rounded-2xl rounded-tl-none px-4 py-3 text-xs text-gray-400 italic">
-              AI Mentor is typing...
-            </div>
-          </div>
-        )}
-        <div ref={bottomRef} />
-      </div>
-
-      {/* Suggestions */}
-      <div className="p-2.5 bg-gray-50 border-t border-gray-100 flex gap-1.5 overflow-x-auto whitespace-nowrap scrollbar-none no-print">
-        {SUGGESTIONS.map(s => (
-          <button key={s} onClick={() => send(s)} className="px-3 py-1.5 bg-white border border-gray-200 rounded-full text-[10px] font-semibold text-gray-600 hover:border-purple-300 transition">
-            {s}
-          </button>
-        ))}
-      </div>
-
-      {/* Input */}
-      <div className="bg-white border border-gray-200 rounded-b-xl p-3 flex gap-2 items-center">
-        <input
-          value={input}
-          onChange={e => setInput(e.target.value)}
-          onKeyDown={e => e.key === "Enter" && !e.shiftKey && send(input)}
-          placeholder="Ask me anything about NEET, SIUAT, scholarship or study tips..."
-          data-testid="chat-input"
-          className="flex-1 px-4 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:border-purple-400 transition"
-        />
-        <button
-          onClick={() => send(input)}
-          disabled={!input.trim() || loading}
-          data-testid="chat-send"
-          className="w-10 h-10 rounded-full flex items-center justify-center text-white transition disabled:opacity-40 flex-shrink-0"
-          style={{ background: "linear-gradient(135deg,#6c3fc7,#4c1d95)" }}
-        >
-          ➤
-        </button>
-      </div>
-
       {/* Stats */}
-      <div className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-3">
+      <div className="mt-4 grid grid-cols-3 gap-3 sm:gap-4">
         {[
           { num: "2,34,891", label: "Questions answered this month" },
           { num: "1.2s", label: "Average response time" },
           { num: "847", label: "Topics covered" },
         ].map(s => (
-          <div key={s.label} className="bg-white border border-gray-200 rounded-xl p-3 text-center">
-            <div className="font-serif font-bold text-base text-[#6c3fc7]">{s.num}</div>
-            <div className="text-[10px] text-gray-400 mt-0.5">{s.label}</div>
+          <div key={s.label} className="bg-white border border-gray-200 rounded-xl p-4 text-center">
+            <div className="font-bold text-lg sm:text-xl text-[#6c3fc7]">{s.num}</div>
+            <div className="text-xs sm:text-sm text-gray-400 mt-1">{s.label}</div>
           </div>
         ))}
       </div>
