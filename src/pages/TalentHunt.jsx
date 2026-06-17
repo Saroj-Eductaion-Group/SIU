@@ -13,6 +13,8 @@ const TABS = [
   { id: 'results',      label: 'Results',      icon: '🏆' },
 ];
 
+const VALID_SIUAT_TABS = ['registration', 'admin', 'exam', 'results', 'siuat'];
+
 function ScholarshipPopup({ onClose, onRegister }) {
   const [timeLeft, setTimeLeft] = useState(3 * 24 * 60 * 60);
   useEffect(() => {
@@ -34,8 +36,8 @@ function ScholarshipPopup({ onClose, onRegister }) {
             <div className="text-2xl mb-2">⭐⭐⭐</div>
             <h2 className="text-xl sm:text-2xl font-black text-blue-900 mb-1">Win 100% Full Scholarship!</h2>
             <p className="text-gray-500 text-sm leading-relaxed">Score <strong>90% or above</strong> in the Saroj International University Aptitude Test (SIUAT) and get a complete fee waiver for your entire programme.</p>
-            <p className="text-red-600 text-xs font-bold mt-2">
-              Offer closes in: {d}d {String(h).padStart(2,'0')}h {String(m).padStart(2,'0')}m {String(s).padStart(2,'0')}s
+            <p className="text-emerald-600 text-xs font-bold mt-2 flex items-center justify-center gap-1">
+              🟢 Admission & Scholarship Drive: Active for 2026-27 Session
             </p>
           </div>
           <div className="grid grid-cols-2 gap-2 mb-4">
@@ -65,8 +67,48 @@ function ScholarshipPopup({ onClose, onRegister }) {
 }
 
 export default function TalentHunt() {
-  const [active, setActive] = useState('registration');
+  const [active, setActive] = useState(() => {
+    const hash = window.location.hash.replace('#', '');
+    const valid = ['registration', 'admin', 'exam', 'results'];
+    return valid.includes(hash) ? hash : 'registration';
+  });
   const [showSchPopup, setShowSchPopup] = useState(false);
+
+  const setTab = (tab) => {
+    const resolvedTab = tab === 'siuat' ? 'registration' : tab;
+    const validTabs = ['registration', 'admin', 'exam', 'results'];
+    if (!validTabs.includes(resolvedTab)) return;
+    window.history.pushState({ siuatTab: resolvedTab }, '', `/talent-hunt#${resolvedTab}`);
+    setActive(resolvedTab);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash.replace('#', '');
+      const valid = ['registration', 'admin', 'exam', 'results'];
+      if (valid.includes(hash)) {
+        setActive(hash);
+      }
+    };
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
+
+  useEffect(() => {
+    const initialTab = active;
+    if (!window.history.state?.siuatTab) {
+      window.history.replaceState({ siuatTab: initialTab }, '', `/talent-hunt#${initialTab}`);
+    }
+    const onPopState = (e) => {
+      const valid = ['registration', 'admin', 'exam', 'results'];
+      const tab = e.state?.siuatTab || window.location.hash.replace('#', '');
+      setActive(valid.includes(tab) ? tab : 'registration');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+    window.addEventListener('popstate', onPopState);
+    return () => window.removeEventListener('popstate', onPopState);
+  }, [active]);
 
   useEffect(() => {
     const seen = sessionStorage.getItem('th_sch_seen');
@@ -80,17 +122,18 @@ export default function TalentHunt() {
   }, []);
 
   useEffect(() => {
-    const handler = (e) => setActive(e.detail);
+    const handler = (e) => setTab(e.detail);
     window.addEventListener('th-tab', handler);
     return () => window.removeEventListener('th-tab', handler);
   }, []);
+
 
   return (
     <Layout>
       {showSchPopup && (
         <ScholarshipPopup
           onClose={() => setShowSchPopup(false)}
-          onRegister={() => setActive('registration')}
+          onRegister={() => setTab('registration')}
         />
       )}
 
@@ -159,7 +202,7 @@ export default function TalentHunt() {
             </div>
 
             <div className="flex flex-wrap gap-3 justify-center">
-              <button onClick={() => setActive('registration')}
+              <button onClick={() => setTab('registration')}
                 className="bg-orange-500 hover:bg-orange-600 text-white font-bold px-8 py-3 rounded-xl text-sm transition shadow-lg">
                 ✎ Register Now →
               </button>
@@ -171,19 +214,9 @@ export default function TalentHunt() {
           </div>
 
           <div style={{background:'rgba(0,0,0,0.3)',borderTop:'1px solid rgba(201,168,76,0.25)'}}>
-            <div className="max-w-5xl mx-auto px-4 py-3 flex items-center justify-around flex-wrap gap-x-2 gap-y-2">
-              {[['10 May','Exam 1'],['24 May','Exam 2'],['7 Jun','Exam 3'],['21 Jun','Exam 4']].map(([date,label],i,arr)=>(
-                <div key={date} className="flex items-center gap-3">
-                  <div className="text-center">
-                    <div className="text-yellow-300 font-bold text-base sm:text-lg font-outfit">{date}</div>
-                    <div className="text-blue-300 text-xs sm:text-sm uppercase tracking-widest">{label}</div>
-                  </div>
-                  {i < arr.length-1 && <div className="hidden sm:block" style={{width:'1px',height:'28px',background:'rgba(255,255,255,0.15)'}}/>}
-                </div>
-              ))}
-              <div className="hidden sm:block" style={{width:'1px',height:'28px',background:'rgba(255,255,255,0.15)'}}/>
+            <div className="max-w-5xl mx-auto px-4 py-3 flex items-center justify-center">
               <div className="text-center">
-                <div className="text-yellow-300 font-bold text-base sm:text-lg font-outfit">500</div>
+                <div className="text-yellow-300 font-bold text-base sm:text-lg font-outfit">1000</div>
                 <div className="text-blue-300 text-xs sm:text-sm uppercase tracking-widest">Seats Total</div>
               </div>
             </div>
@@ -195,7 +228,7 @@ export default function TalentHunt() {
           <div className="max-w-6xl mx-auto px-4">
             <div className="flex gap-0 overflow-x-auto">
               {TABS.map(t => (
-                <button key={t.id} onClick={() => setActive(t.id)}
+                <button key={t.id} onClick={() => setTab(t.id)}
                   className={`flex items-center gap-2 px-4 sm:px-5 py-4 text-xs sm:text-sm font-semibold whitespace-nowrap border-b-2 transition-all ${
                     active === t.id ? 'text-blue-700 border-orange-500 bg-blue-50' : 'text-gray-500 border-transparent hover:text-blue-700 hover:bg-gray-50'
                   }`}>
@@ -210,7 +243,7 @@ export default function TalentHunt() {
         <div className="max-w-6xl mx-auto px-4 py-6 sm:py-8">
           {active === 'registration' && <RegistrationPanel onOpenScholarship={() => setShowSchPopup(true)} />}
           {active === 'admin'        && <AdminPanel />}
-          {active === 'exam'         && <ExamPanel onShowResults={() => setActive('results')} />}
+          {active === 'exam'         && <ExamPanel onShowResults={() => setTab('results')} />}
           {active === 'results'      && <ResultsPanel />}
         </div>
 

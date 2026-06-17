@@ -26,6 +26,9 @@ interface ExamResult {
   maxScore: number;
   pct: number;
   answers: Record<number, number>;
+  savedAt?: string;
+  sectionBreakdown?: Record<string, { correct: number; wrong: number; total: number }>;
+  difficultyBreakdown?: Record<string, { correct: number; wrong: number; total: number }>;
 }
 
 const SUBJECT_FILTERS = ["All", "Physics", "Chemistry", "Biology", "Mathematics", "English", "General Test", "Reasoning"];
@@ -226,7 +229,23 @@ export function MockTestsPanel() {
     const score = correct * 4 - wrong * 1;
     const maxScore = test.attemptCount * 4;
     const pct = maxScore > 0 ? Math.max(0, Math.round((score / maxScore) * 100)) : 0;
-    const r: ExamResult = { testId: activeTestId!, correct, wrong, skipped, score, maxScore, pct, answers };
+    // Build section & difficulty breakdowns for detailed report
+    const sectionBreakdown: Record<string, { correct: number; wrong: number; total: number }> = {};
+    const difficultyBreakdown: Record<string, { correct: number; wrong: number; total: number }> = {};
+    questions.forEach((q, i) => {
+      const sec = q.section;
+      const diff = q.difficulty;
+      if (!sectionBreakdown[sec]) sectionBreakdown[sec] = { correct: 0, wrong: 0, total: 0 };
+      if (!difficultyBreakdown[diff]) difficultyBreakdown[diff] = { correct: 0, wrong: 0, total: 0 };
+      sectionBreakdown[sec].total++;
+      difficultyBreakdown[diff].total++;
+      const ans = answers[i];
+      if (ans !== undefined) {
+        if (ans === q.correctOption) { sectionBreakdown[sec].correct++; difficultyBreakdown[diff].correct++; }
+        else { sectionBreakdown[sec].wrong++; difficultyBreakdown[diff].wrong++; }
+      }
+    });
+    const r: ExamResult = { testId: activeTestId!, correct, wrong, skipped, score, maxScore, pct, answers, savedAt: new Date().toISOString(), sectionBreakdown, difficultyBreakdown };
     setResult(r);
     setResults(prev => [...prev, r]);
 

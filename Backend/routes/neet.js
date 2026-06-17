@@ -3,10 +3,26 @@ const router = express.Router();
 const NeetRegistration = require('../models/NeetRegistration');
 const auth = require('../middleware/auth');
 
-// ADMIN — Get all NEET registrations
-router.get('/admin/all', auth, async (req, res) => {
+// PUBLIC — Get all NEET registrations with mock results (leaderboard)
+router.get('/admin/all', async (req, res) => {
   try {
-    const regs = await NeetRegistration.find().sort({ registeredAt: -1 });
+    const regs = await NeetRegistration.find(
+      { 'mockResults.0': { $exists: true } },
+      { neetId:1, firstName:1, lastName:1, city:1, state:1, mockResults:1, registeredAt:1 }
+    ).sort({ registeredAt: -1 });
+    res.json(regs);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+// PUBLIC — Get all results (for Results tab)
+router.get('/results-all', async (req, res) => {
+  try {
+    const regs = await NeetRegistration.find(
+      { 'mockResults.0': { $exists: true } },
+      { neetId:1, firstName:1, lastName:1, city:1, state:1, mockResults:1, registeredAt:1 }
+    ).sort({ registeredAt: -1 });
     res.json(regs);
   } catch (err) {
     res.status(500).json({ message: err.message });

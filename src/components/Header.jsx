@@ -463,7 +463,7 @@ function Header() {
               <li className='mt-2'>
                 <a href='/talent-hunt'>
                   <button className='w-full bg-yellow-500 hover:bg-yellow-600 text-white font-semibold px-6 py-3 rounded-md transition duration-300 flex items-center justify-center gap-2'>
-                    🏆 Talent Hunt 2026-27
+                    🏆 SIUAT 2026-27
                   </button>
                 </a>
               </li>

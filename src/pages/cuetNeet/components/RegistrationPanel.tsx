@@ -238,33 +238,6 @@ function ExamPortal({ registrations, setRegistrations }: { registrations: Regist
 
     if (reg.status === "Pending") { setLoginError("Your application is still under review. Please wait for admin approval."); return; }
     if (reg.status === "Rejected") { setLoginError("Your application has been rejected. Please contact SIU admissions."); return; }
-
-    // Check if there is a saved state for this candidate (Auto-Save Resilience)
-    const savedStateRaw = localStorage.getItem(`siuat_exam_state_${trimmed}`);
-    if (savedStateRaw && !reg.examCompleted) {
-      try {
-        const savedState = JSON.parse(savedStateRaw);
-        setCandidate(reg);
-        setExamQuestions(savedState.questions);
-        setAnswers(savedState.answers);
-        setCurrentQ(savedState.currentQ);
-        setViolations(savedState.violations);
-        setTimeLeft(savedState.timeLeft);
-        setPhase("active");
-        setLoginError("");
-
-        requestFullscreen();
-        if (timerRef.current) clearInterval(timerRef.current);
-        timerRef.current = setInterval(() => {
-          setTimeLeft(t => { if (t <= 1) { clearInterval(timerRef.current!); handleSubmit(); return 0; } return t - 1; });
-        }, 1000);
-        return;
-      } catch (err) {
-        console.error("Failed to restore saved exam state:", err);
-      }
-    }
-
-    if (reg.examCompleted) { setLoginError("You have already completed the Talent Hunt exam. Check your result in the Results tab."); return; }
     
     setCandidate(reg);
     setLoginError("");
@@ -742,7 +715,7 @@ function ExamPortal({ registrations, setRegistrations }: { registrations: Regist
 
 /* ─────────────────────────────── MAIN PANEL ─────────────────────────────── */
 export function RegistrationPanel() {
-  const [subTab, setSubTab] = useLocalStorage<SubTab>("siuat_subtab", "register");
+  const [subTab, setSubTab] = useState<SubTab>("register");
   const [step, setStep] = useState(1);
   const [registrations, setRegistrations] = useLocalStorage<Registration[]>("siu_registrations", []);
   

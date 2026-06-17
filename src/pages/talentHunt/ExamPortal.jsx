@@ -4,7 +4,7 @@ import { siuatLogin, siuatSubmitResult } from './api';
 
 const SIUAT_QUESTIONS = getQuestions(['default']);
 
-const EXAM_DURATION = 45 * 60;
+const EXAM_DURATION = 60 * 60;
 
 export default function ExamPortal({ registrations, setRegistrations }) {
   const [phase, setPhase] = useState('login');
@@ -21,13 +21,27 @@ export default function ExamPortal({ registrations, setRegistrations }) {
   const questions = SIUAT_QUESTIONS;
 
   useEffect(() => {
-    const handler = () => {
-      if (document.hidden && phase === 'active') {
-        setViolations(v => { const n = v + 1; setShowVio(true); setTimeout(() => setShowVio(false), 3000); return n; });
-      }
+    if (phase !== 'active') return;
+    const requestFS = () => {
+      const el = document.documentElement;
+      if (el.requestFullscreen) el.requestFullscreen().catch(() => {});
+      else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
     };
+    const addViolation = () => {
+      setViolations(v => { const n = v + 1; setShowVio(true); setTimeout(() => { requestFS(); setShowVio(false); }, 2000); return n; });
+    };
+    const handleFSChange = () => {
+      if (!(document.fullscreenElement || document.webkitFullscreenElement)) addViolation();
+    };
+    const handler = () => { if (document.hidden) addViolation(); };
     document.addEventListener('visibilitychange', handler);
-    return () => document.removeEventListener('visibilitychange', handler);
+    document.addEventListener('fullscreenchange', handleFSChange);
+    document.addEventListener('webkitfullscreenchange', handleFSChange);
+    return () => {
+      document.removeEventListener('visibilitychange', handler);
+      document.removeEventListener('fullscreenchange', handleFSChange);
+      document.removeEventListener('webkitfullscreenchange', handleFSChange);
+    };
   }, [phase]);
 
   const startTimer = () => {
@@ -57,7 +71,12 @@ export default function ExamPortal({ registrations, setRegistrations }) {
     }
   };
 
-  const startExam = () => { setPhase('active'); setTimeLeft(EXAM_DURATION); startTimer(); };
+  const startExam = () => {
+    const el = document.documentElement;
+    if (el.requestFullscreen) el.requestFullscreen().catch(() => {});
+    else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+    setPhase('active'); setTimeLeft(EXAM_DURATION); startTimer();
+  };
 
   const handleSubmit = () => {
     if (timerRef.current) clearInterval(timerRef.current);
@@ -124,7 +143,7 @@ export default function ExamPortal({ registrations, setRegistrations }) {
         </div>
         <div className="p-5">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-5">
-            {[{ l: 'Total Questions', v: `${questions.length}` }, { l: 'Total Marks', v: `${questions.length * 4}` }, { l: 'Duration', v: '45 Minutes' }, { l: 'Marking Scheme', v: '+4 / −1' }].map(s => (
+            {[{ l: 'Total Questions', v: `${questions.length}` }, { l: 'Total Marks', v: `${questions.length * 4}` }, { l: 'Duration', v: '60 Minutes' }, { l: 'Marking Scheme', v: '+4 / −1' }].map(s => (
               <div key={s.l} className="text-center rounded-xl p-3" style={{ background: '#f5f0ff' }}>
                 <div className="font-black text-xl" style={{ fontFamily: "'Playfair Display', serif", color: '#4c1d95' }}>{s.v}</div>
                 <div className="text-[10px] text-gray-500 mt-0.5">{s.l}</div>

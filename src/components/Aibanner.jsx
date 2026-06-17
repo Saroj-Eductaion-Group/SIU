@@ -39,26 +39,29 @@ const LightAIBanner = () => {
     }
   ];
 
-  // Floating dots animation
-  const [dots, setDots] = useState([]);
-  useEffect(() => {
-    const updateDots = () => {
-      const dotCount = window.innerWidth < 768 ? 15 : window.innerWidth < 1024 ? 30 : 40;
-      const newDots = Array.from({ length: dotCount }).map((_, i) => ({
-        id: i,
-        x: Math.random() * 100,
-        y: Math.random() * 100,
-        size: Math.random() * 3 + 1,
-        speed: Math.random() * 3 + 1,
-        delay: Math.random() * 5,
-        opacity: Math.random() * 0.2 + 0.1
-      }));
-      setDots(newDots);
-    };
+  // Floating dots - computed once, stable (no flash)
+  const [dots] = useState(() => {
+    const dotCount = typeof window !== 'undefined'
+      ? (window.innerWidth < 768 ? 15 : window.innerWidth < 1024 ? 30 : 40)
+      : 30;
+    return Array.from({ length: dotCount }).map((_, i) => ({
+      id: i,
+      x: Math.random() * 100,
+      y: Math.random() * 100,
+      size: Math.random() * 3 + 1,
+      speed: Math.random() * 3 + 1,
+      delay: Math.random() * 5,
+      opacity: Math.random() * 0.2 + 0.1
+    }));
+  });
 
-    updateDots();
-    window.addEventListener('resize', updateDots);
-    return () => window.removeEventListener('resize', updateDots);
+  // Inject float animation once on mount
+  useEffect(() => {
+    if (document.getElementById('ai-banner-style')) return;
+    const style = document.createElement('style');
+    style.id = 'ai-banner-style';
+    style.textContent = '@keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }';
+    document.head.appendChild(style);
   }, []);
 
   return (
@@ -124,10 +127,10 @@ const LightAIBanner = () => {
             </p>
             
             <div className="flex flex-wrap gap-3 sm:gap-4">
-              <button className="px-6 py-3 sm:px-8 sm:py-4 bg-gradient-to-r from-blue-500 to-cyan-500 text-white font-bold rounded-lg md:rounded-xl hover:shadow-lg hover:shadow-blue-200 transition-all duration-300 flex items-center gap-2 sm:gap-3 group text-sm sm:text-base">
-                <Link to='/programs'>Explore Programs</Link>
+              <Link to='/programs' className="px-6 py-3 sm:px-8 sm:py-4 bg-gradient-to-r from-blue-500 to-cyan-500 text-white font-bold rounded-lg md:rounded-xl hover:shadow-lg hover:shadow-blue-200 transition-all duration-300 flex items-center gap-2 sm:gap-3 group text-sm sm:text-base">
+                Explore Programs
                 <Rocket className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" />
-              </button>
+              </Link>
             </div>
             
             {/* Stats */}
@@ -206,13 +209,7 @@ const LightAIBanner = () => {
         <Network className="w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 xl:w-28 xl:h-28" />
       </div>
       
-      {/* CSS animations */}
-      <style>{`
-        @keyframes float {
-          0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(-10px); }
-        }
-      `}</style>
+
     </div>
   );
 };

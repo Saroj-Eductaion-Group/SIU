@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
+    "@google/genai": "^2.7.0",
     "@heroicons/react": "^1.0.6",
     "@hookform/resolvers": "^5.2.1",
     "@react-pdf-viewer/core": "^3.12.0",

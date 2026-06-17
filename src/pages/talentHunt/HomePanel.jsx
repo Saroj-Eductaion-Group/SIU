@@ -9,18 +9,18 @@ const STATS = [
 
 const QUICK_ACTIONS = [
   { icon: "✏️", title: "Start Mock Test",  sub: "CUET 2026 pattern",    tab: "mocks",    bg: "linear-gradient(135deg,#1e3a8a,#2563eb)", accent: "#60a5fa" },
-  { icon: "🏆", title: "SIUAT Exam",       sub: "Win ₹51K scholarship", tab: "siuat",    bg: "linear-gradient(135deg,#78350f,#d97706)", accent: "#e8b840" },
+  { icon: "🏆", title: "SIUAT Exam",       sub: "Win ₹51K scholarship", tab: "registration", bg: "linear-gradient(135deg,#78350f,#d97706)", accent: "#e8b840" },
   { icon: "🤖", title: "Ask AI Mentor",    sub: "24/7 doubt solving",   tab: "ai",       bg: "linear-gradient(135deg,#4c1d95,#7c3aed)", accent: "#a78bfa" },
   { icon: "📊", title: "Live Rankings",    sub: "2.4L+ students",       tab: "rankings", bg: "linear-gradient(135deg,#065f46,#059669)", accent: "#34d399" },
 ];
 
 const FEATURES = [
   { icon: "🎯", title: "CUET Mock Tests",      desc: "3000+ chapter-wise questions across 25 subjects following official NTA CUET 2026 pattern with detailed solutions", badge: "Free", badgeColor: "#16a34a", tab: "mocks" },
-  { icon: "🏛️", title: "SIUAT Scholarship",    desc: "Win up to ₹51,000 merit award. 100% full scholarship for top scorers at Saroj International University", badge: "Hot", badgeColor: "#dc2626", tab: "siuat" },
+  { icon: "🏛️", title: "SIUAT Scholarship",    desc: "Win up to ₹51,000 merit award. 100% full scholarship for top scorers at Saroj International University", badge: "Hot", badgeColor: "#dc2626", tab: "registration" },
   { icon: "🤖", title: "AI Mentor",            desc: "24/7 personalised doubt solving powered by advanced AI for CUET prep — ask any question, get instant answers", badge: "AI", badgeColor: "#7c3aed", tab: "ai" },
   { icon: "📊", title: "Live Rankings",        desc: "See where you stand among 2.4L+ students from across India in real-time national leaderboard", badge: "Live", badgeColor: "#dc2626", tab: "rankings" },
   { icon: "📁", title: "Result Tracker",       desc: "Chapter-wise accuracy heatmap, performance analytics dashboard and previous attempt history", badge: "New", badgeColor: "#0a1f5c", tab: "results" },
-  { icon: "🎓", title: "Admission Guidance",   desc: "Direct SIU admission support, course counselling, and merit-based scholarship application assistance", badge: "SIU", badgeColor: "#c9a84c", tab: "siuat" },
+  { icon: "🎓", title: "Admission Guidance",   desc: "Direct SIU admission support, course counselling, and merit-based scholarship application assistance", badge: "SIU", badgeColor: "#c9a84c", tab: "registration" },
 ];
 
 const EXAM_DATES = [
@@ -102,7 +102,7 @@ export default function HomePanel({ setActiveTab, onScholarship }) {
                   style={{ background: "linear-gradient(90deg,#c9a84c,#e8b840)", color: "#0a1f5c", boxShadow: "0 4px 16px rgba(201,168,76,0.4)" }}>
                   ✏ Start Free Mock Test →
                 </button>
-                <button onClick={() => setActiveTab("siuat")}
+                <button onClick={() => setActiveTab("registration")}
                   className="flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold transition hover:bg-white/10 active:scale-95"
                   style={{ color: "rgba(255,255,255,0.9)", border: "1.5px solid rgba(255,255,255,0.25)" }}>
                   Register for SIUAT 🎓

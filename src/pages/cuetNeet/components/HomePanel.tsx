@@ -67,9 +67,9 @@ const ROADMAPS: Record<string, { chapters: string[]; strategy: string; focus: st
 };
 
 const EXAM_DATES = [
-  { label: "NEET UG 2026", date: "May 3, 2026 (Sunday)", status: "Target Exam", color: "#10b981" },
-  { label: "SIUAT Talent Hunt", date: "June 1–15, 2026", status: "Registration Open", color: "#e8b840" },
-  { label: "Admissions Window", date: "July 2026 Onwards", status: "Upcoming", color: "#2563eb" }
+  { label: "NEET UG 2026", date: "", status: "Target Exam", color: "#10b981" },
+  { label: "NEET PG 2026", date: "", status: "Upcoming", color: "#e8b840" },
+  { label: "Admissions Window", date: "Admissions Open Now!", status: "Open", color: "#2563eb" }
 ];
 
 export function HomePanel({ setActiveTab, onScholarship }: HomePanelProps) {
@@ -148,7 +148,13 @@ export function HomePanel({ setActiveTab, onScholarship }: HomePanelProps) {
         {/* Live Ribbon */}
         <div className="relative z-10 text-center py-2 text-xs font-black tracking-widest uppercase text-[#064e3b]"
           style={{ background: "linear-gradient(90deg, #f59e0b 0%, #fbbf24 35%, #fef08a 60%, #fbbf24 80%, #f59e0b 100%)" }}>
-          ⚡ &nbsp;SIUAT 2026 Registrations Open — Direct Seat Allocation on Merit!&nbsp; ⚡
+          ⚡ &nbsp;SIUAT 2026 Registrations Open —{' '}
+          <button
+            onClick={() => window.location.assign('/talent-hunt#registration')}
+            className="underline hover:text-[#022c22] transition bg-transparent border-0 p-0 cursor-pointer">
+            Register for SIUAT here
+          </button>
+          &nbsp;| Direct Seat Allocation on Merit!&nbsp; ⚡
         </div>
 
         <div className="relative z-10 px-4 sm:px-6 md:px-10 pt-6 pb-6">
@@ -176,9 +182,9 @@ export function HomePanel({ setActiveTab, onScholarship }: HomePanelProps) {
                   style={{ background: "linear-gradient(90deg,#fbbf24,#ffd700)", boxShadow: "0 4px 18px rgba(251,191,36,0.4)" }}>
                   🧬 Practice Mock Tests →
                 </button>
-                <button onClick={() => setActiveTab("siuat")} className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition hover:bg-white/10 text-white"
+                <button onClick={() => setActiveTab("results")} className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition hover:bg-white/10 text-white"
                   style={{ border: "1.5px solid rgba(255,255,255,0.3)" }}>
-                  Register for SIUAT 🎓
+                  My Results 📊
                 </button>
               </div>
 
@@ -492,7 +498,7 @@ export function HomePanel({ setActiveTab, onScholarship }: HomePanelProps) {
             </div>
           </div>
 
-          <button onClick={() => setActiveTab("siuat")} className="w-full py-2 bg-slate-800 text-white font-bold text-xs rounded-xl hover:bg-slate-700 transition border border-slate-700">
+          <button onClick={() => setActiveTab("mocks")} className="w-full py-2 bg-slate-800 text-white font-bold text-xs rounded-xl hover:bg-slate-700 transition border border-slate-700">
             Learn Exam Integrity Rules
           </button>
         </div>
@@ -508,18 +514,18 @@ export function HomePanel({ setActiveTab, onScholarship }: HomePanelProps) {
           </div>
           
           <div className="text-white flex-1 text-center md:text-left">
-            <h3 className="font-serif font-black text-2xl mb-1 text-white">Unlock Direct Merit Scholarships!</h3>
+            <h3 className="font-serif font-black text-2xl mb-1 text-white">Crack NEET 2026 with AI Precision!</h3>
             <p className="text-xs text-emerald-50 mt-1 leading-relaxed max-w-xl">
-              Apply today for the SIUAT Talent Hunt. Qualified candidates with 90%+ scores win a **100% full academic tuition scholarship** to study at our main Lucknow Campus.
+              Practice NTA-pattern mock tests, get instant AI result analysis, track weak areas, and improve your All India Rank with every attempt.
             </p>
           </div>
 
           <div className="flex flex-col gap-2 items-center flex-shrink-0">
-            <button onClick={onScholarship} className="font-extrabold text-xs px-6 py-3 rounded-xl text-[#065f46] transition hover:brightness-105 active:scale-97"
+            <button onClick={() => setActiveTab("mocks")} className="font-extrabold text-xs px-6 py-3 rounded-xl text-[#065f46] transition hover:brightness-105 active:scale-97"
               style={{ background: "linear-gradient(90deg,#ffd700,#fbbf24)", boxShadow: "0 4px 12px rgba(0,0,0,0.15)" }}>
-              Explore Scholarships →
+              Start Mock Test →
             </button>
-            <span className="text-[10px] text-emerald-200 font-medium">Approved by UGC · 500 Seats Available</span>
+            <span className="text-[10px] text-emerald-200 font-medium">Free · NTA Pattern · NEET 2026</span>
           </div>
         </div>
       </div>

@@ -73,9 +73,9 @@ href='/fee-payment'            target="_blank"
             <a 
               href="/talent-hunt"
               className="bg-red-600 hover:bg-red-700 text-white px-4 py-1 rounded-md font-medium transition-all duration-300 shadow-lg animate-pulse whitespace-nowrap text-sm sm:text-base"
-              aria-label="Talent Hunt 2026-27"
+              aria-label="SIUAT 2026-27"
             >
-              🏆 Talent Hunt 2026-27
+              🏆 SIUAT 2026-27
             </a>
           </div>
         </div>

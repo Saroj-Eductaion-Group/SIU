@@ -337,16 +337,63 @@ export const QB = {
 ]
 };
 
-export function getQuestions(courses) {
-  const keys = Object.keys(QB).filter(k => k !== 'default');
-  for (let i = 0; i < courses.length; i++) {
-    const c = courses[i].toLowerCase().replace(/[^a-z.]/g, '');
-    for (let j = 0; j < keys.length; j++) {
-      const k = keys[j].toLowerCase().replace(/[^a-z.]/g, '');
-      if (c.includes(k) || k.includes(c)) return QB[keys[j]];
-    }
-  }
-  return QB.default;
+
+
+export const SIUAT_PAPER = [
+  {q:"The corpus luteum secretes mainly which hormone?",opts:["Estrogen","Progesterone","Luteinizing hormone","Follicle stimulating hormone"],ans:1,sec:"Biology",marks:2},
+  {q:"What is the chromosomal constitution of a person with Klinefelter's syndrome?",opts:["44 autosomes + XO","44 autosomes + XXY","45 autosomes + XY","44 autosomes + XXX"],ans:1,sec:"Biology",marks:2},
+  {q:"Cleistogamous flowers are invariably autogamous because they:",opts:["Produce large quantities of pollen","Are always pollinated by insects","Never open and self-pollination is guaranteed","Have separate male and female flowers"],ans:2,sec:"Biology",marks:2},
+  {q:"Non-coding sequences present within a gene are called:",opts:["Exons","Introns","Promoters","Operons"],ans:1,sec:"Biology",marks:2},
+  {q:"An inverted pyramid of biomass is represented by:",opts:["Grassland ecosystem","Aquatic ecosystem","Tropical forest ecosystem","Desert ecosystem"],ans:1,sec:"Biology",marks:2},
+  {q:"To analyse the genotype of an organism, it is crossed with a:",opts:["Dominant parent","Recessive parent","Another species","Homozygous dominant parent"],ans:1,sec:"Biology",marks:2},
+  {q:"Restriction enzymes recognize and cut which type of DNA sequences?",opts:["Random sequences","Palindromic sequences","Repetitive sequences only","Non-coding sequences only"],ans:1,sec:"Biology",marks:2},
+  {q:"Histone proteins are primarily involved in:",opts:["DNA replication","Packaging of DNA into chromatin","Protein synthesis","Cell division only"],ans:1,sec:"Biology",marks:2},
+  {q:"Bt toxin is produced by which organism?",opts:["Escherichia coli","Bacillus thuringiensis","Agrobacterium tumefaciens","Rhizobium"],ans:1,sec:"Biology",marks:2},
+  {q:"Which of the following is a viral sexually transmitted disease?",opts:["Syphilis","Gonorrhoea","AIDS","Chlamydia"],ans:2,sec:"Biology",marks:2},
+  {q:"Apomixis in plants refers to the formation of:",opts:["Seeds through normal fertilization","Seeds without fertilization","Fruits without pollination","Spores by meiosis"],ans:1,sec:"Biology",marks:2},
+  {q:"Turner's syndrome is caused by the chromosomal constitution:",opts:["45, XO","44, XXY","44, XXX","45, XY"],ans:0,sec:"Biology",marks:2},
+  {q:"In a cubic crystal, A atoms occupy corners and B atoms occupy alternate face-centres. The formula is:",opts:["AB","A2B3","AB2","A2B"],ans:1,sec:"Chemistry",marks:2},
+  {q:"For the reaction 2A + B → C + D, the rate constant is 1.5 × 10^-4 s^-1. The order is:",opts:["Zero","One","Two","Three"],ans:1,sec:"Chemistry",marks:2},
+  {q:"The coordination number of Co in [Co(NO2)2(en)2]+ is:",opts:["4","5","6","8"],ans:2,sec:"Chemistry",marks:2},
+  {q:"PCl5 acts as an oxidising agent because phosphorus is in the oxidation state:",opts:["+3","+5","-3","0"],ans:1,sec:"Chemistry",marks:2},
+  {q:"The complex ion [Fe(CN)6]3- is:",opts:["Diamagnetic","Paramagnetic","Ferromagnetic","Antiferromagnetic"],ans:1,sec:"Chemistry",marks:2},
+  {q:"Which of the following is a macromolecular colloid?",opts:["Sulphur sol","Gold sol","Starch solution","Ferric hydroxide sol"],ans:2,sec:"Chemistry",marks:2},
+  {q:"The catalyst used in the Contact process for manufacturing sulphuric acid is:",opts:["Fe2O3","V2O5","Nickel","Platinum"],ans:1,sec:"Chemistry",marks:2},
+  {q:"Mn2+ compounds are more stable towards oxidation than Fe2+ compounds because Mn2+ has:",opts:["Half-filled d5 configuration","Completely filled d6 configuration","Empty d-orbital","Paired electrons only"],ans:0,sec:"Chemistry",marks:2},
+  {q:"Cu2+ ion is coloured while Zn2+ ion is colourless because Cu2+ has:",opts:["d9 configuration allowing d-d transitions","d10 configuration","Charge transfer transitions","No unpaired electrons"],ans:0,sec:"Chemistry",marks:2},
+  {q:"Which of the following is NOT a product of protein hydrolysis?",opts:["Amino acids","Dipeptides","Nucleotides","Tripeptides"],ans:2,sec:"Chemistry",marks:2},
+  {q:"Antacids work by neutralising:",opts:["H1 receptors","Excess stomach acid","Histamine release","Allergic reactions"],ans:1,sec:"Chemistry",marks:2},
+  {q:"The unit of rate constant for a zero-order reaction is:",opts:["s-1","mol L-1 s-1","L mol-1 s-1","mol-2 L2 s-1"],ans:1,sec:"Chemistry",marks:2},
+  {q:"The number of atoms per unit cell in a face-centred cubic (FCC) lattice is:",opts:["1","2","4","6"],ans:2,sec:"Chemistry",marks:2},
+  {q:"Virginia Woolf considers reflections of the self more important than external reality because they:",opts:["Make the story easier to write","Capture the inner reality and consciousness of characters","Replace the need for plot","Are shorter to describe"],ans:1,sec:"English",marks:2},
+  {q:"In Emily Dickinson's lines about the sun, the extended metaphor presents the sun as:",opts:["A bird","A person with estates of clouds","A flower","A clock"],ans:1,sec:"English",marks:2},
+  {q:"Eveline's final decision in James Joyce's story is mainly caused by:",opts:["Her love for Frank","Fear, duty, and paralysis","Her mother's death","The promise of money"],ans:1,sec:"English",marks:2},
+  {q:"Tagore's Chandalika is described as a tragedy of:",opts:["Romantic love","Self-consciousness exceeding its limit","Political rebellion","Poverty"],ans:1,sec:"English",marks:2},
+  {q:"The central issue in Girish Karnad's Broken Images is the unequal status of:",opts:["Science and art","Fiction written in English and Indian languages","Men and women","Urban and rural life"],ans:1,sec:"English",marks:2},
+  {q:"Wordsworth's Tintern Abbey best illustrates his idea that poetry is:",opts:["Emotion recollected in tranquillity","A spontaneous overflow of powerful feelings","A reflection of city life","A story of war"],ans:0,sec:"English",marks:2},
+  {q:"In Orhan Pamuk's description of writing, the most important quality for a writer is:",opts:["Constant inspiration","Patience and stubbornness","Writing very quickly","Seeking fame"],ans:1,sec:"English",marks:2},
+  {q:"'Intelligence comes into being only when you are free to question.' This sentence is:",opts:["A simple sentence","A compound sentence","A complex sentence","An exclamatory sentence"],ans:2,sec:"English",marks:2},
+  {q:"In the sentence 'The tree outside the window taps very gently on the pane,' the word 'tree' is a:",opts:["Function word","Content word","Article","Preposition"],ans:1,sec:"English",marks:2},
+  {q:"In the word 'democracy,' the primary stress falls on the:",opts:["First syllable","Second syllable","Third syllable","Fourth syllable"],ans:1,sec:"English",marks:2},
+  {q:"In Gabriel Garcia Marquez's stories, the boundary between reality and fantasy is often:",opts:["Strictly maintained","Blurred","Reversed","Ignored completely"],ans:1,sec:"English",marks:2},
+  {q:"The central theme of Bertolt Brecht's Life of Galileo is the question of:",opts:["Romantic love","Responsibility in the use of ideas and beliefs","War and peace","Colonialism"],ans:1,sec:"English",marks:2},
+  {q:"Let R = {(a,b) : a = b-2, b > 6}. Which pair belongs to R?",opts:["(2,4)","(3,8)","(6,8)","(8,7)"],ans:2,sec:"Mathematics",marks:2},
+  {q:"If sin-1 x = y, then the principal value of y lies in:",opts:["[0, pi]","[-pi/2, pi/2]","(0, pi/2)","[-pi, pi]"],ans:1,sec:"Mathematics",marks:2},
+  {q:"The number of all possible 3x3 matrices with each entry 0 or 1 is:",opts:["27","81","512","729"],ans:2,sec:"Mathematics",marks:2},
+  {q:"The integrating factor of the differential equation x dy/dx - y = 2x^2 is:",opts:["e^-x","1/x","e^-y","x"],ans:1,sec:"Mathematics",marks:2},
+  {q:"If f(x) = 4x + 3, then f-1(x) is:",opts:["(x-3)/4","(x+3)/4","4x-3","(x-3)/3"],ans:0,sec:"Mathematics",marks:2},
+  {q:"The value of tan-1[(sqrt(1+x)-sqrt(1-x))/(sqrt(1+x)+sqrt(1-x))] for 0<=x<=1 is:",opts:["pi/4 - (1/2)cos-1 x","pi/4 + (1/2)cos-1 x","pi/2 - cos-1 x","sin-1 x"],ans:0,sec:"Mathematics",marks:2},
+  {q:"The function f(x) = x+5 for x<=1 and f(x) = x-5 for x>1 is:",opts:["Continuous everywhere","Discontinuous at x=1 only","Continuous at x=1 only","Differentiable everywhere"],ans:1,sec:"Mathematics",marks:2},
+  {q:"If x = a(cos t + t sin t) and y = a(sin t - t cos t), then d2y/dx2 equals:",opts:["sec3 t / (at)","tan t","sec2 t","sec t / (at)"],ans:0,sec:"Mathematics",marks:2},
+  {q:"Integral of (sin-1 x)^2 dx equals:",opts:["x(sin-1 x)^2 + 2sqrt(1-x^2) sin-1 x - 2x + C","x(sin-1 x)^2 + C","(sin-1 x)^3/3 + C","x tan x + log cos x + C"],ans:0,sec:"Mathematics",marks:2},
+  {q:"The general solution of dy/dx = e^(x+y) is:",opts:["e^x + e^y = C","e^x - e^y = C","e^x + e^-y = C","e^-x + e^y = C"],ans:2,sec:"Mathematics",marks:2},
+  {q:"The angle between the planes 3x-4y+5z=0 and 2x-y-2z=0 is:",opts:["pi/6","pi/4","pi/3","pi/2"],ans:3,sec:"Mathematics",marks:2},
+  {q:"A man and his wife appear for an interview. Probability of husband's selection is 1/7 and wife's is 1/5. Probability that only one is selected is:",opts:["2/7","1/7","1/5","11/35"],ans:0,sec:"Mathematics",marks:2},
+  {q:"The distance of point P(6,5,9) from the plane 3x-4y+3z-19=0 is:",opts:["6/sqrt(34)","3/sqrt(34)","19/sqrt(34)","6/sqrt(17)"],ans:0,sec:"Mathematics",marks:2},
+];
+
+export function getQuestions() {
+  return SIUAT_PAPER;
 }
 
 export function calcGrade(pct) {
@@ -357,7 +404,7 @@ export function calcGrade(pct) {
   return           { grade: 'F',  scholarship: null,              color: 'text-red-600',   bg: 'bg-red-50 border-red-300' };
 }
 
-export const MAX_SEATS = 500;
+export const MAX_SEATS = 1000;
 
 export const EXAM_DATES = [
   '10 May 2026 (Morning)',

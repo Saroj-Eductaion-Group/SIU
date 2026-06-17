@@ -3,12 +3,12 @@ import { cn } from "../lib/utils";
 import { useState, useEffect, useRef } from "react";
 
 export const TABS = [
-  { id: "home",     label: "Home",            icon: "⊞" },
-  { id: "mocks",    label: "Mock Tests",       icon: "✏" },
-  { id: "rankings", label: "Rankings",         icon: "◈" },
-  { id: "ai",       label: "AI Mentor",        icon: "✦" },
-  { id: "results",  label: "Results",          icon: "▤" },
-  { id: "admin",    label: "Admin",            icon: "⚙" },
+  { id: "home",     label: "Home",       icon: "⊞" },
+  { id: "mocks",    label: "Mock Tests", icon: "✏" },
+  { id: "rankings", label: "Rankings",   icon: "◈" },
+  { id: "ai",       label: "AI Mentor",  icon: "✦" },
+  { id: "results",  label: "Results",    icon: "▤" },
+  { id: "admin",    label: "Admin",      icon: "⚙" },
 ] as const;
 
 export type TabId = typeof TABS[number]["id"];
@@ -36,11 +36,11 @@ export function Header({ activeTab, setActiveTab, onScholarship }: HeaderProps) 
   }, [showNotif]);
 
   const NOTIFICATIONS = [
-    { icon: "🏆", text: "SIUAT 2026-27 registrations open — only 500 seats!", time: "Just now" },
+    { icon: "🧬", text: "NEET UG 2026 exam date: May 3, 2026 — start your prep now!", time: "Just now" },
     { icon: "✏", text: "New mock test added: Biology Genetics & Biotech", time: "2h ago" },
-    { icon: "💰", text: "Win ₹51,000 merit award — appear in SIUAT Talent Hunt", time: "5h ago" },
+    { icon: "🤖", text: "AI Mentor now supports Hindi & Hinglish queries", time: "5h ago" },
     { icon: "📢", text: "NEET UG 2026 exam dates: May 3, 2026", time: "1d ago" },
-    { icon: "🤖", text: "AI Mentor now supports Hindi & Hinglish queries", time: "2d ago" },
+    { icon: "📊", text: "Check your performance dashboard after each mock test", time: "2d ago" },
   ];
 
   // Green theme to distinguish from SIU main navbar (dark blue)
@@ -74,11 +74,11 @@ export function Header({ activeTab, setActiveTab, onScholarship }: HeaderProps) 
             LIVE RANKINGS
           </button>
 
-          {/* Scholarship - desktop only */}
-          <button onClick={onScholarship} data-testid="header-scholarship-pill"
+          {/* Scholarship - desktop only — show NEET result tracker instead */}
+          <button onClick={() => setActiveTab('results')} data-testid="header-scholarship-pill"
             className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] font-extrabold transition hover:brightness-110"
             style={{ background: "linear-gradient(90deg,#c9a84c,#e8b840)", color: "#064e3b" }}>
-            🏆 <span>Scholarship</span>
+            📊 <span>My Results</span>
           </button>
 
           {/* Bell - always visible */}
@@ -119,10 +119,10 @@ export function Header({ activeTab, setActiveTab, onScholarship }: HeaderProps) 
             Login <ChevronDown className="h-3 w-3" />
           </button>
 
-          {/* Register */}
-          <button onClick={() => setActiveTab('siuat')} className="flex items-center gap-1 px-4 py-1.5 rounded-xl text-xs font-extrabold transition hover:brightness-110 active:scale-95"
+          {/* Register — goes to NEET registration */}
+          <button onClick={() => setActiveTab('mocks')} className="flex items-center gap-1 px-4 py-1.5 rounded-xl text-xs font-extrabold transition hover:brightness-110 active:scale-95"
             style={{ background: "linear-gradient(90deg,#c9a84c,#e8b840)", color: "#0a1f5c", boxShadow: "0 2px 8px rgba(201,168,76,0.3)" }}>
-            Register
+            Start Mock
           </button>
 
           {/* Mobile menu toggle */}

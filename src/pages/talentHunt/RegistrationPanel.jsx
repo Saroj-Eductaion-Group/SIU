@@ -78,7 +78,7 @@ export default function RegistrationPanel({ onOpenScholarship }) {
 
   const submit = async () => {
     setErr('');
-    if (!f.examdate) return setErr('Please select an exam date.');
+    // Exam date is optional — candidates can appear anytime
     setLoading(true);
     try {
       const res = await fetch(`${API}/register`, {
@@ -274,11 +274,12 @@ export default function RegistrationPanel({ onOpenScholarship }) {
             <h3 className="text-blue-800 font-bold text-lg font-outfit mb-1">Exam Preference</h3>
             <p className="text-gray-400 text-xs mb-4">Select your preferred exam date, mode and centre.</p>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
-              <div><label className={lbl}>Exam Date <span className="text-red-500">*</span></label>
+              <div><label className={lbl}>Preferred Exam Slot <span className="text-gray-400 font-normal">(Optional)</span></label>
                 <select name="examdate" value={f.examdate} onChange={upd} className={inp}>
-                  <option value="">-- Select --</option>
+                  <option value="">-- No preference / Anytime --</option>
                   {EXAM_DATES.map(d=><option key={d}>{d}</option>)}
                 </select>
+                <p className="text-xs text-green-600 mt-1">✅ You can appear for the exam anytime after approval — not restricted to selected date.</p>
               </div>
               <div><label className={lbl}>Exam Mode</label>
                 <select name="exammode" value={f.exammode} onChange={upd} className={inp}>
