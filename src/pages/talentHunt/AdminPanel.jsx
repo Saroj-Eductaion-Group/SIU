@@ -237,7 +237,7 @@ export default function AdminPanel() {
 
       {/* Top bar */}
       <div className="bg-green-50 border border-green-200 rounded-xl px-4 py-3 mb-5 flex items-center justify-between flex-wrap gap-3">
-        <span className="text-sm text-green-700 font-medium">🟢 Logged in as <strong>{adminName || 'Administrator'}</strong> | Session 2026-27 | <strong>{regs.length > 0 ? 500 - regs.length : 500}</strong> seats remaining</span>
+        <span className="text-sm text-green-700 font-medium">🟢 Logged in as <strong>{adminName || 'Administrator'}</strong> | Session 2026-27 | <strong>{regs.length > 0 ? 1000 - regs.length : 1000}</strong> seats remaining</span>
         <div className="flex gap-2">
           <button onClick={()=>setShowChPwd(true)} className="text-xs font-semibold text-blue-700 hover:underline">✎ Change Password</button>
           <button onClick={logout} className="text-xs font-semibold text-red-600 hover:underline">🔓 Logout</button>
@@ -296,7 +296,7 @@ export default function AdminPanel() {
             <div className="overflow-y-auto" style={{maxHeight:'600px'}}>
             <table className="w-full text-sm" style={{minWidth:'1400px'}}>
               <thead className="bg-blue-700 text-white sticky top-0 z-10">
-                <tr>{['#','App ID','Name','Mobile','Email','City','State','Qualification','Board','Marks','Year','Courses','Exam Date','Mode','Centre','Medium','Category','Source','Registered','Status','Score','Grade','Scholarship','Actions'].map(h=>(
+                <tr>{['#','App ID','Name','Mobile','Email','City','State','Qualification','Board','Marks','Year','Courses','Mode','Centre','Medium','Category','Source','Registered','Status','Score','Grade','Scholarship','Actions'].map(h=>(
                   <th key={h} className="px-3 py-3 text-left text-xs font-semibold tracking-wide whitespace-nowrap">{h}</th>
                 ))}</tr>
               </thead>
@@ -317,7 +317,6 @@ export default function AdminPanel() {
                     <td className="px-3 py-3 text-gray-500 text-xs">{r.marks||'—'}</td>
                     <td className="px-3 py-3 text-gray-500 text-xs">{r.yop||'—'}</td>
                     <td className="px-3 py-3 text-gray-600 text-xs whitespace-nowrap">{(r.courses||[]).join(', ')}</td>
-                    <td className="px-3 py-3 text-gray-500 text-xs whitespace-nowrap">{r.examDate}</td>
                     <td className="px-3 py-3 text-gray-500 text-xs whitespace-nowrap">{r.examMode}</td>
                     <td className="px-3 py-3 text-gray-500 text-xs">{r.centre||'—'}</td>
                     <td className="px-3 py-3 text-gray-500 text-xs">{r.medium}</td>
@@ -356,7 +355,7 @@ export default function AdminPanel() {
           </div>
         )}
         <div className="px-4 py-3 text-xs text-gray-400 border-t border-gray-100">
-          Showing {rows.length} of {regs.length} records | Total capacity: 500 | Remaining: {500 - regs.length}
+          Showing {rows.length} of {regs.length} records | Total capacity: 1000 | Remaining: {1000 - regs.length}
         </div>
       </div>
     </div>
