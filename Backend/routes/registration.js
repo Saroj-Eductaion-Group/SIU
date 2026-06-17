@@ -67,6 +67,9 @@ router.post('/forgot-appid', async (req, res) => {
 // PUBLIC — Register new candidate
 router.post('/register', async (req, res) => {
   try {
+    const totalCount = await Registration.countDocuments();
+    if (totalCount >= 1000) return res.status(400).json({ success: false, message: 'Registrations are closed. All 1000 seats have been filled.' });
+
     const existing = await Registration.findOne({ mobile: req.body.mobile });
     if (existing) return res.status(400).json({ success: false, message: `You are already registered. Your Application ID is: ${existing.appId}` });
     
