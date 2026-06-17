@@ -14,7 +14,7 @@ cloudinary.config({
 router.get('/seats', async (req, res) => {
   try {
     const count = await Registration.countDocuments();
-    res.json({ filled: count, left: Math.max(0, 500 - count), total: 500 });
+    res.json({ filled: count, left: Math.max(0, 1000 - count), total: 1000 });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

@@ -73,7 +73,7 @@ export default function HomePanel({ setActiveTab, onScholarship }) {
         {/* Gold announcement strip */}
         <div className="relative z-10 text-center py-2.5 text-[11px] font-extrabold tracking-widest uppercase"
           style={{ background: "linear-gradient(90deg, #b8860b 0%, #e8b840 35%, #ffd700 60%, #e8b840 80%, #b8860b 100%)", color: "#0a1f5c" }}>
-          🏆 &nbsp;SIUAT 2026-27 Registrations Open — Limited 500 Seats — Register Now!&nbsp; 🏆
+          🏆 &nbsp;SIUAT 2026-27 Registrations Open — Limited 1000 Seats — Register Now!&nbsp; 🏆
         </div>
 
         <div className="relative z-10 px-6 md:px-10 pt-8 pb-6">
@@ -281,7 +281,7 @@ export default function HomePanel({ setActiveTab, onScholarship }) {
               style={{ background: "linear-gradient(90deg,#fef08a,#fde047)", color: "#7c2d12", boxShadow: "0 4px 12px rgba(0,0,0,0.2)" }}>
               Know More →
             </button>
-            <div className="text-[10px] text-amber-200 opacity-70">500 seats · Limited time</div>
+            <div className="text-[10px] text-amber-200 opacity-70">1000 seats · Limited time</div>
           </div>
         </div>
       </div>
