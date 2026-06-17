@@ -68,6 +68,19 @@ export default function CompaniesTieUps() {
         "Campus Connect Initiatives",
       ],
     },
+    {
+      name: "Innova Dubai",
+      logo: "/innova-dubai.jpeg",
+      background: "/innova-dubai.jpeg",
+      description:
+        "Innova Dubai brings an exclusive AI Integration Collaboration for UG & PG Degree students at SIU, offering International AI Automation Integration with globally recognized certifications and guaranteed internship opportunities across India, Dubai & UK.",
+      programs: [
+        "4 International Certifications (KHDA – UAE)",
+        "3 Internships – India, Dubai & UK",
+        "Live Capstone Project",
+        "Attestation by KHDA, IOA UK, Qualifi UK & Pearson",
+      ],
+    },
   ];
 
   const infiniteCompanies = [
