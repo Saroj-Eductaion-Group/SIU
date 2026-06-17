@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 
 const TICKER_ITEMS = [
-  "🏆 SIUAT 2026-27 registrations OPEN — Only 500 seats! Register now",
+  "🏆 SIUAT 2026-27 registrations OPEN — Only 1000 seats! Register now",
   "✏ New CUET mock added: Biology Genetics & Biotech Full Mock 2026",
   "🥇 Rahul Sharma, Lucknow — CUET Physics mock score: 98/100",
   "💰 Win ₹51,000 merit award — appear in SIUAT Talent Hunt 2026",
