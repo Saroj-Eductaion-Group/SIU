@@ -55,29 +55,17 @@ export default function CompaniesTieUps() {
         "Collaborative University Projects",
       ],
     },
+
     {
       name: "HDFC Bank",
       logo: hdfcLogo,
       background: logoHdfc,
       description:
-        "HDFC Bank is one of India's leading private sector banks offering a wide range of financial services including retail banking, wholesale banking, and treasury operations. It is known for its technology-driven and customer-focused approach.",
+        "HDFC Bank is one of India’s leading private sector banks offering a wide range of financial services including retail banking, wholesale banking, and treasury operations. It is known for its technology-driven and customer-focused approach.",
       programs: [
         "Future Bankers Program",
         "Internships in Finance & Technology",
         "Campus Connect Initiatives",
-      ],
-    },
-    {
-      name: "Innova Dubai",
-      logo: "/innova-dubai.jpeg",
-      background: "/innova-dubai.jpeg",
-      description:
-        "Innova Dubai offers AI Integration Collaboration with UG & PG Degrees, combining International AI Automation Integration with a Guaranteed Internship and globally recognized certifications attested by KHDA, IOA UK, Qualifi UK & Pearson.",
-      programs: [
-        "4 International Certifications (KHDA – UAE)",
-        "3 Internships (India, Dubai & UK)",
-        "Live Capstone Project",
-        "Attestation by KHDA, IOA UK, Qualifi UK & Pearson",
       ],
     },
   ];
