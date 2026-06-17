@@ -50,11 +50,25 @@ const InstitutePharmacy = () => {
         fees: { year1: 100000, year2: 100000, total: 200000 }
       },
       {
-        degree: "M.Pharm (Medical Chemistry)",
+        degree: "M.Pharm (Pharmaceutical Chemistry)",
         mode: "Regular Mode",
         level: "pg",
         duration_in_yrs: 2,
         fees: { year1: 100000, year2: 100000, total: 200000 }
+      },
+      {
+        degree: "M.Pharm (Pharmaceutics)",
+        mode: "Regular Mode",
+        level: "pg",
+        duration_in_yrs: 2,
+        fees: { year1: 100000, year2: 100000, total: 200000 }
+      },
+      {
+        degree: "MBA (Pharmaceutical Marketing and Management)",
+        mode: "Regular Mode",
+        level: "pg",
+        duration_in_yrs: 2,
+        fees: { year1: 120000, year2: 120000, total: 240000 }
       },
       {
         degree: "Ph.D",

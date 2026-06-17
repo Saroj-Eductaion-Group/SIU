@@ -799,6 +799,13 @@ const ProgramsSection = () => {
           criteria: ["B.Pharm degree", "Minimum 55% marks", "GPAT score preferred"],
         },
         {
+          name: "MBA (Pharmaceutical Marketing and Management)",
+          duration: "2 Years",
+          fee: "₹1,20,000/yr",
+          mode: "Regular",
+          criteria: ["Bachelor's degree in Pharmacy or any discipline", "Minimum 50% marks", "CAT/MAT/University Entrance Exam"],
+        },
+        {
           name: "PhD in Pharmacy",
           duration: "3-5 Years",
           fee: "₹1,00,000/yr",
