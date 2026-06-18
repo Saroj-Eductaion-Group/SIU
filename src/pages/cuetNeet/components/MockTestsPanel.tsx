@@ -31,7 +31,7 @@ interface ExamResult {
   difficultyBreakdown?: Record<string, { correct: number; wrong: number; total: number }>;
 }
 
-const SUBJECT_FILTERS = ["All", "Physics", "Chemistry", "Biology", "Mathematics", "English", "General Test", "Reasoning"];
+const SUBJECT_FILTERS = ["All", "Physics", "Chemistry", "Biology", "Botany", "Zoology", "Mathematics", "English", "General Test", "Reasoning"];
 
 const DIFF_COLORS: Record<string, string> = {
   "Easy": "#16a34a",
@@ -65,7 +65,7 @@ function getGrade(pct: number) {
 }
 
 const ICON: Record<string, string> = {
-  Physics: "⚡", Chemistry: "🧪", Biology: "🧬", Mathematics: "📐",
+  Physics: "⚡", Chemistry: "🧪", Biology: "🧬", Botany: "🌿", Zoology: "🦎", Mathematics: "📐",
   English: "📖", "General Test": "🌍", Reasoning: "🧠",
 };
 
@@ -83,6 +83,7 @@ export function MockTestsPanel() {
   const [showViolation, setShowViolation] = useState(false);
   const [result, setResult] = useState<ExamResult | null>(null);
   const [showSubmitWarning, setShowSubmitWarning] = useState(false);
+  const [showReview, setShowReview] = useState(false);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const [results, setResults] = useLocalStorage<ExamResult[]>("mock_results", []);
   const [cuetActiveId, setCuetActiveId] = useLocalStorage("cuet_active_id", "");
@@ -651,7 +652,74 @@ export function MockTestsPanel() {
               </div>
             )}
 
-            <button onClick={() => setExamState("list")} data-testid="btn-back-list" className="w-full py-2.5 rounded-xl text-sm font-bold text-white" style={{ background: "#0a1f5c" }}>
+            {/* Question-wise review */}
+            {questions.length > 0 && result.answers && (
+              <div className="mb-5">
+                <button
+                  onClick={() => setShowReview((r) => !r)}
+                  className="w-full py-3 rounded-xl text-sm font-bold transition mb-3 cursor-pointer"
+                  style={{
+                    background: showReview ? "#f5f0ff" : "#eff6ff",
+                    color: showReview ? "#4c1d95" : "#1d4ed8",
+                    border: "1.5px solid " + (showReview ? "#c4b5fd" : "#bfdbfe"),
+                  }}
+                >
+                  {showReview ? "▲ Hide Question Review" : "▼ Review All Questions with Answers"}
+                </button>
+
+                {showReview && (
+                  <div className="mt-3 space-y-3 max-h-[500px] overflow-y-auto pr-1">
+                    {questions.map((q, i) => {
+                      const userAns = result.answers[i];
+                      const isCorrect = userAns === q.correctOption;
+                      const isSkipped = userAns === undefined;
+                      const borderColor = isSkipped ? "#e5e7eb" : isCorrect ? "#86efac" : "#fca5a5";
+                      const bgColor = isSkipped ? "#f9fafb" : isCorrect ? "#f0fdf4" : "#fff5f5";
+                      const statusLabel = isCorrect ? "✓ Correct" : isSkipped ? "— Skipped" : "✗ Wrong";
+                      const statusBg = isCorrect ? "#16a34a" : isSkipped ? "#9ca3af" : "#dc2626";
+                      return (
+                        <div key={i} className="rounded-xl border text-left overflow-hidden" style={{ borderColor }}>
+                          <div className="flex items-center gap-2 px-3 py-2 flex-wrap" style={{ background: bgColor }}>
+                            <span className="font-bold text-xs text-orange-500">Q.{i + 1}</span>
+                            <span className="px-1.5 py-0.5 rounded text-white text-[10px] font-bold" style={{ background: statusBg }}>
+                              {statusLabel}
+                            </span>
+                            <span className="text-[10px] text-gray-400">{q.section} · +4 / -1 · {q.difficulty}</span>
+                          </div>
+                          <div className="p-3" style={{ background: bgColor }}>
+                            <p className="font-medium text-gray-900 mb-2 text-xs leading-relaxed">{q.text}</p>
+                            <div className="space-y-1.5">
+                              {q.options.map((opt, j) => {
+                                const isSel = userAns === j;
+                                const isAns = j === q.correctOption;
+                                return (
+                                  <div key={j} className="flex items-center gap-2 px-3 py-2 rounded-lg text-xs"
+                                    style={{
+                                      background: isAns ? "#dcfce7" : isSel && !isAns ? "#fee2e2" : "#f9fafb",
+                                      border: "1px solid " + (isAns ? "#86efac" : isSel && !isAns ? "#fca5a5" : "#e5e7eb"),
+                                      fontWeight: isAns || isSel ? 600 : 400,
+                                      color: isAns ? "#166534" : isSel && !isAns ? "#991b1b" : "#374151",
+                                    }}>
+                                    <span className="w-5 h-5 rounded-full border flex items-center justify-center text-[10px] font-bold shrink-0">
+                                      {String.fromCharCode(65 + j)}
+                                    </span>
+                                    <span className="flex-1">{opt}</span>
+                                    {isAns && <span className="text-[10px] font-bold text-green-700">✓ Correct Answer</span>}
+                                    {isSel && !isAns && <span className="text-[10px] font-bold text-red-600">Your Answer</span>}
+                                  </div>
+                                );
+                              })}
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+            )}
+
+            <button onClick={() => { setExamState("list"); setShowReview(false); }} data-testid="btn-back-list" className="w-full py-2.5 rounded-xl text-sm font-bold text-white cursor-pointer" style={{ background: "#0a1f5c" }}>
               ← Back to Mock Tests
             </button>
           </div>

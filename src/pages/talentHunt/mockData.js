@@ -9,7 +9,7 @@ export const MOCK_TESTS = [
   { id: "p2", subject: "Physics",      name: "CUET Physics Basics — Practice Set",        cuetSection: "Section II",  cuetCode: "PHYS001", difficulty: "Easy",      durationMinutes: 30, questionsCount: 10, attemptCount: 10, marks: 50, iconColor: "bg-sky-100 text-sky-700" },
 ];
 
-export const SUBJECT_FILTERS = ["All","Physics","Chemistry","Biology","Mathematics","English","General Test","Reasoning"];
+export const SUBJECT_FILTERS = ["All","Physics","Chemistry","Biology","Mathematics","English","General Test","Reasoning","Botany","Zoology"];
 
 export const DIFF_COLORS = {
   "Easy":      "#16a34a",
