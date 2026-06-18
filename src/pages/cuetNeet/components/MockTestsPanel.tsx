@@ -565,6 +565,7 @@ export function MockTestsPanel() {
       if (secLower.startsWith("physics")) subject = "Physics";
       else if (secLower.startsWith("chemistry")) subject = "Chemistry";
       else if (secLower.startsWith("biology") || secLower.startsWith("botany") || secLower.startsWith("zoology")) subject = "Biology";
+      else if (secLower.startsWith("math")) subject = "Mathematics";
 
       if (!sections[subject]) sections[subject] = { correct: 0, wrong: 0, total: 0 };
       sections[subject].total++;
