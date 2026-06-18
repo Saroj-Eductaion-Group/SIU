@@ -560,11 +560,17 @@ export function MockTestsPanel() {
     const g = getGrade(result.pct);
     const sections: Record<string, { correct: number; wrong: number; total: number }> = {};
     questions.forEach((q, i) => {
-      if (!sections[q.section]) sections[q.section] = { correct: 0, wrong: 0, total: 0 };
-      sections[q.section].total++;
+      let subject = activeTest.subject;
+      const secLower = q.section.toLowerCase();
+      if (secLower.startsWith("physics")) subject = "Physics";
+      else if (secLower.startsWith("chemistry")) subject = "Chemistry";
+      else if (secLower.startsWith("biology") || secLower.startsWith("botany") || secLower.startsWith("zoology")) subject = "Biology";
+
+      if (!sections[subject]) sections[subject] = { correct: 0, wrong: 0, total: 0 };
+      sections[subject].total++;
       const ans = result.answers[i];
-      if (ans === q.correctOption) sections[q.section].correct++;
-      else if (ans !== undefined) sections[q.section].wrong++;
+      if (ans === q.correctOption) sections[subject].correct++;
+      else if (ans !== undefined) sections[subject].wrong++;
     });
 
     return (
@@ -623,7 +629,7 @@ export function MockTestsPanel() {
 
             {/* Section-wise */}
             <div className="mb-5">
-              <div className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-3">Section-wise Performance</div>
+              <div className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-3">Subject-wise Performance</div>
               {Object.entries(sections).map(([sec, data]) => (
                 <div key={sec} className="mb-2">
                   <div className="flex justify-between text-xs text-gray-600 mb-0.5">
