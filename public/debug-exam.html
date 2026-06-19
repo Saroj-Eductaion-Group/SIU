@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SIU Exam Debug Panel</title>
+  <style>
+    body { font-family: monospace; background: #0a1f5c; color: #f0f0f0; padding: 20px; }
+    h1 { color: #e8b840; }
+    .section { background: #1a2f6c; border: 1px solid #3a4f8c; border-radius: 8px; padding: 16px; margin: 16px 0; }
+    .pass { color: #4ade80; font-weight: bold; }
+    .fail { color: #f87171; font-weight: bold; }
+    .warn { color: #fbbf24; font-weight: bold; }
+    pre { background: #0d1b3e; padding: 10px; border-radius: 4px; overflow-x: auto; font-size: 12px; }
+    button { background: #e8b840; color: #0a1f5c; font-weight: bold; padding: 10px 20px; border: none; border-radius: 6px; cursor: pointer; margin: 5px; }
+  </style>
+</head>
+<body>
+  <h1>🔍 SIU Exam Debug Panel</h1>
+  <p style="color:#aaa">Run this page on the server to diagnose exam issues</p>
+
+  <!-- 1. HTTPS Check -->
+  <div class="section">
+    <h2>1. Protocol & Security</h2>
+    <div id="proto-result"></div>
+  </div>
+
+  <!-- 2. Camera/Mic Check -->
+  <div class="section">
+    <h2>2. Camera & Microphone Access</h2>
+    <button onclick="testCamera()">Test Camera & Mic</button>
+    <div id="cam-result"></div>
+    <video id="cam-preview" autoplay muted playsinline style="width:200px;border-radius:8px;margin-top:10px;display:none"></video>
+  </div>
+
+  <!-- 3. Backend API Check -->
+  <div class="section">
+    <h2>3. Backend API Check</h2>
+    <button onclick="testAPI()">Test Backend API</button>
+    <div id="api-result"></div>
+  </div>
+
+  <!-- 4. Question Bank Check -->
+  <div class="section">
+    <h2>4. Question Bank (via API)</h2>
+    <button onclick="testQuestions()">Test Questions for TESTBTECH</button>
+    <div id="q-result"></div>
+  </div>
+
+  <!-- 5. Fullscreen Check -->
+  <div class="section">
+    <h2>5. Fullscreen API</h2>
+    <button onclick="testFullscreen()">Test Fullscreen</button>
+    <div id="fs-result"></div>
+  </div>
+
+  <!-- 6. LocalStorage Check -->
+  <div class="section">
+    <h2>6. LocalStorage</h2>
+    <div id="ls-result"></div>
+  </div>
+
+  <!-- 7. Environment Info -->
+  <div class="section">
+    <h2>7. Environment Info</h2>
+    <div id="env-result"></div>
+  </div>
+
+  <script>
+    // 1. Protocol
+    const proto = window.location.protocol;
+    const isHttps = proto === 'https:';
+    document.getElementById('proto-result').innerHTML = `
+      Protocol: <span class="${isHttps ? 'pass' : 'fail'}">${proto}</span><br>
+      HTTPS: <span class="${isHttps ? 'pass' : 'fail'}">${isHttps ? '✓ YES — Camera will work' : '✗ NO — Camera BLOCKED by browser on HTTP'}</span><br>
+      Host: ${window.location.hostname}<br>
+      Full URL: ${window.location.href}
+    `;
+
+    // 2. Camera
+    async function testCamera() {
+      const el = document.getElementById('cam-result');
+      const video = document.getElementById('cam-preview');
+      el.innerHTML = '<span class="warn">Testing...</span>';
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+        video.srcObject = stream;
+        video.style.display = 'block';
+        el.innerHTML = '<span class="pass">✓ Camera & Mic granted successfully!</span>';
+      } catch(e) {
+        el.innerHTML = `<span class="fail">✗ FAILED: ${e.name} — ${e.message}</span><br>
+          ${e.name === 'NotAllowedError' ? '<span class="warn">→ User denied OR HTTP (not HTTPS) is blocking it</span>' : ''}
+          ${e.name === 'NotFoundError' ? '<span class="warn">→ No camera/mic device found</span>' : ''}
+        `;
+      }
+    }
+
+    // 3. API
+    async function testAPI() {
+      const el = document.getElementById('api-result');
+      el.innerHTML = '<span class="warn">Testing...</span>';
+      const urls = ['/api/registrations/seats', 'http://localhost:5000/api/registrations/seats'];
+      for (const url of urls) {
+        try {
+          const res = await fetch(url, { signal: AbortSignal.timeout(5000) });
+          const data = await res.json();
+          el.innerHTML += `<br><span class="pass">✓ ${url}</span><pre>${JSON.stringify(data, null, 2)}</pre>`;
+        } catch(e) {
+          el.innerHTML += `<br><span class="fail">✗ ${url} — ${e.message}</span>`;
+        }
+      }
+    }
+
+    // 4. Questions via registration lookup
+    async function testQuestions() {
+      const el = document.getElementById('q-result');
+      el.innerHTML = '<span class="warn">Testing...</span>';
+      const urls = ['/api/registrations/TESTBTECH', 'http://localhost:5000/api/registrations/TESTBTECH'];
+      for (const url of urls) {
+        try {
+          const res = await fetch(url, { signal: AbortSignal.timeout(5000) });
+          if (res.ok) {
+            const data = await res.json();
+            el.innerHTML += `<br><span class="pass">✓ ${url}</span><pre>courses: ${JSON.stringify(data.courses)}\nstatus: ${data.status}</pre>`;
+          } else {
+            el.innerHTML += `<br><span class="warn">⚠ ${url} — status ${res.status} (TESTBTECH is a local dummy, not in DB — this is normal)</span>`;
+          }
+        } catch(e) {
+          el.innerHTML += `<br><span class="fail">✗ ${url} — ${e.message}</span>`;
+        }
+      }
+      el.innerHTML += `<br><br><b>Note:</b> Real students use their SIU-generated App ID (e.g. SIU138740). The question bank is loaded client-side from the JS bundle based on course selection during registration.`;
+    }
+
+    // 5. Fullscreen
+    function testFullscreen() {
+      const el = document.getElementById('fs-result');
+      const supported = !!(document.documentElement.requestFullscreen || document.documentElement.webkitRequestFullscreen);
+      el.innerHTML = `Fullscreen API supported: <span class="${supported ? 'pass' : 'fail'}">${supported ? '✓ YES' : '✗ NO'}</span>`;
+      if (supported) {
+        document.documentElement.requestFullscreen().then(() => {
+          el.innerHTML += '<br><span class="pass">✓ Fullscreen entered successfully!</span>';
+        }).catch(e => {
+          el.innerHTML += `<br><span class="fail">✗ Fullscreen failed: ${e.message}</span>`;
+        });
+      }
+    }
+
+    // 6. LocalStorage
+    try {
+      localStorage.setItem('siu_debug_test', '1');
+      localStorage.removeItem('siu_debug_test');
+      const keys = Object.keys(localStorage).filter(k => k.startsWith('siuat_'));
+      document.getElementById('ls-result').innerHTML = `
+        <span class="pass">✓ LocalStorage working</span><br>
+        Active SIUAT keys: ${keys.length > 0 ? '<pre>' + keys.join('\n') + '</pre>' : 'None'}
+      `;
+    } catch(e) {
+      document.getElementById('ls-result').innerHTML = `<span class="fail">✗ LocalStorage blocked: ${e.message}</span>`;
+    }
+
+    // 7. Env Info
+    document.getElementById('env-result').innerHTML = `
+      <pre>
+User Agent: ${navigator.userAgent}
+Platform:   ${navigator.platform}
+Languages:  ${navigator.languages?.join(', ')}
+Online:     ${navigator.onLine}
+Cookies:    ${navigator.cookieEnabled}
+Screen:     ${screen.width}x${screen.height}
+MediaDevices API: ${!!navigator.mediaDevices ? '✓ Available' : '✗ NOT Available'}
+getUserMedia: ${!!(navigator.mediaDevices?.getUserMedia) ? '✓ Available' : '✗ NOT Available'}
+      </pre>
+    `;
+  </script>
+</body>
+</html>
