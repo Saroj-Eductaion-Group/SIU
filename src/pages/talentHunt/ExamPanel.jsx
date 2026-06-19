@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
-import { getQuestions, calcGrade } from './thData';
+import { getQuestions } from './thQuestions';
+import { calcGrade } from './thData';
 
 const OR_KEY = import.meta.env.VITE_GEMINI_API_KEY || '';
 const OR_URL = 'https://openrouter.ai/api/v1/chat/completions';
@@ -53,7 +54,9 @@ async function getQuestionAIAnalysis(questionText, opts, correctIndex, selectedI
   return callGemini('You are a SIUAT exam expert. Analyze this question:\n\nQuestion: ' + questionText + '\nOptions: ' + optionsText + '\nCorrect Answer: ' + correctText + '\nStudent Answer: ' + selectedText + '\nSection: ' + section + ' | Difficulty: ' + difficulty + '\n\n**Concept Behind This Question:**\n(Identify the exact concept tested)\n\n**Why the Correct Answer is Right:**\n(Explain with underlying concept or calculation)\n\n' + wrongPart + '**Option-Level Intelligence:**\n(Why each option is correct/incorrect, how distractors are designed)\n\n**Similar Question Patterns:**\n(2-3 different question types from the same concept)\n\n**Quick Revision Tip:**\n(One key formula, fact, or memory trick)\n\nKeep it concise and exam-focused.');
 }
 
-const BASE = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+const BASE = import.meta.env.DEV
+  ? '/api'
+  : (import.meta.env.VITE_API_URL || 'http://localhost:5000/api');
 const API  = `${BASE}/registrations`;
 
 // Helper: Secure shuffling algorithm
@@ -121,7 +124,49 @@ export default function ExamPanel({ onShowResults }) {
   const [showViolation, setShowViolation] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [violations, setViolations] = useState(0);
+  const [camGranted, setCamGranted] = useState(false);
+  const [camError, setCamError] = useState('');
   const timerRef = useRef(null);
+  const videoRef = useRef(null);
+  const pipRef = useRef(null);
+  const streamRef = useRef(null);
+
+  // ─── CAMERA / MIC CLEANUP on unmount or submission ───
+  useEffect(() => {
+    return () => { if (streamRef.current) streamRef.current.getTracks().forEach(t => t.stop()); };
+  }, []);
+
+  useEffect(() => {
+    if (submitted && streamRef.current) {
+      streamRef.current.getTracks().forEach(t => t.stop());
+      streamRef.current = null;
+    }
+  }, [submitted]);
+
+  // Attach stream to preview (proctor screen)
+  useEffect(() => {
+    if (camGranted && videoRef.current && streamRef.current) {
+      videoRef.current.srcObject = streamRef.current;
+    }
+  }, [camGranted]);
+
+  // Attach stream to PiP using callback ref so it fires when element mounts
+  const pipCallbackRef = (node) => {
+    if (node && streamRef.current) {
+      node.srcObject = streamRef.current;
+    }
+  };
+
+  const requestCamera = async () => {
+    setCamError('');
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+      streamRef.current = stream;
+      setCamGranted(true);
+    } catch {
+      setCamError('Camera/Mic access denied. Please allow access and try again.');
+    }
+  };
 
   // Time remaining tracking
   useEffect(() => {
@@ -138,11 +183,42 @@ export default function ExamPanel({ onShowResults }) {
 
   const fmt = s => `${String(Math.floor(s/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`;
 
+  // TEST candidate map for offline demo
+  const TEST_CANDIDATES = {
+    'TESTBBA':     { appId: 'TESTBBA',     firstName: 'Test',  lastName: 'BBA',     courses: ['BBA'],     status: 'Approved', examDate: 'Demo' },
+    'TESTBTECH':   { appId: 'TESTBTECH',   firstName: 'Test',  lastName: 'BTech',   courses: ['B.Tech'],  status: 'Approved', examDate: 'Demo' },
+    'TESTBCA':     { appId: 'TESTBCA',     firstName: 'Test',  lastName: 'BCA',     courses: ['BCA'],     status: 'Approved', examDate: 'Demo' },
+    'TESTBSC':     { appId: 'TESTBSC',     firstName: 'Test',  lastName: 'BSc',     courses: ['B.Sc'],    status: 'Approved', examDate: 'Demo' },
+    'TESTBCOM':    { appId: 'TESTBCOM',    firstName: 'Test',  lastName: 'BCom',    courses: ['B.Com'],   status: 'Approved', examDate: 'Demo' },
+    'TESTBA':      { appId: 'TESTBA',      firstName: 'Test',  lastName: 'BA',      courses: ['BA'],      status: 'Approved', examDate: 'Demo' },
+    'TESTMBA':     { appId: 'TESTMBA',     firstName: 'Test',  lastName: 'MBA',     courses: ['BBA'],     status: 'Approved', examDate: 'Demo' },
+    'TESTLLB':     { appId: 'TESTLLB',     firstName: 'Test',  lastName: 'LLB',     courses: ['LLB'],     status: 'Approved', examDate: 'Demo' },
+    'TESTBPHARMA': { appId: 'TESTBPHARMA', firstName: 'Test',  lastName: 'BPharma', courses: ['B.Pharma'],status: 'Approved', examDate: 'Demo' },
+    'TESTDIPLOMA': { appId: 'TESTDIPLOMA', firstName: 'Test',  lastName: 'Diploma', courses: ['Diploma'], status: 'Approved', examDate: 'Demo' },
+    'TESTPHD':     { appId: 'TESTPHD',     firstName: 'Test',  lastName: 'PhD',     courses: ['Ph.D'],   status: 'Approved', examDate: 'Demo' },
+  };
+
   const login = async () => {
     setLoginMsg({ type:'', text:'' });
     const id = loginId.trim().toUpperCase();
     if (!id) return setLoginMsg({ type:'error', text:'Please enter your Application ID.' });
     setLoading(true);
+
+    // Handle TEST candidates offline — no backend needed
+    if (TEST_CANDIDATES[id]) {
+      const r = TEST_CANDIDATES[id];
+      const qList = getQuestions(r.courses || ['B.Tech']);
+      const shuffleArr = (arr) => { const a=[...arr]; for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; };
+      const shuffleOpts = (q) => { const t=q.opts[q.ans]; const s=shuffleArr(q.opts); return {...q,opts:s,ans:s.indexOf(t)===-1?q.ans:s.indexOf(t)}; };
+      setCandidate(r);
+      setQuestions(shuffleArr(qList).map(shuffleOpts));
+      setCurrentQ(0); setAnswers({}); setSkipped({}); setTimeLeft(3600); setSubmitted(false);
+      setCamGranted(false); setCamError('');
+      setScreen('proctor');
+      setLoading(false);
+      return;
+    }
+
     try {
       const res = await fetch(`${API}/${id}`);
       if (res.status === 404) { setLoginMsg({ type:'error', text:'Application ID not found. Please check or register first.' }); setLoading(false); return; }
@@ -201,7 +277,7 @@ export default function ExamPanel({ onShowResults }) {
 
       // Start fresh, prepare unique paper
       setCandidate(r);
-      const qList = getQuestions(r.courses || []);
+      const qList = getQuestions(r.courses || ['B.Tech']);
       
       // Partition by difficulty (marks based)
       const easy = qList.filter(x => x.marks === 1);
@@ -220,7 +296,8 @@ export default function ExamPanel({ onShowResults }) {
 
       setQuestions(finalQuestions);
       setCurrentQ(0); setAnswers({}); setSkipped({}); setTimeLeft(3600); setSubmitted(false);
-      setScreen('exam');
+      setCamGranted(false); setCamError('');
+      setScreen('proctor');
     } catch { setLoginMsg({ type:'error', text:'Cannot connect to server. Make sure backend is running.' }); }
     setLoading(false);
   };
@@ -475,6 +552,65 @@ export default function ExamPanel({ onShowResults }) {
     return 'border-gray-200 text-gray-500 hover:border-blue-400';
   };
 
+  // ─── PROCTOR PERMISSION SCREEN ───
+  if (screen === 'proctor' && candidate) return (
+    <div className="max-w-md mx-auto py-8 px-4">
+      <div className="bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden">
+        <div className="px-6 py-4" style={{ background: 'linear-gradient(135deg,#1e3a8a,#4c1d95)' }}>
+          <p className="text-[10px] font-bold tracking-widest uppercase text-white/50 mb-1">SIUAT 2026-27 · Proctored Exam</p>
+          <p className="text-white font-bold text-base">Camera & Microphone Required</p>
+          <p className="text-white/60 text-xs mt-0.5">{candidate.firstName} {candidate.lastName} — {candidate.appId}</p>
+        </div>
+        <div className="p-6">
+          {!camGranted ? (
+            <>
+              <div className="w-16 h-16 rounded-full bg-blue-50 flex items-center justify-center mx-auto mb-4 text-3xl">📷</div>
+              <p className="text-sm font-semibold text-gray-800 text-center mb-1">Enable Camera & Mic to Continue</p>
+              <p className="text-xs text-gray-500 text-center mb-5 leading-relaxed">
+                This is a proctored exam. Your camera and microphone must stay active throughout. This helps ensure exam integrity.
+              </p>
+              <div className="space-y-2 mb-5">
+                {['Your video feed is only visible to you — not recorded or uploaded.','Microphone is monitored for unusual background noise.','Closing camera mid-exam counts as a security violation.'].map((t,i) => (
+                  <div key={i} className="flex items-start gap-2">
+                    <span className="text-green-500 font-bold text-sm mt-0.5">✓</span>
+                    <p className="text-xs text-gray-600">{t}</p>
+                  </div>
+                ))}
+              </div>
+              {camError && <p className="text-xs text-red-600 bg-red-50 border border-red-200 rounded-lg px-3 py-2 mb-3">{camError}</p>}
+              <button onClick={requestCamera} className="w-full py-3 rounded-xl text-sm font-bold text-white mb-2" style={{ background: 'linear-gradient(90deg,#1e3a8a,#4c1d95)' }}>
+                📷 Allow Camera & Mic
+              </button>
+
+            </>
+          ) : (
+            <>
+              <div className="relative mb-4">
+                <video ref={videoRef} autoPlay muted playsInline
+                  className="w-full rounded-xl bg-black" style={{ maxHeight: 200, objectFit: 'cover' }} />
+                {!streamRef.current && (
+                  <div className="absolute inset-0 flex items-center justify-center bg-gray-900 rounded-xl">
+                    <span className="text-white text-xs">No camera (skipped)</span>
+                  </div>
+                )}
+                <div className="absolute top-2 left-2 flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold text-white" style={{ background: 'rgba(22,163,74,0.85)' }}>
+                  <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse inline-block" />
+                  {streamRef.current ? 'LIVE' : 'SKIPPED'}
+                </div>
+              </div>
+              <p className="text-xs text-green-700 font-semibold text-center mb-4">
+                {streamRef.current ? '✓ Camera & mic active — you are ready to begin.' : '⚠ Proceeding without camera.'}
+              </p>
+              <button onClick={() => setScreen('exam')} className="w-full py-3 rounded-xl text-sm font-bold text-white" style={{ background: 'linear-gradient(90deg,#16a34a,#15803d)' }}>
+                Start Exam Now →
+              </button>
+            </>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+
   // ─── RESULT SCREEN ───
   if (screen === 'result' && result) {
     const secEntries = Object.entries(result.sectionData).filter(
@@ -708,7 +844,7 @@ export default function ExamPanel({ onShowResults }) {
                     <span className="text-[10px] text-gray-400">{q.sec} · {q.marks} mark{q.marks>1?'s':''}</span>
                   </div>
                   <div className="p-4" style={{background:bgColor}}>
-                    <p className="font-medium text-gray-900 mb-3 leading-relaxed text-sm">{q.q}</p>
+                    <p className="font-medium text-gray-900 mb-3 leading-relaxed text-sm">{q.q.replace(/^\d+\.\s*/, '')}</p>
                     <div className="space-y-1.5 mb-3">
                       {q.opts.map((opt,j) => {
                         const isSel=userAns===j, isAns=j===q.ans;
@@ -807,6 +943,16 @@ export default function ExamPanel({ onShowResults }) {
             </div>
           </div>
         )}
+        {/* Camera PiP */}
+        {streamRef.current && (
+          <div className="fixed bottom-4 right-4 z-[9997] rounded-xl overflow-hidden shadow-xl border-2 border-blue-700" style={{ width: 100, height: 75 }}>
+            <video ref={pipCallbackRef} autoPlay muted playsInline className="w-full h-full object-cover bg-black" />
+            <div className="absolute top-1 left-1 flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[8px] font-bold text-white" style={{ background: 'rgba(220,38,38,0.85)' }}>
+              <span className="w-1 h-1 rounded-full bg-white animate-pulse inline-block" />REC
+            </div>
+          </div>
+        )}
+
         {/* Exam Header */}
         <div className="bg-blue-800 rounded-2xl p-4 mb-3">
           <div className="flex justify-between items-start gap-3">
@@ -851,7 +997,7 @@ export default function ExamPanel({ onShowResults }) {
             <p className="text-xs font-bold text-orange-500 uppercase tracking-widest">Q{currentQ+1} of {questions.length} · {q.sec} · <span className="text-blue-600">{q.marks} mark{q.marks>1?'s':''}</span></p>
             {skipped[currentQ] && <span className="text-xs bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full font-semibold">Skipped</span>}
           </div>
-          <p className="text-sm sm:text-base font-medium text-gray-800 leading-relaxed mb-4">{q.q}</p>
+          <p className="text-sm sm:text-base font-medium text-gray-800 leading-relaxed mb-4">{q.q.replace(/^\d+\.\s*/, '')}</p>
           {q.opts.map((opt,i) => (
             <div key={i} onClick={()=>{ setAnswers(p=>({...p,[currentQ]:i})); setSkipped(p=>{ const n={...p}; delete n[currentQ]; return n; }); }}
               className={`flex items-center gap-3 p-3 border-2 rounded-xl mb-2 cursor-pointer transition ${answers[currentQ]===i?'border-blue-700 bg-blue-50 text-blue-800 font-medium':'border-gray-200 hover:border-blue-400 text-gray-700'}`}>

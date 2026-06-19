@@ -5181,6 +5181,8 @@ export function getShuffledQuestions(course) {
   });
 }
 
+export { getQuestions } from './thQuestions';
+
 export function calcGrade(pct) {
   if (pct >= 90) return { grade: 'A+', scholarship: '100% Fee Waiver', color: 'text-yellow-600', bg: 'bg-yellow-50 border-yellow-300' };
   if (pct >= 75) return { grade: 'A',  scholarship: '50% Fee Waiver',  color: 'text-green-600', bg: 'bg-green-50 border-green-300' };
