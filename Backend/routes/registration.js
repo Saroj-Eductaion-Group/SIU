@@ -109,7 +109,7 @@ router.patch('/admin/status/:appId', auth, async (req, res) => {
     const reg = await Registration.findOneAndUpdate(
       { appId: req.params.appId },
       { status: req.body.status },
-      { new: true }
+      { returnDocument: 'after' }
     );
     res.json(reg);
   } catch (err) {
@@ -123,7 +123,7 @@ router.patch('/admin/verify-id/:appId', auth, async (req, res) => {
     const reg = await Registration.findOneAndUpdate(
       { appId: req.params.appId },
       { idVerified: req.body.idVerified },
-      { new: true }
+      { returnDocument: 'after' }
     );
     res.json(reg);
   } catch (err) {
@@ -137,7 +137,7 @@ router.patch('/admin/reset/:appId', auth, async (req, res) => {
     const reg = await Registration.findOneAndUpdate(
       { appId: req.params.appId },
       { score: null, grade: null, sectionData: null, examOverride: true },
-      { new: true }
+      { returnDocument: 'after' }
     );
     res.json(reg);
   } catch (err) {
@@ -151,7 +151,7 @@ router.patch('/admin/override/:appId', auth, async (req, res) => {
     const reg = await Registration.findOneAndUpdate(
       { appId: req.params.appId },
       { examOverride: req.body.examOverride },
-      { new: true }
+      { returnDocument: 'after' }
     );
     res.json(reg);
   } catch (err) {
@@ -178,7 +178,7 @@ router.post('/login/:appId', async (req, res) => {
     const reg = await Registration.findOneAndUpdate(
       { appId: req.params.appId.toUpperCase() },
       { sessionToken },
-      { new: true }
+      { returnDocument: 'after' }
     );
     if (!reg) return res.status(404).json({ message: 'Not found' });
     res.json(reg);
@@ -216,7 +216,7 @@ router.patch('/result/:appId', async (req, res) => {
     const reg = await Registration.findOneAndUpdate(
       { appId: req.params.appId },
       { score, grade, sectionData },
-      { new: true }
+      { returnDocument: 'after' }
     );
     res.json(reg);
   } catch (err) {

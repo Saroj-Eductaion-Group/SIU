@@ -187,6 +187,72 @@ const seedMockCandidates = async () => {
   }
 };
 
+// Auto-seed course-specific test candidates if they don't exist
+const seedTestCandidates = async () => {
+  try {
+    const candidatesToSeed = [
+      { appId: 'TESTBTECH', name: 'BTech', courses: ['B.Tech'] },
+      { appId: 'TESTBBA', name: 'BBA', courses: ['BBA'] },
+      { appId: 'TESTBCA', name: 'BCA', courses: ['BCA'] },
+      { appId: 'TESTBSC', name: 'BSc', courses: ['B.Sc'] },
+      { appId: 'TESTBCOM', name: 'BCom', courses: ['B.Com'] },
+      { appId: 'TESTBA', name: 'BA', courses: ['BA'] },
+      { appId: 'TESTMBA', name: 'MBA', courses: ['MBA'] },
+      { appId: 'TESTMTECH', name: 'MTech', courses: ['M.Tech'] },
+      { appId: 'TESTMCA', name: 'MCA', courses: ['MCA'] },
+      { appId: 'TESTMSC', name: 'MSc', courses: ['M.Sc'] },
+      { appId: 'TESTMCOM', name: 'MCom', courses: ['M.Com'] },
+      { appId: 'TESTMA', name: 'MA', courses: ['MA'] },
+      { appId: 'TESTLLB', name: 'LLB', courses: ['LLB (Law)'] },
+      { appId: 'TESTLLM', name: 'LLM', courses: ['LLM'] },
+      { appId: 'TESTBPHARMA', name: 'BPharma', courses: ['B.Pharma'] },
+      { appId: 'TESTMPHARMA', name: 'MPharma', courses: ['M.Pharma'] },
+      { appId: 'TESTPHD', name: 'PhD', courses: ['PhD'] },
+      { appId: 'TESTDIPLOMA', name: 'Diploma', courses: ['Diploma'] },
+      { appId: 'TESTBSMS', name: 'BSMS', courses: ['BS'] }
+    ];
+
+    for (const c of candidatesToSeed) {
+      const existing = await Registration.findOne({ appId: c.appId });
+      if (!existing) {
+        const dummy = new Registration({
+          appId: c.appId,
+          firstName: 'Test',
+          lastName: c.name,
+          email: `test.${c.name.toLowerCase()}@sarojuniversity.edu.in`,
+          mobile: '99999' + String(Math.floor(10000 + Math.random() * 90000)),
+          dob: '2008-01-01',
+          gender: 'Male',
+          city: 'Lucknow',
+          state: 'Uttar Pradesh',
+          qual: 'Class 12',
+          board: 'CBSE',
+          marks: '95%',
+          yop: '2026',
+          courses: c.courses,
+          examDate: '07 Jun 2026 (Morning)',
+          examMode: 'Online (CBT)',
+          centre: 'Lucknow Main Campus',
+          medium: 'English',
+          category: 'General',
+          scholar: 'Yes, very interested',
+          source: 'University Website',
+          status: 'Approved',
+          examOverride: true,
+          score: null,
+          grade: null,
+          sectionData: null,
+          sessionToken: null
+        });
+        await dummy.save();
+        console.log(`🟢 Auto-seeded course test candidate: ${c.appId}`);
+      }
+    }
+  } catch (err) {
+    console.error('❌ Failed to auto-seed course test candidates:', err.message);
+  }
+};
+
 const CuetRegistration = require('../models/CuetRegistration');
 const NeetRegistration = require('../models/NeetRegistration');
 
@@ -283,6 +349,7 @@ module.exports = {
   router,
   seedDefaultAdmin,
   seedMockCandidates,
-  seedMockCuetNeetCandidates
+  seedMockCuetNeetCandidates,
+  seedTestCandidates
 };
 
