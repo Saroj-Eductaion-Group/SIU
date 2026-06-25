@@ -1,7 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { calcGrade } from './thData';
 
-const BASE = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+const BASE = import.meta.env.DEV
+  ? '/api'
+  : (import.meta.env.VITE_API_URL || 'http://localhost:5000/api');
 const API  = `${BASE}/registrations`;
 
 const GRADE_COLOR = { 'A+': '#b45309', 'A': '#16a34a', 'B': '#1d4ed8', 'C': '#d97706', 'F': '#dc2626' };
@@ -231,28 +233,28 @@ function DetailModal({ candidate, onClose }) {
 }
 
 export default function ResultsPanel() {
-  const [regs, setRegs]         = useState([]);
-  const [filter, setFilter]     = useState('all');
-  const [loading, setLoading]   = useState(false);
-  const [reportFor, setReportFor] = useState(null);
+  const [appIdInput, setAppIdInput] = useState('');
+  const [candidate, setCandidate]   = useState(null);
+  const [error, setError]           = useState('');
+  const [loading, setLoading]       = useState(false);
+  const [reportFor, setReportFor]   = useState(null);
 
-  const fetch_ = async () => {
-    setLoading(true);
+  const lookup = async () => {
+    const id = appIdInput.trim().toUpperCase();
+    if (!id) return setError('Please enter your Application ID.');
+    setError(''); setLoading(true); setCandidate(null);
     try {
-      const res  = await fetch(`${API}/results`);
+      const res  = await fetch(`${API}/${id}`);
+      if (res.status === 404) { setError('Application ID not found. Please check and try again.'); setLoading(false); return; }
       const data = await res.json();
-      setRegs(Array.isArray(data) ? data : []);
-    } catch { setRegs([]); }
+      if (data.score === null || data.score === undefined) {
+        setError('You have not completed the exam yet. Please take the exam first.');
+      } else {
+        setCandidate(data);
+      }
+    } catch { setError('Cannot connect to server. Make sure backend is running.'); }
     setLoading(false);
   };
-
-  useEffect(() => { fetch_(); }, []);
-
-  const appeared  = regs.filter(r => r.score !== null && r.score !== undefined);
-  const filtered  = filter === 'all' ? appeared : appeared.filter(r => r.grade === filter);
-  const scores    = appeared.map(r => r.score);
-  const top       = scores.length ? Math.max(...scores) + '%' : '—';
-  const avg       = scores.length ? Math.round(scores.reduce((a,b)=>a+b,0)/scores.length) + '%' : '—';
 
   const gradeBadge = g => {
     if (g==='A+') return 'bg-yellow-100 text-yellow-700 border border-yellow-300';
@@ -262,115 +264,114 @@ export default function ResultsPanel() {
     return 'bg-red-100 text-red-700';
   };
 
-  const schText = r => calcGrade(r.score).scholarship;
-
   return (
     <div>
       {reportFor && <DetailModal candidate={reportFor} onClose={() => setReportFor(null)} />}
 
-      {/* Scholarship banner */}
-      <div className="flex items-center justify-between flex-wrap gap-2 bg-amber-50 border border-amber-200 rounded-xl px-4 py-3 mb-5 text-sm text-amber-700">
-        <span>🏆 Score 90%+ in the SIUAT Exam and win a <strong>100% Full Scholarship!</strong></span>
-        <button onClick={() => window.dispatchEvent(new CustomEvent('th-tab', { detail: 'registration' }))}
-          className="bg-yellow-500 hover:bg-yellow-600 text-blue-900 font-bold text-xs px-4 py-1.5 rounded-lg transition">
-          Register Now
-        </button>
-      </div>
-
       {/* Header */}
       <div className="bg-blue-800 rounded-2xl p-5 mb-5">
-        <h2 className="text-white font-bold text-lg font-outfit">Official Result Sheet</h2>
+        <h2 className="text-white font-bold text-lg font-outfit">Check Your Result</h2>
         <p className="text-blue-300 text-xs mt-1">Saroj International University — SIUAT 2026-27</p>
       </div>
 
-      {/* Stats */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-5">
-        {[
-          ['Appeared',  appeared.length,                                'text-blue-800'],
-          ['Qualified', appeared.filter(r=>r.grade!=='F').length,       'text-green-600'],
-          ['Top Score', top,                                             'text-blue-800'],
-          ['Avg Score', avg,                                             'text-blue-800'],
-        ].map(([label, val, cls]) => (
-          <div key={label} className="bg-white border border-gray-200 rounded-xl p-4 text-center shadow-sm">
-            <div className={`text-2xl font-bold font-outfit ${cls}`}>{val}</div>
-            <div className="text-xs text-gray-500 mt-1 font-medium">{label}</div>
-          </div>
-        ))}
+      {/* Lookup form */}
+      <div className="bg-white border border-gray-200 rounded-2xl shadow-sm p-6 mb-5 max-w-md mx-auto">
+        <label className="block text-xs font-semibold text-gray-700 mb-1">Enter Your Application ID</label>
+        <input
+          value={appIdInput}
+          onChange={e => setAppIdInput(e.target.value)}
+          onKeyDown={e => e.key === 'Enter' && lookup()}
+          placeholder="e.g. SIU123456"
+          className="w-full border border-gray-300 rounded-lg px-3 py-3 text-center font-bold text-lg tracking-widest focus:outline-none focus:border-blue-700 mb-3"
+        />
+        {error && <p className="text-xs text-red-600 bg-red-50 border border-red-200 rounded-lg px-3 py-2 mb-3">{error}</p>}
+        <button onClick={lookup} disabled={loading}
+          className="w-full bg-blue-700 hover:bg-blue-800 text-white font-semibold py-2.5 rounded-lg text-sm transition disabled:opacity-60">
+          {loading ? 'Searching...' : 'View My Result →'}
+        </button>
       </div>
 
-      {/* Table */}
-      <div className="bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden">
-        <div className="p-4 border-b border-gray-100 flex flex-wrap gap-2 items-center">
-          {[
-            ['all','All'],
-            ['A+','100% Scholarship (A+)'],
-            ['A','50% Scholarship (A)'],
-            ['B','25% Scholarship (B)'],
-            ['C','Grade C'],
-            ['F','Not Qualified'],
-          ].map(([val, label]) => (
-            <button key={val} onClick={() => setFilter(val)}
-              className={`px-3 py-1.5 rounded-full text-xs font-semibold border transition ${filter===val?'bg-blue-700 text-white border-blue-700':'bg-white text-gray-500 border-gray-300 hover:border-blue-700 hover:text-blue-700'}`}>
-              {label}
-            </button>
-          ))}
-          <button onClick={fetch_}
-            className="ml-auto bg-gray-50 text-gray-600 border border-gray-200 hover:bg-gray-100 text-xs font-semibold px-3 py-1.5 rounded-full transition">
-            ↻ Refresh
-          </button>
-        </div>
+      {/* Result card */}
+      {candidate && (() => {
+        const { grade, scholarship } = calcGrade(candidate.score);
+        const gc  = GRADE_COLOR[grade] || '#374151';
+        const gbg = GRADE_BG[grade]   || '#f3f4f6';
+        const sch = scholarship;
+        const hasSectionData = candidate.sectionData && typeof candidate.sectionData === 'object';
+        return (
+          <div className="bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden max-w-2xl mx-auto">
+            {/* Candidate header */}
+            <div style={{ background: 'linear-gradient(135deg,#0a1f5c,#1e3a8a)' }} className="px-6 py-5">
+              <div className="flex items-start justify-between gap-4">
+                <div>
+                  <p className="text-[10px] font-bold tracking-widest uppercase text-white/40">SIUAT 2026-27 · Saroj International University</p>
+                  <h2 className="text-white font-bold text-xl mt-1">{candidate.firstName} {candidate.lastName}</h2>
+                  <p className="text-white/50 text-xs font-mono mt-0.5">{candidate.appId} · {(candidate.courses||[]).join(', ')}</p>
+                </div>
+                <div className="text-right shrink-0">
+                  <div className="text-3xl font-black text-white font-outfit">{candidate.score}%</div>
+                  <div className="text-white/40 text-[10px] uppercase tracking-widest">Score</div>
+                </div>
+              </div>
+            </div>
 
-        {loading ? (
-          <div className="text-center py-12 text-gray-400 text-sm">Loading...</div>
-        ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm">
-              <thead className="bg-blue-700 text-white">
-                <tr>{['App ID','Candidate','Course','Score','Grade','Scholarship','Status','Report'].map(h => (
-                  <th key={h} className="px-4 py-3 text-left text-xs font-semibold tracking-wide">{h}</th>
-                ))}</tr>
-              </thead>
-              <tbody>
-                {filtered.length === 0 ? (
-                  <tr><td colSpan={8} className="text-center py-12 text-gray-400 text-sm">No results available yet.</td></tr>
-                ) : filtered.map(r => {
-                  const sch = schText(r);
-                  const hasSectionData = r.sectionData && typeof r.sectionData === 'object';
-                  return (
-                    <tr key={r._id} className="border-b border-gray-100 hover:bg-blue-50 transition">
-                      <td className="px-4 py-3 font-bold text-blue-800 text-xs tracking-wide">{r.appId}</td>
-                      <td className="px-4 py-3 font-medium">{r.firstName} {r.lastName}</td>
-                      <td className="px-4 py-3 text-gray-500 text-xs">{(r.courses||[])[0]}</td>
-                      <td className="px-4 py-3 font-bold text-base text-blue-800">{r.score}%</td>
-                      <td className="px-4 py-3">
-                        <span className={`px-2 py-1 rounded-full text-xs font-bold ${gradeBadge(r.grade)}`}>Grade {r.grade}</span>
-                      </td>
-                      <td className="px-4 py-3">
-                        {sch
-                          ? <span className="px-2 py-1 bg-green-100 text-green-700 text-xs font-semibold rounded-full">{sch}</span>
-                          : <span className="text-gray-400 text-xs">—</span>}
-                      </td>
-                      <td className="px-4 py-3">
-                        {r.grade !== 'F'
-                          ? <span className="px-2 py-1 bg-green-100 text-green-700 text-xs font-semibold rounded-full">Qualified</span>
-                          : <span className="px-2 py-1 bg-red-100 text-red-600 text-xs font-semibold rounded-full">Not Qualified</span>}
-                      </td>
-                      <td className="px-4 py-3">
-                        {hasSectionData
-                          ? <button onClick={() => setReportFor(r)}
-                              className="px-3 py-1.5 bg-blue-700 hover:bg-blue-800 text-white text-xs font-semibold rounded-lg transition">
-                              📄 Report
-                            </button>
-                          : <span className="text-gray-300 text-xs">—</span>}
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
+            <div className="p-5 space-y-4">
+              {/* Grade + Scholarship */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div className="rounded-xl p-4 flex items-center gap-3 border" style={{ background: gbg, borderColor: gc + '33' }}>
+                  <div className="w-12 h-12 rounded-xl flex items-center justify-center text-xl font-black border-2 shrink-0"
+                    style={{ background: gc + '18', borderColor: gc + '44', color: gc }}>{grade}</div>
+                  <div>
+                    <p className="font-bold text-sm" style={{ color: gc }}>Grade {grade}</p>
+                    <p className="text-xs text-gray-500 mt-0.5">
+                      {grade==='A+'?'Outstanding — Top Scorer':grade==='A'?'Excellent':grade==='B'?'Good — Above Average':grade==='C'?'Average':'Below Average'}
+                    </p>
+                  </div>
+                </div>
+                <div className="rounded-xl p-4 flex items-center gap-3"
+                  style={{ background: sch ? 'linear-gradient(135deg,#78350f,#b45309)' : '#f9fafb', border: sch ? 'none' : '1px solid #e5e7eb' }}>
+                  <div className="text-2xl shrink-0">{sch ? '🏆' : '📋'}</div>
+                  <div>
+                    <p className={`font-bold text-sm ${sch ? 'text-yellow-200' : 'text-gray-500'}`}>
+                      {sch ? 'Scholarship Qualified!' : 'Not Qualified'}
+                    </p>
+                    <p className={`text-xs mt-0.5 ${sch ? 'text-yellow-100/70' : 'text-gray-400'}`}>
+                      {sch || 'Score 60%+ for merit certificate'}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Stats row */}
+              <div className="grid grid-cols-3 gap-3">
+                {[
+                  { val: `${candidate.score}%`, label: 'Score',  bg: '#eff6ff', color: '#1d4ed8' },
+                  { val: candidate.grade,        label: 'Grade',  bg: '#f0fdf4', color: '#16a34a' },
+                  { val: candidate.status,       label: 'Status', bg: '#fef3c7', color: '#d97706' },
+                ].map(s => (
+                  <div key={s.label} className="rounded-xl p-3 text-center" style={{ background: s.bg }}>
+                    <div className="font-black text-lg font-outfit" style={{ color: s.color }}>{s.val}</div>
+                    <div className="text-[10px] text-gray-400 mt-0.5">{s.label}</div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Detailed report button */}
+              {hasSectionData && (
+                <button onClick={() => setReportFor(candidate)}
+                  className="w-full py-2.5 bg-blue-700 hover:bg-blue-800 text-white text-sm font-semibold rounded-xl transition">
+                  📄 View Detailed Report
+                </button>
+              )}
+
+              <button onClick={() => { setCandidate(null); setAppIdInput(''); setError(''); }}
+                className="w-full py-2 text-xs text-gray-400 hover:text-gray-600 transition">
+                ← Check another result
+              </button>
+            </div>
           </div>
-        )}
-      </div>
+        );
+      })()}
     </div>
   );
 }
