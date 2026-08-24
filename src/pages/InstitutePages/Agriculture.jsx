@@ -210,9 +210,9 @@ function InstituteAgriculture() {
     <div className="relative min-h-screen bg-gray-50 p-4 md:p-8">
       {/* Social Media Sidebar */}
       <div className="fixed top-1/2 -translate-y-1/2 left-0 hidden md:flex flex-col gap-3 bg-white p-2 rounded-r-lg shadow-md border border-gray-200">
-        <a href="#" className="text-gray-600 hover:text-pink-500 p-2"><FaInstagram size={20} /></a>
-        <a href="#" className="text-gray-600 hover:text-blue-700 p-2"><FaLinkedin size={20} /></a>
-        <a href="#" className="text-gray-600 hover:text-blue-600 p-2"><FaFacebook size={20} /></a>
+        <a href="https://www.instagram.com/siulucknow/" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-pink-500 p-2"><FaInstagram size={20} /></a>
+        <a href="https://www.linkedin.com/company/siulucknow" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-blue-700 p-2"><FaLinkedin size={20} /></a>
+        <a href="https://www.facebook.com/siulucknow" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-blue-600 p-2"><FaFacebook size={20} /></a>
       </div>
 
       <div className="max-w-7xl mx-auto">

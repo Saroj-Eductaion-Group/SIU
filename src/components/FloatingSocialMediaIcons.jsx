@@ -33,7 +33,7 @@ const FloatingSocialMediaIcons = () => {
 
               <li className="icon-contentFooter">
                 <a
-                  href="https://www.linkedin.com/company/siulucknow/"
+                  href="https://www.linkedin.com/company/siulucknow"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="LinkedIn"
