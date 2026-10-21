@@ -112,9 +112,9 @@ const SIUFeeStructure = () => {
       name: "Saroj Institute of Agriculture Sciences with AI Integration",
       domain: "Agriculture",
       programs: [
-        { degree: "B.Sc Agriculture (Hons)", specializations: "Agriculture", fees: { year1: 60000, year2: 60000, year3: 60000, year4: 60000, total: 240000 } },
-        { degree: "M.Sc Agriculture (Hons)", specializations: "Agriculture", fees: { year1: 60000, year2: 60000, total: 120000 } },
-        { degree: "Ph.D", specializations: "Agriculture", fees: { year1: 110000, year2: 110000, year3: 110000, total: 330000 } }
+        { degree: "B.Sc Agriculture", specializations: "Agronomy, Horticulture", fees: { year1: 60000, year2: 60000, year3: 60000, year4: 60000, total: 240000 } },
+        { degree: "M.Sc Agriculture", specializations: "Agronomy, Horticulture", fees: { year1: 60000, year2: 60000, total: 120000 } },
+        { degree: "Ph.D in Agriculture", fees: { year1: 110000, year2: 110000, year3: 110000, total: 330000 } }
       ]
     },
     {
@@ -143,7 +143,7 @@ const SIUFeeStructure = () => {
         mode: 'Regular',
         instituteName: institute.name,
         domain: institute.domain,
-        searchableText: `${institute.name} ${institute.domain} ${program.degree} ${program.specializations}`.toLowerCase()
+        searchableText: `${institute.name} ${institute.domain} ${program.degree} ${program.specializations || ""}`.toLowerCase()
       }))
     );
 
@@ -153,7 +153,7 @@ const SIUFeeStructure = () => {
         mode: "Global",
         instituteName: institute.name,
         domain: institute.domain,
-        searchableText: `${institute.name} ${institute.domain} ${program.degree} ${program.specializations}`.toLowerCase()
+        searchableText: `${institute.name} ${institute.domain} ${program.degree} ${program.specializations || ""}`.toLowerCase()
       }))
     );
     return [...regular, ...global];
@@ -215,9 +215,10 @@ const SIUFeeStructure = () => {
 
   const transformProgramsToTableData = (programs) => {
     return programs.map(program => {
-      if (!program.fees) return [`${program.degree} (${program.specializations})`, "N/A"];
+      const specText = program.specializations ? ` (${program.specializations || ""})` : '';
+      if (!program.fees) return [`${program.degree}${specText}`, "N/A"];
       const semesterFee = program.fees.year1 ? `₹${(program.fees.year1 / 2).toLocaleString('en-IN')}` : "N/A";
-      return [`${program.degree} (${program.specializations})`, semesterFee];
+      return [`${program.degree}${specText}`, semesterFee];
     });
   };
 

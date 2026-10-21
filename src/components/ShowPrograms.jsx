@@ -601,14 +601,21 @@ const CoursePage = ({ universityData = { university: '', institutes: [] } }) => 
                                 {program.instituteName}
                               </p>
                               
-                              <div className="mt-2">
-                                <p className="text-gray-700">
-                                  <span className="font-medium">Specializations:</span> 
-                                </p>
-                                <div className="mt-1">
-                                  {renderSpecializations(program.specializations)}
+                              {Boolean(
+                                program.specializations &&
+                                (typeof program.specializations === 'string'
+                                  ? program.specializations.trim() !== ''
+                                  : program.specializations.length > 0)
+                              ) && (
+                                <div className="mt-2">
+                                  <p className="text-gray-700">
+                                    <span className="font-medium">Specializations:</span> 
+                                  </p>
+                                  <div className="mt-1">
+                                    {renderSpecializations(program.specializations)}
+                                  </div>
                                 </div>
-                              </div>
+                              )}
                               
                               <div className="mt-3 flex flex-wrap gap-2">
                                 <div className="flex items-center text-xs bg-gray-100 px-3 py-1.5 rounded-full">

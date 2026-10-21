@@ -486,34 +486,33 @@
       "name": "Saroj Institute of Agriculture Sciences with AI Integration",
       "programs": [
         {
-          "degree": "B.Sc Agriculture (Hons)",
+          "degree": "B.Sc Agriculture",
           "mode": "Regular Mode",
-          "specializations": "Agriculture",
+          "specializations": "Agronomy, Horticulture",
           "duration_in_yrs": 4,
           "fees": { "year1": 60000, "year2": 60000, "year3": 60000, "year4": 60000, "total": 240000 }
         },
         {
-          "degree": "M.Sc Agriculture (Hons)",
+          "degree": "M.Sc Agriculture",
           "mode": "Regular Mode",
-          "specializations": "Agriculture",
+          "specializations": "Agronomy, Horticulture",
           "duration_in_yrs": 2,
           "fees": { "year1": 60000, "year2": 60000, "total": 120000 }
         },
         {
           "degree": "Ph.D in Agriculture",
           "mode": "Regular Mode",
-          "specializations": "Agriculture",
           "duration_in_yrs": 3,
           "fees": { "year1": 110000, "year2": 110000, "year3": 110000, "total": 330000 }
         }
       ],
       "eligibility": {
-        "B.Sc Agriculture (Hons)": {
+        "B.Sc Agriculture": {
           "educational_qualifications": "10+2 with Physics, Chemistry, and Biology/Mathematics/Agriculture.",
           "minimum_marks_requirement": "Minimum 50% in 10+2.",
           "selection_process": "Entrance exam + merit-based."
         },
-        "M.Sc Agriculture (Hons)": {
+        "M.Sc Agriculture": {
           "educational_qualifications": "B.Sc in Agriculture or related field.",
           "minimum_marks_requirement": "Minimum 55% in graduation.",
           "selection_process": "Entrance exam + interview."

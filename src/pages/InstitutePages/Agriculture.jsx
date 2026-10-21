@@ -8,7 +8,7 @@ const allCourses = [
     id: 1,
     level: 'Undergraduate',
     name: 'B.Sc (Agriculture Science)',
-    specializations: ['Crop Science', 'Soil Health', 'Agribusiness', 'Horticulture'],
+    specializations: ['Agronomy', 'Horticulture'],
     duration: '4 years',
     fee: '₹60,000 per year',
     eligibility: '10+2 with Physics, Chemistry, and Biology (PCB) with a minimum of 50% marks.',
@@ -18,7 +18,7 @@ const allCourses = [
     id: 2,
     level: 'Postgraduate',
     name: 'M.Sc (Agriculture Science)',
-    specializations: ['Agronomy', 'Plant Pathology', 'Sustainable Agriculture', 'AgTech'],
+    specializations: ['Agronomy', 'Horticulture'],
     duration: '2 years',
     fee: '₹60,000 per year',
     eligibility: 'B.Sc in Agriculture or related fields with a minimum of 55% marks.',
@@ -28,7 +28,6 @@ const allCourses = [
     id: 3,
     level: 'Ph.D',
     name: 'Ph.D (Agriculture Science)',
-    specializations: ['Agricultural Biotechnology', 'Climate-Smart Agriculture', 'Food Security Research'],
     duration: '3 years',
     fee: '₹110,000 per year',
     eligibility: 'M.Sc in Agriculture or a related discipline with a strong research proposal.',
@@ -55,9 +54,11 @@ const CourseCard = ({ course }) => {
       </div>
 
       {/* Details */}
-      <p className="text-sm text-gray-600 mb-3">
-        <strong className="text-gray-800">Specializations:</strong> {course.specializations.join(', ')}
-      </p>
+      {course.specializations && course.specializations.length > 0 && (
+        <p className="text-sm text-gray-600 mb-3">
+          <strong className="text-gray-800">Specializations:</strong> {course.specializations.join(', ')}
+        </p>
+      )}
       <p className="text-sm text-gray-600 mb-5">
         <strong className="text-gray-800">Duration:</strong> {course.duration}
       </p>
