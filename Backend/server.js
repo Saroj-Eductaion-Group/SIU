@@ -38,6 +38,7 @@ app.use('/api/registrations', require('./routes/registration')); // TalentHunt p
 app.use('/api/siuat', require('./routes/siuat'));               // CuetNeet portal SIUAT tab
 app.use('/api/cuet', require('./routes/cuet'));                 // CUET mock test registrations
 app.use('/api/neet', require('./routes/neet'));                 // NEET mock test registrations
+app.use('/api/talent-search', require('./routes/talentSearch')); // Level 1 Talent Search Program (2026-27)
 
 app.use('/api/gemini', require('./routes/gemini'));
 

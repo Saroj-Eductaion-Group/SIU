@@ -104,6 +104,7 @@ import FeePaymentPage from "./pages/FeePaymentPage";
 import OrientationPage from "./pages/Admission/OrientationPage";
 import TalentHunt from "./pages/TalentHunt";
 import NeetTalentHunt from "./pages/NeetTalentHunt";
+import TalentSearchLevel1 from "./pages/TalentSearchLevel1";
 import InstituteAgriculture from "./pages/InstitutePages/Agriculture";
 import Research from "./pages/ResearchPage";
 
@@ -121,7 +122,8 @@ function App() {
 
       {/* Talent Hunt */}
       <Route path='/talent-hunt' element={<TalentHunt />} />
-      <Route path='/neet-talent-hunt' element={<NeetTalentHunt />} />
+      <Route path='/neet-talent-hunt' element={<TalentSearchLevel1 />} />
+      <Route path='/talent-search' element={<TalentSearchLevel1 />} />
 
       {/* Programs Overview */}
       <Route path='/programs' element={<Courses />} />

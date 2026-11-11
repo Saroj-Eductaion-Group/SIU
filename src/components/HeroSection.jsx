@@ -71,7 +71,7 @@ const HeroSection = () => {
               href="/neet-talent-hunt"
               className="bg-green-600 hover:bg-green-700 text-white px-4 py-1 rounded-md font-medium transition-all duration-300 shadow-lg animate-[pulse_2s_infinite] whitespace-nowrap text-sm"
             >
-              📚 NEET Talent Hunt
+              🎯 Talent Search 2026-27 (Level 1)
             </a>
             <a
               href="/talent-hunt"
