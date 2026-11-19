@@ -1539,7 +1539,7 @@ export default function TalentSearchLevel1() {
           </div>
 
           {/* Right Column: Question Palette */}
-          <div className="w-full lg:w-80 bg-slate-950 border-t lg:border-t-0 lg:border-l border-slate-800 p-4 flex flex-col">
+          <div className="w-full lg:w-80 bg-slate-950 border-t lg:border-t-0 lg:border-l border-slate-800 p-4 flex flex-col overflow-y-auto">
             <div className="flex items-center justify-between mb-3">
               <h4 className="text-xs font-bold text-gray-300 uppercase tracking-wider">
                 Question Palette
@@ -1613,8 +1613,10 @@ export default function TalentSearchLevel1() {
               </div>
             </div>
 
-            {/* Question Buttons Grid (Displays active subject's 10 questions or all 50) */}
-            <div className="flex-1 overflow-y-auto max-h-56 lg:max-h-72 grid grid-cols-5 gap-2 pr-1 mb-3">
+            {/* Question Buttons Grid (Displays active subject's 10 questions or all 50 without scrolling) */}
+            <div className={`grid grid-cols-5 content-start pr-0.5 ${
+              paletteMode === 'section' ? 'gap-2' : 'gap-1.5'
+            }`}>
               {(paletteMode === 'section' ? activeSection.indices : questions.map((_, i) => i)).map(i => {
                 const isAnswered = answers[i] !== undefined;
                 const isMarked = markedForReview[i];
@@ -1629,50 +1631,15 @@ export default function TalentSearchLevel1() {
                   <button
                     key={i}
                     onClick={() => setCurrentQIndex(i)}
-                    className={`h-9 rounded-lg text-xs font-semibold flex items-center justify-center transition cursor-pointer ${bgClass}`}
+                    className={`${
+                      paletteMode === 'section' ? 'h-9 text-xs' : 'h-8 text-xs'
+                    } rounded-lg font-semibold flex items-center justify-center transition cursor-pointer ${bgClass}`}
                     title={`Question ${i + 1}: ${questions[i]?.subject || ''}`}
                   >
                     {i + 1}
                   </button>
                 );
               })}
-            </div>
-
-            {/* All Subjects List Switcher inside Palette */}
-            <div className="mt-auto pt-3 border-t border-slate-800">
-              <span className="text-[11px] font-bold text-gray-400 uppercase tracking-wider block mb-2">
-                All Subjects
-              </span>
-              <div className="space-y-1.5 max-h-44 overflow-y-auto pr-1">
-                {sections.map((sec, secIdx) => {
-                  const isSecActive = activeSection.name === sec.name;
-                  const secAns = sec.indices.filter(idx => answers[idx] !== undefined).length;
-                  return (
-                    <button
-                      key={sec.name}
-                      type="button"
-                      onClick={() => setCurrentQIndex(sec.startIndex)}
-                      className={`w-full flex items-center justify-between px-2.5 py-1.5 rounded-lg text-xs transition cursor-pointer ${
-                        isSecActive
-                          ? 'bg-blue-600/30 text-blue-300 border border-blue-500/50 font-bold'
-                          : 'bg-slate-900 hover:bg-slate-800 text-gray-400 hover:text-gray-200'
-                      }`}
-                    >
-                      <span className="flex items-center gap-1.5 truncate">
-                        <span className={`w-4 h-4 rounded-full text-[10px] flex items-center justify-center font-bold ${
-                          isSecActive ? 'bg-blue-500 text-white' : 'bg-slate-700 text-gray-300'
-                        }`}>
-                          {secIdx + 1}
-                        </span>
-                        <span className="truncate">{sec.name}</span>
-                      </span>
-                      <span className="text-[10px] font-mono text-gray-400 shrink-0">
-                        {secAns}/{sec.total}
-                      </span>
-                    </button>
-                  );
-                })}
-              </div>
             </div>
           </div>
         </div>
