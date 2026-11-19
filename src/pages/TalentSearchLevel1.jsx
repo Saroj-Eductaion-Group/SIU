@@ -1328,196 +1328,211 @@ export default function TalentSearchLevel1() {
         )}
 
         {/* Top App Bar */}
-        <header className="bg-slate-950 border-b border-slate-800 px-4 py-3 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="bg-blue-600 text-white font-bold px-2.5 py-1 rounded text-xs tracking-wider">
-              SIU TALENT SEARCH
-            </div>
-            <div className="hidden sm:block text-xs text-gray-300">
-              Candidate: <strong>{name}</strong> · Stream: <strong>{stream}</strong> · <span className="text-amber-400 font-bold">{paperSet}</span>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-4">
-            {/* Timer Badge */}
-            <div className={`flex items-center gap-2 px-3 py-1.5 rounded-lg font-mono text-sm font-bold border ${
-              timeLeft < 300
-                ? 'bg-red-950/80 text-red-400 border-red-700 animate-pulse'
-                : 'bg-slate-800 text-amber-400 border-slate-700'
-            }`}>
-              <Clock className="w-4 h-4" />
-              <span>{formatTimer(timeLeft)}</span>
+        <header className="bg-slate-950 border-b border-slate-800 px-4 sm:px-6 py-3.5 sticky top-0 z-20 shadow-md">
+          <div className="w-full lg:w-[80%] mx-auto flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="bg-blue-600 text-white font-bold px-3 py-1 rounded-lg text-xs tracking-wider shadow-sm">
+                SIU TALENT SEARCH
+              </div>
+              <div className="hidden sm:block text-xs text-gray-300">
+                Candidate: <strong className="text-white">{name}</strong> · Stream: <strong className="text-white">{stream}</strong> · <span className="text-amber-400 font-bold">{paperSet}</span>
+              </div>
             </div>
 
-            <button
-              onClick={() => setShowSubmitModal(true)}
-              className="bg-green-600 hover:bg-green-700 text-white text-xs font-bold px-4 py-2 rounded-lg cursor-pointer transition shadow"
-            >
-              Submit Test
-            </button>
+            <div className="flex items-center gap-4">
+              {/* Timer Badge */}
+              <div className={`flex items-center gap-2 px-3.5 py-1.5 rounded-xl font-mono text-sm font-bold border shadow-sm ${
+                timeLeft < 300
+                  ? 'bg-red-950/80 text-red-400 border-red-700 animate-pulse'
+                  : 'bg-slate-800 text-amber-400 border-slate-700'
+              }`}>
+                <Clock className="w-4 h-4" />
+                <span>{formatTimer(timeLeft)}</span>
+              </div>
+
+              <button
+                onClick={() => setShowSubmitModal(true)}
+                className="bg-green-600 hover:bg-green-700 text-white text-xs font-bold px-4 py-2 rounded-xl cursor-pointer transition shadow-md hover:shadow-green-600/20"
+              >
+                Submit Test
+              </button>
+            </div>
           </div>
         </header>
 
-        {/* Main Layout: Question Area (Left) + Question Palette (Right) */}
-        <div className="flex-1 flex flex-col lg:flex-row overflow-hidden">
-          {/* Left Column: Active Question */}
-          <div className="flex-1 flex flex-col p-4 sm:p-6 overflow-y-auto">
-            {/* Subject Indicator */}
-            <div className="flex items-center justify-between mb-4 pb-2 border-b border-slate-800">
-              <span className="text-xs text-blue-400 font-semibold tracking-wider uppercase">
-                Section: {q?.subject}
-              </span>
-              <span className="text-xs text-gray-400">
-                Question {currentQIndex + 1} of {totalQ}
-              </span>
-            </div>
+        {/* Main Content Area: 80% Width Centered with Question on Top & Palette Below */}
+        <div className="flex-1 overflow-y-auto bg-slate-900 py-6 px-4 sm:px-6">
+          <div className="w-full lg:w-[80%] mx-auto space-y-6 pb-10">
 
-            {/* Question Text */}
-            <div className="bg-slate-800/80 border border-slate-700 rounded-xl p-5 mb-6">
-              <h3 className="text-base sm:text-lg font-medium text-gray-100 leading-relaxed">
-                <span className="text-amber-400 font-bold mr-2">Q{currentQIndex + 1}.</span>
-                {q?.q}
-              </h3>
-            </div>
+            {/* Top Question Card */}
+            <div className="bg-slate-800/80 border border-slate-700/80 rounded-2xl p-6 sm:p-8 shadow-xl">
+              {/* Subject Indicator & Counter */}
+              <div className="flex items-center justify-between mb-5 pb-3 border-b border-slate-700/60">
+                <span className="text-xs text-blue-400 font-bold tracking-wider uppercase flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-blue-500 inline-block"></span>
+                  Section: {q?.subject}
+                </span>
+                <span className="text-xs text-gray-300 font-mono bg-slate-900/80 px-3 py-1 rounded-full border border-slate-700">
+                  Question <strong className="text-white">{currentQIndex + 1}</strong> of {totalQ}
+                </span>
+              </div>
 
-            {/* Options */}
-            <div className="space-y-3 mb-8">
-              {q?.options.map((optText, optIdx) => {
-                const isSelected = answers[currentQIndex] === optIdx;
-                const letter = String.fromCharCode(65 + optIdx); // A, B, C, D
-                return (
-                  <div
-                    key={optIdx}
-                    onClick={() => {
-                      setAnswers(prev => ({ ...prev, [currentQIndex]: optIdx }));
-                    }}
-                    className={`p-4 rounded-xl border flex items-center gap-3 cursor-pointer transition-all ${
-                      isSelected
-                        ? 'bg-blue-600/30 border-blue-500 ring-2 ring-blue-500 text-white'
-                        : 'bg-slate-800/50 border-slate-700/80 hover:bg-slate-800 text-gray-200'
-                    }`}
-                  >
-                    <span
-                      className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold shrink-0 ${
+              {/* Question Text */}
+              <div className="bg-slate-900/70 border border-slate-700/80 rounded-xl p-5 sm:p-6 mb-6">
+                <h3 className="text-base sm:text-lg font-medium text-gray-100 leading-relaxed">
+                  <span className="text-amber-400 font-bold mr-2 text-lg">Q{currentQIndex + 1}.</span>
+                  {q?.q}
+                </h3>
+              </div>
+
+              {/* Options */}
+              <div className="space-y-3 mb-8">
+                {q?.options.map((optText, optIdx) => {
+                  const isSelected = answers[currentQIndex] === optIdx;
+                  const letter = String.fromCharCode(65 + optIdx); // A, B, C, D
+                  return (
+                    <div
+                      key={optIdx}
+                      onClick={() => {
+                        setAnswers(prev => ({ ...prev, [currentQIndex]: optIdx }));
+                      }}
+                      className={`p-4 rounded-xl border flex items-center gap-3.5 cursor-pointer transition-all ${
                         isSelected
-                          ? 'bg-blue-500 text-white'
-                          : 'bg-slate-700 text-gray-300'
+                          ? 'bg-blue-600/30 border-blue-500 ring-2 ring-blue-500 text-white shadow-md'
+                          : 'bg-slate-900/50 border-slate-700/80 hover:bg-slate-900/80 text-gray-200'
                       }`}
                     >
-                      {letter}
-                    </span>
-                    <span className="text-sm font-medium leading-relaxed">{optText}</span>
-                  </div>
-                );
-              })}
-            </div>
-
-            {/* Bottom Question Controls */}
-            <div className="mt-auto pt-4 border-t border-slate-800 flex flex-wrap items-center justify-between gap-3">
-              <div className="flex items-center gap-2">
-                <button
-                  onClick={() => {
-                    setAnswers(prev => {
-                      const updated = { ...prev };
-                      delete updated[currentQIndex];
-                      return updated;
-                    });
-                  }}
-                  className="px-3 py-2 bg-slate-800 hover:bg-slate-700 text-gray-300 rounded-lg text-xs font-medium cursor-pointer"
-                >
-                  Clear Response
-                </button>
-                <button
-                  onClick={() => {
-                    setMarkedForReview(prev => ({
-                      ...prev,
-                      [currentQIndex]: !prev[currentQIndex],
-                    }));
-                  }}
-                  className={`px-3 py-2 rounded-lg text-xs font-medium cursor-pointer border ${
-                    markedForReview[currentQIndex]
-                      ? 'bg-purple-900/60 border-purple-500 text-purple-300'
-                      : 'bg-slate-800 border-slate-700 text-gray-300 hover:bg-slate-700'
-                  }`}
-                >
-                  {markedForReview[currentQIndex] ? 'Unmark Review' : 'Mark for Review'}
-                </button>
+                      <span
+                        className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold shrink-0 transition ${
+                          isSelected
+                            ? 'bg-blue-500 text-white shadow'
+                            : 'bg-slate-800 text-gray-300 border border-slate-700'
+                        }`}
+                      >
+                        {letter}
+                      </span>
+                      <span className="text-sm font-medium leading-relaxed">{optText}</span>
+                    </div>
+                  );
+                })}
               </div>
 
-              <div className="flex items-center gap-2">
-                <button
-                  disabled={currentQIndex === 0}
-                  onClick={() => setCurrentQIndex(prev => Math.max(0, prev - 1))}
-                  className="px-4 py-2 bg-slate-800 hover:bg-slate-700 disabled:opacity-30 rounded-lg text-xs font-semibold flex items-center gap-1 cursor-pointer"
-                >
-                  <ChevronLeft className="w-4 h-4" /> Previous
-                </button>
-                <button
-                  onClick={() => {
-                    if (currentQIndex < totalQ - 1) {
-                      setCurrentQIndex(prev => prev + 1);
-                    } else {
-                      setShowSubmitModal(true);
-                    }
-                  }}
-                  className="px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-semibold flex items-center gap-1 cursor-pointer"
-                >
-                  {currentQIndex === totalQ - 1 ? 'Save & Review' : 'Save & Next'}
-                  <ChevronRight className="w-4 h-4" />
-                </button>
-              </div>
-            </div>
-          </div>
-
-          {/* Right Column: Question Palette */}
-          <div className="w-full lg:w-72 bg-slate-950 border-t lg:border-t-0 lg:border-l border-slate-800 p-4 flex flex-col">
-            <h4 className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">
-              Question Palette ({paperSet})
-            </h4>
-
-            {/* Legend */}
-            <div className="grid grid-cols-2 gap-2 text-[11px] mb-4 bg-slate-900/70 p-2.5 rounded-lg border border-slate-800">
-              <div className="flex items-center gap-1.5">
-                <span className="w-3 h-3 rounded bg-green-500 inline-block"></span>
-                <span>Answered ({answeredCount})</span>
-              </div>
-              <div className="flex items-center gap-1.5">
-                <span className="w-3 h-3 rounded bg-purple-500 inline-block"></span>
-                <span>Marked ({markedCount})</span>
-              </div>
-              <div className="flex items-center gap-1.5">
-                <span className="w-3 h-3 rounded bg-slate-700 inline-block"></span>
-                <span>Unvisited ({totalQ - answeredCount})</span>
-              </div>
-              <div className="flex items-center gap-1.5">
-                <span className="w-3 h-3 rounded bg-blue-500 ring-2 ring-white inline-block"></span>
-                <span>Current</span>
-              </div>
-            </div>
-
-            {/* 50 Question Buttons Grid */}
-            <div className="flex-1 overflow-y-auto max-h-64 lg:max-h-none grid grid-cols-5 gap-2 pr-1">
-              {questions.map((_, i) => {
-                const isAnswered = answers[i] !== undefined;
-                const isMarked = markedForReview[i];
-                const isCurrent = currentQIndex === i;
-
-                let bgClass = 'bg-slate-800 text-gray-300 hover:bg-slate-700';
-                if (isAnswered) bgClass = 'bg-green-600 text-white';
-                if (isMarked) bgClass = 'bg-purple-600 text-white';
-                if (isCurrent) bgClass += ' ring-2 ring-amber-400 font-bold';
-
-                return (
+              {/* Question Action Controls */}
+              <div className="pt-4 border-t border-slate-700/60 flex flex-wrap items-center justify-between gap-3">
+                <div className="flex items-center gap-2">
                   <button
-                    key={i}
-                    onClick={() => setCurrentQIndex(i)}
-                    className={`h-9 rounded-lg text-xs font-semibold flex items-center justify-center transition cursor-pointer ${bgClass}`}
+                    onClick={() => {
+                      setAnswers(prev => {
+                        const updated = { ...prev };
+                        delete updated[currentQIndex];
+                        return updated;
+                      });
+                    }}
+                    className="px-3.5 py-2 bg-slate-700/70 hover:bg-slate-700 text-gray-300 rounded-xl text-xs font-medium cursor-pointer transition border border-slate-600/50"
                   >
-                    {i + 1}
+                    Clear Response
                   </button>
-                );
-              })}
+                  <button
+                    onClick={() => {
+                      setMarkedForReview(prev => ({
+                        ...prev,
+                        [currentQIndex]: !prev[currentQIndex],
+                      }));
+                    }}
+                    className={`px-3.5 py-2 rounded-xl text-xs font-medium cursor-pointer transition border ${
+                      markedForReview[currentQIndex]
+                        ? 'bg-purple-900/60 border-purple-500 text-purple-300'
+                        : 'bg-slate-700/70 border-slate-600/50 text-gray-300 hover:bg-slate-700'
+                    }`}
+                  >
+                    {markedForReview[currentQIndex] ? 'Unmark Review' : 'Mark for Review'}
+                  </button>
+                </div>
+
+                <div className="flex items-center gap-2.5">
+                  <button
+                    disabled={currentQIndex === 0}
+                    onClick={() => setCurrentQIndex(prev => Math.max(0, prev - 1))}
+                    className="px-4 py-2 bg-slate-700/70 hover:bg-slate-700 disabled:opacity-30 rounded-xl text-xs font-semibold flex items-center gap-1 cursor-pointer transition border border-slate-600/50"
+                  >
+                    <ChevronLeft className="w-4 h-4" /> Previous
+                  </button>
+                  <button
+                    onClick={() => {
+                      if (currentQIndex < totalQ - 1) {
+                        setCurrentQIndex(prev => prev + 1);
+                      } else {
+                        setShowSubmitModal(true);
+                      }
+                    }}
+                    className="px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold flex items-center gap-1 cursor-pointer transition shadow-md shadow-blue-600/20"
+                  >
+                    {currentQIndex === totalQ - 1 ? 'Save & Review' : 'Save & Next'}
+                    <ChevronRight className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
             </div>
+
+            {/* Bottom Question Palette (Located directly below the question card) */}
+            <div className="bg-slate-950/90 border border-slate-800 rounded-2xl p-5 sm:p-6 shadow-xl space-y-4">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-800">
+                <div>
+                  <h4 className="text-xs font-bold text-gray-300 uppercase tracking-wider">
+                    Question Palette ({paperSet})
+                  </h4>
+                  <p className="text-[11px] text-gray-500 mt-0.5">
+                    Click any question number to jump directly to it
+                  </p>
+                </div>
+
+                {/* Legend Badges */}
+                <div className="flex flex-wrap items-center gap-3 text-[11px]">
+                  <div className="flex items-center gap-1.5">
+                    <span className="w-3 h-3 rounded bg-green-500 inline-block"></span>
+                    <span className="text-gray-300">Answered ({answeredCount})</span>
+                  </div>
+                  <div className="flex items-center gap-1.5">
+                    <span className="w-3 h-3 rounded bg-purple-500 inline-block"></span>
+                    <span className="text-gray-300">Marked ({markedCount})</span>
+                  </div>
+                  <div className="flex items-center gap-1.5">
+                    <span className="w-3 h-3 rounded bg-slate-800 border border-slate-700 inline-block"></span>
+                    <span className="text-gray-300">Unvisited ({totalQ - answeredCount})</span>
+                  </div>
+                  <div className="flex items-center gap-1.5">
+                    <span className="w-3 h-3 rounded bg-blue-500 ring-2 ring-amber-400 inline-block"></span>
+                    <span className="text-gray-300">Current</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* 50 Question Buttons Grid */}
+              <div className="grid grid-cols-10 sm:grid-cols-10 md:grid-cols-25 gap-2">
+                {questions.map((_, i) => {
+                  const isAnswered = answers[i] !== undefined;
+                  const isMarked = markedForReview[i];
+                  const isCurrent = currentQIndex === i;
+
+                  let bgClass = 'bg-slate-800 text-gray-300 hover:bg-slate-700 border border-slate-700/60';
+                  if (isAnswered) bgClass = 'bg-green-600 text-white border-green-500 shadow-sm';
+                  if (isMarked) bgClass = 'bg-purple-600 text-white border-purple-500 shadow-sm';
+                  if (isCurrent) bgClass = 'bg-blue-600 text-white border-blue-400 ring-2 ring-amber-400 font-bold shadow-md';
+
+                  return (
+                    <button
+                      key={i}
+                      type="button"
+                      onClick={() => setCurrentQIndex(i)}
+                      className={`h-9 rounded-lg text-xs font-semibold flex items-center justify-center transition cursor-pointer ${bgClass}`}
+                    >
+                      {i + 1}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
           </div>
         </div>
       </div>
