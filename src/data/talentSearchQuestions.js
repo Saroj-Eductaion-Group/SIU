@@ -281,17 +281,38 @@ export function getQuestionsForStreamAndSet(streamId, paperSet = 'Set A') {
   };
 
   const seed = setSeeds[paperSet] || 101;
-  const questions = base.map((item, idx) => ({ ...item, originalIndex: idx }));
 
-  // Deterministically shuffle question order for sets other than Set A
-  if (paperSet !== 'Set A') {
-    let currentSeed = seed;
-    for (let i = questions.length - 1; i > 0; i--) {
-      const rand = seededRandom(currentSeed++);
-      const j = Math.floor(rand * (i + 1));
-      [questions[i], questions[j]] = [questions[j], questions[i]];
+  // Group base questions by subject (5 subjects, 10 questions each)
+  const subjectGroups = [];
+  let currentGroup = [];
+  let currentSub = '';
+
+  base.forEach((q) => {
+    if (q.subject !== currentSub) {
+      if (currentGroup.length > 0) subjectGroups.push(currentGroup);
+      currentGroup = [q];
+      currentSub = q.subject;
+    } else {
+      currentGroup.push(q);
     }
-  }
+  });
+  if (currentGroup.length > 0) subjectGroups.push(currentGroup);
+
+  // Deterministically shuffle question order WITHIN each subject section (keeps 10 per subject intact)
+  let currentSeed = seed;
+  const questions = [];
+
+  subjectGroups.forEach((group) => {
+    const groupCopy = [...group];
+    if (paperSet !== 'Set A') {
+      for (let i = groupCopy.length - 1; i > 0; i--) {
+        const rand = seededRandom(currentSeed++);
+        const j = Math.floor(rand * (i + 1));
+        [groupCopy[i], groupCopy[j]] = [groupCopy[j], groupCopy[i]];
+      }
+    }
+    questions.push(...groupCopy);
+  });
 
   // Permute options for each question deterministically so answers can't be peeked
   let optionSeed = seed + 500;

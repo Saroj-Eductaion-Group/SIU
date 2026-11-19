@@ -22,6 +22,7 @@ import {
   MapPin,
   Check,
   Send,
+  Layers,
 } from 'lucide-react';
 import { STREAMS, getQuestionsForStreamAndSet } from '../data/talentSearchQuestions';
 
@@ -88,6 +89,7 @@ export default function TalentSearchLevel1() {
   const [showWarningModal, setShowWarningModal] = useState(false);
   const [showSubmitModal, setShowSubmitModal] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [paletteMode, setPaletteMode] = useState('section'); // 'section' or 'all'
 
   // Result State
   const [result, setResult] = useState(null);
@@ -1151,6 +1153,38 @@ export default function TalentSearchLevel1() {
     const answeredCount = Object.keys(answers).length;
     const markedCount = Object.keys(markedForReview).filter(k => markedForReview[k]).length;
 
+    // Dynamic 5-subject sections calculation
+    const sections = [];
+    const seenSubjects = new Map();
+    questions.forEach((item, idx) => {
+      const sub = item.subject || 'General';
+      if (!seenSubjects.has(sub)) {
+        const secObj = {
+          name: sub,
+          startIndex: idx,
+          endIndex: idx,
+          indices: [idx],
+          total: 1,
+        };
+        seenSubjects.set(sub, secObj);
+        sections.push(secObj);
+      } else {
+        const secObj = seenSubjects.get(sub);
+        secObj.indices.push(idx);
+        secObj.endIndex = idx;
+        secObj.total += 1;
+      }
+    });
+
+    const activeSection = sections.find(s => s.indices.includes(currentQIndex)) || sections[0] || {
+      name: q?.subject || 'Section 1',
+      startIndex: 0,
+      endIndex: 0,
+      indices: [currentQIndex],
+      total: 1,
+    };
+    const secAnsweredCount = activeSection.indices.filter(idx => answers[idx] !== undefined).length;
+
     return (
       <div
         ref={examContainerRef}
@@ -1362,14 +1396,49 @@ export default function TalentSearchLevel1() {
         <div className="flex-1 flex flex-col lg:flex-row overflow-hidden">
           {/* Left Column: Active Question & Options */}
           <div className="flex-1 flex flex-col p-4 sm:p-6 overflow-y-auto">
-            {/* Subject Indicator */}
-            <div className="flex items-center justify-between mb-4 pb-2 border-b border-slate-800">
-              <span className="text-xs text-blue-400 font-semibold tracking-wider uppercase">
-                Section: {q?.subject}
-              </span>
-              <span className="text-xs text-gray-400">
-                Question {currentQIndex + 1} of {totalQ}
-              </span>
+            {/* Subject Section Tabs Bar */}
+            <div className="mb-4 pb-3 border-b border-slate-800">
+              <div className="flex items-center justify-between gap-3 mb-2.5">
+                <div className="flex items-center gap-1.5 text-[11px] font-bold text-gray-400 uppercase tracking-wider">
+                  <Layers className="w-3.5 h-3.5 text-blue-400" />
+                  <span>Sections ({sections.length}):</span>
+                </div>
+                <div className="text-xs text-gray-400">
+                  Question <span className="text-amber-400 font-bold text-sm">{currentQIndex + 1}</span> of {totalQ}
+                </div>
+              </div>
+
+              {/* Interactive 5-Subject Tabs */}
+              <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-thin">
+                {sections.map((sec, secIdx) => {
+                  const isSecActive = activeSection.name === sec.name;
+                  const secAns = sec.indices.filter(idx => answers[idx] !== undefined).length;
+                  return (
+                    <button
+                      key={sec.name}
+                      type="button"
+                      onClick={() => setCurrentQIndex(sec.startIndex)}
+                      className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all border cursor-pointer ${
+                        isSecActive
+                          ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white border-blue-400 shadow-md ring-2 ring-blue-500/50'
+                          : 'bg-slate-800/80 hover:bg-slate-800 text-gray-300 border-slate-700/80 hover:text-white'
+                      }`}
+                    >
+                      <span className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold ${
+                        isSecActive ? 'bg-white/25 text-white' : 'bg-slate-700 text-gray-300'
+                      }`}>
+                        {secIdx + 1}
+                      </span>
+                      <span>{sec.name}</span>
+                      <span className={`px-1.5 py-0.5 rounded text-[10px] font-mono font-medium ${
+                        isSecActive ? 'bg-black/30 text-blue-100' : 'bg-slate-900/60 text-gray-400'
+                      }`}>
+                        {secAns}/{sec.total}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
             </div>
 
             {/* Question Text (Fits text length, does not stretch across entire screen) */}
@@ -1470,13 +1539,62 @@ export default function TalentSearchLevel1() {
           </div>
 
           {/* Right Column: Question Palette */}
-          <div className="w-full lg:w-72 bg-slate-950 border-t lg:border-t-0 lg:border-l border-slate-800 p-4 flex flex-col">
-            <h4 className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">
-              Question Palette ({paperSet})
-            </h4>
+          <div className="w-full lg:w-80 bg-slate-950 border-t lg:border-t-0 lg:border-l border-slate-800 p-4 flex flex-col">
+            <div className="flex items-center justify-between mb-3">
+              <h4 className="text-xs font-bold text-gray-300 uppercase tracking-wider">
+                Question Palette
+              </h4>
+              <span className="text-[11px] font-bold text-amber-400 bg-amber-950/60 border border-amber-800/80 px-2 py-0.5 rounded">
+                {paperSet}
+              </span>
+            </div>
+
+            {/* Active Subject Box & Switcher */}
+            <div className="bg-slate-900/90 border border-slate-800 rounded-xl p-3 mb-3">
+              <div className="flex items-center justify-between mb-1">
+                <span className="text-[10px] font-bold text-blue-400 uppercase tracking-wider">
+                  Current Subject
+                </span>
+                <span className="text-xs font-bold text-green-400 font-mono">
+                  {secAnsweredCount} / {activeSection.total} Answered
+                </span>
+              </div>
+              <div className="text-sm font-bold text-white truncate">
+                {activeSection.name}
+              </div>
+              <div className="text-[11px] text-gray-400 mt-0.5">
+                Questions {activeSection.startIndex + 1} to {activeSection.endIndex + 1} ({activeSection.total} questions)
+              </div>
+
+              {/* View Toggle */}
+              <div className="mt-2.5 pt-2 border-t border-slate-800 flex items-center gap-1.5">
+                <button
+                  type="button"
+                  onClick={() => setPaletteMode('section')}
+                  className={`flex-1 py-1 px-2 rounded text-[11px] font-medium transition cursor-pointer ${
+                    paletteMode === 'section'
+                      ? 'bg-blue-600 text-white font-semibold'
+                      : 'bg-slate-800 text-gray-400 hover:text-gray-200'
+                  }`}
+                >
+                  This Subject ({activeSection.total})
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setPaletteMode('all')}
+                  className={`flex-1 py-1 px-2 rounded text-[11px] font-medium transition cursor-pointer ${
+                    paletteMode === 'all'
+                      ? 'bg-blue-600 text-white font-semibold'
+                      : 'bg-slate-800 text-gray-400 hover:text-gray-200'
+                  }`}
+                >
+                  All Questions (50)
+                </button>
+              </div>
+            </div>
 
             {/* Legend */}
-            <div className="grid grid-cols-2 gap-2 text-[11px] mb-4 bg-slate-900/70 p-2.5 rounded-lg border border-slate-800">
+            <div className="grid grid-cols-2 gap-2 text-[11px] mb-3 bg-slate-900/60 p-2.5 rounded-lg border border-slate-800">
               <div className="flex items-center gap-1.5">
                 <span className="w-3 h-3 rounded bg-green-500 inline-block"></span>
                 <span>Answered ({answeredCount})</span>
@@ -1495,9 +1613,9 @@ export default function TalentSearchLevel1() {
               </div>
             </div>
 
-            {/* 50 Question Buttons Grid */}
-            <div className="flex-1 overflow-y-auto max-h-64 lg:max-h-none grid grid-cols-5 gap-2 pr-1">
-              {questions.map((_, i) => {
+            {/* Question Buttons Grid (Displays active subject's 10 questions or all 50) */}
+            <div className="flex-1 overflow-y-auto max-h-56 lg:max-h-72 grid grid-cols-5 gap-2 pr-1 mb-3">
+              {(paletteMode === 'section' ? activeSection.indices : questions.map((_, i) => i)).map(i => {
                 const isAnswered = answers[i] !== undefined;
                 const isMarked = markedForReview[i];
                 const isCurrent = currentQIndex === i;
@@ -1512,11 +1630,49 @@ export default function TalentSearchLevel1() {
                     key={i}
                     onClick={() => setCurrentQIndex(i)}
                     className={`h-9 rounded-lg text-xs font-semibold flex items-center justify-center transition cursor-pointer ${bgClass}`}
+                    title={`Question ${i + 1}: ${questions[i]?.subject || ''}`}
                   >
                     {i + 1}
                   </button>
                 );
               })}
+            </div>
+
+            {/* All Subjects List Switcher inside Palette */}
+            <div className="mt-auto pt-3 border-t border-slate-800">
+              <span className="text-[11px] font-bold text-gray-400 uppercase tracking-wider block mb-2">
+                All Subjects
+              </span>
+              <div className="space-y-1.5 max-h-44 overflow-y-auto pr-1">
+                {sections.map((sec, secIdx) => {
+                  const isSecActive = activeSection.name === sec.name;
+                  const secAns = sec.indices.filter(idx => answers[idx] !== undefined).length;
+                  return (
+                    <button
+                      key={sec.name}
+                      type="button"
+                      onClick={() => setCurrentQIndex(sec.startIndex)}
+                      className={`w-full flex items-center justify-between px-2.5 py-1.5 rounded-lg text-xs transition cursor-pointer ${
+                        isSecActive
+                          ? 'bg-blue-600/30 text-blue-300 border border-blue-500/50 font-bold'
+                          : 'bg-slate-900 hover:bg-slate-800 text-gray-400 hover:text-gray-200'
+                      }`}
+                    >
+                      <span className="flex items-center gap-1.5 truncate">
+                        <span className={`w-4 h-4 rounded-full text-[10px] flex items-center justify-center font-bold ${
+                          isSecActive ? 'bg-blue-500 text-white' : 'bg-slate-700 text-gray-300'
+                        }`}>
+                          {secIdx + 1}
+                        </span>
+                        <span className="truncate">{sec.name}</span>
+                      </span>
+                      <span className="text-[10px] font-mono text-gray-400 shrink-0">
+                        {secAns}/{sec.total}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
             </div>
           </div>
         </div>
