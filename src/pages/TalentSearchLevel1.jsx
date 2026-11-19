@@ -1377,16 +1377,16 @@ export default function TalentSearchLevel1() {
                 </span>
               </div>
 
-              {/* Question Text */}
-              <div className="bg-slate-900/70 border border-slate-700/80 rounded-xl p-5 sm:p-6 mb-6">
+              {/* Question Text (Fits content width, does not stretch across full card) */}
+              <div className="w-fit max-w-full bg-slate-900/70 border border-slate-700/80 rounded-xl p-4 sm:p-5 mb-6">
                 <h3 className="text-base sm:text-lg font-medium text-gray-100 leading-relaxed">
                   <span className="text-amber-400 font-bold mr-2 text-lg">Q{currentQIndex + 1}.</span>
                   {q?.q}
                 </h3>
               </div>
 
-              {/* Options */}
-              <div className="space-y-3 mb-8">
+              {/* Options (Each option fits its text width only) */}
+              <div className="flex flex-col items-start space-y-3 mb-8">
                 {q?.options.map((optText, optIdx) => {
                   const isSelected = answers[currentQIndex] === optIdx;
                   const letter = String.fromCharCode(65 + optIdx); // A, B, C, D
@@ -1396,7 +1396,7 @@ export default function TalentSearchLevel1() {
                       onClick={() => {
                         setAnswers(prev => ({ ...prev, [currentQIndex]: optIdx }));
                       }}
-                      className={`p-4 rounded-xl border flex items-center gap-3.5 cursor-pointer transition-all ${
+                      className={`w-fit max-w-full p-3 sm:p-3.5 pr-5 rounded-xl border inline-flex items-center gap-3.5 cursor-pointer transition-all ${
                         isSelected
                           ? 'bg-blue-600/30 border-blue-500 ring-2 ring-blue-500 text-white shadow-md'
                           : 'bg-slate-900/50 border-slate-700/80 hover:bg-slate-900/80 text-gray-200'
