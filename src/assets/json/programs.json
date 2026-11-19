@@ -1,0 +1,105 @@
+{
+  "title": "Programs",
+  "path": "/programs",
+  "megaMenu": true,
+  "columns": [
+    {
+      "heading": "TCS ACADEMIA",
+      "items": [
+        { "title": "Design Thinking - Practitioner's Perspective [TCS]", "path": "/programs/design-thinking" },
+        { "title": "Innovation and Entrepreneurship [TCS]", "path": "/programs/innovation-entrepreneurship" },
+        { "title": "Artificial Intelligence for Real-World Application [TCS]", "path": "/programs/artificial-intelligence-real-world" },
+        { "title": "Machine Learning for Real-World Application [TCS]", "path": "/programs/machine-learning-real-world" },
+        { "title": "Statistics using R and Python [TCS]", "path": "/programs/statistics-r-python" },
+        { "title": "Advanced Cyber Security - An Application Approach [TCS]", "path": "/programs/advanced-cyber-security" },
+        { "title": "Cryptography [TCS]", "path": "/programs/cryptography" },
+        { "title": "Cloud Development [TCS]", "path": "/programs/cloud-development" },
+        { "title": "Application of Deep Learning and Neural Networks [TCS]", "path": "/programs/deep-learning-neural-networks" },
+        { "title": "Information Security - Practitioner's Perspective [TCS]", "path": "/programs/information-security" }
+      ]
+    },
+    {
+      "heading": "ARTIFICIAL INTELLIGENCE & TECHNOLOGY",
+      "items": [
+        { "title": "B.Tech - AI & Machine Learning", "path": "/programs/btech-ai-ml" },
+        { "title": "B.Tech - Data Science", "path": "/programs/btech-data-science" },
+        { "title": "M.Tech", "path": "/programs/artificial-intelligence-technology" },
+        { "title": "Ph.D", "path": "/programs/artificial-intelligence-technology" }
+      ]
+    },
+    {
+      "heading": "MANAGEMENT AND TECH",
+      "items": [
+        { "title": "Diploma Engineering", "path": "/programs/management-and-tech" },
+        { "title": "B.Tech - CSE", "path": "/programs/btech-cse" },
+        { "title": "B.Tech - IT", "path": "/programs/btech-it" },
+        { "title": "M.Tech", "path": "/programs/management-and-tech" },
+        { "title": "BCA", "path": "/programs/management-and-tech" },
+        { "title": "MCA", "path": "/programs/management-and-tech" },
+        { "title": "Ph.D", "path": "/programs/management-and-tech" }
+      ]
+    },
+    {
+      "heading": "ENTREPRENEURSHIP AND BUSINESS",
+      "items": [
+        { "title": "BBA - General", "path": "/programs/bba-general" },
+        { "title": "BBA - Banking & Finance", "path": "/programs/bba-banking-finance" },
+        { "title": "BBA Hons", "path": "/programs/entrepreneurship-and-business" },
+        { "title": "MBA", "path": "/programs/entrepreneurship-and-business" },
+        { "title": "B.Com", "path": "/programs/entrepreneurship-and-business" },
+        { "title": "M.Com", "path": "/programs/entrepreneurship-and-business" },
+        { "title": "BA", "path": "/programs/ba" },
+        { "title": "MA", "path": "/programs/entrepreneurship-and-business" },
+        { "title": "Ph.D", "path": "/programs/entrepreneurship-and-business" }
+      ]
+    },
+    {
+      "heading": "HUMANITIES & EDUCATION",
+      "items": [
+        { "title": "BA", "path": "/programs/ba" },
+        { "title": "MA", "path": "/programs/humanities-education" }
+      ]
+    },
+    {
+      "heading": "HEALTH SCIENCES",
+      "items": [
+        { "title": "B.Sc - Physics", "path": "/programs/bsc-physics" },
+        { "title": "B.Sc - Chemistry", "path": "/programs/bsc-Chemistry" },
+        { "title": "B.Sc - Data Sciences / Physiotherapy / Forensic / Radiology", "path": "/programs/health-sciences" },
+        { "title": "Diploma - Public Health", "path": "/programs/health-sciences" },
+        { "title": "M.Sc", "path": "/programs/health-sciences" },
+        { "title": "Ph.D", "path": "/programs/health-sciences" }
+      ]
+    },
+    {
+      "heading": "PHARMACY",
+      "items": [
+        { "title": "D.Pharm", "path": "/programs/dpharm" },
+        { "title": "B.Pharm", "path": "/programs/bpharm" },
+        { "title": "M.Pharm", "path": "/programs/pharmacy" },
+        { "title": "Ph.D", "path": "/programs/pharmacy" }
+      ]
+    },
+    {
+      "heading": "FILM & FASHION",
+      "items": [
+        { "title": "B.Design", "path": "/programs/film-fashion" },
+        { "title": "BFA - Film Making", "path": "/programs/bsc-film-making" },
+        { "title": "BFA - Acting & Drama", "path": "/programs/film-fashion" },
+        { "title": "M.Design", "path": "/programs/film-fashion" },
+        { "title": "MFA - Film Making", "path": "/programs/film-fashion" },
+        { "title": "MFA - Acting & Drama", "path": "/programs/film-fashion" },
+        { "title": "Diploma", "path": "/programs/film-fashion" },
+        { "title": "Ph.D", "path": "/programs/film-fashion" }
+      ]
+    },
+    {
+      "heading": "SPORTS SCIENCE",
+      "items": [
+        { "title": "BSc - Sports Management", "path": "/programs/bs-sports-science" },
+        { "title": "MSc - Sports Management", "path": "/programs/ms-sports-science" },
+        { "title": "Ph.D", "path": "/programs/sports-science" }
+      ]
+    }
+  ]
+}

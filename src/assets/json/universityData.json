@@ -1,0 +1,571 @@
+{
+  "university": "Saroj International University",
+  "institutes": [
+    {
+      "name": "Saroj Institute of Artificial Intelligence (SIAI)",
+      "programs": [
+        {
+          "degree": "B.Tech",
+          "mode": "Regular Mode",
+          "specializations": "Artificial Intelligence & Machine Learning, Data Analytics, Data Science, Robotics, Cloud Technology, Computer Science & Engineering",
+          "duration_in_yrs": 4,
+          "fees": { "year1": 110000, "year2": 110000, "year3": 110000, "year4": 110000, "total": 440000 }
+        },
+        {
+          "degree": "M.Tech",
+          "mode": "Regular Mode",
+          "specializations": "Artificial Intelligence & Machine Learning, Data Analytics, Data Science, Robotics, Cloud Technology, Computer Science & Engineering",
+          "duration_in_yrs": 2,
+          "fees": { "year1": 125000, "year2": 125000, "total": 250000 }
+        },
+        {
+          "degree": "Ph.D",
+          "mode": "Regular Mode",
+          "specializations": "Artificial Intelligence & Machine Learning, Data Science, Robotics, Computer Science & Engineering",
+          "duration_in_yrs": 3,
+          "fees": { "year1": 110000, "year2": 110000, "year3": 110000, "total": 330000 }
+        }
+      ],
+      "eligibility": {
+        "B.Tech": {
+          "educational_qualifications": "10+2 with Physics, Chemistry, and Mathematics from a recognized board.",
+          "minimum_marks_requirement": "Minimum 50% in 10+2.",
+          "selection_process": "Entrance exam scores, academic performance, and counselling."
+        },
+        "M.Tech": {
+          "educational_qualifications": "B.Tech/B.E in relevant discipline from a recognized university.",
+          "minimum_marks_requirement": "Minimum aggregate score of 50% in Bachelor's degree.",
+          "selection_process": "Academic performance, written tests, and/or interviews."
+        },
+        "Ph.D": {
+          "educational_qualifications": "Master's degree in relevant field from a recognized university.",
+          "minimum_marks_requirement": "Minimum aggregate score of 55% in Master's degree.",
+          "selection_process": "Entrance test, research proposal evaluation, and interview."
+        }
+      }
+    },
+    {
+      "name": "Saroj Institute of Management & Technology with AI Integration (SIMT)",
+      "programs": [
+        {
+          "degree": "Diploma Engineering",
+          "mode": "Regular Mode",
+          "specializations": "CE, EE, ME, ECE",
+          "duration_in_yrs": 3,
+          "fees": { "year1": 60000, "year2": 60000, "year3": 60000, "total": 180000 }
+        },
+        {
+          "degree": "B.Tech",
+          "mode": "Regular Mode",
+          "specializations": "CSE, IT, Cyber Security, IOT, EC, ME, Civil, Mechatronics, Bio-Tech, Electrical Engg",
+          "duration_in_yrs": 4,
+          "fees": { "year1": 110000, "year2": 110000, "year3": 110000, "year4": 110000, "total": 440000 }
+        },
+        {
+          "degree": "M.Tech",
+          "mode": "Regular Mode",
+          "specializations": "CSE, IT, Cyber Security, IOT, EC, ME, Civil, Mechatronics, Bio-Tech, Electrical Engg",
+          "duration_in_yrs": 2,
+          "fees": { "year1": 125000, "year2": 125000, "total": 250000 }
+        },
+        {
+          "degree": "BCA",
+          "mode": "Regular Mode",
+          "specializations": "Data Science, AI, ML, Cyber Security",
+          "duration_in_yrs": 3,
+          "fees": { "year1": 100000, "year2": 100000, "year3": 100000, "total": 300000 }
+        },
+        {
+          "degree": "MCA",
+          "mode": "Regular Mode",
+          "specializations": "Data Science, AI, ML, Cyber Security",
+          "duration_in_yrs": 2,
+          "fees": { "year1": 120000, "year2": 120000, "total": 240000 }
+        },
+        {
+          "degree": "Ph.D",
+          "mode": "Regular Mode",
+          "specializations": "Computer Science, Information Technology, Engineering, Management",
+          "duration_in_yrs": 3,
+          "fees": { "year1": 110000, "year2": 110000, "year3": 110000, "total": 330000 }
+        }
+      ],
+      "eligibility": {
+        "Diploma Engineering": {
+          "educational_qualifications": "10th standard from a recognized board.",
+          "minimum_marks_requirement": "Minimum 50% in SSC.",
+          "selection_process": "Merit-based admission."
+        },
+        "B.Tech": {
+          "educational_qualifications": "10+2 with Physics, Chemistry, and Mathematics from a recognized board.",
+          "minimum_marks_requirement": "Minimum 50% in Higher Secondary.",
+          "selection_process": "Entrance exam scores, academic performance, and counselling."
+        },
+        "M.Tech": {
+          "educational_qualifications": "B.Tech/B.E in relevant discipline.",
+          "minimum_marks_requirement": "Minimum 50% in Bachelor's degree.",
+          "selection_process": "GATE score or University Entrance Test."
+        },
+        "BCA": {
+          "educational_qualifications": "10+2 in any stream with Mathematics.",
+          "minimum_marks_requirement": "Minimum 50% in Higher Secondary.",
+          "selection_process": "Merit-based admission."
+        },
+        "MCA": {
+          "educational_qualifications": "Bachelor's degree with Mathematics.",
+          "minimum_marks_requirement": "Minimum 50% in graduation.",
+          "selection_process": "NIMCET or University Entrance Test."
+        },
+        "Ph.D": {
+          "educational_qualifications": "Master's degree in relevant field.",
+          "minimum_marks_requirement": "Minimum 55% in post-graduation.",
+          "selection_process": "Written Test + Interview."
+        }
+      }
+    },
+    {
+      "name": "Saroj Institute of Entrepreneurship & Business (SIEBI)",
+      "programs": [
+        {
+          "degree": "BBA",
+          "mode": "Regular Mode",
+          "specializations": "General, Banking Finance, International Business, Marketing, Insurance, Digital Marketing, Logistics & SCM, HR, IT, Entrepreneurship, Retail & Start-Ups",
+          "duration_in_yrs": 3,
+          "fees": { "year1": 110000, "year2": 110000, "year3": 110000, "total": 330000 }
+        },
+        {
+          "degree": "BBA Hons",
+          "mode": "Regular Mode",
+          "specializations": "General, Banking Finance, International Business",
+          "duration_in_yrs": 3,
+          "fees": { "year1": 60000, "year2": 60000, "year3": 60000, "total": 180000 }
+        },
+        {
+          "degree": "MBA",
+          "mode": "Regular Mode",
+          "specializations": "General Business Administration",
+          "duration_in_yrs": 2,
+          "fees": { "year1": 120000, "year2": 120000, "total": 240000 }
+        },
+        {
+          "degree": "Ph.D",
+          "mode": "Regular Mode",
+          "specializations": "Business Administration, Entrepreneurship, Management Studies",
+          "duration_in_yrs": 3,
+          "fees": { "year1": 110000, "year2": 110000, "year3": 110000, "total": 330000 }
+        },
+        {
+          "degree": "B.Com",
+          "mode": "Regular Mode",
+          "specializations": "Commerce",
+          "duration_in_yrs": 3,
+          "fees": { "year1": 60000, "year2": 60000, "year3": 60000, "total": 180000 }
+        },
+        {
+          "degree": "M.Com",
+          "mode": "Regular Mode",
+          "specializations": "Commerce",
+          "duration_in_yrs": 2,
+          "fees": { "year1": 60000, "year2": 60000, "total": 120000 }
+        },
+        {
+          "degree": "BA",
+          "mode": "Regular Mode",
+          "specializations": "General",
+          "duration_in_yrs": 3,
+          "fees": { "year1": 60000, "year2": 60000, "year3": 60000, "total": 180000 }
+        },
+        {
+          "degree": "MA",
+          "mode": "Regular Mode",
+          "specializations": "General",
+          "duration_in_yrs": 2,
+          "fees": { "year1": 60000, "year2": 60000, "total": 120000 }
+        }
+      ],
+      "eligibility": {
+        "BBA": {
+          "educational_qualifications": "10+2 in any stream from recognized board.",
+          "minimum_marks_requirement": "Minimum 50% in Higher Secondary.",
+          "selection_process": "Entrance test + Personal Interview."
+        },
+        "MBA": {
+          "educational_qualifications": "Bachelor's degree in any discipline.",
+          "minimum_marks_requirement": "Minimum 50% in graduation.",
+          "selection_process": "CAT/MAT/XAT or Institute Entrance Test."
+        },
+        "Ph.D": {
+          "educational_qualifications": "Master's degree in relevant field.",
+          "minimum_marks_requirement": "Minimum 55% in post-graduation.",
+          "selection_process": "Research proposal + Interview."
+        }
+      }
+    },
+    {
+      "name": "Saroj Institute of Humanities & Education with AI Integration (SIHE)",
+      "programs": [
+        {
+          "degree": "BA",
+          "mode": "Regular Mode",
+          "specializations": "General, International Relations, History, Economics, Language, Political Science",
+          "duration_in_yrs": 3,
+          "fees": { "year1": 60000, "year2": 60000, "year3": 60000, "total": 180000 }
+        },
+        {
+          "degree": "MA",
+          "mode": "Regular Mode",
+          "specializations": "General, International Relations, History, Economics, Language, Political Science",
+          "duration_in_yrs": 2,
+          "fees": { "year1": 60000, "year2": 60000, "total": 120000 }
+        }
+      ],
+      "eligibility": {
+        "BA": {
+          "educational_qualifications": "10+2 in any stream from recognized board.",
+          "minimum_marks_requirement": "Minimum 50% in Higher Secondary."
+        },
+        "MA": {
+          "educational_qualifications": "Bachelor's degree in relevant discipline.",
+          "minimum_marks_requirement": "Minimum 50% in graduation."
+        }
+      }
+    },
+    {
+      "name": "Saroj Institute of Basic & Health Sciences with AI Integration (SIBHS)",
+      "programs": [
+        {
+          "degree": "B.Sc",
+          "mode": "Regular Mode",
+          "specializations": "Physics, Chemistry, Biology, Mathematics",
+          "duration_in_yrs": 3,
+          "fees": { "year1": 60000, "year2": 60000, "year3": 60000, "total": 180000 }
+        },
+        {
+          "degree": "B.Sc",
+          "mode": "Regular Mode",
+          "specializations": "Data Sciences, Physiotherapy, Forensic Science, Radiology & Imaging",
+          "duration_in_yrs": 3,
+          "fees": { "year1": 60000, "year2": 60000, "year3": 60000, "total": 180000 }
+        },
+        {
+          "degree": "Diploma",
+          "mode": "Regular Mode",
+          "specializations": "Public Health",
+          "duration_in_yrs": 1,
+          "fees": { "year1": 60000, "total": 60000 }
+        },
+        {
+          "degree": "M.Sc",
+          "mode": "Regular Mode",
+          "specializations": "Physics, Biology, Chemistry, Mathematics",
+          "duration_in_yrs": 2,
+          "fees": { "year1": 80000, "year2": 80000, "total": 160000 }
+        },
+        {
+          "degree": "M.Sc",
+          "mode": "Regular Mode",
+          "specializations": "Data Sciences, Physiotherapy, Forensic Science, Radiology & Imaging",
+          "duration_in_yrs": 2,
+          "fees": { "year1": 80000, "year2": 80000, "total": 160000 }
+        },
+        {
+          "degree": "Ph.D",
+          "mode": "Regular Mode",
+          "specializations": "Basic Sciences, Health Sciences, Data Analytics",
+          "duration_in_yrs": 3,
+          "fees": { "year1": 110000, "year2": 110000, "year3": 110000, "total": 330000 }
+        }
+      ],
+      "eligibility": {
+        "B.Sc": {
+          "educational_qualifications": "10+2 with Science (Physics, Chemistry, Biology/Mathematics).",
+          "minimum_marks_requirement": "Minimum 50% in Higher Secondary."
+        },
+        "Diploma": {
+          "educational_qualifications": "10+2 with Science.",
+          "minimum_marks_requirement": "Minimum 45% in Higher Secondary."
+        },
+        "M.Sc": {
+          "educational_qualifications": "B.Sc in relevant discipline.",
+          "minimum_marks_requirement": "Minimum 50% in graduation."
+        },
+        "Ph.D": {
+          "educational_qualifications": "Master's degree in relevant field.",
+          "minimum_marks_requirement": "Minimum 55% in post-graduation.",
+          "selection_process": "Entrance test, research proposal, and interview."
+        }
+      }
+    },
+    {
+      "name": "Lucknow Institute of Pharmacy",
+      "programs": [
+        {
+          "degree": "D.Pharm",
+          "mode": "Regular Mode",
+          "specializations": "Pharmacology, Pharmaceutical Chemistry, Pharmaceutics, Pharmaceutical Analysis, Clinical Pharmacy, Pharmaceutical Biotechnology, Regulatory Affairs",
+          "duration_in_yrs": 2,
+          "fees": { "year1": 100000, "year2": 100000, "total": 200000 }
+        },
+        {
+          "degree": "B.Pharm",
+          "mode": "Regular Mode",
+          "specializations": "Pharmacology, Pharmaceutical Chemistry, Pharmaceutics, Pharmaceutical Analysis, Clinical Pharmacy, Pharmaceutical Biotechnology, Regulatory Affairs",
+          "duration_in_yrs": 4,
+          "fees": { "year1": 100000, "year2": 100000, "year3": 100000, "year4": 100000, "total": 400000 }
+        },
+        {
+          "degree": "M.Pharm",
+          "mode": "Regular Mode",
+          "specializations": "Pharmacology, Pharmaceutical Chemistry, Pharmaceutics, Pharmaceutical Analysis, Clinical Pharmacy, Pharmaceutical Biotechnology, Regulatory Affairs",
+          "duration_in_yrs": 2,
+          "fees": { "year1": 100000, "year2": 100000, "total": 200000 }
+        },
+        {
+          "degree": "Ph.D",
+          "mode": "Regular Mode",
+          "specializations": "Pharmaceutical Sciences",
+          "duration_in_yrs": 3,
+          "fees": { "year1": 110000, "year2": 110000, "year3": 110000, "total": 330000 }
+        }
+      ],
+      "eligibility": {
+        "D.Pharm": {
+          "educational_qualifications": "10+2 with Physics, Chemistry, and Biology/Mathematics.",
+          "minimum_marks_requirement": "Minimum 50% in Higher Secondary.",
+          "selection_process": "Merit-based admission."
+        },
+        "B.Pharm": {
+          "educational_qualifications": "10+2 with Physics, Chemistry, and Biology/Mathematics.",
+          "minimum_marks_requirement": "Minimum 50% in Higher Secondary.",
+          "selection_process": "Entrance exam + counselling."
+        },
+        "M.Pharm": {
+          "educational_qualifications": "B.Pharm from a PCI approved institution.",
+          "minimum_marks_requirement": "Minimum 55% in B.Pharm.",
+          "selection_process": "GPAT score or university entrance test."
+        },
+        "Ph.D": {
+          "educational_qualifications": "Master's degree in Pharmacy or relevant field.",
+          "minimum_marks_requirement": "Minimum 55% in post-graduation.",
+          "selection_process": "Entrance test and interview."
+        }
+      }
+    },
+    {
+      "name": "Saroj Institute of Law with AI Integration",
+      "programs": [
+        {
+          "degree": "BA LLB",
+          "mode": "Regular Mode",
+          "specializations": "Corporate Law, Intellectual Property Law, Human Rights Law, Criminal Law, Constitutional Law, Environment Law, Cyber Law, International Trade Law",
+          "duration_in_yrs": 5,
+          "fees": { "year1": 75000, "year2": 75000, "year3": 75000, "year4": 75000, "year5": 75000, "total": 375000 }
+        },
+        {
+          "degree": "LLM",
+          "mode": "Regular Mode",
+          "specializations": "Corporate Law, Intellectual Property Law, Human Rights Law, Criminal Law, Constitutional Law, Environment Law, Cyber Law, International Trade Law",
+          "duration_in_yrs": 2,
+          "fees": { "year1": 75000, "year2": 75000, "total": 150000 }
+        },
+        {
+          "degree": "Ph.D",
+          "mode": "Regular Mode",
+          "specializations": "Legal Studies",
+          "duration_in_yrs": 3,
+          "fees": { "year1": 110000, "year2": 110000, "year3": 110000, "total": 330000 }
+        }
+      ],
+      "eligibility": {
+        "BA LLB": {
+          "educational_qualifications": "10+2 from a recognized board.",
+          "minimum_marks_requirement": "Minimum 50% in 10+2.",
+          "selection_process": "Entrance exam + counselling."
+        },
+        "LLM": {
+          "educational_qualifications": "LLB or equivalent law degree.",
+          "minimum_marks_requirement": "Minimum 55% in LLB.",
+          "selection_process": "Entrance test + interview."
+        },
+        "Ph.D": {
+          "educational_qualifications": "Master's degree in Law or relevant field.",
+          "minimum_marks_requirement": "Minimum 55% in post-graduation.",
+          "selection_process": "Entrance test, research proposal, and interview."
+        }
+      }
+    },
+    {
+      "name": "Saroj Institute of Film & Fashion",
+      "programs": [
+        {
+          "degree": "B.Design",
+          "mode": "Regular Mode",
+          "specializations": "Fashion Design, Interior Design, Visual Communication Design, Animation & Game Design",
+          "duration_in_yrs": 4,
+          "fees": { "year1": 100000, "year2": 100000, "year3": 100000, "year4": 100000, "total": 400000 }
+        },
+        {
+          "degree": "BFA",
+          "mode": "Regular Mode",
+          "specializations": "Film Making",
+          "duration_in_yrs": 3,
+          "fees": { "year1": 100000, "year2": 100000, "year3": 100000, "total": 300000 }
+        },
+        {
+          "degree": "BFA",
+          "mode": "Regular Mode",
+          "specializations": "Acting & Drama",
+          "duration_in_yrs": 3,
+          "fees": { "year1": 100000, "year2": 100000, "year3": 100000, "total": 300000 }
+        },
+        {
+          "degree": "M.Design",
+          "mode": "Regular Mode",
+          "specializations": "Fashion Design, Visual Communication Design, Animation & Game Design",
+          "duration_in_yrs": 2,
+          "fees": { "year1": 100000, "year2": 100000, "total": 200000 }
+        },
+        {
+          "degree": "MFA",
+          "mode": "Regular Mode",
+          "specializations": "Film Making",
+          "duration_in_yrs": 2,
+          "fees": { "year1": 100000, "year2": 100000, "total": 200000 }
+        },
+        {
+          "degree": "MFA",
+          "mode": "Regular Mode",
+          "specializations": "Acting & Drama",
+          "duration_in_yrs": 2,
+          "fees": { "year1": 100000, "year2": 100000, "total": 200000 }
+        },
+        {
+          "degree": "Diploma",
+          "mode": "Regular Mode",
+          "specializations": "Film Making, Cinematography, Script Writing, Acting & Drama",
+          "duration_in_yrs": 1,
+          "fees": { "year1": 100000, "total": 100000 }
+        },
+        {
+          "degree": "Ph.D",
+          "mode": "Regular Mode",
+          "specializations": "Film Studies, Fashion Design, Media & Communication",
+          "duration_in_yrs": 3,
+          "fees": { "year1": 110000, "year2": 110000, "year3": 110000, "total": 330000 }
+        }
+      ],
+      "eligibility": {
+        "B.Design": {
+          "educational_qualifications": "10+2 from a recognized board.",
+          "minimum_marks_requirement": "Minimum 50% in Higher Secondary."
+        },
+        "BFA": {
+          "educational_qualifications": "10+2 from a recognized board.",
+          "minimum_marks_requirement": "Minimum 50% in Higher Secondary."
+        },
+        "M.Design": {
+          "educational_qualifications": "Bachelor's degree in any discipline.",
+          "minimum_marks_requirement": "Minimum 50% in graduation."
+        },
+        "MFA": {
+          "educational_qualifications": "Bachelor's degree in any discipline.",
+          "minimum_marks_requirement": "Minimum 50% in graduation."
+        },
+        "Diploma": {
+          "educational_qualifications": "10+2 from a recognized board.",
+          "minimum_marks_requirement": "Minimum 50% in Higher Secondary."
+        },
+        "Ph.D": {
+          "educational_qualifications": "Master's degree in relevant field.",
+          "minimum_marks_requirement": "Minimum 55% in post-graduation.",
+          "selection_process": "Entrance test, research proposal, and interview."
+        }
+      }
+    },
+    {
+      "name": "Saroj Institute of Agriculture Sciences with AI Integration",
+      "programs": [
+        {
+          "degree": "B.Sc Agriculture",
+          "mode": "Regular Mode",
+          "specializations": "Agronomy, Horticulture",
+          "duration_in_yrs": 4,
+          "fees": { "year1": 60000, "year2": 60000, "year3": 60000, "year4": 60000, "total": 240000 }
+        },
+        {
+          "degree": "M.Sc Agriculture",
+          "mode": "Regular Mode",
+          "specializations": "Agronomy, Horticulture",
+          "duration_in_yrs": 2,
+          "fees": { "year1": 60000, "year2": 60000, "total": 120000 }
+        },
+        {
+          "degree": "Ph.D in Agriculture",
+          "mode": "Regular Mode",
+          "duration_in_yrs": 3,
+          "fees": { "year1": 110000, "year2": 110000, "year3": 110000, "total": 330000 }
+        }
+      ],
+      "eligibility": {
+        "B.Sc Agriculture": {
+          "educational_qualifications": "10+2 with Physics, Chemistry, and Biology/Mathematics/Agriculture.",
+          "minimum_marks_requirement": "Minimum 50% in 10+2.",
+          "selection_process": "Entrance exam + merit-based."
+        },
+        "M.Sc Agriculture": {
+          "educational_qualifications": "B.Sc in Agriculture or related field.",
+          "minimum_marks_requirement": "Minimum 55% in graduation.",
+          "selection_process": "Entrance exam + interview."
+        },
+        "Ph.D in Agriculture": {
+          "educational_qualifications": "Master's degree in Agriculture or related field.",
+          "minimum_marks_requirement": "Minimum 60% in post-graduation.",
+          "selection_process": "Entrance test, research proposal, and interview."
+        }
+      }
+    },
+    {
+      "name": "Saroj Institute of Sport Science & Research with AI Integration",
+      "programs": [
+        {
+          "degree": "B.Sc",
+          "mode": "Regular Mode",
+          "specializations": "Sports Management, Applied Sports Psychology, Sports Nutritionist, Sports Coaching & Fitness",
+          "duration_in_yrs": 3,
+          "fees": { "year1": 90000, "year2": 90000, "year3": 90000, "total": 270000 }
+        },
+        {
+          "degree": "M.Sc",
+          "mode": "Regular Mode",
+          "specializations": "Sports Management, Applied Sports Psychology, Sports Nutritionist, Sports Coaching & Fitness",
+          "duration_in_yrs": 2,
+          "fees": { "year1": 90000, "year2": 90000, "total": 180000 }
+        },
+        {
+          "degree": "Ph.D",
+          "mode": "Regular Mode",
+          "specializations": "Sports Science, Sports Management, Sports Psychology",
+          "duration_in_yrs": 3,
+          "fees": { "year1": 110000, "year2": 110000, "year3": 110000, "total": 330000 }
+        }
+      ],
+      "eligibility": {
+        "B.Sc": {
+          "educational_qualifications": "10+2 with Physics/Chemistry/Biology/Mathematics.",
+          "minimum_marks_requirement": "Minimum 50% in Higher Secondary.",
+          "selection_process": "Entrance test + sports achievement evaluation."
+        },
+        "M.Sc": {
+          "educational_qualifications": "Bachelor's degree in Sports Science or related field.",
+          "minimum_marks_requirement": "Minimum 50% in graduation.",
+          "selection_process": "Entrance exam + interview."
+        },
+        "Ph.D": {
+          "educational_qualifications": "Master's degree in Sports Science or related field.",
+          "minimum_marks_requirement": "Minimum 55% in post-graduation.",
+          "selection_process": "Research proposal + interview."
+        }
+      }
+    }
+  ]
+}

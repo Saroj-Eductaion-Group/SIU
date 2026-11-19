@@ -1,0 +1,50 @@
+{
+  "pageHeading": "SIU Approvals & Document",
+  "subHeading": "Approvals & Document",
+  "documents": [
+    {
+      "id": 1,
+      "title": "Statutes of University",
+      "description": "FIRST STATUTES OF SAROJ INTERNATIONAL UNIVERSITY",
+      "fileName": "Approvals-Document.pdf",
+      "fileUrl": "/pdfs/statutesofuniversity.pdf",
+      "category": "Approvals",
+      "date": "2025-05-15",
+      "size": "1 MB"
+    },
+
+    {
+      "id": 2,
+      "title": "Ordinance of the University",
+      "description": "ORDINANCES OF SAROJ INTERNATIONAL UNIVERSITY",
+      "fileName": "Ordinance-University.pdf",
+      "fileUrl": "/pdfs/ordinancesofSIU.pdf",
+      "category": "Ordinance",
+      "date": "2025-05-15",
+      "size": "1 MB"
+    },
+
+    {
+      "id": 3,
+      "title": "UGC 2 (f) Letter of Recognition",
+      "description": "UGC 2 (f) Letter of Recognition",
+      "fileName": "UGC_Letter_Recognition.pdf",
+      "fileUrl": "/pdfs/UGC_Letter_Recognition.pdf",
+      "category": "Recognition",
+      "date": "2025-05-15",
+      "size": "1 MB"
+    },
+    {
+      "id": 4,
+      "title": "UP Government Act",
+      "description": "UP Government Act",
+      "fileName": "UP_Government_Act.pdf",
+      "fileUrl": "/pdfs/university_act.pdf",
+      "category": "Act",
+      "date": "2025-05-15",
+      "size": "1 MB"
+    }
+
+    
+  ]
+}
