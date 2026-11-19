@@ -17,6 +17,11 @@ const talentSearchRegistrationSchema = new mongoose.Schema({
     lowercase: true,
     default: '',
   },
+  board: {
+    type: String,
+    trim: true,
+    default: 'CBSE',
+  },
   mobile: {
     type: String,
     required: true,

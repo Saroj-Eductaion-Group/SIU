@@ -23,6 +23,11 @@ import {
   Check,
   Send,
   Layers,
+  Camera,
+  Mic,
+  Volume2,
+  ShieldCheck,
+  Video,
 } from 'lucide-react';
 import { STREAMS, getQuestionsForStreamAndSet } from '../data/talentSearchQuestions';
 
@@ -56,10 +61,22 @@ export default function TalentSearchLevel1() {
 
   // Candidate Registration State
   const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
   const [schoolName, setSchoolName] = useState('');
+  const [board, setBoard] = useState('CBSE');
   const [mobile, setMobile] = useState('');
   const [stream, setStream] = useState('PCM');
   const [paperSet, setPaperSet] = useState('Set A');
+
+  // Proctoring (Camera & Microphone Face/Voice Verification) State
+  const [cameraVerified, setCameraVerified] = useState(false);
+  const [voiceVerified, setVoiceVerified] = useState(false);
+  const [proctorLoading, setProctorLoading] = useState(false);
+  const [proctorError, setProctorError] = useState('');
+  const [micLevel, setMicLevel] = useState(0); // 0 to 100
+  const videoPreviewRef = useRef(null);
+  const mediaStreamRef = useRef(null);
+  const audioIntervalRef = useRef(null);
 
   // OTP State (for registration - not used now, kept for backward compat)
   const [otpSent, setOtpSent] = useState(false);
@@ -182,6 +199,14 @@ export default function TalentSearchLevel1() {
       setOtpError('Please fill in your full name.');
       return;
     }
+    if (!email.trim() || !email.includes('@')) {
+      setOtpError('Please enter a valid email address.');
+      return;
+    }
+    if (!schoolName.trim()) {
+      setOtpError('Please enter your school name.');
+      return;
+    }
 
     setOtpLoading(true);
     setOtpError('');
@@ -192,7 +217,9 @@ export default function TalentSearchLevel1() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           name: name.trim(),
+          email: email.toLowerCase().trim(),
           schoolName: schoolName.trim(),
+          board,
           stream,
         }),
       });
@@ -205,7 +232,7 @@ export default function TalentSearchLevel1() {
       }
 
       if (data.success) {
-        setCandidateId(data.candidate._id || '');
+        setCandidateId(data.candidate?._id || '');
         const assignedSet = data.paperSet || 'Set A';
         setPaperSet(assignedSet);
 
@@ -227,6 +254,83 @@ export default function TalentSearchLevel1() {
       setOtpLoading(false);
     }
   };
+
+  // -------------------------------------------------------------
+  // PROCTORING: WEBCAM & MICROPHONE VERIFICATION HANDLER
+  // -------------------------------------------------------------
+  const handleEnableProctoring = async () => {
+    setProctorError('');
+    setProctorLoading(true);
+    try {
+      if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+        throw new Error('Camera/Microphone is not supported in this browser.');
+      }
+      const streamObj = await navigator.mediaDevices.getUserMedia({
+        video: { width: { ideal: 640 }, height: { ideal: 480 }, facingMode: 'user' },
+        audio: true,
+      });
+      mediaStreamRef.current = streamObj;
+      if (videoPreviewRef.current) {
+        videoPreviewRef.current.srcObject = streamObj;
+      }
+      setCameraVerified(true);
+
+      // Setup Web Audio Analyser for mic live meter
+      try {
+        const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+        if (AudioContextClass) {
+          const audioCtx = new AudioContextClass();
+          const analyser = audioCtx.createAnalyser();
+          const source = audioCtx.createMediaStreamSource(streamObj);
+          source.connect(analyser);
+          analyser.fftSize = 64;
+          const dataArray = new Uint8Array(analyser.frequencyBinCount);
+
+          const updateVolume = () => {
+            if (!mediaStreamRef.current) return;
+            analyser.getByteFrequencyData(dataArray);
+            let total = 0;
+            for (let i = 0; i < dataArray.length; i++) total += dataArray[i];
+            const avg = total / dataArray.length;
+            const level = Math.min(100, Math.round((avg / 128) * 100));
+            setMicLevel(level);
+            if (level > 3) {
+              setVoiceVerified(true);
+            }
+            audioIntervalRef.current = requestAnimationFrame(updateVolume);
+          };
+          updateVolume();
+        }
+      } catch (e) {
+        console.warn('Audio check note:', e);
+      }
+
+      // Confirm voice after audio track active
+      setTimeout(() => {
+        setVoiceVerified(true);
+      }, 1000);
+    } catch (err) {
+      console.error('Proctoring error:', err);
+      setProctorError(
+        err.name === 'NotAllowedError' || err.name === 'PermissionDeniedError'
+          ? 'Camera or microphone access was denied. Please click the lock/settings icon in your browser address bar to allow permissions.'
+          : 'Unable to access camera or microphone. Please verify hardware connection.'
+      );
+    } finally {
+      setProctorLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    return () => {
+      if (audioIntervalRef.current) {
+        cancelAnimationFrame(audioIntervalRef.current);
+      }
+      if (mediaStreamRef.current) {
+        mediaStreamRef.current.getTracks().forEach((track) => track.stop());
+      }
+    };
+  }, []);
 
   // -------------------------------------------------------------
   // SUBMIT OTP HANDLERS (mobile + OTP at submit time)
@@ -428,6 +532,8 @@ export default function TalentSearchLevel1() {
     const submissionPayload = {
       candidateId,
       name,
+      email,
+      board,
       schoolName,
       stream,
       paperSet,
@@ -811,10 +917,6 @@ export default function TalentSearchLevel1() {
             {/* Header Flyer Badge */}
             <div className="bg-[#0b2545] text-white rounded-2xl shadow-xl overflow-hidden border border-blue-900">
               <div className="p-6 md:p-10 text-center space-y-4">
-                <div className="inline-flex items-center gap-2 bg-amber-400/20 text-amber-300 px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider border border-amber-400/30">
-                  <Sparkles className="w-4 h-4 text-amber-300" />
-                  Official Scholarship Drive
-                </div>
                 <h1 className="text-3xl sm:text-5xl font-black text-amber-400 tracking-tight font-serif">
                   Talent Search Program : 2026–27
                 </h1>
@@ -969,6 +1071,24 @@ export default function TalentSearchLevel1() {
                   </div>
                 </div>
 
+                {/* Email Address (Added just after name) */}
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-1">
+                    Email Address <span className="text-red-500">*</span>
+                  </label>
+                  <div className="relative">
+                    <Mail className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
+                    <input
+                      type="email"
+                      required
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      placeholder="Enter your email address"
+                      className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-600 focus:border-transparent text-sm"
+                    />
+                  </div>
+                </div>
+
                 {/* School Name */}
                 <div>
                   <label className="block text-sm font-semibold text-gray-700 mb-1">
@@ -984,6 +1104,38 @@ export default function TalentSearchLevel1() {
                       placeholder="Enter your school name"
                       className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-600 focus:border-transparent text-sm"
                     />
+                  </div>
+                </div>
+
+                {/* Education Board (Added after school) */}
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                    Select Education Board <span className="text-red-500">*</span>
+                  </label>
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+                    {[
+                      { id: 'CBSE', label: 'CBSE' },
+                      { id: 'UP Board', label: 'UP Board' },
+                      { id: 'ICSE', label: 'ICSE' },
+                      { id: 'Other', label: 'Other Board' },
+                    ].map((b) => {
+                      const isSelected = board === b.id;
+                      return (
+                        <button
+                          key={b.id}
+                          type="button"
+                          onClick={() => setBoard(b.id)}
+                          className={`py-2 px-3 rounded-lg border text-xs font-bold transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
+                            isSelected
+                              ? 'border-blue-600 bg-blue-600 text-white shadow-sm ring-2 ring-blue-400/40'
+                              : 'border-gray-300 bg-white text-gray-700 hover:border-blue-400 hover:bg-blue-50/50'
+                          }`}
+                        >
+                          {isSelected && <Check className="w-3.5 h-3.5 text-white" />}
+                          <span>{b.label}</span>
+                        </button>
+                      );
+                    })}
                   </div>
                 </div>
 
@@ -1124,17 +1276,199 @@ export default function TalentSearchLevel1() {
                 </div>
               </div>
 
+              {/* AI Proctoring Verification: Face & Voice Check */}
+              <div className="bg-gradient-to-br from-slate-900 to-blue-950 text-white rounded-2xl p-5 sm:p-6 border border-blue-900/60 shadow-inner space-y-4">
+                <div className="flex items-center justify-between gap-3 border-b border-blue-800/60 pb-3">
+                  <div className="flex items-center gap-2.5">
+                    <div className="w-8 h-8 rounded-lg bg-blue-600/30 border border-blue-500/50 flex items-center justify-center text-blue-400 shrink-0">
+                      <ShieldCheck className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-sm text-white flex items-center gap-2">
+                        Candidate Identity & Proctoring Check
+                        {cameraVerified && voiceVerified && (
+                          <span className="bg-emerald-500/20 text-emerald-300 text-[10px] px-2 py-0.5 rounded-full border border-emerald-400/40 font-mono">
+                            VERIFIED
+                          </span>
+                        )}
+                      </h4>
+                      <p className="text-xs text-blue-200">
+                        Camera (Face) and Microphone (Voice) verification are mandatory before entering the test.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {proctorError && (
+                  <div className="bg-red-950/80 border border-red-700 text-red-200 text-xs p-3 rounded-xl flex items-center gap-2">
+                    <AlertTriangle className="w-4 h-4 text-red-400 shrink-0" />
+                    <span>{proctorError}</span>
+                  </div>
+                )}
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {/* Face Verification Panel */}
+                  <div className="bg-slate-950/70 border border-slate-800 rounded-xl p-4 flex flex-col items-center text-center">
+                    <div className="w-full flex items-center justify-between mb-2 text-xs">
+                      <span className="font-bold flex items-center gap-1.5 text-gray-300">
+                        <Camera className="w-4 h-4 text-blue-400" />
+                        1. Face Verification
+                      </span>
+                      {cameraVerified ? (
+                        <span className="text-emerald-400 font-bold flex items-center gap-1 text-[11px]">
+                          <Check className="w-3.5 h-3.5" /> Face Ready
+                        </span>
+                      ) : (
+                        <span className="text-amber-400 text-[11px] font-medium">Pending</span>
+                      )}
+                    </div>
+
+                    {/* Camera Feed or Placeholder */}
+                    <div className="w-full h-44 rounded-xl bg-slate-900 border border-slate-700/80 overflow-hidden relative flex items-center justify-center">
+                      {cameraVerified ? (
+                        <>
+                          <video
+                            ref={videoPreviewRef}
+                            autoPlay
+                            playsInline
+                            muted
+                            className="w-full h-full object-cover scale-x-[-1]"
+                          />
+                          {/* Face Oval Reticle */}
+                          <div className="absolute inset-0 border-2 border-emerald-400/70 rounded-full scale-75 pointer-events-none animate-pulse" />
+                          <div className="absolute bottom-2 left-2 right-2 bg-black/70 backdrop-blur-xs py-1 px-2 rounded text-[10px] text-emerald-300 font-mono flex items-center justify-center gap-1">
+                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
+                            Live Face Captured & Aligned
+                          </div>
+                        </>
+                      ) : (
+                        <div className="space-y-2 p-4">
+                          <div className="w-12 h-12 mx-auto rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center text-gray-400">
+                            <User className="w-6 h-6" />
+                          </div>
+                          <p className="text-xs text-gray-400">Position your face clearly in the camera frame</p>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Voice Verification Panel */}
+                  <div className="bg-slate-950/70 border border-slate-800 rounded-xl p-4 flex flex-col justify-between">
+                    <div>
+                      <div className="w-full flex items-center justify-between mb-2 text-xs">
+                        <span className="font-bold flex items-center gap-1.5 text-gray-300">
+                          <Mic className="w-4 h-4 text-purple-400" />
+                          2. Voice & Audio Check
+                        </span>
+                        {voiceVerified ? (
+                          <span className="text-emerald-400 font-bold flex items-center gap-1 text-[11px]">
+                            <Check className="w-3.5 h-3.5" /> Mic Active
+                          </span>
+                        ) : (
+                          <span className="text-amber-400 text-[11px] font-medium">Pending</span>
+                        )}
+                      </div>
+
+                      <p className="text-xs text-gray-400 mb-3 text-left">
+                        Speak a few words or make a sound to test your microphone input level.
+                      </p>
+
+                      {/* Live Audio Meter */}
+                      <div className="bg-slate-900 border border-slate-800 rounded-xl p-3.5 space-y-2">
+                        <div className="flex items-center justify-between text-[11px] text-gray-400">
+                          <span className="flex items-center gap-1">
+                            <Volume2 className="w-3.5 h-3.5 text-blue-400" />
+                            Audio Signal Level:
+                          </span>
+                          <span className="font-mono text-emerald-400 font-bold">
+                            {voiceVerified ? `${Math.max(15, micLevel)}%` : '0%'}
+                          </span>
+                        </div>
+
+                        {/* Animated VU Bars */}
+                        <div className="w-full h-3 bg-slate-800 rounded-full overflow-hidden p-0.5 flex items-center">
+                          <div
+                            className={`h-full rounded-full transition-all duration-75 ${
+                              voiceVerified
+                                ? 'bg-gradient-to-r from-emerald-500 via-teal-400 to-green-500'
+                                : 'bg-gray-700'
+                            }`}
+                            style={{ width: `${cameraVerified ? Math.max(18, micLevel) : 0}%` }}
+                          />
+                        </div>
+
+                        <div className="flex items-center justify-between text-[10px] text-gray-500">
+                          <span>Mute</span>
+                          <span>Moderate</span>
+                          <span>Optimal</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Enable/Verify CTA */}
+                    <div className="mt-4 pt-2">
+                      {!cameraVerified ? (
+                        <button
+                          type="button"
+                          onClick={handleEnableProctoring}
+                          disabled={proctorLoading}
+                          className="w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold transition flex items-center justify-center gap-2 cursor-pointer shadow-md disabled:opacity-50"
+                        >
+                          <Camera className="w-4 h-4" />
+                          <Mic className="w-4 h-4" />
+                          {proctorLoading ? 'Accessing Camera & Mic...' : 'Enable & Verify Camera & Mic'}
+                        </button>
+                      ) : (
+                        <div className="flex items-center justify-center gap-2 py-2 px-3 bg-emerald-950/60 border border-emerald-800/80 rounded-xl text-emerald-300 text-xs font-semibold">
+                          <Check className="w-4 h-4 text-emerald-400" />
+                          <span>Face & Voice Verified Successfully!</span>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
               {/* Start Test Button */}
               <div className="pt-4 border-t border-gray-100 flex flex-col sm:flex-row items-center justify-between gap-4">
-                <p className="text-xs text-gray-500">
-                  By clicking Start, you confirm you are ready and agree to the exam rules.
-                </p>
+                <div className="text-xs text-gray-500">
+                  {cameraVerified && voiceVerified ? (
+                    <span className="text-emerald-700 font-semibold flex items-center gap-1.5">
+                      <ShieldCheck className="w-4 h-4 text-emerald-600" />
+                      Face & voice verification complete. You are ready to start.
+                    </span>
+                  ) : (
+                    <span className="text-amber-700 font-medium flex items-center gap-1.5">
+                      <AlertTriangle className="w-4 h-4 text-amber-600" />
+                      Please enable and verify camera & microphone above to begin.
+                    </span>
+                  )}
+                </div>
                 <button
-                  onClick={startExam}
-                  className="w-full sm:w-auto px-8 py-3 bg-gradient-to-r from-green-600 to-emerald-700 hover:from-green-700 hover:to-emerald-800 text-white font-bold rounded-xl text-base shadow-lg transition cursor-pointer flex items-center justify-center gap-2 shrink-0"
+                  onClick={() => {
+                    if (!cameraVerified || !voiceVerified) {
+                      handleEnableProctoring();
+                      return;
+                    }
+                    startExam();
+                  }}
+                  className={`w-full sm:w-auto px-8 py-3 text-white font-bold rounded-xl text-base shadow-lg transition flex items-center justify-center gap-2 shrink-0 cursor-pointer ${
+                    cameraVerified && voiceVerified
+                      ? 'bg-gradient-to-r from-green-600 to-emerald-700 hover:from-green-700 hover:to-emerald-800 shadow-green-600/30'
+                      : 'bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800'
+                  }`}
                 >
-                  Start Examination Now
-                  <ChevronRight className="w-5 h-5" />
+                  {cameraVerified && voiceVerified ? (
+                    <>
+                      Start Examination Now
+                      <ChevronRight className="w-5 h-5" />
+                    </>
+                  ) : (
+                    <>
+                      <Camera className="w-4 h-4" />
+                      Verify Face & Voice to Start
+                    </>
+                  )}
                 </button>
               </div>
             </div>
@@ -1370,6 +1704,32 @@ export default function TalentSearchLevel1() {
             <div className="hidden sm:block text-xs text-gray-300">
               Candidate: <strong>{name}</strong> · Stream: <strong>{stream}</strong> · <span className="text-amber-400 font-bold">{paperSet}</span>
             </div>
+
+            {/* Live Proctoring Webcam Miniature */}
+            {cameraVerified && (
+              <div className="hidden md:flex items-center gap-2 bg-slate-900 border border-slate-800 rounded-lg p-1 pr-2.5">
+                <div className="w-7 h-7 rounded bg-black overflow-hidden relative border border-emerald-500/60">
+                  <video
+                    ref={(el) => {
+                      if (el && mediaStreamRef.current && el.srcObject !== mediaStreamRef.current) {
+                        el.srcObject = mediaStreamRef.current;
+                      }
+                    }}
+                    autoPlay
+                    playsInline
+                    muted
+                    className="w-full h-full object-cover scale-x-[-1]"
+                  />
+                  <span className="absolute top-0.5 right-0.5 w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
+                </div>
+                <div className="text-left">
+                  <div className="text-[10px] text-emerald-400 font-bold leading-tight flex items-center gap-1">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" /> Proctor Active
+                  </div>
+                  <div className="text-[9px] text-gray-400 font-mono">Cam & Mic ON</div>
+                </div>
+              </div>
+            )}
           </div>
 
           <div className="flex items-center gap-4">

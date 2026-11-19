@@ -166,7 +166,7 @@ router.post('/verify-result-otp', async (req, res) => {
 // 3. POST /api/talent-search/register
 router.post('/register', async (req, res) => {
   try {
-    const { name, schoolName, email, stream } = req.body;
+    const { name, schoolName, email, board, stream } = req.body;
     const mobile = normalizeMobile(req.body.mobile);
 
     if (!name || !name.trim()) {
@@ -201,6 +201,7 @@ router.post('/register', async (req, res) => {
       candidate.name = name.trim();
       if (schoolName) candidate.schoolName = schoolName.trim();
       if (email) candidate.email = email.toLowerCase().trim();
+      if (board) candidate.board = board.trim();
       candidate.stream = stream;
       candidate.paperSet = assignedSet;
       await candidate.save();
@@ -209,6 +210,7 @@ router.post('/register', async (req, res) => {
         name: name.trim(),
         schoolName: schoolName ? schoolName.trim() : '',
         email: email ? email.toLowerCase().trim() : '',
+        board: board ? board.trim() : 'CBSE',
         mobile,
         stream,
         paperSet: assignedSet,
@@ -236,6 +238,8 @@ router.post('/submit-test', async (req, res) => {
     const {
       candidateId,
       name,
+      email,
+      board,
       schoolName,
       stream,
       paperSet,
@@ -276,6 +280,8 @@ router.post('/submit-test', async (req, res) => {
     if (!candidate) {
       candidate = new TalentSearchRegistration({
         name: (name || 'Student').trim(),
+        email: email ? email.toLowerCase().trim() : '',
+        board: board ? board.trim() : 'CBSE',
         schoolName: (schoolName || '').trim(),
         mobile,
         stream: stream || 'PCM',
@@ -294,6 +300,8 @@ router.post('/submit-test', async (req, res) => {
       });
     } else {
       if (name) candidate.name = name.trim();
+      if (email) candidate.email = email.toLowerCase().trim();
+      if (board) candidate.board = board.trim();
       if (schoolName) candidate.schoolName = schoolName.trim();
       if (stream) candidate.stream = stream;
       if (paperSet) candidate.paperSet = paperSet;

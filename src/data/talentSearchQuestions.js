@@ -2,12 +2,12 @@
 // 50 Questions per stream (10 per subject) with 4 Paper Sets (A, B, C, D)
 
 export const STREAMS = [
-  { id: 'PCM', label: 'PCM (Physics, Chemistry, Maths)', subjects: ['Physics', 'Chemistry', 'Mathematics', 'General English', 'General Knowledge'] },
-  { id: 'PCB', label: 'PCB (Physics, Chemistry, Biology)', subjects: ['Physics', 'Chemistry', 'Biology', 'General English', 'General Knowledge'] },
-  { id: 'PCM+Bio', label: 'PCM + Biology (PCMB)', subjects: ['Physics', 'Chemistry', 'Mathematics', 'Biology', 'English & GK'] },
-  { id: 'Commerce', label: 'Commerce', subjects: ['Accountancy', 'Business Studies', 'Economics', 'General English', 'General Knowledge'] },
-  { id: 'Arts', label: 'Arts', subjects: ['History', 'Political Science', 'Geography & Sociology', 'General English', 'General Knowledge'] },
-  { id: 'Humanities', label: 'Humanities', subjects: ['History', 'Political Science', 'Economics & Psychology', 'General English', 'General Knowledge'] },
+  { id: 'PCM', label: 'PCM (Physics, Chemistry, Maths)', subjects: ['General Knowledge', 'General English', 'Mathematics', 'Chemistry', 'Physics'] },
+  { id: 'PCB', label: 'PCB (Physics, Chemistry, Biology)', subjects: ['General Knowledge', 'General English', 'Biology', 'Chemistry', 'Physics'] },
+  { id: 'PCM+Bio', label: 'PCM + Biology (PCMB)', subjects: ['English & GK', 'Biology', 'Mathematics', 'Chemistry', 'Physics'] },
+  { id: 'Commerce', label: 'Commerce', subjects: ['General Knowledge', 'General English', 'Economics', 'Business Studies', 'Accountancy'] },
+  { id: 'Arts', label: 'Arts', subjects: ['General Knowledge', 'General English', 'Geography & Sociology', 'Political Science', 'History'] },
+  { id: 'Humanities', label: 'Humanities', subjects: ['General Knowledge', 'General English', 'Economics & Psychology', 'Political Science', 'History'] },
 ];
 
 export const SUBJECT_POOLS = {
@@ -188,74 +188,74 @@ export function getBaseQuestionsForStream(streamId) {
   switch (streamId) {
     case 'PCM':
       questions = [
-        ...SUBJECT_POOLS.Physics.map(q => ({ ...q, subject: 'Physics' })),
-        ...SUBJECT_POOLS.Chemistry.map(q => ({ ...q, subject: 'Chemistry' })),
-        ...SUBJECT_POOLS.Mathematics.map(q => ({ ...q, subject: 'Mathematics' })),
-        ...SUBJECT_POOLS.English.map(q => ({ ...q, subject: 'General English' })),
         ...SUBJECT_POOLS.GK.map(q => ({ ...q, subject: 'General Knowledge' })),
+        ...SUBJECT_POOLS.English.map(q => ({ ...q, subject: 'General English' })),
+        ...SUBJECT_POOLS.Mathematics.map(q => ({ ...q, subject: 'Mathematics' })),
+        ...SUBJECT_POOLS.Chemistry.map(q => ({ ...q, subject: 'Chemistry' })),
+        ...SUBJECT_POOLS.Physics.map(q => ({ ...q, subject: 'Physics' })),
       ];
       break;
 
     case 'PCB':
       questions = [
-        ...SUBJECT_POOLS.Physics.map(q => ({ ...q, subject: 'Physics' })),
-        ...SUBJECT_POOLS.Chemistry.map(q => ({ ...q, subject: 'Chemistry' })),
-        ...SUBJECT_POOLS.Biology.map(q => ({ ...q, subject: 'Biology' })),
-        ...SUBJECT_POOLS.English.map(q => ({ ...q, subject: 'General English' })),
         ...SUBJECT_POOLS.GK.map(q => ({ ...q, subject: 'General Knowledge' })),
+        ...SUBJECT_POOLS.English.map(q => ({ ...q, subject: 'General English' })),
+        ...SUBJECT_POOLS.Biology.map(q => ({ ...q, subject: 'Biology' })),
+        ...SUBJECT_POOLS.Chemistry.map(q => ({ ...q, subject: 'Chemistry' })),
+        ...SUBJECT_POOLS.Physics.map(q => ({ ...q, subject: 'Physics' })),
       ];
       break;
 
     case 'PCM+Bio':
-      // 10 Physics, 10 Chemistry, 10 Maths, 10 Biology, 5 English + 5 GK = 50 Qs
+      // 5 English + 5 GK, 10 Biology, 10 Maths, 10 Chemistry, 10 Physics = 50 Qs
       questions = [
-        ...SUBJECT_POOLS.Physics.map(q => ({ ...q, subject: 'Physics' })),
-        ...SUBJECT_POOLS.Chemistry.map(q => ({ ...q, subject: 'Chemistry' })),
-        ...SUBJECT_POOLS.Mathematics.map(q => ({ ...q, subject: 'Mathematics' })),
-        ...SUBJECT_POOLS.Biology.map(q => ({ ...q, subject: 'Biology' })),
-        ...SUBJECT_POOLS.English.slice(0, 5).map(q => ({ ...q, subject: 'English & GK' })),
         ...SUBJECT_POOLS.GK.slice(0, 5).map(q => ({ ...q, subject: 'English & GK' })),
+        ...SUBJECT_POOLS.English.slice(0, 5).map(q => ({ ...q, subject: 'English & GK' })),
+        ...SUBJECT_POOLS.Biology.map(q => ({ ...q, subject: 'Biology' })),
+        ...SUBJECT_POOLS.Mathematics.map(q => ({ ...q, subject: 'Mathematics' })),
+        ...SUBJECT_POOLS.Chemistry.map(q => ({ ...q, subject: 'Chemistry' })),
+        ...SUBJECT_POOLS.Physics.map(q => ({ ...q, subject: 'Physics' })),
       ];
       break;
 
     case 'Commerce':
       questions = [
-        ...SUBJECT_POOLS.Accountancy.map(q => ({ ...q, subject: 'Accountancy' })),
-        ...SUBJECT_POOLS.BusinessStudies.map(q => ({ ...q, subject: 'Business Studies' })),
-        ...SUBJECT_POOLS.Economics.map(q => ({ ...q, subject: 'Economics' })),
-        ...SUBJECT_POOLS.English.map(q => ({ ...q, subject: 'General English' })),
         ...SUBJECT_POOLS.GK.map(q => ({ ...q, subject: 'General Knowledge' })),
+        ...SUBJECT_POOLS.English.map(q => ({ ...q, subject: 'General English' })),
+        ...SUBJECT_POOLS.Economics.map(q => ({ ...q, subject: 'Economics' })),
+        ...SUBJECT_POOLS.BusinessStudies.map(q => ({ ...q, subject: 'Business Studies' })),
+        ...SUBJECT_POOLS.Accountancy.map(q => ({ ...q, subject: 'Accountancy' })),
       ];
       break;
 
     case 'Arts':
       questions = [
-        ...SUBJECT_POOLS.History.map(q => ({ ...q, subject: 'History' })),
-        ...SUBJECT_POOLS.PoliticalScience.map(q => ({ ...q, subject: 'Political Science' })),
-        ...SUBJECT_POOLS.GeographySociology.map(q => ({ ...q, subject: 'Geography & Sociology' })),
-        ...SUBJECT_POOLS.English.map(q => ({ ...q, subject: 'General English' })),
         ...SUBJECT_POOLS.GK.map(q => ({ ...q, subject: 'General Knowledge' })),
+        ...SUBJECT_POOLS.English.map(q => ({ ...q, subject: 'General English' })),
+        ...SUBJECT_POOLS.GeographySociology.map(q => ({ ...q, subject: 'Geography & Sociology' })),
+        ...SUBJECT_POOLS.PoliticalScience.map(q => ({ ...q, subject: 'Political Science' })),
+        ...SUBJECT_POOLS.History.map(q => ({ ...q, subject: 'History' })),
       ];
       break;
 
     case 'Humanities':
       questions = [
-        ...SUBJECT_POOLS.History.map(q => ({ ...q, subject: 'History' })),
-        ...SUBJECT_POOLS.PoliticalScience.map(q => ({ ...q, subject: 'Political Science' })),
-        ...SUBJECT_POOLS.EconomicsPsychology.map(q => ({ ...q, subject: 'Economics & Psychology' })),
-        ...SUBJECT_POOLS.English.map(q => ({ ...q, subject: 'General English' })),
         ...SUBJECT_POOLS.GK.map(q => ({ ...q, subject: 'General Knowledge' })),
+        ...SUBJECT_POOLS.English.map(q => ({ ...q, subject: 'General English' })),
+        ...SUBJECT_POOLS.EconomicsPsychology.map(q => ({ ...q, subject: 'Economics & Psychology' })),
+        ...SUBJECT_POOLS.PoliticalScience.map(q => ({ ...q, subject: 'Political Science' })),
+        ...SUBJECT_POOLS.History.map(q => ({ ...q, subject: 'History' })),
       ];
       break;
 
     default:
       // Fallback to PCM
       questions = [
-        ...SUBJECT_POOLS.Physics.map(q => ({ ...q, subject: 'Physics' })),
-        ...SUBJECT_POOLS.Chemistry.map(q => ({ ...q, subject: 'Chemistry' })),
-        ...SUBJECT_POOLS.Mathematics.map(q => ({ ...q, subject: 'Mathematics' })),
-        ...SUBJECT_POOLS.English.map(q => ({ ...q, subject: 'General English' })),
         ...SUBJECT_POOLS.GK.map(q => ({ ...q, subject: 'General Knowledge' })),
+        ...SUBJECT_POOLS.English.map(q => ({ ...q, subject: 'General English' })),
+        ...SUBJECT_POOLS.Mathematics.map(q => ({ ...q, subject: 'Mathematics' })),
+        ...SUBJECT_POOLS.Chemistry.map(q => ({ ...q, subject: 'Chemistry' })),
+        ...SUBJECT_POOLS.Physics.map(q => ({ ...q, subject: 'Physics' })),
       ];
   }
 
