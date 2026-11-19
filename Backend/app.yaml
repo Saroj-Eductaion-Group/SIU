@@ -1,0 +1,19 @@
+runtime: nodejs20
+
+env: standard
+
+instance_class: F1
+
+env_variables:
+  PORT: "8080"
+  NODE_ENV: "production"
+  MONGO_URI: "mongodb://siu_admin:VeXC80POfjzxSFIl@ac-duen7sj-shard-00-00.bwfkhxp.mongodb.net:27017,ac-duen7sj-shard-00-01.bwfkhxp.mongodb.net:27017,ac-duen7sj-shard-00-02.bwfkhxp.mongodb.net:27017/siu_talenthunt?ssl=true&replicaSet=atlas-10dyvw-shard-0&authSource=admin&retryWrites=true&w=majority"
+  JWT_SECRET: "siu_talent_hunt_jwt_secret_2026_change_this_in_production"
+  ALLOWED_ORIGINS: "http://localhost:5173,https://sarojuniversity.edu.in"
+  CLOUDINARY_CLOUD_NAME: "dqpd2xcq9"
+  CLOUDINARY_API_KEY: "755313183984862"
+  CLOUDINARY_API_SECRET: "ThUSV6TvLm46EFWLKQMqIX9CL-E"
+
+automatic_scaling:
+  min_instances: 0
+  max_instances: 2
