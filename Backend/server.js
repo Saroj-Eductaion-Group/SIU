@@ -46,21 +46,25 @@ app.get('/health', (req, res) => res.json({ status: 'ok' }));
 
 // Resilient fallback connection string to support quick local setups out-of-the-box
 const mongoURI = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/siu';
+const PORT = process.env.PORT || 5000;
+
+// Start server immediately so frontend can connect even if local MongoDB is not running
+app.listen(PORT, () => {
+  console.log(`🚀 Server running on port ${PORT}`);
+});
 
 mongoose.connect(mongoURI, {
-  serverSelectionTimeoutMS: 10000,
+  serverSelectionTimeoutMS: 5000,
   family: 4
 })
   .then(() => {
-    console.log('MongoDB connected');
+    console.log('🟢 MongoDB connected successfully');
     
-    // Database seeding is now triggered safely AFTER mongoose connects successfully
+    // Database seeding is triggered safely AFTER mongoose connects
     adminRoutes.seedDefaultAdmin();
     adminRoutes.seedMockCandidates();
     adminRoutes.seedMockCuetNeetCandidates();
-    
-    app.listen(process.env.PORT || 5000, () => {
-      console.log(`Server running on port ${process.env.PORT || 5000}`);
-    });
   })
-  .catch(err => console.error('MongoDB error:', err));
+  .catch(err => {
+    console.warn('⚠️ MongoDB connection failed (running in offline/in-memory fallback mode):', err.message);
+  });

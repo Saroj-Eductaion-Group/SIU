@@ -580,6 +580,33 @@ export default function TalentSearchLevel1() {
     };
 
     try {
+      // Save submission locally so Admin portal can always view it offline
+      try {
+        const existingSubmissions = JSON.parse(localStorage.getItem('siu_talent_local_submissions') || '[]');
+        const newRecord = {
+          _id: candidateId || `local_${Date.now()}`,
+          name,
+          email,
+          board,
+          schoolName,
+          stream,
+          paperSet,
+          mobile: finalMobile,
+          score: totalScore,
+          percentage,
+          isQualifiedForLevel2,
+          subjectBreakdown,
+          tabSwitchCount,
+          hasAttempted: true,
+          testDate: new Date().toISOString(),
+          timeTakenSeconds: 3600 - timeLeft,
+        };
+        const updatedList = [newRecord, ...existingSubmissions.filter(c => c.mobile !== finalMobile)];
+        localStorage.setItem('siu_talent_local_submissions', JSON.stringify(updatedList));
+      } catch (locErr) {
+        console.warn('Failed to save to local storage:', locErr);
+      }
+
       const res = await fetch(`${API_BASE}/talent-search/submit-test`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
