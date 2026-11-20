@@ -49,15 +49,15 @@ const STREAMS = [
 // Boards
 const BOARDS = ['CBSE', 'ICSE', 'UP Board', 'Other State Board'];
 
-// Exact exam slot dates requested by user
+// Exact exam slot dates requested by user (Time removed)
 const EXAM_SLOTS = [
-  { id: '29 Nov', label: '29 Nov', year: '2026', day: 'Sunday', time: '11:00 AM – 12:00 PM' },
-  { id: '6 Dec', label: '6 Dec', year: '2026', day: 'Sunday', time: '11:00 AM – 12:00 PM' },
-  { id: '20 Dec', label: '20 Dec', year: '2026', day: 'Sunday', time: '11:00 AM – 12:00 PM' },
-  { id: '10 Jan', label: '10 Jan', year: '2027', day: 'Sunday', time: '11:00 AM – 12:00 PM' },
-  { id: '24 Jan', label: '24 Jan', year: '2027', day: 'Sunday', time: '11:00 AM – 12:00 PM' },
-  { id: '7 Feb', label: '7 Feb', year: '2027', day: 'Sunday', time: '11:00 AM – 12:00 PM' },
-  { id: '21 Feb', label: '21 Feb', year: '2027', day: 'Sunday', time: '11:00 AM – 12:00 PM' },
+  { id: '29 Nov', label: '29 Nov', year: '2026', day: 'Sunday' },
+  { id: '6 Dec', label: '6 Dec', year: '2026', day: 'Sunday' },
+  { id: '20 Dec', label: '20 Dec', year: '2026', day: 'Sunday' },
+  { id: '10 Jan', label: '10 Jan', year: '2027', day: 'Sunday' },
+  { id: '24 Jan', label: '24 Jan', year: '2027', day: 'Sunday' },
+  { id: '7 Feb', label: '7 Feb', year: '2027', day: 'Sunday' },
+  { id: '21 Feb', label: '21 Feb', year: '2027', day: 'Sunday' },
 ];
 
 export default function TalentSearchLevel1() {
@@ -268,10 +268,10 @@ export default function TalentSearchLevel1() {
   return (
     <Layout>
       <Helmet>
-        <title>Talent Search 2026-2027 Scholarship Exam | Saroj International University</title>
+        <title>Talent Search 2026-27 Schollership | Saroj International University</title>
         <meta
           name="description"
-          content="Register for Talent Search 2026-2027 Scholarship Exam. Win up to 100% Tuition Fee Waiver for Class 12th students."
+          content="Register for Talent Search 2026-27 Schollership. Win up to 100% Tuition Fee Waiver for Class 12th students."
         />
       </Helmet>
 
@@ -429,7 +429,7 @@ export default function TalentSearchLevel1() {
               Official Scholarship Drive
             </span>
             <span className="text-gray-300 hidden sm:inline">
-              Talent Search 2026–2027 Scholarship Exam · Admissions Open for Class 12
+              Talent Search 2026-27 Schollership · Admissions Open for Class 12
             </span>
           </div>
 
@@ -441,8 +441,9 @@ export default function TalentSearchLevel1() {
                 setQError('');
                 setQSuccess('');
               }}
-              className="inline-flex items-center gap-1.5 text-amber-400 hover:text-amber-300 font-bold transition cursor-pointer bg-slate-900 border border-slate-700/80 px-3 py-1 rounded-lg hover:border-amber-400/60"
+              className="inline-flex items-center gap-1.5 text-white font-black transition cursor-pointer bg-gradient-to-r from-red-600 via-rose-500 to-red-600 shadow-md shadow-red-500/50 ring-2 ring-red-400/80 animate-pulse hover:animate-none hover:scale-105 px-3 py-1 rounded-lg text-xs"
             >
+              <span className="w-1.5 h-1.5 rounded-full bg-white animate-ping" />
               <HelpCircle className="w-3.5 h-3.5" />
               <span>Any Query?</span>
             </button>
@@ -465,7 +466,7 @@ export default function TalentSearchLevel1() {
                 Registration Successful
               </span>
               <h2 className="text-2xl sm:text-3xl font-black mt-1 font-serif">
-                Talent Search 2026–2027 Scholarship Exam
+                Talent Search 2026-27 Schollership
               </h2>
               <p className="text-sm text-emerald-100 max-w-lg mx-auto mt-2">
                 Your application has been received and verified. Please note your allocated examination slot details below.
@@ -555,9 +556,10 @@ export default function TalentSearchLevel1() {
                       setQMobile(confirmedCandidate.mobile);
                       setQEmail(confirmedCandidate.email);
                     }}
-                    className="px-4 py-2.5 rounded-xl border border-blue-200 text-blue-700 bg-blue-50 hover:bg-blue-100 font-bold text-xs transition flex items-center gap-1.5 cursor-pointer"
+                    className="px-4 py-2.5 rounded-xl font-black text-xs text-white bg-gradient-to-r from-red-600 via-rose-500 to-red-600 shadow-md shadow-red-500/50 ring-2 ring-red-400/80 animate-pulse hover:animate-none hover:scale-105 transition-all flex items-center gap-1.5 cursor-pointer"
                   >
-                    <MessageSquare className="w-4 h-4" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-white animate-ping" />
+                    <HelpCircle className="w-4 h-4" />
                     <span>Any Query?</span>
                   </button>
 
@@ -598,7 +600,7 @@ export default function TalentSearchLevel1() {
               </div>
 
               <h1 className="text-3xl sm:text-5xl font-black font-serif tracking-tight text-white">
-                Talent search 2026-2027 <span className="text-amber-400">Schollership exam</span>
+                Talent Search 2026-27 <span className="text-amber-400">Schollership</span>
               </h1>
 
               <p className="text-sm sm:text-base text-blue-100 max-w-2xl mx-auto leading-relaxed">
@@ -632,14 +634,15 @@ export default function TalentSearchLevel1() {
                   </p>
                 </div>
 
-                {/* Any Query CTA in form header */}
+                {/* Any Query CTA on the card right: Glowing / Shining Red Background */}
                 <button
                   type="button"
                   onClick={() => setShowQueryModal(true)}
-                  className="self-start sm:self-auto px-4 py-2 bg-amber-400 hover:bg-amber-500 text-slate-950 font-black text-xs rounded-xl transition flex items-center gap-1.5 shadow cursor-pointer shrink-0"
+                  className="self-start sm:self-auto px-4 py-2.5 rounded-xl font-black text-xs text-white bg-gradient-to-r from-red-600 via-rose-500 to-red-600 shadow-lg shadow-red-500/50 ring-2 ring-red-400/80 animate-pulse hover:animate-none hover:scale-105 transition-all flex items-center gap-2 cursor-pointer shrink-0"
                 >
-                  <HelpCircle className="w-4 h-4" />
-                  <span>Any Query?</span>
+                  <span className="w-2 h-2 rounded-full bg-white animate-ping" />
+                  <HelpCircle className="w-4 h-4 text-white" />
+                  <span className="tracking-wide uppercase">Any Query?</span>
                 </button>
               </div>
 
@@ -831,10 +834,7 @@ export default function TalentSearchLevel1() {
                             <span className="absolute top-2 right-2 w-2 h-2 rounded-full bg-amber-500" />
                           )}
                           <div className="text-base font-black text-gray-900">{s.label}</div>
-                          <div className="text-[11px] text-gray-500">{s.year} ({s.day})</div>
-                          <div className="text-[10px] font-mono text-blue-700 font-semibold mt-1">
-                            11 AM – 12 PM
-                          </div>
+                          <div className="text-xs text-gray-500 mt-0.5">{s.year} ({s.day})</div>
                         </button>
                       );
                     })}
