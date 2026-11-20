@@ -1,29 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import Layout from '../components/Layout';
 import { Helmet } from 'react-helmet';
-import {
-  Award,
-  CheckCircle2,
-  Calendar,
-  Clock,
-  BookOpen,
-  HelpCircle,
-  School,
-  User,
-  Phone,
-  Mail,
-  Send,
-  Sparkles,
-  ArrowRight,
-  ShieldCheck,
-  AlertCircle,
-  Printer,
-  RotateCcw,
-  X,
-  MessageSquare,
-  FileCheck,
-} from 'lucide-react';
+import './NeetTalentHunt.css';
 
+/* ---------- API BASE ---------- */
 const isLocalhost = typeof window !== 'undefined' && (
   window.location.hostname === 'localhost' ||
   window.location.hostname === '127.0.0.1' ||
@@ -36,49 +16,143 @@ const API_BASE = isLocalhost
   ? `http://${typeof window !== 'undefined' ? window.location.hostname : 'localhost'}:5000/api`
   : (import.meta.env.VITE_API_URL || '/api');
 
-// Stream options
-const STREAMS = [
-  { id: 'PCM', label: 'PCM', full: 'Physics, Chemistry, Maths', icon: '📐' },
-  { id: 'PCB', label: 'PCB', full: 'Physics, Chemistry, Biology', icon: '🧬' },
-  { id: 'PCM+Bio', label: 'PCMB', full: 'PCM + Biology', icon: '🔬' },
-  { id: 'Commerce', label: 'Commerce', full: 'Accounts, Economics, B.St', icon: '📈' },
-  { id: 'Arts', label: 'Arts', full: 'History, Pol. Sci., Geography', icon: '🎨' },
-  { id: 'Humanities', label: 'Humanities', full: 'Economics, Psychology, History', icon: '📚' },
+/* ---------- CONFIG ---------- */
+const SLOTS = [
+  { id: '29 Nov', date: '2026-11-29T10:00:00+05:30', seats: 120, day: '29', mon: 'Nov', year: '2026', wk: 'Sunday' },
+  { id: '6 Dec', date: '2026-12-06T10:00:00+05:30', seats: 340, day: '6', mon: 'Dec', year: '2026', wk: 'Sunday' },
+  { id: '20 Dec', date: '2026-12-20T10:00:00+05:30', seats: 410, day: '20', mon: 'Dec', year: '2026', wk: 'Sunday' },
+  { id: '10 Jan', date: '2027-01-10T10:00:00+05:30', seats: 500, day: '10', mon: 'Jan', year: '2027', wk: 'Sunday' },
+  { id: '24 Jan', date: '2027-01-24T10:00:00+05:30', seats: 500, day: '24', mon: 'Jan', year: '2027', wk: 'Sunday' },
+  { id: '7 Feb', date: '2027-02-07T10:00:00+05:30', seats: 500, day: '7', mon: 'Feb', year: '2027', wk: 'Sunday' },
+  { id: '21 Feb', date: '2027-02-21T10:00:00+05:30', seats: 500, day: '21', mon: 'Feb', year: '2027', wk: 'Sunday' },
 ];
 
-// Boards
-const BOARDS = ['CBSE', 'ICSE', 'UP Board', 'Other State Board'];
-
-// Exact exam slot dates requested by user (Time removed)
-const EXAM_SLOTS = [
-  { id: '29 Nov', label: '29 Nov', year: '2026', day: 'Sunday' },
-  { id: '6 Dec', label: '6 Dec', year: '2026', day: 'Sunday' },
-  { id: '20 Dec', label: '20 Dec', year: '2026', day: 'Sunday' },
-  { id: '10 Jan', label: '10 Jan', year: '2027', day: 'Sunday' },
-  { id: '24 Jan', label: '24 Jan', year: '2027', day: 'Sunday' },
-  { id: '7 Feb', label: '7 Feb', year: '2027', day: 'Sunday' },
-  { id: '21 Feb', label: '21 Feb', year: '2027', day: 'Sunday' },
+const BOARDS = [
+  'CBSE',
+  'ICSE / ISC',
+  'UP Board',
+  'Bihar Board',
+  'Rajasthan Board',
+  'MP Board',
+  'Other State Board',
+  'NIOS',
 ];
 
+const STEPS = ['Student Details', 'Academics', 'Exam Slot'];
+
+const TIERS = [
+  { pct: '100%', title: 'Full Tuition Waiver', text: 'For the top rankers in the scholarship examination.', top: true },
+  { pct: '75%', title: 'Merit Scholarship', text: 'For outstanding performers just below the top bracket.' },
+  { pct: '50%', title: 'Achiever Scholarship', text: 'For every candidate who clears the qualifying score.' },
+];
+
+const HOW = [
+  ['Register', 'Fill the 3-step form. It takes under 2 minutes.'],
+  ['Get Admit Slip', 'Your slip is generated immediately after submit.'],
+  ['Appear for Test', 'Attend on your chosen slot date with the slip.'],
+  ['Claim Scholarship', 'Results are shared on your mobile & email.'],
+];
+
+const FAQ = [
+  ['Is there any registration fee?', 'No. Registration for the Talent Search Scholarship is completely free.'],
+  ['Who can apply?', 'Any Class 12 (appearing or passed) student from any board in India can apply.'],
+  ['Can I change my slot later?', 'Please contact the admission helpdesk at least 3 days before your selected exam date to request a change.'],
+  ['What is the syllabus?', 'The paper is based on the Class 12 board syllabus of your stream.'],
+];
+
+/* ---------- VALIDATION RULES ---------- */
+const rules = {
+  name: (v) => (/^[A-Za-z .'-]{3,}$/.test((v || '').trim()) ? '' : 'Enter full name (min 3 characters)'),
+  father: (v) => (/^[A-Za-z .'-]{3,}$/.test((v || '').trim()) ? '' : "Enter father's full name"),
+  mobile: (v) => (/^[6-9]\d{9}$/.test(v || '') ? '' : 'Enter a valid 10-digit mobile number'),
+  email: (v) => (/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v || '') ? '' : 'Enter a valid email address'),
+  school: (v) => ((v || '').trim().length >= 3 ? '' : 'Enter your school name'),
+  board: (v) => (v ? '' : 'Select your board'),
+  slot: (v) => (v ? '' : 'Please pick an exam date'),
+};
+
+const STEP_FIELDS = [
+  ['name', 'father', 'mobile', 'email'],
+  ['school', 'board'],
+  ['slot'],
+];
+
+const fmt = (slotObj) => {
+  if (!slotObj) return { day: '', mon: '', year: '', wk: '', full: '' };
+  return {
+    day: slotObj.day,
+    mon: slotObj.mon,
+    year: slotObj.year,
+    wk: slotObj.wk,
+    full: `${slotObj.day} ${slotObj.mon} ${slotObj.year} (${slotObj.wk})`,
+  };
+};
+
+/* ---------- COUNTDOWN HOOK ---------- */
+function useCountdown(targetIso) {
+  const [now, setNow] = useState(Date.now());
+  useEffect(() => {
+    const t = setInterval(() => setNow(Date.now()), 1000);
+    return () => clearInterval(t);
+  }, []);
+  const diff = Math.max(0, new Date(targetIso).getTime() - now);
+  return {
+    d: Math.floor(diff / 864e5),
+    h: Math.floor((diff / 36e5) % 24),
+    m: Math.floor((diff / 6e4) % 60),
+    s: Math.floor((diff / 1e3) % 60),
+  };
+}
+
+/* ---------- FIELD COMPONENT ---------- */
+function Field({ label, name, form, errors, touched, onChange, onBlur, prefix, children, ...rest }) {
+  const show = touched[name] && errors[name];
+  const ok = touched[name] && !errors[name] && form[name];
+  return (
+    <div className="th-field">
+      <label htmlFor={name}>
+        {label} <b>*</b>
+      </label>
+      <div className={`th-input ${prefix ? 'pre' : ''} ${show ? 'bad' : ''} ${ok ? 'ok' : ''}`}>
+        {prefix && <span className="pfx">{prefix}</span>}
+        {children || (
+          <input
+            id={name}
+            name={name}
+            value={form[name] || ''}
+            onChange={onChange}
+            onBlur={onBlur}
+            {...rest}
+          />
+        )}
+        {ok && !children && <span className="tick">✓</span>}
+      </div>
+      <p className="th-err">{show ? errors[name] : ''}</p>
+    </div>
+  );
+}
+
+/* ---------- MAIN COMPONENT ---------- */
 export default function TalentSearchLevel1() {
-  // Phase: 'form' | 'confirmed'
-  const [phase, setPhase] = useState('form');
+  const upcoming = useMemo(() => SLOTS.find((s) => new Date(s.date) > new Date()) || SLOTS[0], []);
+  const cd = useCountdown(upcoming.date);
 
-  // Mandatory Registration Form States
-  const [name, setName] = useState('');
-  const [fatherName, setFatherName] = useState('');
-  const [mobile, setMobile] = useState('');
-  const [email, setEmail] = useState('');
-  const [schoolName, setSchoolName] = useState('');
-  const [board, setBoard] = useState('CBSE');
-  const [stream, setStream] = useState('Class 12');
-  const [slot, setSlot] = useState('29 Nov');
-
+  const [step, setStep] = useState(0);
+  const [form, setForm] = useState({
+    name: '',
+    father: '',
+    mobile: '',
+    email: '',
+    school: '',
+    board: 'CBSE',
+    slot: '29 Nov',
+  });
+  const [touched, setTouched] = useState({});
   const [loading, setLoading] = useState(false);
-  const [formError, setFormError] = useState('');
-  const [confirmedCandidate, setConfirmedCandidate] = useState(null);
+  const [result, setResult] = useState(null);
+  const [openFaq, setOpenFaq] = useState(0);
 
-  // "Any Query" Modal State
+  // Any Query Modal State
   const [showQueryModal, setShowQueryModal] = useState(false);
   const [qName, setQName] = useState('');
   const [qMobile, setQMobile] = useState('');
@@ -88,59 +162,47 @@ export default function TalentSearchLevel1() {
   const [qError, setQError] = useState('');
   const [qSuccess, setQSuccess] = useState('');
 
-  // -------------------------------------------------------------
-  // REGISTRATION SUBMIT HANDLER
-  // -------------------------------------------------------------
-  const handleRegister = async (e) => {
-    e.preventDefault();
-    setFormError('');
+  const errors = useMemo(() => {
+    const e = {};
+    Object.keys(rules).forEach((k) => (e[k] = rules[k](form[k])));
+    return e;
+  }, [form]);
 
-    // Strict validation for all mandatory fields
-    if (!name.trim()) {
-      setFormError('Please enter Student Full Name.');
-      return;
-    }
-    if (!fatherName.trim()) {
-      setFormError("Please enter Father's Name.");
-      return;
-    }
-    const cleanMobile = mobile.replace(/\D/g, '').slice(-10);
-    if (cleanMobile.length !== 10) {
-      setFormError('Please enter a valid 10-digit Mobile Number.');
-      return;
-    }
-    if (!email.trim() || !email.includes('@')) {
-      setFormError('Please enter a valid Email Address.');
-      return;
-    }
-    if (!schoolName.trim()) {
-      setFormError('Please enter your School Name.');
-      return;
-    }
-    if (!board.trim()) {
-      setFormError('Please select your Board.');
-      return;
-    }
-    if (!slot) {
-      setFormError('Please select an Exam Slot.');
-      return;
-    }
+  const onChange = (e) => {
+    let { name, value } = e.target;
+    if (name === 'mobile') value = value.replace(/\D/g, '').slice(0, 10);
+    setForm((f) => ({ ...f, [name]: value }));
+  };
 
+  const onBlur = (e) => setTouched((t) => ({ ...t, [e.target.name]: true }));
+
+  const stepValid = (i) => STEP_FIELDS[i].every((k) => !errors[k]);
+  const filled = Object.keys(rules).filter((k) => !errors[k]).length;
+  const progress = Math.round((filled / Object.keys(rules).length) * 100);
+
+  const next = () => {
+    setTouched((t) => ({ ...t, ...Object.fromEntries(STEP_FIELDS[step].map((k) => [k, true])) }));
+    if (stepValid(step)) setStep((s) => s + 1);
+  };
+
+  // Submit Registration to Backend + LocalStorage
+  const submit = async () => {
+    setTouched((t) => ({ ...t, slot: true }));
+    if (!stepValid(2)) return;
     setLoading(true);
 
     const regData = {
-      name: name.trim(),
-      fatherName: fatherName.trim(),
-      mobile: cleanMobile,
-      email: email.toLowerCase().trim(),
-      schoolName: schoolName.trim(),
-      board: board.trim(),
+      name: form.name.trim(),
+      fatherName: form.father.trim(),
+      mobile: form.mobile.trim(),
+      email: form.email.toLowerCase().trim(),
+      schoolName: form.school.trim(),
+      board: form.board,
+      slot: form.slot,
       stream: 'PCM', // Backward compatible stream code for backend schema
-      slot,
     };
 
     try {
-      // 1. Send to Backend API
       let savedCandidate = null;
       try {
         const res = await fetch(`${API_BASE}/talent-search/register`, {
@@ -158,13 +220,12 @@ export default function TalentSearchLevel1() {
         console.warn('Backend unavailable, saving offline:', backendErr);
       }
 
-      // 2. Offline / LocalStorage fallback
+      const regNo = savedCandidate?.applicationNumber || `SIU-TS27-${Math.floor(100000 + Math.random() * 900000)}`;
       const regId = savedCandidate?._id || `SIU-TS-${Date.now().toString().slice(-6)}`;
-      const appNumber = `SIU-TS-2026-${Math.floor(10000 + Math.random() * 90000)}`;
 
       const finalRecord = {
         _id: regId,
-        applicationNumber: appNumber,
+        applicationNumber: regNo,
         ...regData,
         hasAttempted: false,
         score: 0,
@@ -173,50 +234,48 @@ export default function TalentSearchLevel1() {
 
       try {
         const existing = JSON.parse(localStorage.getItem('siu_talent_local_submissions') || '[]');
-        const updated = [finalRecord, ...existing.filter((c) => c.mobile !== cleanMobile)];
+        const updated = [finalRecord, ...existing.filter((c) => c.mobile !== form.mobile)];
         localStorage.setItem('siu_talent_local_submissions', JSON.stringify(updated));
       } catch (locErr) {
         console.warn('Local storage save error:', locErr);
       }
 
-      setConfirmedCandidate(finalRecord);
-      setPhase('confirmed');
-    } catch (err) {
-      setFormError('An unexpected error occurred. Please try again.');
+      setResult({
+        regNo,
+        at: new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' }),
+      });
     } finally {
       setLoading(false);
     }
   };
 
-  // -------------------------------------------------------------
-  // QUERY / HELPDESK SUBMIT HANDLER
-  // -------------------------------------------------------------
+  // Query Submit Handler
   const handleQuerySubmit = async (e) => {
     e.preventDefault();
     setQError('');
     setQSuccess('');
 
     if (!qName.trim()) {
-      setQError('Please enter your Name.');
+      setQError('Please enter your name.');
       return;
     }
     const cleanMobile = qMobile.replace(/\D/g, '').slice(-10);
     if (cleanMobile.length !== 10) {
-      setQError('Please enter a valid 10-digit Mobile Number.');
+      setQError('Please enter a valid 10-digit mobile number.');
       return;
     }
     if (!qEmail.trim() || !qEmail.includes('@')) {
-      setQError('Please enter a valid Email Address.');
+      setQError('Please enter a valid email address.');
       return;
     }
     if (!qQuery.trim()) {
-      setQError('Please describe your query or problem.');
+      setQError('Please describe your query.');
       return;
     }
 
     setQLoading(true);
 
-    const queryPayload = {
+    const payload = {
       name: qName.trim(),
       mobile: cleanMobile,
       email: qEmail.toLowerCase().trim(),
@@ -224,23 +283,21 @@ export default function TalentSearchLevel1() {
     };
 
     try {
-      // 1. Send to Backend
       try {
         await fetch(`${API_BASE}/talent-search/query`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(queryPayload),
+          body: JSON.stringify(payload),
         });
       } catch (netErr) {
         console.warn('Backend query submit offline fallback:', netErr);
       }
 
-      // 2. Save in LocalStorage
       try {
         const existingQueries = JSON.parse(localStorage.getItem('siu_talent_student_queries') || '[]');
         const newQueryObj = {
           _id: `q_${Date.now()}`,
-          ...queryPayload,
+          ...payload,
           status: 'Pending',
           createdAt: new Date().toISOString(),
         };
@@ -251,7 +308,7 @@ export default function TalentSearchLevel1() {
       setTimeout(() => {
         setQQuery('');
         setQError('');
-      }, 1000);
+      }, 1200);
     } catch (err) {
       setQError('Failed to submit query. Please try again.');
     } finally {
@@ -259,9 +316,21 @@ export default function TalentSearchLevel1() {
     }
   };
 
-  const handlePrintSlip = () => {
-    window.print();
-  };
+  const selectedSlotObj = SLOTS.find((s) => s.id === form.slot) || SLOTS[0];
+  const slotF = fmt(selectedSlotObj);
+
+  const confetti = useMemo(
+    () =>
+      Array.from({ length: 46 }, (_, i) => ({
+        left: Math.random() * 100,
+        delay: Math.random() * 0.8,
+        dur: 2.2 + Math.random() * 1.8,
+        bg: ['#f5a623', '#2563eb', '#16a34a', '#ef4444', '#a855f7', '#ffc95c'][i % 6],
+      })),
+    []
+  );
+
+  const common = { form, errors, touched, onChange, onBlur };
 
   return (
     <Layout>
@@ -273,581 +342,539 @@ export default function TalentSearchLevel1() {
         />
       </Helmet>
 
-      {/* ------------------------------------------------------------- */}
-      {/* ANY QUERY / HELPDESK MODAL                                     */}
-      {/* ------------------------------------------------------------- */}
+      {/* ANY QUERY MODAL */}
       {showQueryModal && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
-          <div className="bg-white rounded-2xl shadow-2xl max-w-lg w-full overflow-hidden border border-gray-200 animate-in fade-in zoom-in-95 duration-150">
-            {/* Modal Header */}
-            <div className="bg-[#0b2545] text-white p-5 sm:p-6 flex items-center justify-between">
-              <div>
-                <span className="text-[11px] font-bold uppercase tracking-wider text-amber-400">
-                  Student Helpdesk & Support
-                </span>
-                <h3 className="text-xl font-bold font-serif">Any Query? Ask Us</h3>
-                <p className="text-xs text-blue-200 mt-0.5">
-                  Have questions about slots, syllabus, or scholarships? Submit your query below.
-                </p>
-              </div>
+        <div className="th-modal-backdrop" onClick={() => setShowQueryModal(false)}>
+          <div className="th-modal-box" onClick={(e) => e.stopPropagation()}>
+            <div className="th-modal-header">
+              <h3>
+                <span>❓</span> Have a Query? Ask SIU Helpdesk
+              </h3>
               <button
                 type="button"
-                onClick={() => {
-                  setShowQueryModal(false);
-                  setQError('');
-                  setQSuccess('');
-                }}
-                className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition cursor-pointer"
+                className="th-modal-close"
+                onClick={() => setShowQueryModal(false)}
               >
-                <X className="w-5 h-5" />
+                ✕
               </button>
             </div>
 
-            {/* Modal Form */}
-            <form onSubmit={handleQuerySubmit} className="p-6 space-y-4">
+            <form onSubmit={handleQuerySubmit} className="th-modal-body">
+              <p style={{ margin: '0 0 16px', fontSize: '13px', color: '#64748b' }}>
+                Fill out the form below. Our admission &amp; scholarship coordinators will resolve your query promptly.
+              </p>
+
               {qError && (
-                <div className="bg-red-50 border border-red-200 text-red-700 text-xs p-3 rounded-xl flex items-center gap-2">
-                  <AlertCircle className="w-4 h-4 text-red-500 shrink-0" />
-                  <span>{qError}</span>
+                <div style={{ padding: '10px 14px', background: '#fef2f2', border: '1px solid #fecaca', borderRadius: '10px', color: '#dc2626', fontSize: '12px', marginBottom: '14px', fontWeight: 600 }}>
+                  {qError}
                 </div>
               )}
 
-              {qSuccess ? (
-                <div className="bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs sm:text-sm p-4 rounded-xl flex items-start gap-2.5">
-                  <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
-                  <div>
-                    <div className="font-bold text-emerald-900">Query Submitted!</div>
-                    <p className="mt-0.5 text-xs text-emerald-700">{qSuccess}</p>
-                    <button
-                      type="button"
-                      onClick={() => setShowQueryModal(false)}
-                      className="mt-3 px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-lg cursor-pointer"
-                    >
-                      Close
-                    </button>
-                  </div>
+              {qSuccess && (
+                <div style={{ padding: '10px 14px', background: '#f0fdf4', border: '1px solid #bbf7d0', borderRadius: '10px', color: '#16a34a', fontSize: '12px', marginBottom: '14px', fontWeight: 600 }}>
+                  ✓ {qSuccess}
                 </div>
-              ) : (
-                <>
-                  <div>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1">
-                      Student Full Name *
-                    </label>
-                    <input
-                      type="text"
-                      required
-                      value={qName}
-                      onChange={(e) => setQName(e.target.value)}
-                      placeholder="Enter your name"
-                      className="w-full px-3.5 py-2.5 text-sm rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-600 focus:border-transparent outline-none"
-                    />
-                  </div>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <div>
-                      <label className="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1">
-                        Mobile Number *
-                      </label>
-                      <input
-                        type="tel"
-                        maxLength={10}
-                        required
-                        value={qMobile}
-                        onChange={(e) => setQMobile(e.target.value)}
-                        placeholder="10-digit number"
-                        className="w-full px-3.5 py-2.5 text-sm rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-600 focus:border-transparent outline-none font-mono"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1">
-                        Email Address *
-                      </label>
-                      <input
-                        type="email"
-                        required
-                        value={qEmail}
-                        onChange={(e) => setQEmail(e.target.value)}
-                        placeholder="your.email@gmail.com"
-                        className="w-full px-3.5 py-2.5 text-sm rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-600 focus:border-transparent outline-none"
-                      />
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1">
-                      Your Query / Problem Description *
-                    </label>
-                    <textarea
-                      rows={4}
-                      required
-                      value={qQuery}
-                      onChange={(e) => setQQuery(e.target.value)}
-                      placeholder="Kya dikkat hai? Write your query or question here..."
-                      className="w-full px-3.5 py-2.5 text-sm rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-600 focus:border-transparent outline-none resize-none"
-                    />
-                  </div>
-
-                  <div className="flex gap-2.5 pt-2">
-                    <button
-                      type="button"
-                      onClick={() => setShowQueryModal(false)}
-                      className="flex-1 py-2.5 px-4 rounded-xl border border-gray-300 text-gray-700 font-semibold text-xs hover:bg-gray-50 transition cursor-pointer"
-                    >
-                      Cancel
-                    </button>
-                    <button
-                      type="submit"
-                      disabled={qLoading}
-                      className="flex-1 py-2.5 px-4 rounded-xl font-bold text-xs text-white bg-blue-600 hover:bg-blue-700 transition flex items-center justify-center gap-1.5 shadow cursor-pointer disabled:opacity-50"
-                    >
-                      {qLoading ? (
-                        <span>Submitting...</span>
-                      ) : (
-                        <>
-                          <Send className="w-3.5 h-3.5" />
-                          <span>Submit Query</span>
-                        </>
-                      )}
-                    </button>
-                  </div>
-                </>
               )}
+
+              <div className="th-field">
+                <label>Student Full Name <b>*</b></label>
+                <div className="th-input">
+                  <input
+                    type="text"
+                    value={qName}
+                    onChange={(e) => setQName(e.target.value)}
+                    placeholder="Enter your name"
+                  />
+                </div>
+              </div>
+
+              <div className="th-field">
+                <label>Mobile Number <b>*</b></label>
+                <div className="th-input pre">
+                  <span className="pfx">+91</span>
+                  <input
+                    type="tel"
+                    maxLength={10}
+                    value={qMobile}
+                    onChange={(e) => setQMobile(e.target.value.replace(/\D/g, '').slice(0, 10))}
+                    placeholder="10-digit mobile number"
+                  />
+                </div>
+              </div>
+
+              <div className="th-field">
+                <label>Email Address <b>*</b></label>
+                <div className="th-input">
+                  <input
+                    type="email"
+                    value={qEmail}
+                    onChange={(e) => setQEmail(e.target.value)}
+                    placeholder="your.email@gmail.com"
+                  />
+                </div>
+              </div>
+
+              <div className="th-field">
+                <label>What is your Query / Issue? <b>*</b></label>
+                <textarea
+                  rows={3}
+                  value={qQuery}
+                  onChange={(e) => setQQuery(e.target.value)}
+                  placeholder="Ask about exam slot, syllabus, admit card, eligibility, etc."
+                />
+              </div>
+
+              <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px', marginTop: '18px' }}>
+                <button
+                  type="button"
+                  className="th-btn ghost"
+                  onClick={() => setShowQueryModal(false)}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={qLoading}
+                  className="th-btn"
+                  style={{ background: 'linear-gradient(135deg, #dc2626, #b91c1c)', color: '#fff' }}
+                >
+                  {qLoading ? <><span className="th-spin" /> Submitting...</> : 'Submit Query →'}
+                </button>
+              </div>
             </form>
           </div>
         </div>
       )}
 
-      {/* ------------------------------------------------------------- */}
-      {/* TOP NOTIFICATION / HELP BAR                                   */}
-      {/* ------------------------------------------------------------- */}
-      <div className="bg-slate-950 text-white border-b border-slate-800 text-xs py-2.5 px-4 sm:px-8">
-        <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3">
-          <div className="flex items-center gap-2">
-            <span className="px-2 py-0.5 rounded bg-amber-400 text-slate-950 font-black text-[10px] tracking-wider uppercase">
-              Official Scholarship Drive
+      <div className="th">
+        <div className="th-wrap">
+          {/* HERO */}
+          <section className="th-hero">
+            <span className="th-pill">
+              <i /> Class 12th Merit Scholarship Drive 2026-2027
             </span>
-            <span className="text-gray-300 hidden sm:inline">
-              Talent Search 2026-27 Scholarship · Admissions Open for Class 12
-            </span>
-          </div>
+            <h1 className="th-title">
+              Talent Search 2026-27 <span>Scholarship</span>
+            </h1>
+            <p className="th-sub">
+              Saroj International University invites all Class 12 aspirants across India to take the scholarship examination.
+              Compete for up to 100% full tuition fee waivers.
+            </p>
 
-          <div className="flex items-center gap-3">
-            <button
-              type="button"
-              onClick={() => {
-                setShowQueryModal(true);
-                setQError('');
-                setQSuccess('');
-              }}
-              className="inline-flex items-center gap-1.5 text-white font-black transition cursor-pointer bg-gradient-to-r from-red-600 via-rose-500 to-red-600 shadow-md shadow-red-500/50 ring-2 ring-red-400/80 animate-pulse hover:animate-none hover:scale-105 px-3 py-1 rounded-lg text-xs"
-            >
-              <span className="w-1.5 h-1.5 rounded-full bg-white animate-ping" />
-              <HelpCircle className="w-3.5 h-3.5" />
-              <span>Any Query?</span>
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* ------------------------------------------------------------- */}
-      {/* PHASE: REGISTRATION CONFIRMED / ADMIT SLIP VIEW                */}
-      {/* ------------------------------------------------------------- */}
-      {phase === 'confirmed' && confirmedCandidate && (
-        <div className="min-h-screen bg-slate-50 py-12 px-4 sm:px-6 lg:px-8">
-          <div className="max-w-2xl mx-auto space-y-6">
-            {/* Top Success Banner */}
-            <div className="bg-gradient-to-r from-emerald-700 via-teal-700 to-emerald-800 rounded-3xl shadow-xl text-white p-8 text-center relative overflow-hidden">
-              <div className="w-16 h-16 mx-auto bg-white/20 rounded-full flex items-center justify-center border-2 border-white/40 mb-3 shadow-lg">
-                <CheckCircle2 className="w-10 h-10 text-white" />
-              </div>
-              <span className="text-xs font-bold uppercase tracking-widest text-emerald-200">
-                Registration Successful
-              </span>
-              <h2 className="text-2xl sm:text-3xl font-black mt-1 font-serif">
-                Talent Search 2026-27 Scholarship
-              </h2>
-              <p className="text-sm text-emerald-100 max-w-lg mx-auto mt-2">
-                Your application has been received and verified. Please note your allocated examination slot details below.
-              </p>
-            </div>
-
-            {/* Official Registration Slip Card */}
-            <div className="bg-white rounded-3xl shadow-xl border border-gray-200 p-6 sm:p-8 space-y-6 print:shadow-none print:border-none">
-              <div className="flex items-center justify-between border-b pb-4">
-                <div>
-                  <span className="text-[11px] font-bold uppercase tracking-wider text-blue-700 block">
-                    Candidate Confirmation Slip
-                  </span>
-                  <div className="text-xs text-gray-500 font-mono mt-0.5">
-                    Application ID: <strong className="text-gray-900 font-mono text-sm">{confirmedCandidate.applicationNumber || confirmedCandidate._id}</strong>
+            <div className="th-countdown">
+              <small>Next exam in</small>
+              <div className="th-cd-row">
+                {[
+                  ['d', 'Days'],
+                  ['h', 'Hrs'],
+                  ['m', 'Min'],
+                  ['s', 'Sec'],
+                ].map(([k, l]) => (
+                  <div className="th-cd" key={k}>
+                    <b>{String(cd[k]).padStart(2, '0')}</b>
+                    <span>{l}</span>
                   </div>
-                </div>
-                <div className="text-right">
-                  <span className="inline-block px-3 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-800 border border-amber-300">
-                    Slot: {confirmedCandidate.slot}
-                  </span>
-                </div>
-              </div>
-
-              {/* Grid Details */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs sm:text-sm">
-                <div className="p-3.5 bg-slate-50 rounded-2xl border border-slate-100">
-                  <span className="text-[10px] uppercase font-bold text-gray-400 block">Student Full Name</span>
-                  <span className="font-bold text-gray-900 text-base">{confirmedCandidate.name}</span>
-                </div>
-
-                <div className="p-3.5 bg-slate-50 rounded-2xl border border-slate-100">
-                  <span className="text-[10px] uppercase font-bold text-gray-400 block">Father's Name</span>
-                  <span className="font-bold text-gray-900 text-base">{confirmedCandidate.fatherName}</span>
-                </div>
-
-                <div className="p-3.5 bg-slate-50 rounded-2xl border border-slate-100">
-                  <span className="text-[10px] uppercase font-bold text-gray-400 block">Registered Mobile</span>
-                  <span className="font-mono font-bold text-gray-900">{confirmedCandidate.mobile}</span>
-                </div>
-
-                <div className="p-3.5 bg-slate-50 rounded-2xl border border-slate-100">
-                  <span className="text-[10px] uppercase font-bold text-gray-400 block">Email Address</span>
-                  <span className="font-mono text-gray-800 truncate block">{confirmedCandidate.email}</span>
-                </div>
-
-                <div className="p-3.5 bg-slate-50 rounded-2xl border border-slate-100">
-                  <span className="text-[10px] uppercase font-bold text-gray-400 block">School & Board</span>
-                  <span className="font-semibold text-gray-800 block">{confirmedCandidate.schoolName}</span>
-                  <span className="text-xs text-blue-600 font-medium">({confirmedCandidate.board})</span>
-                </div>
-
-                <div className="p-3.5 bg-slate-50 rounded-2xl border border-slate-100">
-                  <span className="text-[10px] uppercase font-bold text-gray-400 block">Class Eligibility</span>
-                  <span className="font-bold text-indigo-700 text-base">Class 12th</span>
-                </div>
-              </div>
-
-              {/* Slot Notice */}
-              <div className="bg-amber-50 border border-amber-200 rounded-2xl p-4 flex items-start gap-3 text-xs text-amber-900">
-                <Calendar className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
-                <div className="space-y-1">
-                  <div className="font-bold">Allocated Examination Slot: {confirmedCandidate.slot}</div>
-                  <p className="leading-relaxed text-amber-800">
-                    The scholarship exam will be conducted through our dedicated live examination software. Your software download link, exam roll number, and proctoring credentials will be delivered via SMS & Email 24 hours prior to your slot.
-                  </p>
-                </div>
-              </div>
-
-              {/* Actions */}
-              <div className="pt-4 border-t flex flex-wrap items-center justify-between gap-3 print:hidden">
-                <button
-                  type="button"
-                  onClick={handlePrintSlip}
-                  className="px-5 py-2.5 rounded-xl border border-gray-300 text-gray-700 font-bold text-xs hover:bg-gray-50 transition flex items-center gap-1.5 cursor-pointer shadow-sm"
-                >
-                  <Printer className="w-4 h-4 text-gray-500" />
-                  <span>Print Slip</span>
-                </button>
-
-                <div className="flex items-center gap-2">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setShowQueryModal(true);
-                      setQName(confirmedCandidate.name);
-                      setQMobile(confirmedCandidate.mobile);
-                      setQEmail(confirmedCandidate.email);
-                    }}
-                    className="px-4 py-2.5 rounded-xl font-black text-xs text-white bg-gradient-to-r from-red-600 via-rose-500 to-red-600 shadow-md shadow-red-500/50 ring-2 ring-red-400/80 animate-pulse hover:animate-none hover:scale-105 transition-all flex items-center gap-1.5 cursor-pointer"
-                  >
-                    <span className="w-1.5 h-1.5 rounded-full bg-white animate-ping" />
-                    <HelpCircle className="w-4 h-4" />
-                    <span>Any Query?</span>
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setName('');
-                      setFatherName('');
-                      setMobile('');
-                      setEmail('');
-                      setSchoolName('');
-                      setPhase('form');
-                    }}
-                    className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs transition flex items-center gap-1.5 cursor-pointer shadow"
-                  >
-                    <RotateCcw className="w-4 h-4" />
-                    <span>Register Another</span>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* ------------------------------------------------------------- */}
-      {/* PHASE: REGISTRATION FORM VIEW                                 */}
-      {/* ------------------------------------------------------------- */}
-      {phase === 'form' && (
-        <div className="min-h-screen bg-gradient-to-b from-slate-900 via-[#0b2545] to-slate-900 text-white py-12 px-4 sm:px-6 lg:px-8">
-          <div className="max-w-4xl mx-auto space-y-8">
-
-            {/* Header Hero */}
-            <div className="text-center space-y-3">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-400/10 border border-amber-400/30 text-amber-300 text-xs font-bold tracking-wider uppercase">
-                <Sparkles className="w-4 h-4 text-amber-400" />
-                <span>Class 12th Merit Scholarship Drive 2026–2027</span>
-              </div>
-
-              <h1 className="text-3xl sm:text-5xl font-black font-serif tracking-tight text-white">
-                Talent Search 2026-27 <span className="text-amber-400">Scholarship</span>
-              </h1>
-
-              <p className="text-sm sm:text-base text-blue-100 max-w-2xl mx-auto leading-relaxed">
-                Saroj International University invites all Class 12 aspirants across India to participate in the prestigious scholarship examination. Compete for up to 100% full tuition fee waivers.
-              </p>
-
-              {/* Quick Perks Pill */}
-              <div className="flex flex-wrap items-center justify-center gap-2.5 pt-2 text-xs">
-                <span className="px-3 py-1 bg-white/10 rounded-full border border-white/15 flex items-center gap-1.5">
-                  <Award className="w-3.5 h-3.5 text-amber-400" /> Up to 100% Scholarships
-                </span>
-                <span className="px-3 py-1 bg-white/10 rounded-full border border-white/15 flex items-center gap-1.5">
-                  <Calendar className="w-3.5 h-3.5 text-blue-300" /> Multiple Slot Choices
-                </span>
-                <span className="px-3 py-1 bg-white/10 rounded-full border border-white/15 flex items-center gap-1.5">
-                  <BookOpen className="w-3.5 h-3.5 text-emerald-400" /> Class 12 Board Syllabus
-                </span>
+                ))}
               </div>
             </div>
 
-            {/* Main Form Container */}
-            <div className="bg-white text-gray-900 rounded-3xl shadow-2xl border border-gray-100 overflow-hidden">
-              <div className="bg-[#0b2545] text-white p-6 sm:p-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                <div>
-                  <span className="text-[11px] font-bold uppercase tracking-wider text-amber-400 block">
-                    Candidate Registration Form
-                  </span>
-                  <h2 className="text-xl sm:text-2xl font-bold font-serif">Enter Student Details</h2>
-                  <p className="text-xs text-blue-200 mt-0.5">
-                    All fields marked with <span className="text-amber-400 font-bold">*</span> are mandatory.
-                  </p>
+            <div className="th-tiers">
+              {TIERS.map((t) => (
+                <div key={t.pct} className={`th-tier ${t.top ? 'top' : ''}`}>
+                  {t.top && <em>TOP PRIZE</em>}
+                  <div className="pct">{t.pct}</div>
+                  <h4>{t.title}</h4>
+                  <p>{t.text}</p>
                 </div>
+              ))}
+            </div>
+          </section>
 
-                {/* Any Query CTA on the card right: Glowing / Shining Red Background */}
-                <button
-                  type="button"
-                  onClick={() => setShowQueryModal(true)}
-                  className="self-start sm:self-auto px-4 py-2.5 rounded-xl font-black text-xs text-white bg-gradient-to-r from-red-600 via-rose-500 to-red-600 shadow-lg shadow-red-500/50 ring-2 ring-red-400/80 animate-pulse hover:animate-none hover:scale-105 transition-all flex items-center gap-2 cursor-pointer shrink-0"
-                >
-                  <span className="w-2 h-2 rounded-full bg-white animate-ping" />
-                  <HelpCircle className="w-4 h-4 text-white" />
-                  <span className="tracking-wide uppercase">Any Query?</span>
-                </button>
-              </div>
-
-              {/* Registration Form */}
-              <form onSubmit={handleRegister} className="p-6 sm:p-8 space-y-6">
-                {formError && (
-                  <div className="bg-red-50 border border-red-200 text-red-700 text-xs sm:text-sm p-3.5 rounded-2xl flex items-center gap-2.5">
-                    <AlertCircle className="w-5 h-5 text-red-500 shrink-0" />
-                    <span className="font-semibold">{formError}</span>
-                  </div>
-                )}
-
-                {/* Section 1: Personal Details */}
-                <div className="space-y-4">
-                  <div className="text-xs font-bold uppercase tracking-wider text-blue-700 flex items-center gap-1.5">
-                    <User className="w-4 h-4" />
-                    <span>1. Student & Parent Information</span>
-                  </div>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    {/* Student Full Name */}
+          <div className="th-grid">
+            {/* FORM / SUCCESS */}
+            <div className="th-card">
+              {!result ? (
+                <>
+                  <div className="th-card-head">
                     <div>
-                      <label className="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1.5">
-                        Student Full Name <span className="text-red-500">*</span>
-                      </label>
-                      <input
-                        type="text"
-                        required
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                        placeholder="Enter student full name"
-                        className="w-full px-4 py-3 text-sm rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-600 focus:border-transparent outline-none transition"
-                      />
+                      <small>Candidate Registration Form</small>
+                      <h2>Enter Student Details</h2>
+                      <p>All fields marked with * are mandatory.</p>
                     </div>
 
-                    {/* Father's Name */}
-                    <div>
-                      <label className="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1.5">
-                        Father's Name <span className="text-red-500">*</span>
-                      </label>
-                      <input
-                        type="text"
-                        required
-                        value={fatherName}
-                        onChange={(e) => setFatherName(e.target.value)}
-                        placeholder="Enter father's full name"
-                        className="w-full px-4 py-3 text-sm rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-600 focus:border-transparent outline-none transition"
-                      />
-                    </div>
+                    {/* Red Glowing Any Query Button */}
+                    <button
+                      type="button"
+                      onClick={() => setShowQueryModal(true)}
+                      className="th-query-btn"
+                      title="Have any questions or issues? Contact Helpdesk"
+                    >
+                      <span className="th-query-ping" />
+                      <span>❓ Any Query?</span>
+                    </button>
                   </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    {/* Mobile Number */}
-                    <div>
-                      <label className="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1.5">
-                        Mobile Number <span className="text-red-500">*</span>
-                      </label>
-                      <div className="relative">
-                        <span className="absolute left-3.5 top-3.5 text-xs font-bold text-gray-400 font-mono">
-                          +91
-                        </span>
-                        <input
-                          type="tel"
-                          maxLength={10}
-                          required
-                          value={mobile}
-                          onChange={(e) => setMobile(e.target.value.replace(/\D/g, ''))}
-                          placeholder="10-digit mobile number"
-                          className="w-full pl-12 pr-4 py-3 text-sm rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-600 focus:border-transparent outline-none transition font-mono"
-                        />
+                  <div className="th-steps">
+                    {STEPS.map((s, i) => (
+                      <div key={s} style={{ display: 'contents' }}>
+                        <div className={`th-step ${i === step ? 'active' : ''} ${i < step ? 'done' : ''}`}>
+                          <div className="dot">{i < step ? '✓' : i + 1}</div>
+                          <span className="lbl">{s}</span>
+                        </div>
+                        {i < STEPS.length - 1 && (
+                          <div className={`th-bar ${i < step ? 'on' : ''}`}>
+                            <i />
+                          </div>
+                        )}
                       </div>
-                    </div>
-
-                    {/* Email Address */}
-                    <div>
-                      <label className="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1.5">
-                        Email Address <span className="text-red-500">*</span>
-                      </label>
-                      <input
-                        type="email"
-                        required
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        placeholder="candidate.email@gmail.com"
-                        className="w-full px-4 py-3 text-sm rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-600 focus:border-transparent outline-none transition"
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                {/* Section 2: School & Board */}
-                <div className="space-y-4 pt-4 border-t border-gray-100">
-                  <div className="text-xs font-bold uppercase tracking-wider text-blue-700 flex items-center gap-1.5">
-                    <School className="w-4 h-4" />
-                    <span>2. Academic Background</span>
+                    ))}
                   </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                    {/* School Name */}
-                    <div className="sm:col-span-2">
-                      <label className="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1.5">
-                        School Name <span className="text-red-500">*</span>
-                      </label>
-                      <input
-                        type="text"
-                        required
-                        value={schoolName}
-                        onChange={(e) => setSchoolName(e.target.value)}
-                        placeholder="e.g. Delhi Public School / St. Mary's High School"
-                        className="w-full px-4 py-3 text-sm rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-600 focus:border-transparent outline-none transition"
-                      />
-                    </div>
-
-                    {/* Board */}
-                    <div>
-                      <label className="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1.5">
-                        Board <span className="text-red-500">*</span>
-                      </label>
-                      <select
-                        value={board}
-                        onChange={(e) => setBoard(e.target.value)}
-                        className="w-full px-3.5 py-3 text-sm rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-600 focus:border-transparent outline-none transition bg-white"
-                      >
-                        {BOARDS.map((b) => (
-                          <option key={b} value={b}>
-                            {b}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Section 2: Exam Slot Selection */}
-                <div className="space-y-4 pt-4 border-t border-gray-100">
-                  <div className="flex items-center justify-between">
-                    <div className="text-xs font-bold uppercase tracking-wider text-blue-700 flex items-center gap-1.5">
-                      <Calendar className="w-4 h-4" />
-                      <span>2. Choose Your Examination Slot <span className="text-red-500">*</span></span>
-                    </div>
-                    <span className="text-[11px] text-gray-500">Pick any 1 slot date</span>
-                  </div>
-
-                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
-                    {EXAM_SLOTS.map((s) => {
-                      const isSelected = slot === s.id;
-                      return (
-                        <button
-                          key={s.id}
-                          type="button"
-                          onClick={() => setSlot(s.id)}
-                          className={`p-3.5 rounded-2xl border text-center transition cursor-pointer relative ${
-                            isSelected
-                              ? 'bg-amber-50 border-amber-500 ring-2 ring-amber-500 text-amber-950 shadow-sm'
-                              : 'bg-slate-50 border-slate-200 hover:bg-slate-100 text-gray-700'
-                          }`}
-                        >
-                          {isSelected && (
-                            <span className="absolute top-2 right-2 w-2 h-2 rounded-full bg-amber-500" />
-                          )}
-                          <div className="text-base font-black text-gray-900">{s.label}</div>
-                          <div className="text-xs text-gray-500 mt-0.5">{s.year} ({s.day})</div>
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-
-                {/* Submit Button */}
-                <div className="pt-4 border-t border-gray-100 flex flex-col sm:flex-row items-center justify-between gap-4">
-                  <div className="text-xs text-gray-500 flex items-center gap-1.5">
-                    <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0" />
-                    <span>Free registration · Admit card issued immediately on submit</span>
-                  </div>
-
-                  <button
-                    type="submit"
-                    disabled={loading}
-                    className="w-full sm:w-auto px-8 py-3.5 rounded-2xl font-black text-sm text-white bg-blue-600 hover:bg-blue-700 active:bg-blue-800 transition flex items-center justify-center gap-2 shadow-lg shadow-blue-600/30 cursor-pointer disabled:opacity-50"
-                  >
-                    {loading ? (
-                      <span>Submitting Registration...</span>
-                    ) : (
+                  <div className="th-body">
+                    {step === 0 && (
                       <>
-                        <span>Submit Registration & Get Slip</span>
-                        <ArrowRight className="w-4 h-4" />
+                        <div className="th-sec">👤 Student &amp; Parent Information</div>
+                        <div className="th-row">
+                          <Field
+                            label="Student Full Name"
+                            name="name"
+                            placeholder="Enter student full name"
+                            autoComplete="name"
+                            {...common}
+                          />
+                          <Field
+                            label="Father's Name"
+                            name="father"
+                            placeholder="Enter father's full name"
+                            {...common}
+                          />
+                        </div>
+                        <div className="th-row">
+                          <Field
+                            label="Mobile Number"
+                            name="mobile"
+                            prefix="+91"
+                            inputMode="numeric"
+                            placeholder="10-digit mobile number"
+                            {...common}
+                          />
+                          <Field
+                            label="Email Address"
+                            name="email"
+                            type="email"
+                            placeholder="candidate.email@gmail.com"
+                            {...common}
+                          />
+                        </div>
                       </>
                     )}
-                  </button>
+
+                    {step === 1 && (
+                      <>
+                        <div className="th-sec">🏫 Academic Background</div>
+                        <div className="th-row">
+                          <Field
+                            label="School Name"
+                            name="school"
+                            placeholder="e.g. Delhi Public School / St. Mary's High School"
+                            {...common}
+                          />
+                          <Field label="Board" name="board" {...common}>
+                            <select
+                              id="board"
+                              name="board"
+                              value={form.board}
+                              onChange={onChange}
+                              onBlur={onBlur}
+                            >
+                              {BOARDS.map((b) => (
+                                <option key={b} value={b}>
+                                  {b}
+                                </option>
+                              ))}
+                            </select>
+                          </Field>
+                        </div>
+                      </>
+                    )}
+
+                    {step === 2 && (
+                      <>
+                        <div className="th-sec">
+                          📅 Choose Your Examination Slot{' '}
+                          <span
+                            style={{
+                              marginLeft: 'auto',
+                              textTransform: 'none',
+                              letterSpacing: 0,
+                              fontWeight: 500,
+                              color: '#94a3b8',
+                            }}
+                          >
+                            Pick any 1 date
+                          </span>
+                        </div>
+                        <div className="th-slots">
+                          {SLOTS.map((s) => {
+                            const low = s.seats <= 150;
+                            const isSel = form.slot === s.id;
+                            return (
+                              <button
+                                type="button"
+                                key={s.id}
+                                className={`th-slot ${isSel ? 'sel' : ''}`}
+                                onClick={() => {
+                                  setForm((x) => ({ ...x, slot: s.id }));
+                                  setTouched((t) => ({ ...t, slot: true }));
+                                }}
+                              >
+                                <div className="d">
+                                  {s.day}
+                                  <small>{s.mon}</small>
+                                </div>
+                                <div className="y">
+                                  {s.year} ({s.wk})
+                                </div>
+                                <div className="t">🕙 10:00 AM – 12:00 PM</div>
+                                <span className={`seat ${low ? 'low' : ''}`}>
+                                  {low ? `🔥 Only ${s.seats} seats left` : `${s.seats}+ seats open`}
+                                </span>
+                              </button>
+                            );
+                          })}
+                        </div>
+                        <p className="th-err" style={{ marginTop: 10 }}>
+                          {touched.slot && errors.slot}
+                        </p>
+                      </>
+                    )}
+
+                    <div className="th-actions">
+                      <span className="th-note">
+                        Free registration · Admit slip issued immediately on submit
+                      </span>
+                      <div style={{ display: 'flex', gap: 10 }}>
+                        {step > 0 && (
+                          <button
+                            type="button"
+                            className="th-btn ghost"
+                            onClick={() => setStep(step - 1)}
+                          >
+                            ← Back
+                          </button>
+                        )}
+                        {step < 2 ? (
+                          <button type="button" className="th-btn primary" onClick={next}>
+                            Continue →
+                          </button>
+                        ) : (
+                          <button
+                            type="button"
+                            className="th-btn gold"
+                            onClick={submit}
+                            disabled={loading}
+                          >
+                            {loading ? (
+                              <>
+                                <span className="th-spin" /> Submitting…
+                              </>
+                            ) : (
+                              'Submit Registration & Get Slip →'
+                            )}
+                          </button>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <div className="th-done">
+                  <div className="th-confetti">
+                    {confetti.map((c, i) => (
+                      <i
+                        key={i}
+                        style={{
+                          left: `${c.left}%`,
+                          background: c.bg,
+                          animationDelay: `${c.delay}s`,
+                          animationDuration: `${c.dur}s`,
+                        }}
+                      />
+                    ))}
+                  </div>
+                  <div className="th-check">✓</div>
+                  <h2>Registration Successful!</h2>
+                  <p>
+                    Congratulations {form.name.split(' ')[0]}! Keep your admit slip safe and carry it on the exam day.
+                  </p>
+
+                  <div className="th-slip">
+                    <div className="th-slip-h">
+                      <b>Saroj International University</b>
+                      <span>Admit Slip · Talent Search 2026-27</span>
+                    </div>
+                    <div className="th-slip-b">
+                      <div className="full">
+                        <small>Registration No.</small>
+                        <b className="th-regno">{result.regNo}</b>
+                      </div>
+                      <div>
+                        <small>Student Name</small>
+                        <b>{form.name}</b>
+                      </div>
+                      <div>
+                        <small>Father's Name</small>
+                        <b>{form.father}</b>
+                      </div>
+                      <div>
+                        <small>Mobile</small>
+                        <b>+91 {form.mobile}</b>
+                      </div>
+                      <div>
+                        <small>Email</small>
+                        <b>{form.email}</b>
+                      </div>
+                      <div>
+                        <small>School</small>
+                        <b>{form.school}</b>
+                      </div>
+                      <div>
+                        <small>Board</small>
+                        <b>{form.board}</b>
+                      </div>
+                      <div className="full">
+                        <small>Exam Date &amp; Time</small>
+                        <b>{slotF.full} · 10:00 AM – 12:00 PM</b>
+                      </div>
+                    </div>
+                    <div className="th-slip-f">
+                      Registered on {result.at}. Please carry a valid photo ID along with this slip.
+                    </div>
+                  </div>
+
+                  <div className="th-actions">
+                    <button className="th-btn primary" onClick={() => window.print()}>
+                      ⬇ Download / Print Slip
+                    </button>
+                    <button
+                      className="th-btn ghost"
+                      onClick={() => {
+                        setResult(null);
+                        setStep(0);
+                        setTouched({});
+                        setForm({
+                          name: '',
+                          father: '',
+                          mobile: '',
+                          email: '',
+                          school: '',
+                          board: 'CBSE',
+                          slot: '29 Nov',
+                        });
+                      }}
+                    >
+                      Register another student
+                    </button>
+                  </div>
                 </div>
-              </form>
+              )}
             </div>
 
-            {/* Bottom FAQ / Help Note */}
-            <div className="bg-slate-900/60 border border-slate-800 rounded-3xl p-6 text-center text-xs text-gray-400 space-y-2">
-              <div className="text-white font-bold flex items-center justify-center gap-2 text-sm">
-                <HelpCircle className="w-4 h-4 text-amber-400" />
-                Need help with your application?
+            {/* SIDE PANEL */}
+            <aside className="th-side">
+              <div className="th-panel">
+                <h3>Your Registration</h3>
+                <div className="th-sum">
+                  <div>
+                    <span>Student</span>
+                    <b className={form.name ? '' : 'empty'}>{form.name || '—'}</b>
+                  </div>
+                  <div>
+                    <span>Mobile</span>
+                    <b className={form.mobile ? '' : 'empty'}>
+                      {form.mobile ? `+91 ${form.mobile}` : '—'}
+                    </b>
+                  </div>
+                  <div>
+                    <span>Board</span>
+                    <b>{form.board}</b>
+                  </div>
+                  <div>
+                    <span>Exam date</span>
+                    <b className={slotF ? '' : 'empty'}>
+                      {slotF ? `${slotF.day} ${slotF.mon} ${slotF.year}` : 'Not selected'}
+                    </b>
+                  </div>
+                </div>
+                <div className="th-prog">
+                  <i style={{ width: `${result ? 100 : progress}%` }} />
+                </div>
+                <div className="th-prog-t">{result ? 'Completed 🎉' : `${progress}% complete`}</div>
               </div>
-              <p className="max-w-xl mx-auto">
-                If you face any issues while filling the registration form, click the <strong>"Any Query?"</strong> button above or contact the Saroj International University Admission Helpdesk.
-              </p>
-            </div>
 
+              <div className="th-panel">
+                <h3>Exam Pattern</h3>
+                <div className="th-pat">
+                  <div>
+                    <b>2 hrs</b>
+                    <span>Duration</span>
+                  </div>
+                  <div>
+                    <b>Class 12</b>
+                    <span>Syllabus</span>
+                  </div>
+                  <div>
+                    <b>MCQ</b>
+                    <span>Format</span>
+                  </div>
+                  <div>
+                    <b>₹0</b>
+                    <span>Reg. Fee</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="th-panel">
+                <div className="th-help">
+                  <div className="ic">🎧</div>
+                  <div>
+                    <b>1800-180-7686</b>
+                    <span>Admission Help Desk · Toll free</span>
+                  </div>
+                </div>
+              </div>
+            </aside>
           </div>
+
+          {/* HOW IT WORKS */}
+          <section className="th-how">
+            {HOW.map(([t, p], i) => (
+              <div key={t}>
+                <div className="n">{i + 1}</div>
+                <b>{t}</b>
+                <p>{p}</p>
+              </div>
+            ))}
+          </section>
+
+          {/* FAQ */}
+          <section className="th-faq">
+            <h3>Frequently Asked Questions</h3>
+            {FAQ.map(([q, a], i) => (
+              <div key={q} className={`th-q ${openFaq === i ? 'open' : ''}`}>
+                <button
+                  type="button"
+                  onClick={() => setOpenFaq(openFaq === i ? -1 : i)}
+                >
+                  {q}
+                  <span>+</span>
+                </button>
+                <div className="a">{a}</div>
+              </div>
+            ))}
+          </section>
         </div>
-      )}
+      </div>
     </Layout>
   );
 }
