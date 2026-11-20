@@ -949,7 +949,6 @@ export default function TalentSearchLevel1() {
                         </div>
                         <div className="th-slots">
                           {SLOTS.map((s) => {
-                            const low = s.seats <= 150;
                             const isSel = form.slot === s.id;
                             return (
                               <button
@@ -968,10 +967,8 @@ export default function TalentSearchLevel1() {
                                 <div className="y">
                                   {s.year} ({s.wk})
                                 </div>
-                                <div className="t">🕙 10:00 AM – 12:00 PM</div>
-                                <span className={`seat ${low ? 'low' : ''}`}>
-                                  {low ? `🔥 Only ${s.seats} seats left` : `${s.seats}+ seats open`}
-                                </span>
+                                <div className="t">🕙 10:00 AM – 5:00 PM</div>
+                                <div className="th-slot-sub">✨ Attempt Anytime (10 AM to 5 PM)</div>
                               </button>
                             );
                           })}
@@ -1076,8 +1073,8 @@ export default function TalentSearchLevel1() {
                         <b>{form.board}</b>
                       </div>
                       <div className="full">
-                        <small>Exam Date &amp; Time</small>
-                        <b>{slotF.full} · 10:00 AM – 12:00 PM</b>
+                        <small>Exam Date &amp; Time Window</small>
+                        <b>{slotF.full} · 10:00 AM – 5:00 PM (Attempt Anytime)</b>
                       </div>
                     </div>
                     <div className="th-slip-f">
