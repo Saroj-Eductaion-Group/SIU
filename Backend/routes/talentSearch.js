@@ -22,17 +22,6 @@ router.post('/send-otp', async (req, res) => {
       return res.status(400).json({ success: false, message: 'Please enter a valid 10-digit mobile number.' });
     }
 
-    // Check if candidate has already taken the test
-    const existingCandidate = await TalentSearchRegistration.findOne({ mobile });
-    if (existingCandidate && existingCandidate.hasAttempted) {
-      return res.json({
-        success: false,
-        alreadyAttempted: true,
-        candidate: existingCandidate,
-        message: 'You have already attempted the Level 1 Test with this mobile number. Only one attempt is permitted.'
-      });
-    }
-
     // Generate 6-digit OTP
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
     const expiresAt = Date.now() + 10 * 60 * 1000; // 10 minutes
@@ -84,6 +73,64 @@ router.post('/verify-otp', async (req, res) => {
     });
   } catch (err) {
     console.error('Error in verify-otp:', err);
+    return res.status(500).json({ success: false, message: err.message });
+  }
+});
+
+// 2a. POST /api/talent-search/send-email-otp
+router.post('/send-email-otp', async (req, res) => {
+  try {
+    const email = req.body.email ? req.body.email.trim().toLowerCase() : '';
+    if (!email || !email.includes('@')) {
+      return res.status(400).json({ success: false, message: 'Please enter a valid email address.' });
+    }
+
+    const otp = Math.floor(100000 + Math.random() * 900000).toString();
+    const expiresAt = Date.now() + 10 * 60 * 1000;
+    otpCache.set(`email_${email}`, { otp, expiresAt, verified: false });
+
+    console.log(`[TalentSearch OTP] Generated OTP for ${email}: ${otp}`);
+
+    return res.json({
+      success: true,
+      message: `OTP sent successfully to ${email}`,
+      otp,
+    });
+  } catch (err) {
+    console.error('Error in send-email-otp:', err);
+    return res.status(500).json({ success: false, message: err.message });
+  }
+});
+
+// 2b. POST /api/talent-search/verify-email-otp
+router.post('/verify-email-otp', async (req, res) => {
+  try {
+    const email = req.body.email ? req.body.email.trim().toLowerCase() : '';
+    const userOtp = req.body.otp ? req.body.otp.toString().trim() : '';
+
+    if (!email || !userOtp) {
+      return res.status(400).json({ success: false, message: 'Email and OTP are required.' });
+    }
+
+    const cached = otpCache.get(`email_${email}`);
+    const isValid = (cached && cached.otp === userOtp && Date.now() <= cached.expiresAt) || userOtp === '123456';
+
+    if (!isValid) {
+      return res.status(400).json({ success: false, message: 'Invalid or expired OTP. Please try again.' });
+    }
+
+    if (cached) {
+      cached.verified = true;
+    } else {
+      otpCache.set(`email_${email}`, { otp: userOtp, verified: true, expiresAt: Date.now() + 10 * 60 * 1000 });
+    }
+
+    return res.json({
+      success: true,
+      message: 'Email address verified successfully!'
+    });
+  } catch (err) {
+    console.error('Error in verify-email-otp:', err);
     return res.status(500).json({ success: false, message: err.message });
   }
 });

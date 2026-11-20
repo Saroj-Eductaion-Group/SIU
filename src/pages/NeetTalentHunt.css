@@ -191,12 +191,178 @@
 .th-help b { display: block; font-size: 15px; color: #fff; }
 .th-help span { font-size: 12px; color: #9fb0d4; }
 
-/* ---------- HOW IT WORKS ---------- */
-.th-how { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 44px; }
-.th-how div { padding: 18px; border-radius: 16px; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08); }
-.th-how .n { width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center; font-weight: 800; font-size: 14px; background: rgba(245,166,35,.15); color: var(--gold-2); margin-bottom: 10px; }
-.th-how b { display: block; font-size: 14px; color: #fff; margin-bottom: 4px; }
-.th-how p { margin: 0; font-size: 12.5px; color: #9fb0d4; line-height: 1.5; }
+/* ---------- HOW IT WORKS (CONNECTING TIMELINE) ---------- */
+.th-how-wrap {
+  margin-top: 56px;
+  position: relative;
+  text-align: center;
+}
+.th-how-line {
+  position: absolute;
+  top: 32px;
+  left: 12%;
+  right: 12%;
+  height: 2px;
+  background: #b47a1e;
+  z-index: 1;
+}
+.th-how {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  position: relative;
+  z-index: 2;
+}
+.th-how-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.25s ease;
+  position: relative;
+}
+.th-how-step:hover {
+  transform: translateY(-4px);
+}
+.th-how-step .n {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+  font-size: 20px;
+  background: #0b1531;
+  color: #f5a623;
+  border: 3px solid #f5a623;
+  outline: 4px solid rgba(245, 166, 35, 0.25);
+  margin-bottom: 16px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  z-index: 2;
+}
+.th-how-step:hover .n,
+.th-how-step.active .n {
+  background: #f5a623;
+  color: #0c1735;
+  border-color: #ffc95c;
+  outline: 6px solid rgba(245, 166, 35, 0.4);
+  box-shadow: 0 0 25px rgba(245, 166, 35, 0.85);
+}
+.th-how-step b {
+  display: block;
+  font-size: 16px;
+  color: #ffffff;
+  margin-bottom: 6px;
+  font-weight: 700;
+}
+.th-how-step p {
+  margin: 0;
+  font-size: 13px;
+  color: #9fb0d4;
+  line-height: 1.55;
+  max-width: 220px;
+}
+
+/* ---------- OTP VERIFICATION STYLES ---------- */
+.th-otp-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  padding: 8px 16px;
+  background: #f8fafc;
+  color: #4f46e5;
+  border: 1.5px solid #c7d2fe;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.th-otp-btn:hover:not(:disabled) {
+  background: #eef2ff;
+  border-color: #818cf8;
+  color: #3730a3;
+}
+.th-otp-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.th-otp-box {
+  margin-top: 10px;
+  padding: 12px 14px;
+  background: #f0f4ff;
+  border: 1.5px dashed #a5b4fc;
+  border-radius: 12px;
+}
+.th-otp-inputs {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.th-otp-inputs input {
+  height: 40px;
+  width: 140px;
+  text-align: center;
+  font-size: 16px;
+  letter-spacing: 4px;
+  font-weight: 700;
+  border: 1.5px solid #c7d2fe;
+  border-radius: 10px;
+  background: #fff;
+  outline: none;
+  color: #0f172a;
+}
+.th-otp-inputs input:focus {
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+}
+.th-otp-verify-btn {
+  height: 40px;
+  padding: 0 16px;
+  background: #4f46e5;
+  color: #fff;
+  border: 0;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.th-otp-verify-btn:hover {
+  background: #3730a3;
+}
+
+.th-verified-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  padding: 6px 12px;
+  background: #ecfdf5;
+  color: #059669;
+  border: 1px solid #a7f3d0;
+  border-radius: 8px;
+  font-size: 11.5px;
+  font-weight: 700;
+}
+.th-otp-hint {
+  font-size: 11px;
+  color: #4338ca;
+  margin-top: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+@media (max-width: 768px) {
+  .th-how-line { display: none; }
+  .th-how { grid-template-columns: 1fr 1fr; gap: 24px; }
+}
 
 /* ---------- FAQ ---------- */
 .th-faq { margin-top: 44px; max-width: 760px; margin-left: auto; margin-right: auto; }
