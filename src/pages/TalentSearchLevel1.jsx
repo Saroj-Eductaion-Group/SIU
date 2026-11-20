@@ -107,6 +107,7 @@ export default function TalentSearchLevel1() {
   const [showSubmitModal, setShowSubmitModal] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [paletteMode, setPaletteMode] = useState('section'); // 'section' or 'all'
+  const [examLang, setExamLang] = useState('en'); // 'en' (default) or 'hi'
 
   // Result State
   const [result, setResult] = useState(null);
@@ -258,6 +259,30 @@ export default function TalentSearchLevel1() {
   // -------------------------------------------------------------
   // PROCTORING: WEBCAM & MICROPHONE VERIFICATION HANDLER
   // -------------------------------------------------------------
+  // Helper to reliably stop camera & microphone and turn off hardware lights
+  const stopMediaStream = () => {
+    if (audioIntervalRef.current) {
+      cancelAnimationFrame(audioIntervalRef.current);
+      audioIntervalRef.current = null;
+    }
+    if (mediaStreamRef.current) {
+      try {
+        mediaStreamRef.current.getTracks().forEach((track) => {
+          track.stop();
+        });
+      } catch (err) {
+        console.warn('Error stopping proctoring tracks:', err);
+      }
+      mediaStreamRef.current = null;
+    }
+    if (videoPreviewRef.current) {
+      videoPreviewRef.current.srcObject = null;
+    }
+    setCameraVerified(false);
+    setVoiceVerified(false);
+    setMicLevel(0);
+  };
+
   const handleEnableProctoring = async () => {
     setProctorError('');
     setProctorLoading(true);
@@ -270,10 +295,12 @@ export default function TalentSearchLevel1() {
         audio: true,
       });
       mediaStreamRef.current = streamObj;
+      setCameraVerified(true);
+
       if (videoPreviewRef.current) {
         videoPreviewRef.current.srcObject = streamObj;
+        videoPreviewRef.current.play().catch(() => {});
       }
-      setCameraVerified(true);
 
       // Setup Web Audio Analyser for mic live meter
       try {
@@ -321,14 +348,19 @@ export default function TalentSearchLevel1() {
     }
   };
 
+  // Ensure video element plays the stream as soon as camera is verified
+  useEffect(() => {
+    if (cameraVerified && mediaStreamRef.current && videoPreviewRef.current) {
+      if (videoPreviewRef.current.srcObject !== mediaStreamRef.current) {
+        videoPreviewRef.current.srcObject = mediaStreamRef.current;
+      }
+      videoPreviewRef.current.play().catch(() => {});
+    }
+  }, [cameraVerified]);
+
   useEffect(() => {
     return () => {
-      if (audioIntervalRef.current) {
-        cancelAnimationFrame(audioIntervalRef.current);
-      }
-      if (mediaStreamRef.current) {
-        mediaStreamRef.current.getTracks().forEach((track) => track.stop());
-      }
+      stopMediaStream();
     };
   }, []);
 
@@ -587,6 +619,8 @@ export default function TalentSearchLevel1() {
     } finally {
       setSubmitting(false);
       setPhase('result');
+      // Turn off camera & microphone immediately upon test completion
+      stopMediaStream();
       // Exit fullscreen
       if (document.fullscreenElement && document.exitFullscreen) {
         document.exitFullscreen().catch(() => {});
@@ -1325,15 +1359,21 @@ export default function TalentSearchLevel1() {
 
                     {/* Camera Feed or Placeholder */}
                     <div className="w-full h-44 rounded-xl bg-slate-900 border border-slate-700/80 overflow-hidden relative flex items-center justify-center">
+                      <video
+                        ref={(el) => {
+                          videoPreviewRef.current = el;
+                          if (el && mediaStreamRef.current && el.srcObject !== mediaStreamRef.current) {
+                            el.srcObject = mediaStreamRef.current;
+                            el.play().catch(() => {});
+                          }
+                        }}
+                        autoPlay
+                        playsInline
+                        muted
+                        className={`w-full h-full object-cover scale-x-[-1] ${cameraVerified ? 'block' : 'hidden'}`}
+                      />
                       {cameraVerified ? (
                         <>
-                          <video
-                            ref={videoPreviewRef}
-                            autoPlay
-                            playsInline
-                            muted
-                            className="w-full h-full object-cover scale-x-[-1]"
-                          />
                           {/* Face Oval Reticle */}
                           <div className="absolute inset-0 border-2 border-emerald-400/70 rounded-full scale-75 pointer-events-none animate-pulse" />
                           <div className="absolute bottom-2 left-2 right-2 bg-black/70 backdrop-blur-xs py-1 px-2 rounded text-[10px] text-emerald-300 font-mono flex items-center justify-center gap-1">
@@ -1732,7 +1772,33 @@ export default function TalentSearchLevel1() {
             )}
           </div>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3 sm:gap-4">
+            {/* Top Bar Language Switcher */}
+            <div className="hidden sm:flex items-center bg-slate-900 border border-slate-800 rounded-lg p-0.5 text-xs">
+              <button
+                type="button"
+                onClick={() => setExamLang('en')}
+                className={`px-2.5 py-1 rounded text-xs font-bold transition cursor-pointer ${
+                  examLang === 'en'
+                    ? 'bg-blue-600 text-white shadow'
+                    : 'text-gray-400 hover:text-white'
+                }`}
+              >
+                English
+              </button>
+              <button
+                type="button"
+                onClick={() => setExamLang('hi')}
+                className={`px-2.5 py-1 rounded text-xs font-bold transition cursor-pointer ${
+                  examLang === 'hi'
+                    ? 'bg-blue-600 text-white shadow'
+                    : 'text-gray-400 hover:text-white'
+                }`}
+              >
+                हिंदी
+              </button>
+            </div>
+
             {/* Timer Badge */}
             <div className={`flex items-center gap-2 px-3 py-1.5 rounded-lg font-mono text-sm font-bold border ${
               timeLeft < 300
@@ -1758,13 +1824,43 @@ export default function TalentSearchLevel1() {
           <div className="flex-1 flex flex-col p-4 sm:p-6 overflow-y-auto">
             {/* Subject Section Tabs Bar */}
             <div className="mb-4 pb-3 border-b border-slate-800">
-              <div className="flex items-center justify-between gap-3 mb-2.5">
+              <div className="flex flex-wrap items-center justify-between gap-3 mb-2.5">
                 <div className="flex items-center gap-1.5 text-[11px] font-bold text-gray-400 uppercase tracking-wider">
                   <Layers className="w-3.5 h-3.5 text-blue-400" />
                   <span>Sections ({sections.length}):</span>
                 </div>
-                <div className="text-xs text-gray-400">
-                  Question <span className="text-amber-400 font-bold text-sm">{currentQIndex + 1}</span> of {totalQ}
+
+                <div className="flex items-center gap-3">
+                  {/* Language Switcher for Question Area */}
+                  <div className="flex items-center bg-slate-950 border border-slate-700/80 rounded-lg p-0.5 text-xs">
+                    <span className="text-[10px] text-gray-400 px-1.5 font-semibold uppercase">View in:</span>
+                    <button
+                      type="button"
+                      onClick={() => setExamLang('en')}
+                      className={`px-2 py-0.5 rounded text-xs font-bold transition cursor-pointer ${
+                        examLang === 'en'
+                          ? 'bg-blue-600 text-white shadow'
+                          : 'text-gray-400 hover:text-white'
+                      }`}
+                    >
+                      English
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setExamLang('hi')}
+                      className={`px-2 py-0.5 rounded text-xs font-bold transition cursor-pointer ${
+                        examLang === 'hi'
+                          ? 'bg-blue-600 text-white shadow'
+                          : 'text-gray-400 hover:text-white'
+                      }`}
+                    >
+                      हिंदी
+                    </button>
+                  </div>
+
+                  <div className="text-xs text-gray-400">
+                    Question <span className="text-amber-400 font-bold text-sm">{currentQIndex + 1}</span> of {totalQ}
+                  </div>
                 </div>
               </div>
 
@@ -1801,17 +1897,17 @@ export default function TalentSearchLevel1() {
               </div>
             </div>
 
-            {/* Question Text (Fits text length, does not stretch across entire screen) */}
+            {/* Question Text (Supports English & Hindi) */}
             <div className="w-fit max-w-full bg-slate-800/80 border border-slate-700 rounded-xl p-4 sm:p-5 mb-6">
               <h3 className="text-base sm:text-lg font-medium text-gray-100 leading-relaxed">
                 <span className="text-amber-400 font-bold mr-2 text-lg">Q{currentQIndex + 1}.</span>
-                {q?.q}
+                {examLang === 'hi' && q?.qHindi ? q.qHindi : q?.q}
               </h3>
             </div>
 
-            {/* Options (Each option fits its text length) */}
+            {/* Options (Supports English & Hindi) */}
             <div className="flex flex-col items-start space-y-3 mb-8">
-              {q?.options.map((optText, optIdx) => {
+              {(examLang === 'hi' && q?.optionsHindi ? q.optionsHindi : q?.options).map((optText, optIdx) => {
                 const isSelected = answers[currentQIndex] === optIdx;
                 const letter = String.fromCharCode(65 + optIdx); // A, B, C, D
                 return (
