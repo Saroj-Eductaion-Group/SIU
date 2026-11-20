@@ -66,9 +66,9 @@ href='/fee-payment'            target="_blank"
             <a 
               href="/neet-talent-hunt"
               className="bg-green-600 hover:bg-green-700 text-white px-4 py-1 rounded-md font-medium transition-all duration-300 shadow-lg animate-pulse whitespace-nowrap text-sm sm:text-base"
-              aria-label="Talent Search 2026-27 Level 1"
+              aria-label="Talent Search 2026-27 Scholarship"
             >
-              🎯 Talent Search 2026-27 (Level 1)
+              🎯 Talent Search 2026-27 Scholarship
             </a>
             <a 
               href="/talent-hunt"

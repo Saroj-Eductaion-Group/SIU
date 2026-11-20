@@ -545,7 +545,7 @@ export default function TalentSearchAdmin() {
     return (
       <Layout>
         <Helmet>
-          <title>Talent Search 2026-27 Schollership | Admin Login</title>
+          <title>Talent Search 2026-27 Scholarship | Admin Login</title>
         </Helmet>
 
         <div className="min-h-screen bg-slate-50 py-16 px-4 sm:px-6 flex items-center justify-center">
@@ -559,7 +559,7 @@ export default function TalentSearchAdmin() {
                 Talent Search 2026-27
               </h1>
               <span className="text-xs uppercase tracking-widest font-bold text-amber-400 mt-1 block">
-                Schollership · Admin Portal
+                Scholarship · Admin Portal
               </span>
               <p className="text-xs text-blue-200 mt-1">
                 Saroj International University Admissions
@@ -652,7 +652,7 @@ export default function TalentSearchAdmin() {
   return (
     <Layout>
       <Helmet>
-        <title>Admin Dashboard | Talent Search 2026-27 Schollership</title>
+        <title>Admin Dashboard | Talent Search 2026-27 Scholarship</title>
       </Helmet>
 
       {/* Record Detail Modal */}
@@ -735,7 +735,7 @@ export default function TalentSearchAdmin() {
                 Administrator Dashboard
               </div>
               <h1 className="text-2xl sm:text-3xl font-black text-gray-900 font-serif">
-                Talent Search 2026-27 <span className="text-amber-500">Schollership</span>
+                Talent Search 2026-27 <span className="text-amber-500">Scholarship</span>
               </h1>
               <p className="text-xs text-gray-500 mt-0.5">
                 Monitoring scholarship exam student registrations, slots, and student support queries.

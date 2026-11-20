@@ -268,10 +268,10 @@ export default function TalentSearchLevel1() {
   return (
     <Layout>
       <Helmet>
-        <title>Talent Search 2026-27 Schollership | Saroj International University</title>
+        <title>Talent Search 2026-27 Scholarship | Saroj International University</title>
         <meta
           name="description"
-          content="Register for Talent Search 2026-27 Schollership. Win up to 100% Tuition Fee Waiver for Class 12th students."
+          content="Register for Talent Search 2026-27 Scholarship. Win up to 100% Tuition Fee Waiver for Class 12th students."
         />
       </Helmet>
 
@@ -429,7 +429,7 @@ export default function TalentSearchLevel1() {
               Official Scholarship Drive
             </span>
             <span className="text-gray-300 hidden sm:inline">
-              Talent Search 2026-27 Schollership · Admissions Open for Class 12
+              Talent Search 2026-27 Scholarship · Admissions Open for Class 12
             </span>
           </div>
 
@@ -466,7 +466,7 @@ export default function TalentSearchLevel1() {
                 Registration Successful
               </span>
               <h2 className="text-2xl sm:text-3xl font-black mt-1 font-serif">
-                Talent Search 2026-27 Schollership
+                Talent Search 2026-27 Scholarship
               </h2>
               <p className="text-sm text-emerald-100 max-w-lg mx-auto mt-2">
                 Your application has been received and verified. Please note your allocated examination slot details below.
@@ -600,7 +600,7 @@ export default function TalentSearchLevel1() {
               </div>
 
               <h1 className="text-3xl sm:text-5xl font-black font-serif tracking-tight text-white">
-                Talent Search 2026-27 <span className="text-amber-400">Schollership</span>
+                Talent Search 2026-27 <span className="text-amber-400">Scholarship</span>
               </h1>
 
               <p className="text-sm sm:text-base text-blue-100 max-w-2xl mx-auto leading-relaxed">
