@@ -135,12 +135,12 @@ export default function TalentSearchLevel1() {
       email: email.toLowerCase().trim(),
       schoolName: schoolName.trim(),
       board: board.trim(),
-      stream,
+      stream: 'PCM', // Backward compatible stream code for backend schema
       slot,
     };
 
     try {
-      // 1. Try Backend API
+      // 1. Send to Backend API
       let savedCandidate = null;
       try {
         const res = await fetch(`${API_BASE}/talent-search/register`, {
@@ -151,6 +151,8 @@ export default function TalentSearchLevel1() {
         const data = await res.json();
         if (data.success && data.candidate) {
           savedCandidate = data.candidate;
+        } else {
+          console.warn('Backend register response:', data);
         }
       } catch (backendErr) {
         console.warn('Backend unavailable, saving offline:', backendErr);

@@ -171,7 +171,7 @@ export default function TalentSearchAdmin() {
   const [registrations, setRegistrations] = useState([]);
   const [regLoading, setRegLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedStream, setSelectedStream] = useState('all');
+  const [selectedBoard, setSelectedBoard] = useState('all');
   const [selectedSlot, setSelectedSlot] = useState('all');
 
   // Queries Data State
@@ -262,7 +262,7 @@ export default function TalentSearchAdmin() {
   };
 
   // -------------------------------------------------------------
-  // DATA FETCHING: REGISTRATIONS
+  // DATA FETCHING: REGISTRATIONS (Merged Database + Local Submissions)
   // -------------------------------------------------------------
   const fetchRegistrations = async (authToken = token) => {
     if (!authToken) return;
@@ -270,13 +270,12 @@ export default function TalentSearchAdmin() {
     setActionMessage({ text: '', type: '' });
 
     try {
-      const params = new URLSearchParams();
-      if (searchTerm.trim()) params.append('search', searchTerm.trim());
-      if (selectedStream !== 'all') params.append('stream', selectedStream);
-      if (selectedSlot !== 'all') params.append('slot', selectedSlot);
-
-      let loaded = false;
+      let backendCandidates = [];
       try {
+        const params = new URLSearchParams();
+        if (searchTerm.trim()) params.append('search', searchTerm.trim());
+        if (selectedSlot !== 'all') params.append('slot', selectedSlot);
+
         const res = await fetch(`${API_BASE}/talent-search/admin/candidates?${params.toString()}`, {
           headers: { Authorization: `Bearer ${authToken}` },
         });
@@ -286,103 +285,181 @@ export default function TalentSearchAdmin() {
         }
         if (res.ok) {
           const data = await res.json();
-          if (data.success && Array.isArray(data.candidates) && data.candidates.length > 0) {
-            setRegistrations(data.candidates);
-            loaded = true;
+          if (data.success && Array.isArray(data.candidates)) {
+            backendCandidates = data.candidates;
           }
         }
       } catch (e) {
         console.warn('Backend fetch failed, using local/demo records:', e.message);
       }
 
-      // Offline / LocalStorage sync fallback
-      if (!loaded) {
-        let localSubs = [];
-        try {
-          localSubs = JSON.parse(localStorage.getItem('siu_talent_local_submissions') || '[]');
-        } catch {}
+      // Read local storage submissions
+      let localSubs = [];
+      try {
+        localSubs = JSON.parse(localStorage.getItem('siu_talent_local_submissions') || '[]');
+      } catch {}
 
-        const combined = [
-          ...localSubs,
-          ...INITIAL_DEMO_REGISTRATIONS.filter((d) => !localSubs.some((l) => l.mobile === d.mobile)),
-        ];
-
-        let filtered = combined;
-        if (selectedStream !== 'all') filtered = filtered.filter((r) => r.stream === selectedStream);
-        if (selectedSlot !== 'all') filtered = filtered.filter((r) => r.slot === selectedSlot);
-        if (searchTerm.trim()) {
-          const s = searchTerm.trim().toLowerCase();
-          filtered = filtered.filter(
-            (r) =>
-              (r.name && r.name.toLowerCase().includes(s)) ||
-              (r.fatherName && r.fatherName.toLowerCase().includes(s)) ||
-              (r.mobile && r.mobile.includes(s)) ||
-              (r.email && r.email.toLowerCase().includes(s)) ||
-              (r.schoolName && r.schoolName.toLowerCase().includes(s))
-          );
-        }
-        setRegistrations(filtered);
+      // Background auto-sync: Push any offline local registrations to backend
+      if (localSubs.length > 0) {
+        localSubs.forEach((local) => {
+          const existsInBackend = backendCandidates.some((bc) => bc.mobile === local.mobile);
+          if (!existsInBackend) {
+            fetch(`${API_BASE}/talent-search/register`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                name: local.name,
+                fatherName: local.fatherName,
+                mobile: local.mobile,
+                email: local.email,
+                schoolName: local.schoolName,
+                board: local.board,
+                slot: local.slot,
+                stream: local.stream || 'PCM',
+              }),
+            }).catch(() => {});
+          }
+        });
       }
+
+      // Combine backend and local records (Local has latest fatherName and slot)
+      const candidateMap = new Map();
+      const baseList =
+        backendCandidates.length === 0 && localSubs.length === 0
+          ? INITIAL_DEMO_REGISTRATIONS
+          : [...backendCandidates, ...localSubs];
+
+      baseList.forEach((c) => {
+        if (!c.mobile) return;
+        if (candidateMap.has(c.mobile)) {
+          const prev = candidateMap.get(c.mobile);
+          candidateMap.set(c.mobile, {
+            ...prev,
+            ...c,
+            fatherName: c.fatherName && c.fatherName !== '—' ? c.fatherName : prev.fatherName || '—',
+            registeredAt: c.registeredAt || prev.registeredAt,
+          });
+        } else {
+          candidateMap.set(c.mobile, { ...c, fatherName: c.fatherName || '—' });
+        }
+      });
+
+      let combined = Array.from(candidateMap.values());
+
+      // Sort by registeredAt descending (newest registrations first)
+      combined.sort((a, b) => new Date(b.registeredAt || 0) - new Date(a.registeredAt || 0));
+
+      // Client-side filtering
+      let filtered = combined;
+      if (selectedBoard !== 'all') {
+        filtered = filtered.filter((r) => (r.board || '').toLowerCase() === selectedBoard.toLowerCase());
+      }
+      if (selectedSlot !== 'all') {
+        filtered = filtered.filter((r) => r.slot === selectedSlot);
+      }
+      if (searchTerm.trim()) {
+        const s = searchTerm.trim().toLowerCase();
+        filtered = filtered.filter(
+          (r) =>
+            (r.name && r.name.toLowerCase().includes(s)) ||
+            (r.fatherName && r.fatherName.toLowerCase().includes(s)) ||
+            (r.mobile && r.mobile.includes(s)) ||
+            (r.email && r.email.toLowerCase().includes(s)) ||
+            (r.schoolName && r.schoolName.toLowerCase().includes(s)) ||
+            (r.board && r.board.toLowerCase().includes(s))
+        );
+      }
+
+      setRegistrations(filtered);
     } finally {
       setRegLoading(false);
     }
   };
 
   // -------------------------------------------------------------
-  // DATA FETCHING: QUERIES
+  // DATA FETCHING: QUERIES (Merged Database + Local Inquiries)
   // -------------------------------------------------------------
   const fetchQueries = async (authToken = token) => {
     if (!authToken) return;
     setQueryLoading(true);
 
     try {
-      const params = new URLSearchParams();
-      if (querySearch.trim()) params.append('search', querySearch.trim());
-      if (selectedQueryStatus !== 'all') params.append('status', selectedQueryStatus);
-
-      let loaded = false;
+      let backendQueries = [];
       try {
+        const params = new URLSearchParams();
+        if (querySearch.trim()) params.append('search', querySearch.trim());
+        if (selectedQueryStatus !== 'all') params.append('status', selectedQueryStatus);
+
         const res = await fetch(`${API_BASE}/talent-search/admin/queries?${params.toString()}`, {
           headers: { Authorization: `Bearer ${authToken}` },
         });
         if (res.ok) {
           const data = await res.json();
           if (data.success && Array.isArray(data.queries)) {
-            setQueries(data.queries);
-            loaded = true;
+            backendQueries = data.queries;
           }
         }
       } catch (e) {
         console.warn('Backend queries fetch failed, using local fallback:', e.message);
       }
 
-      if (!loaded) {
-        let localQueries = [];
-        try {
-          localQueries = JSON.parse(localStorage.getItem('siu_talent_student_queries') || '[]');
-        } catch {}
+      let localQueries = [];
+      try {
+        localQueries = JSON.parse(localStorage.getItem('siu_talent_student_queries') || '[]');
+      } catch {}
 
-        const combined = [
-          ...localQueries,
-          ...INITIAL_DEMO_QUERIES.filter((d) => !localQueries.some((l) => l.mobile === d.mobile && l.query === d.query)),
-        ];
-
-        let filtered = combined;
-        if (selectedQueryStatus !== 'all') {
-          filtered = filtered.filter((q) => q.status === selectedQueryStatus);
-        }
-        if (querySearch.trim()) {
-          const s = querySearch.trim().toLowerCase();
-          filtered = filtered.filter(
-            (q) =>
-              (q.name && q.name.toLowerCase().includes(s)) ||
-              (q.mobile && q.mobile.includes(s)) ||
-              (q.email && q.email.toLowerCase().includes(s)) ||
-              (q.query && q.query.toLowerCase().includes(s))
-          );
-        }
-        setQueries(filtered);
+      // Auto-sync offline queries to backend in background
+      if (localQueries.length > 0) {
+        localQueries.forEach((lq) => {
+          const exists = backendQueries.some((bq) => bq.mobile === lq.mobile && bq.query === lq.query);
+          if (!exists) {
+            fetch(`${API_BASE}/talent-search/query`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                name: lq.name,
+                mobile: lq.mobile,
+                email: lq.email,
+                query: lq.query,
+              }),
+            }).catch(() => {});
+          }
+        });
       }
+
+      // Combine queries uniquely
+      const queryMap = new Map();
+      const baseQueries =
+        backendQueries.length === 0 && localQueries.length === 0
+          ? INITIAL_DEMO_QUERIES
+          : [...backendQueries, ...localQueries];
+
+      baseQueries.forEach((q) => {
+        const key = q._id || `${q.mobile}_${q.query}`;
+        if (!queryMap.has(key)) {
+          queryMap.set(key, q);
+        }
+      });
+
+      let combined = Array.from(queryMap.values());
+      // Sort newest first
+      combined.sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0));
+
+      let filtered = combined;
+      if (selectedQueryStatus !== 'all') {
+        filtered = filtered.filter((q) => q.status === selectedQueryStatus);
+      }
+      if (querySearch.trim()) {
+        const s = querySearch.trim().toLowerCase();
+        filtered = filtered.filter(
+          (q) =>
+            (q.name && q.name.toLowerCase().includes(s)) ||
+            (q.mobile && q.mobile.includes(s)) ||
+            (q.email && q.email.toLowerCase().includes(s)) ||
+            (q.query && q.query.toLowerCase().includes(s))
+        );
+      }
+      setQueries(filtered);
     } finally {
       setQueryLoading(false);
     }
@@ -393,7 +470,7 @@ export default function TalentSearchAdmin() {
       fetchRegistrations(token);
       fetchQueries(token);
     }
-  }, [token, selectedStream, selectedSlot, selectedQueryStatus]);
+  }, [token, selectedBoard, selectedSlot, selectedQueryStatus]);
 
   // Debounced Search
   useEffect(() => {
@@ -666,7 +743,7 @@ export default function TalentSearchAdmin() {
                 </span>
                 <h3 className="text-xl font-bold font-serif">{selectedRecord.name}</h3>
                 <p className="text-xs text-blue-200">
-                  Slot: <strong>{selectedRecord.slot || '29 Nov'}</strong> · Stream: <strong>{selectedRecord.stream}</strong>
+                  Slot: <strong>{selectedRecord.slot || '29 Nov'}</strong> · Board: <strong>{selectedRecord.board || 'CBSE'}</strong>
                 </p>
               </div>
               <button
@@ -848,37 +925,37 @@ export default function TalentSearchAdmin() {
 
                 <div className="bg-white p-5 rounded-3xl border border-gray-200 shadow-sm">
                   <span className="text-[11px] font-bold uppercase tracking-wider text-gray-400 block">
-                    PCM / PCB Science
+                    Upcoming Slot (29 Nov)
                   </span>
                   <div className="text-3xl font-black text-blue-700 mt-1 font-serif">
-                    {registrations.filter((r) => ['PCM', 'PCB', 'PCM+Bio'].includes(r.stream)).length}
+                    {registrations.filter((r) => r.slot === '29 Nov').length}
                   </div>
                   <span className="text-[11px] text-gray-500 font-medium mt-1 inline-block">
-                    Science stream aspirants
+                    First scheduled exam
                   </span>
                 </div>
 
                 <div className="bg-white p-5 rounded-3xl border border-gray-200 shadow-sm">
                   <span className="text-[11px] font-bold uppercase tracking-wider text-gray-400 block">
-                    Commerce & Arts
+                    Later Exam Slots
                   </span>
                   <div className="text-3xl font-black text-purple-700 mt-1 font-serif">
-                    {registrations.filter((r) => ['Commerce', 'Arts', 'Humanities'].includes(r.stream)).length}
+                    {registrations.filter((r) => r.slot !== '29 Nov').length}
                   </div>
                   <span className="text-[11px] text-gray-500 font-medium mt-1 inline-block">
-                    Non-medical streams
+                    Dec 2026 – Feb 2027
                   </span>
                 </div>
 
                 <div className="bg-white p-5 rounded-3xl border border-gray-200 shadow-sm">
                   <span className="text-[11px] font-bold uppercase tracking-wider text-gray-400 block">
-                    First Upcoming Slot
+                    Student Inquiries
                   </span>
-                  <div className="text-2xl font-black text-amber-600 mt-1 font-serif">
-                    29 Nov 2026
+                  <div className="text-3xl font-black text-amber-600 mt-1 font-serif">
+                    {queries.length}
                   </div>
-                  <span className="text-[11px] text-amber-700 font-medium mt-1 inline-block">
-                    {registrations.filter((r) => r.slot === '29 Nov').length} candidates scheduled
+                  <span className="text-[11px] text-amber-700 font-semibold mt-1 inline-block">
+                    {queries.filter((q) => q.status === 'Pending').length} pending inquiries
                   </span>
                 </div>
               </div>
@@ -897,19 +974,17 @@ export default function TalentSearchAdmin() {
                 </div>
 
                 <div className="flex flex-wrap items-center gap-2 text-xs">
-                  {/* Stream Filter */}
+                  {/* Board Filter */}
                   <select
-                    value={selectedStream}
-                    onChange={(e) => setSelectedStream(e.target.value)}
+                    value={selectedBoard}
+                    onChange={(e) => setSelectedBoard(e.target.value)}
                     className="px-3 py-2 rounded-xl border border-gray-300 bg-white font-medium outline-none"
                   >
-                    <option value="all">All Streams</option>
-                    <option value="PCM">PCM</option>
-                    <option value="PCB">PCB</option>
-                    <option value="PCM+Bio">PCMB</option>
-                    <option value="Commerce">Commerce</option>
-                    <option value="Arts">Arts</option>
-                    <option value="Humanities">Humanities</option>
+                    <option value="all">All Boards</option>
+                    <option value="CBSE">CBSE</option>
+                    <option value="ICSE">ICSE</option>
+                    <option value="UP Board">UP Board</option>
+                    <option value="Other">Other State Board</option>
                   </select>
 
                   {/* Slot Filter */}
@@ -940,7 +1015,6 @@ export default function TalentSearchAdmin() {
                         <th className="py-3.5 px-4">Father's Name</th>
                         <th className="py-3.5 px-4">Mobile & Email</th>
                         <th className="py-3.5 px-4">School & Board</th>
-                        <th className="py-3.5 px-4">Stream</th>
                         <th className="py-3.5 px-4">Exam Slot</th>
                         <th className="py-3.5 px-4">Registered Date</th>
                         <th className="py-3.5 px-4 text-right">Actions</th>
@@ -949,7 +1023,7 @@ export default function TalentSearchAdmin() {
                     <tbody className="divide-y divide-gray-100 text-gray-700">
                       {registrations.length === 0 ? (
                         <tr>
-                          <td colSpan={8} className="py-12 text-center text-gray-400">
+                          <td colSpan={7} className="py-12 text-center text-gray-400">
                             No student registrations found matching your filters.
                           </td>
                         </tr>
@@ -960,7 +1034,7 @@ export default function TalentSearchAdmin() {
                               {r.name}
                             </td>
                             <td className="py-3.5 px-4 font-medium text-gray-800">
-                              {r.fatherName || '—'}
+                              {r.fatherName && r.fatherName !== '—' ? r.fatherName : '—'}
                             </td>
                             <td className="py-3.5 px-4 font-mono text-[11px]">
                               <div className="font-bold text-gray-900">{r.mobile}</div>
@@ -970,11 +1044,6 @@ export default function TalentSearchAdmin() {
                               <div className="font-semibold text-gray-800 truncate max-w-[180px]">{r.schoolName}</div>
                               <span className="text-[10px] font-bold text-blue-600 bg-blue-50 px-1.5 py-0.5 rounded">
                                 {r.board || 'CBSE'}
-                              </span>
-                            </td>
-                            <td className="py-3.5 px-4">
-                              <span className="font-bold text-indigo-700 bg-indigo-50 px-2 py-1 rounded-lg">
-                                {r.stream}
                               </span>
                             </td>
                             <td className="py-3.5 px-4">
