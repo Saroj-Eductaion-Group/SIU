@@ -189,10 +189,7 @@ router.post('/register', async (req, res) => {
       return res.status(400).json({ success: false, message: 'Board (CBSE/ICSE/UP Board/Other) is required.' });
     }
 
-    const validStreams = ['PCM', 'PCB', 'PCM+Bio', 'Commerce', 'Arts', 'Humanities'];
-    if (!stream || !validStreams.includes(stream)) {
-      return res.status(400).json({ success: false, message: 'Please select a valid stream.' });
-    }
+    const chosenStream = stream && stream.trim() ? stream.trim() : 'Class 12';
 
     const validSlots = ['29 Nov', '6 Dec', '20 Dec', '10 Jan', '24 Jan', '7 Feb', '21 Feb'];
     const chosenSlot = validSlots.includes(slot) ? slot : '29 Nov';
@@ -209,7 +206,7 @@ router.post('/register', async (req, res) => {
       candidate.schoolName = schoolName.trim();
       candidate.email = email.toLowerCase().trim();
       candidate.board = board.trim();
-      candidate.stream = stream;
+      candidate.stream = chosenStream;
       candidate.slot = chosenSlot;
       candidate.paperSet = assignedSet;
       await candidate.save();
@@ -221,7 +218,7 @@ router.post('/register', async (req, res) => {
         email: email.toLowerCase().trim(),
         board: board.trim(),
         mobile,
-        stream,
+        stream: chosenStream,
         slot: chosenSlot,
         paperSet: assignedSet,
         isVerified: true,

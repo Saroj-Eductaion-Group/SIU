@@ -45,8 +45,7 @@ const talentSearchRegistrationSchema = new mongoose.Schema({
   },
   stream: {
     type: String,
-    required: true,
-    enum: ['PCM', 'PCB', 'PCM+Bio', 'Commerce', 'Arts', 'Humanities'],
+    default: 'General',
   },
   paperSet: {
     type: String,

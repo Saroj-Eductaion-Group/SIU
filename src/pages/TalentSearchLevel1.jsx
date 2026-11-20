@@ -71,7 +71,7 @@ export default function TalentSearchLevel1() {
   const [email, setEmail] = useState('');
   const [schoolName, setSchoolName] = useState('');
   const [board, setBoard] = useState('CBSE');
-  const [stream, setStream] = useState('PCM');
+  const [stream, setStream] = useState('Class 12');
   const [slot, setSlot] = useState('29 Nov');
 
   const [loading, setLoading] = useState(false);
@@ -119,10 +119,6 @@ export default function TalentSearchLevel1() {
     }
     if (!board.trim()) {
       setFormError('Please select your Board.');
-      return;
-    }
-    if (!stream) {
-      setFormError('Please choose your Stream.');
       return;
     }
     if (!slot) {
@@ -520,8 +516,8 @@ export default function TalentSearchLevel1() {
                 </div>
 
                 <div className="p-3.5 bg-slate-50 rounded-2xl border border-slate-100">
-                  <span className="text-[10px] uppercase font-bold text-gray-400 block">Selected Stream</span>
-                  <span className="font-bold text-indigo-700 text-base">{confirmedCandidate.stream}</span>
+                  <span className="text-[10px] uppercase font-bold text-gray-400 block">Class Eligibility</span>
+                  <span className="font-bold text-indigo-700 text-base">Class 12th</span>
                 </div>
               </div>
 
@@ -774,44 +770,14 @@ export default function TalentSearchLevel1() {
                       </select>
                     </div>
                   </div>
-
-                  {/* Stream Selection */}
-                  <div>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-2">
-                      Select Class 12 Stream <span className="text-red-500">*</span>
-                    </label>
-                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
-                      {STREAMS.map((s) => {
-                        const isSelected = stream === s.id;
-                        return (
-                          <button
-                            key={s.id}
-                            type="button"
-                            onClick={() => setStream(s.id)}
-                            className={`p-3 rounded-2xl border text-left transition cursor-pointer ${
-                              isSelected
-                                ? 'bg-blue-50 border-blue-600 ring-2 ring-blue-600 text-blue-950'
-                                : 'bg-slate-50 border-slate-200 hover:border-slate-300 text-gray-700'
-                            }`}
-                          >
-                            <div className="flex items-center gap-2">
-                              <span className="text-lg">{s.icon}</span>
-                              <span className="font-bold text-sm">{s.label}</span>
-                            </div>
-                            <div className="text-[11px] text-gray-500 mt-0.5 truncate">{s.full}</div>
-                          </button>
-                        );
-                      })}
-                    </div>
-                  </div>
                 </div>
 
-                {/* Section 3: Exam Slot Selection */}
+                {/* Section 2: Exam Slot Selection */}
                 <div className="space-y-4 pt-4 border-t border-gray-100">
                   <div className="flex items-center justify-between">
                     <div className="text-xs font-bold uppercase tracking-wider text-blue-700 flex items-center gap-1.5">
                       <Calendar className="w-4 h-4" />
-                      <span>3. Choose Your Examination Slot <span className="text-red-500">*</span></span>
+                      <span>2. Choose Your Examination Slot <span className="text-red-500">*</span></span>
                     </div>
                     <span className="text-[11px] text-gray-500">Pick any 1 slot date</span>
                   </div>
