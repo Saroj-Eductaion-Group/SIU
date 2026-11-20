@@ -6,21 +6,36 @@ const talentSearchRegistrationSchema = new mongoose.Schema({
     required: true,
     trim: true,
   },
+  fatherName: {
+    type: String,
+    required: true,
+    trim: true,
+    default: '',
+  },
   schoolName: {
     type: String,
+    required: true,
     trim: true,
     default: '',
   },
   email: {
     type: String,
+    required: true,
     trim: true,
     lowercase: true,
     default: '',
   },
   board: {
     type: String,
+    required: true,
     trim: true,
     default: 'CBSE',
+  },
+  slot: {
+    type: String,
+    required: true,
+    trim: true,
+    default: '29 Nov',
   },
   mobile: {
     type: String,

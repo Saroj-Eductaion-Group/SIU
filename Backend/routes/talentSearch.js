@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const TalentSearchRegistration = require('../models/TalentSearchRegistration');
+const StudentQuery = require('../models/StudentQuery');
 
 // In-memory OTP storage with 10-minute expiry
 const otpCache = new Map();
@@ -166,53 +167,62 @@ router.post('/verify-result-otp', async (req, res) => {
 // 3. POST /api/talent-search/register
 router.post('/register', async (req, res) => {
   try {
-    const { name, schoolName, email, board, stream } = req.body;
+    const { name, fatherName, schoolName, email, board, stream, slot } = req.body;
     const mobile = normalizeMobile(req.body.mobile);
 
     if (!name || !name.trim()) {
-      return res.status(400).json({ success: false, message: 'Name is required.' });
+      return res.status(400).json({ success: false, message: 'Student Full Name is required.' });
     }
+    if (!fatherName || !fatherName.trim()) {
+      return res.status(400).json({ success: false, message: "Father's Name is required." });
+    }
+    if (!mobile || mobile.length !== 10) {
+      return res.status(400).json({ success: false, message: 'Valid 10-digit Mobile Number is required.' });
+    }
+    if (!email || !email.trim() || !email.includes('@')) {
+      return res.status(400).json({ success: false, message: 'Valid Email Address is required.' });
+    }
+    if (!schoolName || !schoolName.trim()) {
+      return res.status(400).json({ success: false, message: 'School Name is required.' });
+    }
+    if (!board || !board.trim()) {
+      return res.status(400).json({ success: false, message: 'Board (CBSE/ICSE/UP Board/Other) is required.' });
+    }
+
     const validStreams = ['PCM', 'PCB', 'PCM+Bio', 'Commerce', 'Arts', 'Humanities'];
     if (!stream || !validStreams.includes(stream)) {
-      return res.status(400).json({ success: false, message: 'Please select a valid Class 12 stream.' });
+      return res.status(400).json({ success: false, message: 'Please select a valid stream.' });
     }
 
-    // Check if already attempted
-    let candidate = null;
-    if (mobile) {
-      candidate = await TalentSearchRegistration.findOne({ mobile });
-    }
+    const validSlots = ['29 Nov', '6 Dec', '20 Dec', '10 Jan', '24 Jan', '7 Feb', '21 Feb'];
+    const chosenSlot = validSlots.includes(slot) ? slot : '29 Nov';
 
-    if (candidate && candidate.hasAttempted) {
-      return res.json({
-        success: false,
-        alreadyAttempted: true,
-        candidate,
-        message: 'You have already attempted the Level 1 Test. Each student is allowed only one attempt.'
-      });
-    }
+    let candidate = await TalentSearchRegistration.findOne({ mobile });
 
-    // Assign a random paper set from Set A, Set B, Set C, Set D
     const paperSets = ['Set A', 'Set B', 'Set C', 'Set D'];
     const assignedSet = paperSets[Math.floor(Math.random() * paperSets.length)];
 
     if (candidate) {
-      // Update existing unattempted registration
+      // Update existing registration
       candidate.name = name.trim();
-      if (schoolName) candidate.schoolName = schoolName.trim();
-      if (email) candidate.email = email.toLowerCase().trim();
-      if (board) candidate.board = board.trim();
+      candidate.fatherName = fatherName.trim();
+      candidate.schoolName = schoolName.trim();
+      candidate.email = email.toLowerCase().trim();
+      candidate.board = board.trim();
       candidate.stream = stream;
+      candidate.slot = chosenSlot;
       candidate.paperSet = assignedSet;
       await candidate.save();
-    } else if (mobile) {
+    } else {
       candidate = new TalentSearchRegistration({
         name: name.trim(),
-        schoolName: schoolName ? schoolName.trim() : '',
-        email: email ? email.toLowerCase().trim() : '',
-        board: board ? board.trim() : 'CBSE',
+        fatherName: fatherName.trim(),
+        schoolName: schoolName.trim(),
+        email: email.toLowerCase().trim(),
+        board: board.trim(),
         mobile,
         stream,
+        slot: chosenSlot,
         paperSet: assignedSet,
         isVerified: true,
         hasAttempted: false,
@@ -224,10 +234,50 @@ router.post('/register', async (req, res) => {
       success: true,
       candidate,
       paperSet: assignedSet,
-      message: 'Registration successful! You may now begin the Level 1 Test.'
+      message: 'Registration for Talent Search 2026-2027 Scholarship Exam successful!'
     });
   } catch (err) {
     console.error('Error in register:', err);
+    return res.status(500).json({ success: false, message: err.message });
+  }
+});
+
+// 3b. POST /api/talent-search/query (Student Helpdesk / Any Query)
+router.post('/query', async (req, res) => {
+  try {
+    const { name, query } = req.body;
+    const mobile = normalizeMobile(req.body.mobile);
+    const email = (req.body.email || '').toLowerCase().trim();
+
+    if (!name || !name.trim()) {
+      return res.status(400).json({ success: false, message: 'Student Name is required.' });
+    }
+    if (!mobile || mobile.length !== 10) {
+      return res.status(400).json({ success: false, message: 'Valid 10-digit Mobile Number is required.' });
+    }
+    if (!email || !email.includes('@')) {
+      return res.status(400).json({ success: false, message: 'Valid Email Address is required.' });
+    }
+    if (!query || !query.trim()) {
+      return res.status(400).json({ success: false, message: 'Please describe your query or problem.' });
+    }
+
+    const queryRecord = new StudentQuery({
+      name: name.trim(),
+      mobile,
+      email,
+      query: query.trim(),
+      status: 'Pending',
+    });
+    await queryRecord.save();
+
+    return res.json({
+      success: true,
+      message: 'Your query has been submitted successfully! SIU counseling team will contact you shortly.',
+      queryRecord,
+    });
+  } catch (err) {
+    console.error('Error in student query submission:', err);
     return res.status(500).json({ success: false, message: err.message });
   }
 });
@@ -371,11 +421,15 @@ const authMiddleware = require('../middleware/auth');
 // GET /api/talent-search/admin/candidates - fetch all student records with stats
 router.get('/admin/candidates', authMiddleware, async (req, res) => {
   try {
-    const { search, stream, status } = req.query;
+    const { search, stream, slot, status } = req.query;
     const query = {};
 
     if (stream && stream !== 'all') {
       query.stream = stream;
+    }
+
+    if (slot && slot !== 'all') {
+      query.slot = slot;
     }
 
     if (status === 'attempted') {
@@ -394,27 +448,31 @@ router.get('/admin/candidates', authMiddleware, async (req, res) => {
       const s = search.trim();
       query.$or = [
         { name: { $regex: s, $options: 'i' } },
+        { fatherName: { $regex: s, $options: 'i' } },
         { schoolName: { $regex: s, $options: 'i' } },
         { mobile: { $regex: s, $options: 'i' } },
         { email: { $regex: s, $options: 'i' } },
       ];
     }
 
-    const candidates = await TalentSearchRegistration.find(query).sort({ testDate: -1, registeredAt: -1 });
+    const candidates = await TalentSearchRegistration.find(query).sort({ registeredAt: -1, testDate: -1 });
 
     // Aggregate statistics across ALL candidates in DB
-    const allCandidates = await TalentSearchRegistration.find({}, { stream: 1, hasAttempted: 1, isQualifiedForLevel2: 1, score: 1 });
+    const allCandidates = await TalentSearchRegistration.find({}, { stream: 1, slot: 1, hasAttempted: 1, isQualifiedForLevel2: 1, score: 1 });
     const stats = {
       total: allCandidates.length,
       attempted: allCandidates.filter(c => c.hasAttempted).length,
       unattempted: allCandidates.filter(c => !c.hasAttempted).length,
       qualified: allCandidates.filter(c => c.hasAttempted && c.isQualifiedForLevel2).length,
       streamCounts: {},
+      slotCounts: {},
     };
 
     allCandidates.forEach(c => {
       const st = c.stream || 'Other';
       stats.streamCounts[st] = (stats.streamCounts[st] || 0) + 1;
+      const sl = c.slot || '29 Nov';
+      stats.slotCounts[sl] = (stats.slotCounts[sl] || 0) + 1;
     });
 
     return res.json({
@@ -424,6 +482,71 @@ router.get('/admin/candidates', authMiddleware, async (req, res) => {
     });
   } catch (err) {
     console.error('Error in admin candidates fetch:', err);
+    return res.status(500).json({ success: false, message: err.message });
+  }
+});
+
+// GET /api/talent-search/admin/queries - fetch all student queries
+router.get('/admin/queries', authMiddleware, async (req, res) => {
+  try {
+    const { status, search } = req.query;
+    const query = {};
+    if (status && status !== 'all') {
+      query.status = status;
+    }
+    if (search && search.trim()) {
+      const s = search.trim();
+      query.$or = [
+        { name: { $regex: s, $options: 'i' } },
+        { mobile: { $regex: s, $options: 'i' } },
+        { email: { $regex: s, $options: 'i' } },
+        { query: { $regex: s, $options: 'i' } },
+      ];
+    }
+    const queries = await StudentQuery.find(query).sort({ createdAt: -1 });
+    const allQueries = await StudentQuery.find({}, { status: 1 });
+    const stats = {
+      total: allQueries.length,
+      pending: allQueries.filter(q => q.status === 'Pending').length,
+      resolved: allQueries.filter(q => q.status === 'Resolved').length,
+      inProgress: allQueries.filter(q => q.status === 'In Progress').length,
+    };
+    return res.json({ success: true, stats, queries });
+  } catch (err) {
+    console.error('Error in admin queries fetch:', err);
+    return res.status(500).json({ success: false, message: err.message });
+  }
+});
+
+// PATCH /api/talent-search/admin/query/:id/status - update query status
+router.patch('/admin/query/:id/status', authMiddleware, async (req, res) => {
+  try {
+    const { status } = req.body;
+    const updated = await StudentQuery.findByIdAndUpdate(
+      req.params.id,
+      { status },
+      { new: true }
+    );
+    if (!updated) {
+      return res.status(404).json({ success: false, message: 'Query record not found.' });
+    }
+    return res.json({ success: true, message: 'Query status updated.', query: updated });
+  } catch (err) {
+    console.error('Error updating query status:', err);
+    return res.status(500).json({ success: false, message: err.message });
+  }
+});
+
+// DELETE /api/talent-search/admin/query/:id - delete query
+router.delete('/admin/query/:id', authMiddleware, async (req, res) => {
+  try {
+    const deleted = await StudentQuery.findByIdAndDelete(req.params.id);
+    if (!deleted) {
+      return res.status(404).json({ success: false, message: 'Query record not found.' });
+    }
+    return res.json({ success: true, message: 'Query deleted successfully.' });
+  } catch (err) {
+    console.error('Error deleting query:', err);
     return res.status(500).json({ success: false, message: err.message });
   }
 });
