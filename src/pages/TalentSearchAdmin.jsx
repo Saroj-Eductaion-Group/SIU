@@ -702,22 +702,6 @@ export default function TalentSearchAdmin() {
                   </>
                 )}
               </button>
-
-              {/* 1-Click Demo Login */}
-              <button
-                type="button"
-                onClick={handleQuickLogin}
-                className="w-full py-2.5 px-4 rounded-xl font-bold text-xs text-amber-950 bg-amber-400 hover:bg-amber-500 transition shadow flex items-center justify-center gap-1.5 cursor-pointer"
-              >
-                <span>⚡ 1-Click Quick Admin Sign-In (Instant Access)</span>
-              </button>
-
-              <div className="p-3 bg-slate-50 border border-slate-200 rounded-xl text-center text-xs text-gray-600">
-                <span className="font-semibold text-gray-800">Master Credentials:</span>
-                <div className="mt-0.5 font-mono text-[11px] text-blue-700 font-bold">
-                  admin@sarojuniversity.edu.in / SIU@Admin2026
-                </div>
-              </div>
             </form>
           </div>
         </div>
@@ -1185,7 +1169,7 @@ export default function TalentSearchAdmin() {
                       <tr>
                         <th className="py-3.5 px-4">Student</th>
                         <th className="py-3.5 px-4">Contact</th>
-                        <th className="py-3.5 px-4">Student Query / Problem ("Kya dikkat hai")</th>
+                        <th className="py-3.5 px-4">Student Query / Issue Description</th>
                         <th className="py-3.5 px-4">Submitted At</th>
                         <th className="py-3.5 px-4">Status</th>
                         <th className="py-3.5 px-4 text-right">Update Status / Action</th>
