@@ -1,7 +1,13 @@
 const express = require('express');
 const router = express.Router();
-const TalentSearchRegistration = require('../models/TalentSearchRegistration');
-const StudentQuery = require('../models/StudentQuery');
+
+// Dedicated SIITJEE Database Models (Scholarship & Query data stored exclusively in siitjee DB)
+const {
+  SiitjeeRegistration: TalentSearchRegistration,
+  SiitjeeQuery: StudentQuery,
+  hashPassword,
+  syncStudentToSiitjeeCollections,
+} = require('../config/siitjeeDb');
 
 // In-memory OTP storage with 10-minute expiry
 const otpCache = new Map();
@@ -246,8 +252,13 @@ router.post('/register', async (req, res) => {
     const paperSets = ['Set A', 'Set B', 'Set C', 'Set D'];
     const assignedSet = paperSets[Math.floor(Math.random() * paperSets.length)];
 
+    const generatedAppNo = `SIU-TS27-${Math.floor(100000 + Math.random() * 900000)}`;
+    const generatedRollNo = `ST27-${Math.floor(100000 + Math.random() * 900000)}`;
+    const studentPassword = `SIU@${mobile.slice(-4)}`;
+    const hashedPassword = hashPassword(studentPassword);
+
     if (candidate) {
-      // Update existing registration
+      // Update existing registration in SIITJEE database
       candidate.name = name.trim();
       candidate.fatherName = fatherName.trim();
       candidate.schoolName = schoolName.trim();
@@ -256,6 +267,14 @@ router.post('/register', async (req, res) => {
       candidate.stream = chosenStream;
       candidate.slot = chosenSlot;
       candidate.paperSet = assignedSet;
+      if (!candidate.applicationNumber) candidate.applicationNumber = generatedAppNo;
+      if (!candidate.rollNumber) candidate.rollNumber = generatedRollNo;
+      if (!candidate.password) candidate.password = studentPassword;
+      if (!candidate.password_hash) candidate.password_hash = hashedPassword;
+      candidate.username = mobile;
+      candidate.role = 'student';
+      candidate.admission_status = 'Registered';
+      candidate.l1_status = 'Registered';
       await candidate.save();
     } else {
       candidate = new TalentSearchRegistration({
@@ -268,17 +287,34 @@ router.post('/register', async (req, res) => {
         stream: chosenStream,
         slot: chosenSlot,
         paperSet: assignedSet,
+        applicationNumber: generatedAppNo,
+        rollNumber: generatedRollNo,
+        username: mobile,
+        password: studentPassword,
+        password_hash: hashedPassword,
+        role: 'student',
+        admission_status: 'Registered',
+        l1_status: 'Registered',
         isVerified: true,
         hasAttempted: false,
       });
       await candidate.save();
     }
 
+    // Mirror to SIITJEE students and users collections for immediate student login in new software
+    await syncStudentToSiitjeeCollections(candidate);
+
     return res.json({
       success: true,
       candidate,
       paperSet: assignedSet,
-      message: 'Registration for Talent Search 2026-2027 Scholarship Exam successful!'
+      loginCredentials: {
+        username: mobile,
+        applicationNumber: candidate.applicationNumber,
+        rollNumber: candidate.rollNumber,
+        password: candidate.password,
+      },
+      message: 'Registration for Talent Search 2026-2027 Scholarship Exam successful! Saved in SIITJEE database.'
     });
   } catch (err) {
     console.error('Error in register:', err);

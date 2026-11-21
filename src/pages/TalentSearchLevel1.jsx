@@ -466,6 +466,12 @@ export default function TalentSearchLevel1() {
         registeredAt: new Date().toISOString(),
       };
 
+      const rollNo = savedCandidate?.rollNumber || `ST27-${regNo.slice(-6)}`;
+      const examPass = savedCandidate?.password || `SIU@${form.mobile.slice(-4)}`;
+
+      finalRecord.rollNumber = rollNo;
+      finalRecord.password = examPass;
+
       try {
         const existing = JSON.parse(localStorage.getItem('siu_talent_local_submissions') || '[]');
         const updated = [finalRecord, ...existing.filter((c) => c.mobile !== form.mobile)];
@@ -476,6 +482,8 @@ export default function TalentSearchLevel1() {
 
       setResult({
         regNo,
+        rollNo,
+        password: examPass,
         at: new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' }),
       });
     } finally {
@@ -1110,6 +1118,21 @@ export default function TalentSearchLevel1() {
                       <div className="full">
                         <small>Exam Date &amp; Time Window</small>
                         <b>{slotF.full} · 10:00 AM – 5:00 PM (Attempt Anytime)</b>
+                      </div>
+                      <div className="full" style={{ background: '#f1f5f9', padding: '12px 14px', borderRadius: '12px', border: '1px solid #cbd5e1' }}>
+                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
+                          <div>
+                            <small style={{ color: '#475569', fontSize: '10px', textTransform: 'uppercase', fontWeight: 800 }}>Online Exam Login ID / Roll No</small>
+                            <b style={{ color: '#1e40af', fontSize: '15px', display: 'block', marginTop: '2px' }}>{result.rollNo || result.regNo}</b>
+                          </div>
+                          <div>
+                            <small style={{ color: '#475569', fontSize: '10px', textTransform: 'uppercase', fontWeight: 800 }}>Student Portal Password</small>
+                            <b style={{ color: '#b45309', fontSize: '15px', fontFamily: 'monospace', display: 'block', marginTop: '2px' }}>{result.password}</b>
+                          </div>
+                        </div>
+                        <div style={{ margin: '6px 0 0', fontSize: '11px', color: '#047857', fontWeight: 600 }}>
+                          🔑 Keep this Login ID &amp; Password safe for attempting the scholarship test on the exam portal.
+                        </div>
                       </div>
                     </div>
                     <div className="th-slip-f">

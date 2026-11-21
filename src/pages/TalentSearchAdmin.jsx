@@ -565,10 +565,11 @@ export default function TalentSearchAdmin() {
       alert('No registration records to export.');
       return;
     }
-    const headers = ['Application ID,Student Name,Father Name,Mobile,Email,School Name,Board,Stream,Exam Slot,Registered At'];
+    const headers = ['Application ID,Roll Number,Student Name,Father Name,Mobile,Email,School Name,Board,Stream,Exam Slot,Exam Password,Registered At'];
     const rows = registrations.map((r) =>
       [
         `"${r.applicationNumber || r._id || ''}"`,
+        `"${r.rollNumber || ''}"`,
         `"${(r.name || '').replace(/"/g, '""')}"`,
         `"${(r.fatherName || '').replace(/"/g, '""')}"`,
         `"${r.mobile || ''}"`,
@@ -577,6 +578,7 @@ export default function TalentSearchAdmin() {
         `"${r.board || 'CBSE'}"`,
         `"${r.stream || ''}"`,
         `"${r.slot || ''}"`,
+        `"${r.password || ('SIU@' + (r.mobile || '1234').slice(-4))}"`,
         `"${r.registeredAt ? new Date(r.registeredAt).toLocaleString('en-IN') : ''}"`,
       ].join(',')
     );
@@ -780,6 +782,17 @@ export default function TalentSearchAdmin() {
                 <span className="font-semibold text-gray-900">{selectedRecord.schoolName}</span>
               </div>
 
+              <div className="bg-blue-50 p-3 rounded-xl border border-blue-200 grid grid-cols-2 gap-2 text-xs">
+                <div>
+                  <span className="text-[10px] uppercase font-bold text-blue-600 block">Roll / Login ID</span>
+                  <span className="font-mono font-bold text-blue-900">{selectedRecord.rollNumber || selectedRecord.applicationNumber || selectedRecord._id}</span>
+                </div>
+                <div>
+                  <span className="text-[10px] uppercase font-bold text-amber-600 block">Exam Password</span>
+                  <span className="font-mono font-bold text-amber-900">{selectedRecord.password || `SIU@${(selectedRecord.mobile || '1234').slice(-4)}`}</span>
+                </div>
+              </div>
+
               <div className="bg-amber-50 border border-amber-200 rounded-xl p-3 text-xs text-amber-900 flex items-center justify-between">
                 <span>Allocated Slot: <strong>{selectedRecord.slot}</strong></span>
                 <span className="font-mono text-gray-500">
@@ -814,9 +827,15 @@ export default function TalentSearchAdmin() {
               <h1 className="text-2xl sm:text-3xl font-black text-gray-900 font-serif">
                 Talent Search 2026-27 <span className="text-amber-500">Scholarship</span>
               </h1>
-              <p className="text-xs text-gray-500 mt-0.5">
-                Monitoring scholarship exam student registrations, slots, and student support queries.
-              </p>
+              <div className="flex items-center gap-2 mt-1">
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10.5px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                  Database: SIITJEE Cluster (Live Sync)
+                </span>
+                <span className="text-xs text-gray-500">
+                  Live scholarship exam registrations and helpdesk queries.
+                </span>
+              </div>
             </div>
 
             <div className="flex flex-wrap items-center gap-2.5">
