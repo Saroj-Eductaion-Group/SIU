@@ -172,137 +172,21 @@ export default function TalentSearchLevel1() {
     return (
       <Layout>
         <Helmet>
-          <title>Talent Search 2026-27 Scholarship | Portal Under Maintenance</title>
-          <meta
-            name="description"
-            content="Talent Search 2026-27 Scholarship registration portal is currently under maintenance. Registration will be active soon."
-          />
+          <title>Portal Under Maintenance | Saroj International University</title>
         </Helmet>
-        <div className="th-page" style={{ minHeight: '75vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '60px 20px' }}>
-          <div style={{ maxWidth: '640px', width: '100%', margin: '0 auto', textAlign: 'center' }}>
-            <div style={{
-              background: 'linear-gradient(160deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02))',
-              border: '1px solid rgba(255, 255, 255, 0.12)',
-              borderRadius: '24px',
-              padding: '48px 32px',
-              backdropFilter: 'blur(10px)',
-              boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5)'
-            }}>
-              {/* Animated Maintenance Icon */}
-              <div style={{
-                width: '84px',
-                height: '84px',
-                margin: '0 auto 24px',
-                borderRadius: '50%',
-                background: 'rgba(245, 166, 35, 0.15)',
-                border: '2px solid rgba(245, 166, 35, 0.4)',
-                display: 'grid',
-                placeItems: 'center',
-                fontSize: '40px',
-                boxShadow: '0 0 30px rgba(245, 166, 35, 0.3)'
-              }}>
-                🛠️
-              </div>
-
-              {/* Maintenance Tag */}
-              <span style={{
-                display: 'inline-block',
-                padding: '4px 14px',
-                borderRadius: '999px',
-                background: 'rgba(245, 166, 35, 0.2)',
-                color: '#ffc95c',
-                border: '1px solid rgba(245, 166, 35, 0.4)',
-                fontSize: '11px',
-                fontWeight: 700,
-                letterSpacing: '0.08em',
-                textTransform: 'uppercase',
-                marginBottom: '16px'
-              }}>
-                Scheduled Maintenance
-              </span>
-
-              <h1 style={{
-                fontFamily: "'Playfair Display', serif",
-                fontSize: '32px',
-                fontWeight: 800,
-                color: '#ffffff',
-                marginBottom: '12px',
-                lineHeight: 1.2
-              }}>
-                Portal Under Maintenance
-              </h1>
-
-              <p style={{
-                fontSize: '15px',
-                color: '#cbd5e1',
-                lineHeight: 1.6,
-                maxWidth: '480px',
-                margin: '0 auto 24px'
-              }}>
-                Online registration for the <strong>Talent Search 2026–27 Scholarship</strong> is currently paused for scheduled system maintenance.
-              </p>
-
-              {/* Notice Box */}
-              <div style={{
-                background: 'rgba(11, 21, 49, 0.8)',
-                border: '1.5px dashed rgba(245, 166, 35, 0.4)',
-                borderRadius: '16px',
-                padding: '20px',
-                marginBottom: '28px',
-                textAlign: 'center'
-              }}>
-                <div style={{ fontSize: '15px', fontWeight: 700, color: '#ffc95c', marginBottom: '6px' }}>
-                  📢 Registration Will Be Active Soon!
-                </div>
-                <div style={{ fontSize: '13px', color: '#94a3b8', lineHeight: 1.5 }}>
-                  Our technical team is upgrading the portal. Online registration will resume shortly. Please check back soon!
-                </div>
-              </div>
-
-              {/* Quick Contact Helpdesk */}
-              <div style={{
-                borderTop: '1px solid rgba(255, 255, 255, 0.1)',
-                paddingTop: '20px',
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '8px',
-                fontSize: '13px',
-                color: '#94a3b8'
-              }}>
-                <div>For urgent admission inquiries:</div>
-                <div style={{ display: 'flex', justifyContent: 'center', gap: '20px', flexWrap: 'wrap', fontWeight: 600 }}>
-                  <a href="tel:+919513731275" style={{ color: '#ffc95c', textDecoration: 'none' }}>
-                    📞 +91-9513731275
-                  </a>
-                  <span style={{ color: 'rgba(255,255,255,0.2)' }}>|</span>
-                  <a href="mailto:info@sarojuniversity.edu.in" style={{ color: '#93c5fd', textDecoration: 'none' }}>
-                    ✉️ info@sarojuniversity.edu.in
-                  </a>
-                </div>
-              </div>
-
-              {/* Back to Home Button */}
-              <div style={{ marginTop: '28px' }}>
-                <a
-                  href="/"
-                  style={{
-                    display: 'inline-block',
-                    padding: '10px 24px',
-                    borderRadius: '12px',
-                    background: 'rgba(255, 255, 255, 0.1)',
-                    border: '1px solid rgba(255, 255, 255, 0.2)',
-                    color: '#ffffff',
-                    fontSize: '13px',
-                    fontWeight: 600,
-                    textDecoration: 'none',
-                    transition: 'all 0.2s ease'
-                  }}
-                >
-                  ← Return to University Home
-                </a>
-              </div>
-            </div>
-          </div>
+        <div style={{ minHeight: '65vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: '60px 20px', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+          <h1 style={{ fontSize: '32px', fontWeight: 800, color: '#0f172a', marginBottom: '16px' }}>
+            Portal Under Maintenance
+          </h1>
+          <p style={{ fontSize: '16px', color: '#334155', marginBottom: '24px', maxWidth: '600px', lineHeight: 1.6 }}>
+            Online registration for the Talent Search 2026–27 Scholarship is currently paused for scheduled system maintenance.
+          </p>
+          <h2 style={{ fontSize: '20px', fontWeight: 700, color: '#b45309', marginBottom: '12px' }}>
+            Registration Will Be Active Soon!
+          </h2>
+          <p style={{ fontSize: '15px', color: '#64748b', maxWidth: '550px', lineHeight: 1.6, margin: 0 }}>
+            Our technical team is upgrading the portal. Online registration will resume shortly. Please check back soon!
+          </p>
         </div>
       </Layout>
     );
