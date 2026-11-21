@@ -87,7 +87,7 @@ const FAQ = [
   ['Can I change my slot later?', 'Please contact the admission helpdesk at least 3 days before your selected exam date to request a change.'],
   [
     'What is the syllabus?',
-    'The paper is based on the Class 12 board syllabus of your stream, aligned with JEE Mains (Class 11–12) standard. Key topics include Mechanics, Electricity & Modern Physics (Physics); Physical, Organic & Inorganic Chemistry (Chemistry); and Calculus, Algebra & Vectors/3D Geometry (Mathematics).',
+    'The paper is based on the Class 12 board syllabus of your stream, aligned with JEE Mains (Class 11–12) standard. It covers Physics, Chemistry, and Mathematics.',
   ],
 ];
 
