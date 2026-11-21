@@ -41,9 +41,37 @@ const BOARDS = [
 const STEPS = ['Student Details', 'Academics', 'Exam Slot'];
 
 const TIERS = [
-  { pct: '100%', title: 'Full Tuition Waiver', text: 'For the top rankers in the scholarship examination.', top: true },
-  { pct: '75%', title: 'Merit Scholarship', text: 'For outstanding performers just below the top bracket.' },
-  { pct: '50%', title: 'Achiever Scholarship', text: 'For every candidate who clears the qualifying score.' },
+  {
+    pct: '100%',
+    score: 'Score > 80%',
+    title: 'Full Tuition Waiver',
+    text: '100% tuition fee wave off for top scorers securing more than 80% marks.',
+    top: true,
+  },
+  {
+    pct: '75%',
+    score: 'Score 70% – 80%',
+    title: 'Merit Scholarship',
+    text: '75% tuition fee wave off for scorers securing 70% to 80% marks.',
+  },
+  {
+    pct: '50%',
+    score: 'Score 60% – 70%',
+    title: 'Achiever Scholarship',
+    text: '50% tuition fee wave off for performers securing 60% to 70% marks.',
+  },
+  {
+    pct: '25%',
+    score: 'Score 50% – 60%',
+    title: 'Scholar Award',
+    text: '25% tuition fee wave off for students securing 50% to 60% marks.',
+  },
+  {
+    pct: '15%',
+    score: 'Score Below 60%',
+    title: 'Encouragement Grant',
+    text: '15% tuition fee wave off for qualifying candidates scoring below 60%.',
+  },
 ];
 
 const HOW = [
@@ -686,10 +714,17 @@ export default function TalentSearchLevel1() {
                 <div key={t.pct} className={`th-tier ${t.top ? 'top' : ''}`}>
                   {t.top && <em>TOP PRIZE</em>}
                   <div className="pct">{t.pct}</div>
+                  <span className="th-criteria-tag">{t.score}</span>
                   <h4>{t.title}</h4>
                   <p>{t.text}</p>
                 </div>
               ))}
+            </div>
+
+            <div style={{ textAlign: 'center' }}>
+              <div className="th-tiers-note">
+                ✨ <span>All scholarship waiver criteria apply strictly to the <strong>tuition fee</strong> of the course.</span>
+              </div>
             </div>
           </section>
 

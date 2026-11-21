@@ -121,10 +121,12 @@ function App() {
       {/* FeePayment Page */}
       <Route path='/fee-payment' element ={<FeePaymentPage />} />
 
-      {/* Talent Hunt */}
+      {/* Talent Hunt & Scholarship */}
       <Route path='/talent-hunt' element={<TalentHunt />} />
-      <Route path='/neet-talent-hunt' element={<TalentSearchLevel1 />} />
+      <Route path='/talent-search-scholarship' element={<TalentSearchLevel1 />} />
+      <Route path='/talent-sarch-scholership' element={<TalentSearchLevel1 />} />
       <Route path='/talent-search' element={<TalentSearchLevel1 />} />
+      <Route path='/neet-talent-hunt' element={<TalentSearchLevel1 />} />
       <Route path='/talent-search-admin' element={<TalentSearchAdmin />} />
 
       {/* Programs Overview */}

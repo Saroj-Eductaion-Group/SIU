@@ -453,7 +453,7 @@ function Header() {
               ))}
               {/* Talent Search Scholarship Button - Mobile */}
               <li className='mt-2'>
-                <a href='/neet-talent-hunt'>
+                <a href='/talent-search-scholarship'>
                   <button className='w-full bg-green-600 hover:bg-green-700 text-white font-semibold px-6 py-3 rounded-md transition duration-300 flex items-center justify-center gap-2'>
                     🎯 Talent Search 2026-27 Scholarship
                   </button>

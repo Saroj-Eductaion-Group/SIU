@@ -64,7 +64,7 @@ href='/fee-payment'            target="_blank"
           {/* Talent Hunt Buttons */}
           <div className="flex items-center gap-2">
             <a 
-              href="/neet-talent-hunt"
+              href="/talent-search-scholarship"
               className="bg-green-600 hover:bg-green-700 text-white px-4 py-1 rounded-md font-medium transition-all duration-300 shadow-lg animate-pulse whitespace-nowrap text-sm sm:text-base"
               aria-label="Talent Search 2026-27 Scholarship"
             >

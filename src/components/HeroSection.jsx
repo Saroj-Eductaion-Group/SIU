@@ -68,7 +68,7 @@ const HeroSection = () => {
         <header className="text-center mb-6 sm:mb-12">
           <div className="inline-flex md:hidden gap-2 mb-2 flex-wrap justify-center">
             <a
-              href="/neet-talent-hunt"
+              href="/talent-search-scholarship"
               className="bg-green-600 hover:bg-green-700 text-white px-4 py-1 rounded-md font-medium transition-all duration-300 shadow-lg animate-[pulse_2s_infinite] whitespace-nowrap text-sm"
             >
               🎯 Talent Search 2026-27 Scholarship
