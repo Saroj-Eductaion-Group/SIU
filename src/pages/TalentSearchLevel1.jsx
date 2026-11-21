@@ -85,7 +85,10 @@ const FAQ = [
   ['Is there any registration fee?', 'No. Registration for the Talent Search Scholarship is completely free.'],
   ['Who can apply?', 'Any Class 12 (appearing or passed) student from any board in India can apply.'],
   ['Can I change my slot later?', 'Please contact the admission helpdesk at least 3 days before your selected exam date to request a change.'],
-  ['What is the syllabus?', 'The paper is based on the Class 12 board syllabus of your stream.'],
+  [
+    'What is the syllabus?',
+    'The paper is based on the Class 12 board syllabus of your stream, aligned with JEE Mains (Class 11–12) standard. Key topics include Mechanics, Electricity & Modern Physics (Physics); Physical, Organic & Inorganic Chemistry (Chemistry); and Calculus, Algebra & Vectors/3D Geometry (Mathematics).',
+  ],
 ];
 
 /* ---------- VALIDATION RULES ---------- */

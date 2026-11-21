@@ -456,7 +456,7 @@
 .th-q button span { color: var(--gold); font-size: 20px; transition: transform .25s; }
 .th-q.open button span { transform: rotate(45deg); }
 .th-q .a { max-height: 0; overflow: hidden; transition: max-height .3s; padding: 0 18px; font-size: 13px; line-height: 1.65; color: #aebbd9; }
-.th-q.open .a { max-height: 200px; padding-bottom: 16px; }
+.th-q.open .a { max-height: 300px; padding-bottom: 16px; }
 
 /* ---------- SUCCESS / SLIP ---------- */
 .th-done { padding: 34px 26px 30px; text-align: center; position: relative; overflow: hidden; }
