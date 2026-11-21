@@ -85,10 +85,7 @@ const FAQ = [
   ['Is there any registration fee?', 'No. Registration for the Talent Search Scholarship is completely free.'],
   ['Who can apply?', 'Any Class 12 (appearing or passed) student from any board in India can apply.'],
   ['Can I change my slot later?', 'Please contact the admission helpdesk at least 3 days before your selected exam date to request a change.'],
-  [
-    'What is the syllabus and exam pattern?',
-    'The scholarship examination syllabus is aligned with JEE Mains level standards across Physics, Chemistry, and Mathematics (Class 11 & 12). Topics include Mechanics, Electrostatics, Modern Physics, Physical & Organic Chemistry, Calculus, Vectors, 3D Geometry, and Algebra. The test comprises 50 objective MCQs designed to evaluate fundamental clarity and problem-solving speed with a total duration of 60 minutes.',
-  ],
+  ['What is the syllabus?', 'The paper is based on the Class 12 board syllabus of your stream.'],
 ];
 
 /* ---------- VALIDATION RULES ---------- */
@@ -1230,128 +1227,6 @@ export default function TalentSearchLevel1() {
               </div>
             </aside>
           </div>
-
-          {/* ALL EXAM SLOTS SHOWCASE (DIRECTLY BELOW REGISTRATION FORM) */}
-          <section className="th-all-slots-sec">
-            <div className="th-sec-head">
-              <div>
-                <h3>📅 All Upcoming Examination Slots (2026–2027)</h3>
-                <p>Choose any slot date that fits your academic schedule. Online CBT examination with flexible attempt timing.</p>
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <span className="th-slot-badge-open">⚡ 7 Flexible Slots Available</span>
-              </div>
-            </div>
-
-            <div className="th-slots-grid">
-              {SLOTS.map((s) => {
-                const info = fmt(s.date);
-                const isSelected = form.slot === s.id;
-                const isPassed = new Date(s.date) < new Date();
-                return (
-                  <div key={s.id} className={`th-slot-tile ${isSelected ? 'selected' : ''}`}>
-                    <div>
-                      <div className="th-slot-tile-top">
-                        <span className="th-slot-badge-open">{isPassed ? 'Archived' : 'Registration Open'}</span>
-                        <span style={{ fontSize: '11px', color: '#94a3b8' }}>Session 2026–27</span>
-                      </div>
-                      <div className="th-slot-date-big">
-                        {info.day} {info.mon} {info.year}
-                      </div>
-                      <div className="th-slot-wkday">
-                        {info.wk}
-                      </div>
-
-                      <div className="th-slot-info-box">
-                        <span>⏰ <strong>Timing:</strong> 10:00 AM – 5:00 PM (Anytime)</span>
-                        <span>💻 <strong>Format:</strong> Online CBT (50 MCQs · 60 Mins)</span>
-                        <span>🎯 <strong>Syllabus:</strong> Class 12 / JEE Mains Level</span>
-                      </div>
-                    </div>
-
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setForm((f) => ({ ...f, slot: s.id }));
-                        setStep(2);
-                        window.scrollTo({ top: 400, behavior: 'smooth' });
-                      }}
-                      className="th-slot-pick-btn"
-                    >
-                      {isSelected ? '✓ Selected Exam Slot' : '📅 Select this Date'}
-                    </button>
-                  </div>
-                );
-              })}
-            </div>
-          </section>
-
-          {/* JEE MAINS LEVEL SYLLABUS SECTION */}
-          <section className="th-syllabus-sec">
-            <div className="th-sec-head">
-              <div>
-                <h3>📘 Detailed Examination Syllabus (JEE Mains Standard)</h3>
-                <p>The scholarship examination tests conceptual understanding, analytical thinking, and problem-solving skills based on JEE Mains Level topics.</p>
-              </div>
-            </div>
-
-            <div className="th-syl-grid">
-              {/* Physics */}
-              <div className="th-syl-card">
-                <div className="th-syl-icon" style={{ background: 'rgba(59, 130, 246, 0.2)', color: '#60a5fa' }}>
-                  ⚡
-                </div>
-                <h4>Physics</h4>
-                <span className="th-syl-tag" style={{ background: 'rgba(59, 130, 246, 0.2)', color: '#93c5fd' }}>
-                  JEE Mains · Class 11 &amp; 12 Standard
-                </span>
-                <ul className="th-syl-topics">
-                  <li><span className="th-syl-bullet">•</span> <span><strong>Mechanics &amp; Motion:</strong> Kinematics, Newton's Laws, Work, Energy, Power &amp; Rotational Motion.</span></li>
-                  <li><span className="th-syl-bullet">•</span> <span><strong>Electricity &amp; Magnetism:</strong> Electrostatics, Capacitors, Current Electricity, Magnetic Effects &amp; EMI.</span></li>
-                  <li><span className="th-syl-bullet">•</span> <span><strong>Optics &amp; Modern Physics:</strong> Wave &amp; Ray Optics, Dual Nature of Matter, Atoms &amp; Nuclei.</span></li>
-                  <li><span className="th-syl-bullet">•</span> <span><strong>Thermodynamics &amp; Waves:</strong> Kinetic Theory of Gases, Thermal Properties, Simple Harmonic Motion.</span></li>
-                </ul>
-              </div>
-
-              {/* Chemistry */}
-              <div className="th-syl-card">
-                <div className="th-syl-icon" style={{ background: 'rgba(16, 185, 129, 0.2)', color: '#34d399' }}>
-                  🧪
-                </div>
-                <h4>Chemistry</h4>
-                <span className="th-syl-tag" style={{ background: 'rgba(16, 185, 129, 0.2)', color: '#6ee7b7' }}>
-                  Physical, Organic &amp; Inorganic
-                </span>
-                <ul className="th-syl-topics">
-                  <li><span className="th-syl-bullet">•</span> <span><strong>Physical Chemistry:</strong> Atomic Structure, Chemical Kinetics, Thermodynamics, Solutions &amp; Equilibrium.</span></li>
-                  <li><span className="th-syl-bullet">•</span> <span><strong>Organic Chemistry:</strong> Reaction Mechanisms, Hydrocarbons, Haloalkanes, Alcohols, Carbonyl Compounds &amp; Biomolecules.</span></li>
-                  <li><span className="th-syl-bullet">•</span> <span><strong>Inorganic Chemistry:</strong> Periodic Classification, Chemical Bonding, Coordination Chemistry &amp; d/f-Block Elements.</span></li>
-                </ul>
-              </div>
-
-              {/* Mathematics */}
-              <div className="th-syl-card">
-                <div className="th-syl-icon" style={{ background: 'rgba(245, 158, 11, 0.2)', color: '#fbbf24' }}>
-                  📐
-                </div>
-                <h4>Mathematics</h4>
-                <span className="th-syl-tag" style={{ background: 'rgba(245, 158, 11, 0.2)', color: '#fde68a' }}>
-                  Higher Calculus &amp; Algebra
-                </span>
-                <ul className="th-syl-topics">
-                  <li><span className="th-syl-bullet">•</span> <span><strong>Calculus:</strong> Limits, Continuity, Differentiability, Applications of Derivatives, Definite &amp; Indefinite Integrals.</span></li>
-                  <li><span className="th-syl-bullet">•</span> <span><strong>Algebra:</strong> Matrices &amp; Determinants, Quadratic Equations, Complex Numbers, Sequences &amp; Series.</span></li>
-                  <li><span className="th-syl-bullet">•</span> <span><strong>Vectors &amp; 3D Geometry:</strong> Vector Algebra, Direction Cosines, Straight Lines &amp; Planes in Space.</span></li>
-                  <li><span className="th-syl-bullet">•</span> <span><strong>Coordinate Geometry &amp; Probability:</strong> Circles, Conic Sections, Permutations, Combinations &amp; Probability.</span></li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="th-syl-pattern-bar">
-              <div>🎯 <strong>Exam Pattern:</strong> 50 Multiple Choice Questions (Single Correct) · Balanced PCM weightage</div>
-              <div>⏳ <strong>Duration:</strong> 60 Minutes · Flexible window 10:00 AM – 5:00 PM on Exam Date</div>
-            </div>
-          </section>
 
           {/* HOW IT WORKS (CONNECTING TIMELINE AS PER IMAGE 1) */}
           <section className="th-how-wrap">
