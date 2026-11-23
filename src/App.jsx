@@ -102,7 +102,6 @@ import CryptographyPage from "./pages/tcs/Cryptography";
 // Fee Payment Page
 import FeePaymentPage from "./pages/FeePaymentPage";
 import OrientationPage from "./pages/Admission/OrientationPage";
-import TalentHunt from "./pages/TalentHunt";
 import NeetTalentHunt from "./pages/NeetTalentHunt";
 import TalentSearchLevel1 from "./pages/TalentSearchLevel1";
 import TalentSearchAdmin from "./pages/TalentSearchAdmin";
@@ -121,8 +120,7 @@ function App() {
       {/* FeePayment Page */}
       <Route path='/fee-payment' element ={<FeePaymentPage />} />
 
-      {/* Talent Hunt & Scholarship */}
-      <Route path='/talent-hunt' element={<TalentHunt />} />
+      {/* Talent Search & Scholarship */}
       <Route path='/talent-search-scholarship' element={<TalentSearchLevel1 />} />
       <Route path='/talent-sarch-scholership' element={<TalentSearchLevel1 />} />
       <Route path='/talent-search' element={<TalentSearchLevel1 />} />

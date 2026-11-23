@@ -73,12 +73,6 @@ const HeroSection = () => {
             >
               🎯 Talent Search 2026-27 Scholarship
             </a>
-            <a
-              href="/talent-hunt"
-              className="bg-red-600 hover:bg-red-700 text-white px-4 py-1 rounded-md font-medium transition-all duration-300 shadow-lg hover:shadow-red-500/20 animate-[pulse_2s_infinite] whitespace-nowrap text-sm"
-            >
-              🏆 SIUAT 2026-27
-            </a>
           </div>
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-2 sm:mb-4 text-blue-900">
             Saroj International University

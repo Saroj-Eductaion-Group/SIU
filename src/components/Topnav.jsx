@@ -70,13 +70,6 @@ href='/fee-payment'            target="_blank"
             >
               🎯 Talent Search 2026-27 Scholarship
             </a>
-            <a 
-              href="/talent-hunt"
-              className="bg-red-600 hover:bg-red-700 text-white px-4 py-1 rounded-md font-medium transition-all duration-300 shadow-lg animate-pulse whitespace-nowrap text-sm sm:text-base"
-              aria-label="SIUAT 2026-27"
-            >
-              🏆 SIUAT 2026-27
-            </a>
           </div>
         </div>
         {/* End Desktop */}
