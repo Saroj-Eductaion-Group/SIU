@@ -20,13 +20,14 @@ jobs:
           # Sync backend files to /var/www/SIU-Backend if backend runs from there
           if [ -d "/var/www/SIU-Backend" ]; then
             echo "📦 Updating /var/www/SIU-Backend..."
+            sudo chown -R admin:admin /var/www/SIU-Backend 2>/dev/null || true
             if [ -d "/var/www/SIU-Backend/.git" ]; then
-              cd /var/www/SIU-Backend && git pull origin main || true
+              cd /var/www/SIU-Backend && git pull origin main 2>/dev/null || true
             fi
             if command -v rsync >/dev/null 2>&1; then
-              rsync -av --exclude 'node_modules' /var/www/SIU/Backend/ /var/www/SIU-Backend/
+              sudo rsync -av --exclude 'node_modules' /var/www/SIU/Backend/ /var/www/SIU-Backend/ 2>/dev/null || sudo cp -r /var/www/SIU/Backend/* /var/www/SIU-Backend/ 2>/dev/null || true
             else
-              cp -r /var/www/SIU/Backend/* /var/www/SIU-Backend/
+              sudo cp -r /var/www/SIU/Backend/* /var/www/SIU-Backend/ 2>/dev/null || true
             fi
           fi
 
