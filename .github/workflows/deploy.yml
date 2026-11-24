@@ -30,8 +30,8 @@ jobs:
           fi
 
           pm2 restart all || pm2 reload all
-          echo "=== PM2 STATUS ==="
-          pm2 list
-          pm2 show siu-backend || true
+          echo "=== PM2 & NGINX DEBUG ===" > /var/www/SIU/dist/debug-backend.txt
+          pm2 show siu-backend >> /var/www/SIU/dist/debug-backend.txt 2>&1 || true
+          cat /etc/nginx/sites-enabled/* >> /var/www/SIU/dist/debug-backend.txt 2>&1 || true
           echo "✅ Deployment completed successfully!"
 
