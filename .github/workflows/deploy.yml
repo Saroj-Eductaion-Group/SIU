@@ -30,5 +30,8 @@ jobs:
           fi
 
           pm2 restart all || pm2 reload all
+          echo "=== PM2 STATUS ==="
+          pm2 list
+          pm2 show siu-backend || true
           echo "✅ Deployment completed successfully!"
 
