@@ -17,8 +17,8 @@ const API_BASE = isLocalhost
   : (import.meta.env.VITE_API_URL || '/api');
 
 /* ---------- CONFIG ---------- */
-// Set to false when ready to reopen live registration
-const IS_UNDER_MAINTENANCE = true;
+// Set to true when maintenance mode is needed
+const IS_UNDER_MAINTENANCE = false;
 
 const SLOTS = [
   { id: '29 Nov', date: '2026-11-29T10:00:00+05:30', seats: 120, day: '29', mon: 'Nov', year: '2026', wk: 'Sunday' },
