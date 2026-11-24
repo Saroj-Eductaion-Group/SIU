@@ -41,6 +41,13 @@ const BOARDS = [
   'NIOS',
 ];
 
+const STREAMS = [
+  { id: 'PCM', label: 'PCM (Physics, Chemistry, Mathematics)', subjects: 'Physics, Chemistry & Mathematics' },
+  { id: 'PCB', label: 'PCB (Physics, Chemistry, Biology)', subjects: 'Physics, Chemistry & Biology' },
+  { id: 'Commerce', label: 'Commerce (Accountancy, BST, Economics)', subjects: 'Accountancy, Business Studies & Economics' },
+  { id: 'Arts & Humanities', label: 'Arts & Humanities (History, Pol. Science, Humanities)', subjects: 'History, Political Science & Humanities' },
+];
+
 const STEPS = ['Student Details', 'Academics', 'Exam Slot'];
 
 const TIERS = [
@@ -90,7 +97,7 @@ const FAQ = [
   ['Can I change my slot later?', 'Please contact the admission helpdesk at least 3 days before your selected exam date to request a change.'],
   [
     'What is the syllabus?',
-    'The paper is based on the Class 12 board syllabus of your stream, aligned with JEE Mains (Class 11–12) standard. It covers Physics, Chemistry, and Mathematics.',
+    'The examination question paper is tailored specifically to your chosen stream (PCM, PCB, Commerce, or Arts & Humanities) based on the Class 12 board syllabus (including relevant Class 11–12 topics): PCM covers Physics, Chemistry & Mathematics; PCB covers Physics, Chemistry & Biology; Commerce covers Accountancy, Business Studies & Economics; Arts & Humanities covers History, Political Science & Humanities.',
   ],
 ];
 
@@ -102,12 +109,13 @@ const rules = {
   email: (v) => (/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v || '') ? '' : 'Enter a valid email address'),
   school: (v) => ((v || '').trim().length >= 3 ? '' : 'Enter your school name'),
   board: (v) => (v ? '' : 'Select your board'),
+  stream: (v) => (v ? '' : 'Select your stream / field'),
   slot: (v) => (v ? '' : 'Please pick an exam date'),
 };
 
 const STEP_FIELDS = [
   ['name', 'father', 'mobile', 'email'],
-  ['school', 'board'],
+  ['school', 'board', 'stream'],
   ['slot'],
 ];
 
@@ -203,6 +211,7 @@ export default function TalentSearchLevel1() {
     email: '',
     school: '',
     board: 'CBSE',
+    stream: 'PCM',
     slot: '29 Nov',
   });
   const [touched, setTouched] = useState({});
@@ -462,8 +471,8 @@ export default function TalentSearchLevel1() {
       email: form.email.toLowerCase().trim(),
       schoolName: form.school.trim(),
       board: form.board,
+      stream: form.stream || 'PCM',
       slot: form.slot,
-      stream: 'PCM',
     };
 
     try {
@@ -977,7 +986,7 @@ export default function TalentSearchLevel1() {
 
                     {step === 1 && (
                       <>
-                        <div className="th-sec">🏫 Academic Background</div>
+                        <div className="th-sec">🏫 Academic Background &amp; Stream Selection</div>
                         <div className="th-row">
                           <Field
                             label="School Name"
@@ -1000,6 +1009,78 @@ export default function TalentSearchLevel1() {
                               ))}
                             </select>
                           </Field>
+                        </div>
+
+                        <div className="th-row" style={{ marginTop: '6px' }}>
+                          <Field label="Select Stream / Field (For Exam Paper)" name="stream" {...common}>
+                            <select
+                              id="stream"
+                              name="stream"
+                              value={form.stream}
+                              onChange={onChange}
+                              onBlur={onBlur}
+                              style={{ fontWeight: 600, color: '#0f172a' }}
+                            >
+                              {STREAMS.map((s) => (
+                                <option key={s.id} value={s.id}>
+                                  {s.label}
+                                </option>
+                              ))}
+                            </select>
+                          </Field>
+
+                          <div
+                            style={{
+                              display: 'flex',
+                              flexDirection: 'column',
+                              justifyContent: 'center',
+                              background: '#f8fafc',
+                              padding: '12px 14px',
+                              borderRadius: '12px',
+                              border: '1px solid #e2e8f0',
+                              fontSize: '12px',
+                              color: '#334155',
+                              lineHeight: 1.5,
+                            }}
+                          >
+                            <div style={{ color: '#0284c7', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '5px', marginBottom: '2px' }}>
+                              <span>📘</span> Stream-Specific Question Paper
+                            </div>
+                            <span>
+                              Your examination paper and syllabus will be strictly based on <strong>{form.stream}</strong>.
+                            </span>
+                          </div>
+                        </div>
+
+                        {/* Quick 1-Click Stream Selection Pills */}
+                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: '8px', marginBottom: '14px' }}>
+                          {STREAMS.map((s) => {
+                            const isSelected = form.stream === s.id;
+                            return (
+                              <button
+                                key={s.id}
+                                type="button"
+                                onClick={() => {
+                                  setForm((f) => ({ ...f, stream: s.id }));
+                                  setTouched((t) => ({ ...t, stream: true }));
+                                }}
+                                style={{
+                                  padding: '8px 12px',
+                                  borderRadius: '10px',
+                                  border: isSelected ? '2px solid #0284c7' : '1px solid #cbd5e1',
+                                  background: isSelected ? '#f0f9ff' : '#ffffff',
+                                  color: isSelected ? '#0369a1' : '#475569',
+                                  fontWeight: isSelected ? 700 : 500,
+                                  fontSize: '12px',
+                                  cursor: 'pointer',
+                                  textAlign: 'center',
+                                  transition: 'all 0.15s ease',
+                                }}
+                              >
+                                {isSelected ? `✓ ${s.id}` : s.id}
+                              </button>
+                            );
+                          })}
                         </div>
                       </>
                     )}
@@ -1145,6 +1226,10 @@ export default function TalentSearchLevel1() {
                         <small>Board</small>
                         <b>{form.board}</b>
                       </div>
+                      <div>
+                        <small>Stream / Paper Type</small>
+                        <b style={{ color: '#0284c7' }}>{form.stream}</b>
+                      </div>
                       <div className="full">
                         <small>Exam Date &amp; Time Window</small>
                         <b>{slotF.full} · 10:00 AM – 5:00 PM (Attempt Anytime)</b>
@@ -1191,6 +1276,7 @@ export default function TalentSearchLevel1() {
                           email: '',
                           school: '',
                           board: 'CBSE',
+                          stream: 'PCM',
                           slot: '29 Nov',
                         });
                       }}
@@ -1220,6 +1306,10 @@ export default function TalentSearchLevel1() {
                   <div>
                     <span>Board</span>
                     <b>{form.board}</b>
+                  </div>
+                  <div>
+                    <span>Stream</span>
+                    <b style={{ color: '#0284c7' }}>{form.stream}</b>
                   </div>
                   <div>
                     <span>Exam date</span>

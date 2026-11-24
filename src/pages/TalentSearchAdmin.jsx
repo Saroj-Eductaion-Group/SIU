@@ -172,6 +172,7 @@ export default function TalentSearchAdmin() {
   const [regLoading, setRegLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedBoard, setSelectedBoard] = useState('all');
+  const [selectedStream, setSelectedStream] = useState('all');
   const [selectedSlot, setSelectedSlot] = useState('all');
 
   // Queries Data State
@@ -354,6 +355,9 @@ export default function TalentSearchAdmin() {
       if (selectedBoard !== 'all') {
         filtered = filtered.filter((r) => (r.board || '').toLowerCase() === selectedBoard.toLowerCase());
       }
+      if (selectedStream !== 'all') {
+        filtered = filtered.filter((r) => (r.stream || '').toLowerCase() === selectedStream.toLowerCase());
+      }
       if (selectedSlot !== 'all') {
         filtered = filtered.filter((r) => r.slot === selectedSlot);
       }
@@ -470,7 +474,7 @@ export default function TalentSearchAdmin() {
       fetchRegistrations(token);
       fetchQueries(token);
     }
-  }, [token, selectedBoard, selectedSlot, selectedQueryStatus]);
+  }, [token, selectedBoard, selectedStream, selectedSlot, selectedQueryStatus]);
 
   // Debounced Search
   useEffect(() => {
@@ -756,8 +760,8 @@ export default function TalentSearchAdmin() {
                   <span className="font-mono text-gray-900 truncate block">{selectedRecord.email}</span>
                 </div>
                 <div className="bg-slate-50 p-3 rounded-xl border border-slate-200">
-                  <span className="text-[10px] uppercase font-bold text-gray-400 block">Board</span>
-                  <span className="font-bold text-blue-700">{selectedRecord.board || 'CBSE'}</span>
+                  <span className="text-[10px] uppercase font-bold text-gray-400 block">Board & Stream</span>
+                  <span className="font-bold text-blue-700">{selectedRecord.board || 'CBSE'} · <span className="text-emerald-700">{selectedRecord.stream || 'PCM'}</span></span>
                 </div>
               </div>
 
@@ -990,6 +994,19 @@ export default function TalentSearchAdmin() {
                     <option value="Other">Other State Board</option>
                   </select>
 
+                  {/* Stream Filter */}
+                  <select
+                    value={selectedStream}
+                    onChange={(e) => setSelectedStream(e.target.value)}
+                    className="px-3 py-2 rounded-xl border border-gray-300 bg-white font-medium outline-none"
+                  >
+                    <option value="all">All Streams</option>
+                    <option value="PCM">PCM</option>
+                    <option value="PCB">PCB</option>
+                    <option value="Commerce">Commerce</option>
+                    <option value="Arts & Humanities">Arts & Humanities</option>
+                  </select>
+
                   {/* Slot Filter */}
                   <select
                     value={selectedSlot}
@@ -1045,9 +1062,14 @@ export default function TalentSearchAdmin() {
                             </td>
                             <td className="py-3.5 px-4">
                               <div className="font-semibold text-gray-800 truncate max-w-[180px]">{r.schoolName}</div>
-                              <span className="text-[10px] font-bold text-blue-600 bg-blue-50 px-1.5 py-0.5 rounded">
-                                {r.board || 'CBSE'}
-                              </span>
+                              <div className="flex items-center gap-1.5 mt-0.5">
+                                <span className="text-[10px] font-bold text-blue-600 bg-blue-50 px-1.5 py-0.5 rounded">
+                                  {r.board || 'CBSE'}
+                                </span>
+                                <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-1.5 py-0.5 rounded">
+                                  {r.stream || 'PCM'}
+                                </span>
+                              </div>
                             </td>
                             <td className="py-3.5 px-4">
                               <span className="font-bold text-amber-800 bg-amber-50 border border-amber-200 px-2.5 py-1 rounded-full text-[11px] whitespace-nowrap">
