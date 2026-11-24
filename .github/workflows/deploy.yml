@@ -21,16 +21,14 @@ jobs:
           if [ -d "/var/www/SIU-Backend" ]; then
             echo "📦 Updating /var/www/SIU-Backend..."
             sudo chown -R admin:admin /var/www/SIU-Backend 2>/dev/null || true
-            if [ -d "/var/www/SIU-Backend/.git" ]; then
-              cd /var/www/SIU-Backend && git pull origin main 2>/dev/null || true
-            fi
-            if command -v rsync >/dev/null 2>&1; then
-              sudo rsync -av --exclude 'node_modules' /var/www/SIU/Backend/ /var/www/SIU-Backend/ 2>/dev/null || sudo cp -r /var/www/SIU/Backend/* /var/www/SIU-Backend/ 2>/dev/null || true
-            else
-              sudo cp -r /var/www/SIU/Backend/* /var/www/SIU-Backend/ 2>/dev/null || true
-            fi
+            sudo mkdir -p /var/www/SIU-Backend/routes /var/www/SIU-Backend/models /var/www/SIU-Backend/middleware /var/www/SIU-Backend/config
+            sudo cp -r /var/www/SIU/Backend/routes/* /var/www/SIU-Backend/routes/
+            sudo cp -r /var/www/SIU/Backend/models/* /var/www/SIU-Backend/models/
+            sudo cp -r /var/www/SIU/Backend/middleware/* /var/www/SIU-Backend/middleware/
+            sudo cp -r /var/www/SIU/Backend/config/* /var/www/SIU-Backend/config/
+            sudo cp /var/www/SIU/Backend/server.js /var/www/SIU-Backend/server.js
           fi
 
-          pm2 reload all
+          pm2 restart all || pm2 reload all
           echo "✅ Deployment completed successfully!"
 
