@@ -928,37 +928,6 @@ export default function TalentSearchLevel1() {
                             </span>
                           </div>
                         </div>
-
-                        {/* Quick 1-Click Stream Selection Pills */}
-                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: '8px', marginBottom: '14px' }}>
-                          {STREAMS.map((s) => {
-                            const isSelected = form.stream === s.id;
-                            return (
-                              <button
-                                key={s.id}
-                                type="button"
-                                onClick={() => {
-                                  setForm((f) => ({ ...f, stream: s.id }));
-                                  setTouched((t) => ({ ...t, stream: true }));
-                                }}
-                                style={{
-                                  padding: '8px 12px',
-                                  borderRadius: '10px',
-                                  border: isSelected ? '2px solid #0284c7' : '1px solid #cbd5e1',
-                                  background: isSelected ? '#f0f9ff' : '#ffffff',
-                                  color: isSelected ? '#0369a1' : '#475569',
-                                  fontWeight: isSelected ? 700 : 500,
-                                  fontSize: '12px',
-                                  cursor: 'pointer',
-                                  textAlign: 'center',
-                                  transition: 'all 0.15s ease',
-                                }}
-                              >
-                                {isSelected ? `✓ ${s.id}` : s.id}
-                              </button>
-                            );
-                          })}
-                        </div>
                       </>
                     )}
 
