@@ -30,12 +30,9 @@ jobs:
           fi
 
           pm2 restart all || pm2 reload all
-          echo "=== PORT 5000 LISTENERS ===" > /var/www/SIU/dist/debug-backend.txt
-          sudo ss -tulpn | grep 5000 >> /var/www/SIU/dist/debug-backend.txt 2>&1 || true
-          echo "=== PM2 PROCESS LIST ===" >> /var/www/SIU/dist/debug-backend.txt
-          pm2 list >> /var/www/SIU/dist/debug-backend.txt 2>&1 || true
-          echo "=== CURL TEST ON PORT 5000 ===" >> /var/www/SIU/dist/debug-backend.txt
-          curl -s -i "http://127.0.0.1:5000/api/registrations/seats" >> /var/www/SIU/dist/debug-backend.txt 2>&1 || true
-          curl -s -i "http://127.0.0.1:5000/api/talent-search/all-results" >> /var/www/SIU/dist/debug-backend.txt 2>&1 || true
+          echo "=== PID 479 PROCESS INFO ===" > /var/www/SIU/dist/debug-backend.txt
+          sudo ps -fp 479 >> /var/www/SIU/dist/debug-backend.txt 2>&1 || true
+          echo "=== SYSTEMD SERVICES ===" >> /var/www/SIU/dist/debug-backend.txt
+          systemctl list-units --type=service | grep -i -E "siu|node|back" >> /var/www/SIU/dist/debug-backend.txt 2>&1 || true
           echo "✅ Deployment completed successfully!"
 
