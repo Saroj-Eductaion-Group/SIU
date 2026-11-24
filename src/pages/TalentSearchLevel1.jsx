@@ -219,23 +219,6 @@ export default function TalentSearchLevel1() {
   const [result, setResult] = useState(null);
   const [openFaq, setOpenFaq] = useState(0);
 
-  // Mobile OTP States
-  const [mobileOtpSent, setMobileOtpSent] = useState(false);
-  const [mobileOtp, setMobileOtp] = useState('');
-  const [mobileOtpLoading, setMobileOtpLoading] = useState(false);
-  const [mobileVerified, setMobileVerified] = useState(false);
-  const [mobileOtpError, setMobileOtpError] = useState('');
-  const [mobileOtpMsg, setMobileOtpMsg] = useState('');
-  const [mobileOtpTimer, setMobileOtpTimer] = useState(0);
-
-  // Email OTP States
-  const [emailOtpSent, setEmailOtpSent] = useState(false);
-  const [emailOtp, setEmailOtp] = useState('');
-  const [emailOtpLoading, setEmailOtpLoading] = useState(false);
-  const [emailVerified, setEmailVerified] = useState(false);
-  const [emailOtpError, setEmailOtpError] = useState('');
-  const [emailOtpMsg, setEmailOtpMsg] = useState('');
-  const [emailOtpTimer, setEmailOtpTimer] = useState(0);
 
   // Any Query Modal State
   const [showQueryModal, setShowQueryModal] = useState(false);
@@ -247,19 +230,11 @@ export default function TalentSearchLevel1() {
   const [qError, setQError] = useState('');
   const [qSuccess, setQSuccess] = useState('');
 
-  // Mobile OTP Countdown Timer
-  useEffect(() => {
-    if (mobileOtpTimer <= 0) return;
-    const t = setInterval(() => setMobileOtpTimer((prev) => prev - 1), 1000);
-    return () => clearInterval(t);
-  }, [mobileOtpTimer]);
+  // Duplicate Check & Registration Error States
+  const [submitError, setSubmitError] = useState('');
+  const [stepError, setStepError] = useState('');
+  const [checkingStep, setCheckingStep] = useState(false);
 
-  // Email OTP Countdown Timer
-  useEffect(() => {
-    if (emailOtpTimer <= 0) return;
-    const t = setInterval(() => setEmailOtpTimer((prev) => prev - 1), 1000);
-    return () => clearInterval(t);
-  }, [emailOtpTimer]);
 
   const errors = useMemo(() => {
     const e = {};
@@ -281,162 +256,38 @@ export default function TalentSearchLevel1() {
   const filled = Object.keys(rules).filter((k) => !errors[k]).length;
   const progress = Math.round((filled / Object.keys(rules).length) * 100);
 
-  // Send Mobile OTP
-  const handleSendMobileOtp = async () => {
-    setMobileOtpError('');
-    setMobileOtpMsg('');
-    const cleanMobile = form.mobile ? form.mobile.replace(/\D/g, '').slice(-10) : '';
-    if (cleanMobile.length !== 10) {
-      setMobileOtpError('Please enter a valid 10-digit mobile number first.');
-      return;
-    }
-    setMobileOtpLoading(true);
-    try {
-      let sentOtp = '';
-      try {
-        const res = await fetch(`${API_BASE}/talent-search/send-otp`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ mobile: cleanMobile }),
-        });
-        const data = await res.json();
-        if (data.success && data.otp) {
-          sentOtp = data.otp;
-        }
-      } catch (e) {
-        console.warn('Backend send-otp failed, using fallback:', e);
-      }
-
-      if (!sentOtp) {
-        sentOtp = Math.floor(100000 + Math.random() * 900000).toString();
-      }
-      localStorage.setItem(`demo_otp_mobile_${cleanMobile}`, sentOtp);
-
-      setMobileOtpSent(true);
-      setMobileOtpTimer(60);
-      setMobileOtpMsg(`OTP sent to +91-${cleanMobile}! (OTP: ${sentOtp})`);
-    } catch {
-      setMobileOtpError('Could not send OTP. Try again.');
-    } finally {
-      setMobileOtpLoading(false);
-    }
-  };
-
-  // Verify Mobile OTP
-  const handleVerifyMobileOtp = async () => {
-    setMobileOtpError('');
-    if (!mobileOtp.trim() || mobileOtp.trim().length !== 6) {
-      setMobileOtpError('Please enter the 6-digit OTP.');
-      return;
-    }
-    setMobileOtpLoading(true);
-    const cleanMobile = form.mobile ? form.mobile.replace(/\D/g, '').slice(-10) : '';
-    try {
-      let verified = false;
-      try {
-        const res = await fetch(`${API_BASE}/talent-search/verify-otp`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ mobile: cleanMobile, otp: mobileOtp.trim() }),
-        });
-        const data = await res.json();
-        if (data.success) verified = true;
-      } catch (e) {
-        console.warn('Backend verify-otp error:', e);
-      }
-
-      const localSaved = localStorage.getItem(`demo_otp_mobile_${cleanMobile}`);
-      if (verified || mobileOtp.trim() === '123456' || (localSaved && localSaved === mobileOtp.trim())) {
-        setMobileVerified(true);
-        setMobileOtpMsg('Mobile number verified successfully!');
-      } else {
-        setMobileOtpError('Invalid OTP. Please check and re-enter.');
-      }
-    } finally {
-      setMobileOtpLoading(false);
-    }
-  };
-
-  // Send Email OTP
-  const handleSendEmailOtp = async () => {
-    setEmailOtpError('');
-    setEmailOtpMsg('');
-    const emailVal = form.email ? form.email.trim().toLowerCase() : '';
-    if (!emailVal || !emailVal.includes('@') || !emailVal.includes('.')) {
-      setEmailOtpError('Please enter a valid email address first.');
-      return;
-    }
-    setEmailOtpLoading(true);
-    try {
-      let sentOtp = '';
-      try {
-        const res = await fetch(`${API_BASE}/talent-search/send-email-otp`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email: emailVal }),
-        });
-        const data = await res.json();
-        if (data.success && data.otp) {
-          sentOtp = data.otp;
-        }
-      } catch (e) {
-        console.warn('Backend send-email-otp failed, using fallback:', e);
-      }
-
-      if (!sentOtp) {
-        sentOtp = Math.floor(100000 + Math.random() * 900000).toString();
-      }
-      localStorage.setItem(`demo_otp_email_${emailVal}`, sentOtp);
-
-      setEmailOtpSent(true);
-      setEmailOtpTimer(60);
-      setEmailOtpMsg(`OTP sent to ${emailVal}! (OTP: ${sentOtp})`);
-    } catch {
-      setEmailOtpError('Could not send OTP. Try again.');
-    } finally {
-      setEmailOtpLoading(false);
-    }
-  };
-
-  // Verify Email OTP
-  const handleVerifyEmailOtp = async () => {
-    setEmailOtpError('');
-    if (!emailOtp.trim() || emailOtp.trim().length !== 6) {
-      setEmailOtpError('Please enter the 6-digit OTP.');
-      return;
-    }
-    setEmailOtpLoading(true);
-    const emailVal = form.email ? form.email.trim().toLowerCase() : '';
-    try {
-      let verified = false;
-      try {
-        const res = await fetch(`${API_BASE}/talent-search/verify-email-otp`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email: emailVal, otp: emailOtp.trim() }),
-        });
-        const data = await res.json();
-        if (data.success) verified = true;
-      } catch (e) {
-        console.warn('Backend verify-email-otp error:', e);
-      }
-
-      const localSaved = localStorage.getItem(`demo_otp_email_${emailVal}`);
-      if (verified || emailOtp.trim() === '123456' || (localSaved && localSaved === emailOtp.trim())) {
-        setEmailVerified(true);
-        setEmailOtpMsg('Email address verified successfully!');
-      } else {
-        setEmailOtpError('Invalid OTP. Please check and re-enter.');
-      }
-    } finally {
-      setEmailOtpLoading(false);
-    }
-  };
-
-  const next = () => {
+  const next = async () => {
     setTouched((t) => ({ ...t, ...Object.fromEntries(STEP_FIELDS[step].map((k) => [k, true])) }));
     if (!stepValid(step)) return;
 
+    // Check duplicate on Step 0 before proceeding
+    if (step === 0) {
+      setStepError('');
+      const cleanMobile = form.mobile ? form.mobile.replace(/\D/g, '').slice(-10) : '';
+      const cleanEmail = form.email ? form.email.toLowerCase().trim() : '';
+
+      setCheckingStep(true);
+      try {
+        const res = await fetch(`${API_BASE}/talent-search/check-duplicate`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ mobile: cleanMobile, email: cleanEmail }),
+        });
+        const data = await res.json();
+        if (data.success && data.isDuplicate) {
+          setStepError(data.message || 'A student with this Mobile Number or Email is already registered.');
+          setCheckingStep(false);
+          return;
+        }
+      } catch (err) {
+        console.warn('Duplicate pre-check failed, continuing:', err);
+      } finally {
+        setCheckingStep(false);
+      }
+    }
+
+    setStepError('');
+    setSubmitError('');
     setStep((s) => s + 1);
   };
 
@@ -445,6 +296,7 @@ export default function TalentSearchLevel1() {
     setTouched((t) => ({ ...t, slot: true }));
     if (!stepValid(2)) return;
     setLoading(true);
+    setSubmitError('');
 
     const regData = {
       name: form.name.trim(),
@@ -458,44 +310,38 @@ export default function TalentSearchLevel1() {
     };
 
     try {
-      let savedCandidate = null;
-      try {
-        const res = await fetch(`${API_BASE}/talent-search/register`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(regData),
-        });
-        const data = await res.json();
-        if (data.success && data.candidate) {
-          savedCandidate = data.candidate;
-        } else {
-          console.warn('Backend register response:', data);
-        }
-      } catch (backendErr) {
-        console.warn('Backend unavailable, saving offline:', backendErr);
+      const res = await fetch(`${API_BASE}/talent-search/register`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(regData),
+      });
+      const data = await res.json();
+
+      if (!res.ok || !data.success) {
+        setSubmitError(data.message || 'Registration failed. A student with this Mobile Number or Email may already be registered.');
+        return;
       }
 
+      const savedCandidate = data.candidate;
       const regNo = savedCandidate?.applicationNumber || `SIU-TS27-${Math.floor(100000 + Math.random() * 900000)}`;
       const regId = savedCandidate?._id || `SIU-TS-${Date.now().toString().slice(-6)}`;
+      const rollNo = savedCandidate?.rollNumber || `ST27-${regNo.slice(-6)}`;
+      const examPass = savedCandidate?.password || `SIU@${form.mobile.slice(-4)}`;
 
       const finalRecord = {
         _id: regId,
         applicationNumber: regNo,
+        rollNumber: rollNo,
+        password: examPass,
         ...regData,
         hasAttempted: false,
         score: 0,
         registeredAt: new Date().toISOString(),
       };
 
-      const rollNo = savedCandidate?.rollNumber || `ST27-${regNo.slice(-6)}`;
-      const examPass = savedCandidate?.password || `SIU@${form.mobile.slice(-4)}`;
-
-      finalRecord.rollNumber = rollNo;
-      finalRecord.password = examPass;
-
       try {
         const existing = JSON.parse(localStorage.getItem('siu_talent_local_submissions') || '[]');
-        const updated = [finalRecord, ...existing.filter((c) => c.mobile !== form.mobile)];
+        const updated = [finalRecord, ...existing.filter((c) => c.mobile !== form.mobile && c.email !== form.email)];
         localStorage.setItem('siu_talent_local_submissions', JSON.stringify(updated));
       } catch (locErr) {
         console.warn('Local storage save error:', locErr);
@@ -507,6 +353,9 @@ export default function TalentSearchLevel1() {
         password: examPass,
         at: new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' }),
       });
+    } catch (err) {
+      console.error('Registration error:', err);
+      setSubmitError('Unable to connect to the registration server. Please check your internet connection and try again.');
     } finally {
       setLoading(false);
     }
@@ -858,6 +707,22 @@ export default function TalentSearchLevel1() {
                             {...common}
                           />
                         </div>
+
+                        {stepError && (
+                          <div style={{
+                            marginTop: '12px',
+                            padding: '12px 16px',
+                            background: '#fef2f2',
+                            border: '1.5px solid #fecaca',
+                            borderRadius: '12px',
+                            color: '#b91c1c',
+                            fontSize: '12.5px',
+                            fontWeight: 600,
+                            lineHeight: 1.5,
+                          }}>
+                            ⚠️ {stepError}
+                          </div>
+                        )}
                       </>
                     )}
 
@@ -979,23 +844,49 @@ export default function TalentSearchLevel1() {
                       </>
                     )}
 
+                    {submitError && (
+                      <div style={{
+                        marginTop: '14px',
+                        marginBottom: '10px',
+                        padding: '12px 16px',
+                        background: '#fef2f2',
+                        border: '1.5px solid #fecaca',
+                        borderRadius: '12px',
+                        color: '#b91c1c',
+                        fontSize: '12.5px',
+                        fontWeight: 600,
+                        lineHeight: 1.5,
+                      }}>
+                        ⚠️ {submitError}
+                      </div>
+                    )}
+
                     <div className="th-actions">
                       <span className="th-note">
-                        Free registration · Admit slip issued immediately on submit
+                        Free registration · Admit card delivered to registered Email &amp; SMS
                       </span>
                       <div style={{ display: 'flex', gap: 10 }}>
                         {step > 0 && (
                           <button
                             type="button"
                             className="th-btn ghost"
-                            onClick={() => setStep(step - 1)}
+                            onClick={() => {
+                              setStepError('');
+                              setSubmitError('');
+                              setStep(step - 1);
+                            }}
                           >
                             ← Back
                           </button>
                         )}
                         {step < 2 ? (
-                          <button type="button" className="th-btn primary" onClick={next}>
-                            Continue →
+                          <button
+                            type="button"
+                            className="th-btn primary"
+                            onClick={next}
+                            disabled={checkingStep}
+                          >
+                            {checkingStep ? 'Checking details...' : 'Continue →'}
                           </button>
                         ) : (
                           <button

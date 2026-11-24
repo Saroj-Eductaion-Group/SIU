@@ -41,101 +41,6 @@ const API_BASE = isLocalhost
   ? `http://${typeof window !== 'undefined' ? window.location.hostname : 'localhost'}:5000/api`
   : (import.meta.env.VITE_API_URL || '/api');
 
-// Fallback initial demo registrations if storage/db is fresh
-const INITIAL_DEMO_REGISTRATIONS = [
-  {
-    _id: 'reg_101',
-    name: 'Aarav Sharma',
-    fatherName: 'Rajesh Sharma',
-    mobile: '9876543210',
-    email: 'aarav.sharma@gmail.com',
-    schoolName: 'Delhi Public School, Gomti Nagar, Lucknow',
-    board: 'CBSE',
-    stream: 'PCM',
-    slot: '29 Nov',
-    registeredAt: new Date(Date.now() - 3600000 * 4).toISOString(),
-  },
-  {
-    _id: 'reg_102',
-    name: 'Priya Verma',
-    fatherName: 'Manoj Verma',
-    mobile: '9812345678',
-    email: 'priya.verma@outlook.com',
-    schoolName: 'City Montessori School (CMS), Lucknow',
-    board: 'ICSE',
-    stream: 'PCB',
-    slot: '6 Dec',
-    registeredAt: new Date(Date.now() - 3600000 * 8).toISOString(),
-  },
-  {
-    _id: 'reg_103',
-    name: 'Rohan Gupta',
-    fatherName: 'Anil Gupta',
-    mobile: '9798765432',
-    email: 'rohan.g@yahoo.com',
-    schoolName: 'St. Francis College, Hazratganj',
-    board: 'CBSE',
-    stream: 'Commerce',
-    slot: '20 Dec',
-    registeredAt: new Date(Date.now() - 3600000 * 16).toISOString(),
-  },
-  {
-    _id: 'reg_104',
-    name: 'Ananya Mishra',
-    fatherName: 'Dr. S. K. Mishra',
-    mobile: '9654321890',
-    email: 'ananya.mishra@gmail.com',
-    schoolName: 'La Martiniere Girls College, Lucknow',
-    board: 'ICSE',
-    stream: 'Arts',
-    slot: '10 Jan',
-    registeredAt: new Date(Date.now() - 3600000 * 24).toISOString(),
-  },
-  {
-    _id: 'reg_105',
-    name: 'Vikas Singh',
-    fatherName: 'Ramesh Singh',
-    mobile: '9123456780',
-    email: 'vikas.singh@gmail.com',
-    schoolName: 'Govt. Inter College, Prayagraj',
-    board: 'UP Board',
-    stream: 'PCM',
-    slot: '24 Jan',
-    registeredAt: new Date(Date.now() - 3600000 * 36).toISOString(),
-  },
-];
-
-// Fallback initial demo queries
-const INITIAL_DEMO_QUERIES = [
-  {
-    _id: 'query_1',
-    name: 'Karan Singhania',
-    mobile: '9988776655',
-    email: 'karan.s@gmail.com',
-    query: 'Sir, mera exam slot change ho sakta hai kya? 29 Nov ko mera pre-board exam hai.',
-    status: 'Pending',
-    createdAt: new Date(Date.now() - 3600000 * 3).toISOString(),
-  },
-  {
-    _id: 'query_2',
-    name: 'Sneha Patel',
-    mobile: '9871122334',
-    email: 'sneha.patel@gmail.com',
-    query: 'Can you provide the detailed syllabus breakdown for PCM stream?',
-    status: 'In Progress',
-    createdAt: new Date(Date.now() - 3600000 * 10).toISOString(),
-  },
-  {
-    _id: 'query_3',
-    name: 'Aditya Srivastava',
-    mobile: '9765544332',
-    email: 'aditya.s@gmail.com',
-    query: 'What software or laptop configuration is needed to attempt the scholarship test?',
-    status: 'Resolved',
-    createdAt: new Date(Date.now() - 3600000 * 20).toISOString(),
-  },
-];
-
 // Master credential check
 const isMasterCredential = (inputEmail, inputPassword) => {
   const e = (inputEmail || '').trim().toLowerCase();
@@ -412,10 +317,19 @@ Website: https://sarojuniversity.edu.in`;
         console.warn('Backend fetch failed, using local/demo records:', e.message);
       }
 
-      // Read local storage submissions
+      // Read local storage submissions (excluding any legacy demo records)
       let localSubs = [];
       try {
-        localSubs = JSON.parse(localStorage.getItem('siu_talent_local_submissions') || '[]');
+        const raw = JSON.parse(localStorage.getItem('siu_talent_local_submissions') || '[]');
+        localSubs = raw.filter(
+          (s) =>
+            s &&
+            s.mobile &&
+            !s._id?.startsWith('reg_') &&
+            !s.isDemo &&
+            s.mobile !== '9876543210' &&
+            s.mobile !== '9812345678'
+        );
       } catch {}
 
       // Background auto-sync: Push any offline local registrations to backend
@@ -441,12 +355,9 @@ Website: https://sarojuniversity.edu.in`;
         });
       }
 
-      // Combine backend and local records (Local has latest fatherName and slot)
+      // Combine backend and local records - STRICTLY REAL CANDIDATES ONLY
       const candidateMap = new Map();
-      const baseList =
-        backendCandidates.length === 0 && localSubs.length === 0
-          ? INITIAL_DEMO_REGISTRATIONS
-          : [...backendCandidates, ...localSubs];
+      const baseList = [...backendCandidates, ...localSubs];
 
       baseList.forEach((c) => {
         if (!c.mobile) return;
@@ -527,7 +438,8 @@ Website: https://sarojuniversity.edu.in`;
 
       let localQueries = [];
       try {
-        localQueries = JSON.parse(localStorage.getItem('siu_talent_student_queries') || '[]');
+        const raw = JSON.parse(localStorage.getItem('siu_talent_student_queries') || '[]');
+        localQueries = raw.filter((q) => q && !q._id?.startsWith('query_') && !q.isDemo);
       } catch {}
 
       // Auto-sync offline queries to backend in background
@@ -549,12 +461,9 @@ Website: https://sarojuniversity.edu.in`;
         });
       }
 
-      // Combine queries uniquely
+      // Combine queries uniquely - STRICTLY REAL QUERIES ONLY
       const queryMap = new Map();
-      const baseQueries =
-        backendQueries.length === 0 && localQueries.length === 0
-          ? INITIAL_DEMO_QUERIES
-          : [...backendQueries, ...localQueries];
+      const baseQueries = [...backendQueries, ...localQueries];
 
       baseQueries.forEach((q) => {
         const key = q._id || `${q.mobile}_${q.query}`;
@@ -586,6 +495,27 @@ Website: https://sarojuniversity.edu.in`;
       setQueryLoading(false);
     }
   };
+
+  // Purge any legacy demo/mock data from localStorage on component mount
+  useEffect(() => {
+    try {
+      const rawSubs = JSON.parse(localStorage.getItem('siu_talent_local_submissions') || '[]');
+      const cleanSubs = rawSubs.filter(
+        (s) =>
+          s &&
+          s.mobile &&
+          !s._id?.startsWith('reg_') &&
+          !s.isDemo &&
+          s.mobile !== '9876543210' &&
+          s.mobile !== '9812345678'
+      );
+      localStorage.setItem('siu_talent_local_submissions', JSON.stringify(cleanSubs));
+
+      const rawQ = JSON.parse(localStorage.getItem('siu_talent_student_queries') || '[]');
+      const cleanQ = rawQ.filter((q) => q && !q._id?.startsWith('query_') && !q.isDemo);
+      localStorage.setItem('siu_talent_student_queries', JSON.stringify(cleanQ));
+    } catch {}
+  }, []);
 
   useEffect(() => {
     if (token) {

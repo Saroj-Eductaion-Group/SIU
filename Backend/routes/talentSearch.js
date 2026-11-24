@@ -217,6 +217,43 @@ router.post('/verify-result-otp', async (req, res) => {
   }
 });
 
+// 2d. POST /api/talent-search/check-duplicate
+router.post('/check-duplicate', async (req, res) => {
+  try {
+    const rawMobile = req.body.mobile;
+    const mobile = normalizeMobile(rawMobile);
+    const email = req.body.email ? req.body.email.toLowerCase().trim() : '';
+
+    const conditions = [];
+    if (mobile && mobile.length === 10) conditions.push({ mobile });
+    if (email && email.includes('@')) conditions.push({ email });
+
+    if (conditions.length === 0) {
+      return res.json({ success: true, isDuplicate: false });
+    }
+
+    const existing = await TalentSearchRegistration.findOne({ $or: conditions });
+    if (existing) {
+      const isMobile = existing.mobile === mobile;
+      const matchedField = isMobile ? 'Mobile Number' : 'Email Address';
+      const matchedVal = isMobile ? `+91-${mobile}` : email;
+      return res.json({
+        success: true,
+        isDuplicate: true,
+        candidateName: existing.name,
+        existingSlot: existing.slot,
+        existingStream: existing.stream,
+        message: `A student with this ${matchedField} (${matchedVal}) is already registered for Exam Slot: ${existing.slot || '29 Nov'} (${existing.stream || 'Class 12'}). Duplicate registration is not permitted.`,
+      });
+    }
+
+    return res.json({ success: true, isDuplicate: false });
+  } catch (err) {
+    console.error('Error in check-duplicate:', err);
+    return res.status(500).json({ success: false, message: err.message });
+  }
+});
+
 // 3. POST /api/talent-search/register
 router.post('/register', async (req, res) => {
   try {
@@ -242,12 +279,42 @@ router.post('/register', async (req, res) => {
       return res.status(400).json({ success: false, message: 'Board (CBSE/ICSE/UP Board/Other) is required.' });
     }
 
+    const cleanEmail = email.toLowerCase().trim();
     const chosenStream = stream && stream.trim() ? stream.trim() : 'Class 12';
 
     const validSlots = ['29 Nov', '6 Dec', '20 Dec', '10 Jan', '24 Jan', '7 Feb', '21 Feb'];
     const chosenSlot = validSlots.includes(slot) ? slot : '29 Nov';
 
-    let candidate = await TalentSearchRegistration.findOne({ mobile });
+    // STRICT DUPLICATE CHECK: No duplicate student allowed by Mobile OR Email
+    const existingCandidate = await TalentSearchRegistration.findOne({
+      $or: [
+        { mobile },
+        { email: cleanEmail },
+      ],
+    });
+
+    if (existingCandidate) {
+      const isMobileMatch = existingCandidate.mobile === mobile;
+      const isEmailMatch = existingCandidate.email === cleanEmail;
+      let matchedReason = '';
+      if (isMobileMatch && isEmailMatch) {
+        matchedReason = `Mobile Number (+91-${mobile}) and Email Address (${cleanEmail})`;
+      } else if (isMobileMatch) {
+        matchedReason = `Mobile Number (+91-${mobile})`;
+      } else {
+        matchedReason = `Email Address (${cleanEmail})`;
+      }
+
+      return res.status(409).json({
+        success: false,
+        duplicate: true,
+        candidateName: existingCandidate.name,
+        existingSlot: existingCandidate.slot,
+        existingStream: existingCandidate.stream,
+        existingRollNumber: existingCandidate.rollNumber || existingCandidate.applicationNumber,
+        message: `A student is already registered with this ${matchedReason}. Registered Exam Slot: ${existingCandidate.slot || '29 Nov'} (${existingCandidate.stream || 'Class 12'}). Duplicate registrations are not permitted.`,
+      });
+    }
 
     const paperSets = ['Set A', 'Set B', 'Set C', 'Set D'];
     const assignedSet = paperSets[Math.floor(Math.random() * paperSets.length)];
@@ -257,49 +324,28 @@ router.post('/register', async (req, res) => {
     const studentPassword = `SIU@${mobile.slice(-4)}`;
     const hashedPassword = hashPassword(studentPassword);
 
-    if (candidate) {
-      // Update existing registration in SIITJEE database
-      candidate.name = name.trim();
-      candidate.fatherName = fatherName.trim();
-      candidate.schoolName = schoolName.trim();
-      candidate.email = email.toLowerCase().trim();
-      candidate.board = board.trim();
-      candidate.stream = chosenStream;
-      candidate.slot = chosenSlot;
-      candidate.paperSet = assignedSet;
-      if (!candidate.applicationNumber) candidate.applicationNumber = generatedAppNo;
-      if (!candidate.rollNumber) candidate.rollNumber = generatedRollNo;
-      if (!candidate.password) candidate.password = studentPassword;
-      if (!candidate.password_hash) candidate.password_hash = hashedPassword;
-      candidate.username = mobile;
-      candidate.role = 'student';
-      candidate.admission_status = 'Registered';
-      candidate.l1_status = 'Registered';
-      await candidate.save();
-    } else {
-      candidate = new TalentSearchRegistration({
-        name: name.trim(),
-        fatherName: fatherName.trim(),
-        schoolName: schoolName.trim(),
-        email: email.toLowerCase().trim(),
-        board: board.trim(),
-        mobile,
-        stream: chosenStream,
-        slot: chosenSlot,
-        paperSet: assignedSet,
-        applicationNumber: generatedAppNo,
-        rollNumber: generatedRollNo,
-        username: mobile,
-        password: studentPassword,
-        password_hash: hashedPassword,
-        role: 'student',
-        admission_status: 'Registered',
-        l1_status: 'Registered',
-        isVerified: true,
-        hasAttempted: false,
-      });
-      await candidate.save();
-    }
+    const candidate = new TalentSearchRegistration({
+      name: name.trim(),
+      fatherName: fatherName.trim(),
+      schoolName: schoolName.trim(),
+      email: cleanEmail,
+      board: board.trim(),
+      mobile,
+      stream: chosenStream,
+      slot: chosenSlot,
+      paperSet: assignedSet,
+      applicationNumber: generatedAppNo,
+      rollNumber: generatedRollNo,
+      username: mobile,
+      password: studentPassword,
+      password_hash: hashedPassword,
+      role: 'student',
+      admission_status: 'Registered',
+      l1_status: 'Registered',
+      isVerified: true,
+      hasAttempted: false,
+    });
+    await candidate.save();
 
     // Mirror to SIITJEE students and users collections for immediate student login in new software
     await syncStudentToSiitjeeCollections(candidate);
