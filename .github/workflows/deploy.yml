@@ -16,6 +16,20 @@ jobs:
           git checkout package-lock.json
           git pull origin main
           npm run build
+
+          # Sync backend files to /var/www/SIU-Backend if backend runs from there
+          if [ -d "/var/www/SIU-Backend" ]; then
+            echo "📦 Updating /var/www/SIU-Backend..."
+            if [ -d "/var/www/SIU-Backend/.git" ]; then
+              cd /var/www/SIU-Backend && git pull origin main || true
+            fi
+            if command -v rsync >/dev/null 2>&1; then
+              rsync -av --exclude 'node_modules' /var/www/SIU/Backend/ /var/www/SIU-Backend/
+            else
+              cp -r /var/www/SIU/Backend/* /var/www/SIU-Backend/
+            fi
+          fi
+
           pm2 reload all
           echo "✅ Deployment completed successfully!"
 
