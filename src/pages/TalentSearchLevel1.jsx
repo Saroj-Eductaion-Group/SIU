@@ -812,13 +812,13 @@ export default function TalentSearchLevel1() {
                           gap: '12px',
                           boxShadow: '0 2px 8px rgba(37, 99, 235, 0.08)'
                         }}>
-                          <span style={{ fontSize: '22px', lineHeight: 1 }}>✉️</span>
+                          <span style={{ fontSize: '24px', lineHeight: 1 }}>✉️</span>
                           <div>
                             <div style={{ fontSize: '13px', fontWeight: 800, color: '#1e3a8a', marginBottom: '3px' }}>
-                              Notice for Applicants:
+                              Important Notice for Applicants:
                             </div>
                             <div style={{ fontSize: '12.5px', color: '#1e40af', lineHeight: 1.5, fontWeight: 500 }}>
-                              Please provide accurate details so we can email your exam portal Login ID and Password.
+                              Please provide accurate details. Your official <strong>Admit Card</strong> along with the <strong>Exam Portal Login ID and Password</strong> will be delivered directly to your <strong>Email Address and Mobile SMS</strong>. Details will not be shown on-screen.
                             </div>
                           </div>
                         </div>
@@ -1040,7 +1040,7 @@ export default function TalentSearchLevel1() {
                                 <span className="th-spin" /> Submitting…
                               </>
                             ) : (
-                              'Submit Registration & Get Slip →'
+                              'Complete Registration →'
                             )}
                           </button>
                         )}
@@ -1066,17 +1066,66 @@ export default function TalentSearchLevel1() {
                   <div className="th-check">✓</div>
                   <h2>Registration Successful!</h2>
                   <p>
-                    Congratulations {form.name.split(' ')[0]}! Keep your admit slip safe and carry it on the exam day.
+                    Congratulations <strong>{form.name}</strong>! Your application for the SIU Talent Search &amp; Scholarship Examination 2026-27 has been submitted.
                   </p>
 
-                  <div className="th-slip">
-                    <div className="th-slip-h">
+                  {/* High-Priority Notification Box: Admit Card sent to Mailbox & SMS */}
+                  <div style={{
+                    background: 'linear-gradient(135deg, #eff6ff 0%, #ecfdf5 100%)',
+                    border: '2px solid #60a5fa',
+                    borderRadius: '18px',
+                    padding: '24px 20px',
+                    margin: '22px 0',
+                    textAlign: 'center',
+                    boxShadow: '0 4px 18px rgba(37, 99, 235, 0.1)'
+                  }}>
+                    <div style={{ fontSize: '42px', marginBottom: '8px' }}>📬</div>
+                    <h3 style={{ fontSize: '19px', fontWeight: 800, color: '#1e3a8a', margin: '0 0 8px' }}>
+                      Check Your Mailbox &amp; SMS
+                    </h3>
+                    <p style={{ fontSize: '13.5px', color: '#1e40af', lineHeight: 1.6, fontWeight: 500, maxWidth: '520px', margin: '0 auto 16px' }}>
+                      To safeguard your privacy and exam credentials, your <strong>Official Admit Card</strong>, including your <strong>Exam Portal Login ID and Password</strong>, is <strong>NOT</strong> displayed on-screen. It has been dispatched directly to your registered Email Address and Mobile Number.
+                    </p>
+
+                    <div style={{
+                      background: '#ffffff',
+                      border: '1.5px solid #bfdbfe',
+                      borderRadius: '14px',
+                      padding: '14px 20px',
+                      fontSize: '13px',
+                      color: '#1e293b',
+                      display: 'inline-block',
+                      textAlign: 'left',
+                      boxShadow: '0 2px 8px rgba(0,0,0,0.04)'
+                    }}>
+                      <div style={{ padding: '3px 0' }}>
+                        📧 <strong>Registered Email:</strong> <span style={{ color: '#0369a1', fontFamily: 'monospace', fontWeight: 700 }}>{form.email}</span>
+                      </div>
+                      <div style={{ padding: '3px 0' }}>
+                        📱 <strong>Registered Mobile (SMS):</strong> <span style={{ color: '#0369a1', fontFamily: 'monospace', fontWeight: 700 }}>+91 {form.mobile}</span>
+                      </div>
+                      <div style={{ padding: '3px 0' }}>
+                        🎯 <strong>Selected Stream:</strong> <span style={{ color: '#047857', fontWeight: 700 }}>{form.stream}</span>
+                      </div>
+                      <div style={{ padding: '3px 0' }}>
+                        📅 <strong>Scheduled Exam Slot:</strong> <span style={{ color: '#b45309', fontWeight: 700 }}>{slotF.full}</span>
+                      </div>
+                    </div>
+
+                    <div style={{ marginTop: '16px', fontSize: '12px', color: '#475569', lineHeight: 1.5 }}>
+                      ⚠️ <strong>Important Note:</strong> Please check your Email Inbox as well as your <strong>Spam / Promotions folder</strong>. If you do not see the email within a few minutes, our university helpdesk is ready to assist you.
+                    </div>
+                  </div>
+
+                  {/* Summary Acknowledgement Card (No passwords or printable slip generated here) */}
+                  <div className="th-slip" style={{ border: '1px solid #e2e8f0', background: '#fafafa' }}>
+                    <div className="th-slip-h" style={{ background: '#0b2545', color: '#ffffff' }}>
                       <b>Saroj International University</b>
-                      <span>Admit Slip · Talent Search 2026-27</span>
+                      <span>Registration Acknowledgement · Talent Search 2026-27</span>
                     </div>
                     <div className="th-slip-b">
                       <div className="full">
-                        <small>Registration No.</small>
+                        <small>Application Reference</small>
                         <b className="th-regno">{result.regNo}</b>
                       </div>
                       <div>
@@ -1086,14 +1135,6 @@ export default function TalentSearchLevel1() {
                       <div>
                         <small>Father's Name</small>
                         <b>{form.father}</b>
-                      </div>
-                      <div>
-                        <small>Mobile</small>
-                        <b>+91 {form.mobile}</b>
-                      </div>
-                      <div>
-                        <small>Email</small>
-                        <b>{form.email}</b>
                       </div>
                       <div>
                         <small>School</small>
@@ -1107,45 +1148,24 @@ export default function TalentSearchLevel1() {
                         <small>Stream / Paper Type</small>
                         <b style={{ color: '#0284c7' }}>{form.stream}</b>
                       </div>
-                      <div className="full">
-                        <small>Exam Date &amp; Time Window</small>
-                        <b>{slotF.full} · 10:00 AM – 5:00 PM (Attempt Anytime)</b>
-                      </div>
-                      <div className="full" style={{ background: '#f1f5f9', padding: '12px 14px', borderRadius: '12px', border: '1px solid #cbd5e1' }}>
-                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
-                          <div>
-                            <small style={{ color: '#475569', fontSize: '10px', textTransform: 'uppercase', fontWeight: 800 }}>Online Exam Login ID / Roll No</small>
-                            <b style={{ color: '#1e40af', fontSize: '15px', display: 'block', marginTop: '2px' }}>{result.rollNo || result.regNo}</b>
-                          </div>
-                          <div>
-                            <small style={{ color: '#475569', fontSize: '10px', textTransform: 'uppercase', fontWeight: 800 }}>Student Portal Password</small>
-                            <b style={{ color: '#b45309', fontSize: '15px', fontFamily: 'monospace', display: 'block', marginTop: '2px' }}>{result.password}</b>
-                          </div>
-                        </div>
-                        <div style={{ margin: '6px 0 0', fontSize: '11px', color: '#047857', fontWeight: 600 }}>
-                          🔑 Keep this Login ID &amp; Password safe for attempting the scholarship test on the exam portal.
-                        </div>
+                      <div>
+                        <small>Scheduled Slot</small>
+                        <b>{slotF.full}</b>
                       </div>
                     </div>
-                    <div className="th-slip-f">
-                      Registered on {result.at}. Please carry a valid photo ID along with this slip.
+                    <div className="th-slip-f" style={{ textAlign: 'center', background: '#f1f5f9', color: '#64748b', fontSize: '11px', padding: '10px' }}>
+                      Registration submitted on {result.at}. Official Admit Card dispatched to {form.email}.
                     </div>
                   </div>
 
-                  <div className="th-actions">
-                    <button className="th-btn primary" onClick={() => window.print()}>
-                      ⬇ Download / Print Slip
-                    </button>
+                  <div className="th-actions" style={{ justifyContent: 'center', marginTop: '22px' }}>
                     <button
-                      className="th-btn ghost"
+                      type="button"
+                      className="th-btn primary"
                       onClick={() => {
                         setResult(null);
                         setStep(0);
                         setTouched({});
-                        setMobileVerified(false);
-                        setMobileOtpSent(false);
-                        setEmailVerified(false);
-                        setEmailOtpSent(false);
                         setForm({
                           name: '',
                           father: '',
@@ -1158,8 +1178,11 @@ export default function TalentSearchLevel1() {
                         });
                       }}
                     >
-                      Register another student
+                      Register Another Candidate
                     </button>
+                    <a href="/" className="th-btn ghost" style={{ textDecoration: 'none', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
+                      Return to Homepage
+                    </a>
                   </div>
                 </div>
               )}
