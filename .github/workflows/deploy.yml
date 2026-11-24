@@ -30,9 +30,11 @@ jobs:
           fi
 
           pm2 restart all || pm2 reload all
-          echo "=== PM2 ERROR LOG ===" > /var/www/SIU/dist/debug-backend.txt
-          tail -n 80 /home/admin/.pm2/logs/siu-backend-error.log >> /var/www/SIU/dist/debug-backend.txt 2>&1 || true
-          echo "=== PM2 OUT LOG ===" >> /var/www/SIU/dist/debug-backend.txt
-          tail -n 80 /home/admin/.pm2/logs/siu-backend-out.log >> /var/www/SIU/dist/debug-backend.txt 2>&1 || true
+          echo "=== ROUTES IN SERVER.JS ===" > /var/www/SIU/dist/debug-backend.txt
+          grep -rn "talent-search" /var/www/SIU/Backend/ >> /var/www/SIU/dist/debug-backend.txt 2>&1 || true
+          echo "=== CHECK-DUPLICATE IN ROUTES ===" >> /var/www/SIU/dist/debug-backend.txt
+          grep -rn "check-duplicate" /var/www/SIU/Backend/ >> /var/www/SIU/dist/debug-backend.txt 2>&1 || true
+          echo "=== LOCALHOST CURL TEST ===" >> /var/www/SIU/dist/debug-backend.txt
+          curl -s -i "http://127.0.0.1:5000/api/talent-search/all-results" >> /var/www/SIU/dist/debug-backend.txt 2>&1 || true
           echo "✅ Deployment completed successfully!"
 
