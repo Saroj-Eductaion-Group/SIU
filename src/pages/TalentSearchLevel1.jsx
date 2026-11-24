@@ -271,12 +271,6 @@ export default function TalentSearchLevel1() {
     let { name, value } = e.target;
     if (name === 'mobile') {
       value = value.replace(/\D/g, '').slice(0, 10);
-      setMobileVerified(false);
-      setMobileOtpSent(false);
-    }
-    if (name === 'email') {
-      setEmailVerified(false);
-      setEmailOtpSent(false);
     }
     setForm((f) => ({ ...f, [name]: value }));
   };
@@ -442,18 +436,6 @@ export default function TalentSearchLevel1() {
   const next = () => {
     setTouched((t) => ({ ...t, ...Object.fromEntries(STEP_FIELDS[step].map((k) => [k, true])) }));
     if (!stepValid(step)) return;
-
-    // Strict check for Mobile and Email OTP verification on Step 0
-    if (step === 0) {
-      if (!mobileVerified) {
-        setMobileOtpError('Please verify your Mobile Number via OTP to proceed.');
-        return;
-      }
-      if (!emailVerified) {
-        setEmailOtpError('Please verify your Email Address via OTP to proceed.');
-        return;
-      }
-    }
 
     setStep((s) => s + 1);
   };
@@ -818,6 +800,29 @@ export default function TalentSearchLevel1() {
                   <div className="th-body">
                     {step === 0 && (
                       <>
+                        {/* Notice for Students */}
+                        <div style={{
+                          marginBottom: '20px',
+                          padding: '14px 18px',
+                          background: 'linear-gradient(135deg, #eff6ff 0%, #f0fdf4 100%)',
+                          border: '1.5px solid #bfdbfe',
+                          borderRadius: '14px',
+                          display: 'flex',
+                          alignItems: 'flex-start',
+                          gap: '12px',
+                          boxShadow: '0 2px 8px rgba(37, 99, 235, 0.08)'
+                        }}>
+                          <span style={{ fontSize: '22px', lineHeight: 1 }}>✉️</span>
+                          <div>
+                            <div style={{ fontSize: '13px', fontWeight: 800, color: '#1e3a8a', marginBottom: '3px' }}>
+                              Notice for Applicants:
+                            </div>
+                            <div style={{ fontSize: '12.5px', color: '#1e40af', lineHeight: 1.5, fontWeight: 500 }}>
+                              Please provide accurate details so we can email your exam portal Login ID and Password.
+                            </div>
+                          </div>
+                        </div>
+
                         <div className="th-sec">👤 Student &amp; Parent Information</div>
                         <div className="th-row">
                           <Field
@@ -835,151 +840,23 @@ export default function TalentSearchLevel1() {
                           />
                         </div>
 
-                        {/* Mobile Number & OTP Verification */}
+                        {/* Mobile Number & Email Address */}
                         <div className="th-row">
-                          <div>
-                            <Field
-                              label="Mobile Number"
-                              name="mobile"
-                              prefix="+91"
-                              inputMode="numeric"
-                              placeholder="10-digit mobile number"
-                              disabled={mobileVerified}
-                              {...common}
-                            />
-                            {mobileVerified ? (
-                              <div className="th-verified-badge">
-                                ✓ Mobile Verified (+91 {form.mobile})
-                              </div>
-                            ) : (
-                              <>
-                                {!mobileOtpSent ? (
-                                  <button
-                                    type="button"
-                                    onClick={handleSendMobileOtp}
-                                    disabled={mobileOtpLoading || !form.mobile || form.mobile.length !== 10}
-                                    className="th-otp-btn"
-                                  >
-                                    {mobileOtpLoading ? <span className="th-spin" /> : '📩'} Send OTP to mobile number
-                                  </button>
-                                ) : (
-                                  <div className="th-otp-box">
-                                    <div className="th-otp-inputs">
-                                      <input
-                                        type="text"
-                                        maxLength={6}
-                                        value={mobileOtp}
-                                        onChange={(e) => setMobileOtp(e.target.value.replace(/\D/g, '').slice(0, 6))}
-                                        placeholder="6-digit OTP"
-                                      />
-                                      <button
-                                        type="button"
-                                        onClick={handleVerifyMobileOtp}
-                                        disabled={mobileOtpLoading || mobileOtp.length !== 6}
-                                        className="th-otp-verify-btn"
-                                      >
-                                        {mobileOtpLoading ? 'Verifying...' : 'Verify OTP'}
-                                      </button>
-                                    </div>
-                                    {mobileOtpTimer > 0 ? (
-                                      <span className="th-otp-hint">Resend OTP in {mobileOtpTimer}s</span>
-                                    ) : (
-                                      <button
-                                        type="button"
-                                        onClick={handleSendMobileOtp}
-                                        className="th-otp-hint"
-                                        style={{ background: 'none', border: 0, cursor: 'pointer', textDecoration: 'underline', padding: 0 }}
-                                      >
-                                        Resend OTP
-                                      </button>
-                                    )}
-                                  </div>
-                                )}
-                                {mobileOtpMsg && (
-                                  <div style={{ fontSize: '11px', color: '#16a34a', fontWeight: 600, marginTop: '4px' }}>
-                                    {mobileOtpMsg}
-                                  </div>
-                                )}
-                                {mobileOtpError && (
-                                  <div style={{ fontSize: '11px', color: '#dc2626', fontWeight: 600, marginTop: '4px' }}>
-                                    {mobileOtpError}
-                                  </div>
-                                )}
-                              </>
-                            )}
-                          </div>
-
-                          {/* Email Address & OTP Verification */}
-                          <div>
-                            <Field
-                              label="Email Address"
-                              name="email"
-                              type="email"
-                              placeholder="candidate.email@gmail.com"
-                              disabled={emailVerified}
-                              {...common}
-                            />
-                            {emailVerified ? (
-                              <div className="th-verified-badge">
-                                ✓ Email Verified ({form.email})
-                              </div>
-                            ) : (
-                              <>
-                                {!emailOtpSent ? (
-                                  <button
-                                    type="button"
-                                    onClick={handleSendEmailOtp}
-                                    disabled={emailOtpLoading || !form.email || !form.email.includes('@')}
-                                    className="th-otp-btn"
-                                  >
-                                    {emailOtpLoading ? <span className="th-spin" /> : '✉️'} Send OTP to email
-                                  </button>
-                                ) : (
-                                  <div className="th-otp-box">
-                                    <div className="th-otp-inputs">
-                                      <input
-                                        type="text"
-                                        maxLength={6}
-                                        value={emailOtp}
-                                        onChange={(e) => setEmailOtp(e.target.value.replace(/\D/g, '').slice(0, 6))}
-                                        placeholder="6-digit OTP"
-                                      />
-                                      <button
-                                        type="button"
-                                        onClick={handleVerifyEmailOtp}
-                                        disabled={emailOtpLoading || emailOtp.length !== 6}
-                                        className="th-otp-verify-btn"
-                                      >
-                                        {emailOtpLoading ? 'Verifying...' : 'Verify OTP'}
-                                      </button>
-                                    </div>
-                                    {emailOtpTimer > 0 ? (
-                                      <span className="th-otp-hint">Resend OTP in {emailOtpTimer}s</span>
-                                    ) : (
-                                      <button
-                                        type="button"
-                                        onClick={handleSendEmailOtp}
-                                        className="th-otp-hint"
-                                        style={{ background: 'none', border: 0, cursor: 'pointer', textDecoration: 'underline', padding: 0 }}
-                                      >
-                                        Resend OTP
-                                      </button>
-                                    )}
-                                  </div>
-                                )}
-                                {emailOtpMsg && (
-                                  <div style={{ fontSize: '11px', color: '#16a34a', fontWeight: 600, marginTop: '4px' }}>
-                                    {emailOtpMsg}
-                                  </div>
-                                )}
-                                {emailOtpError && (
-                                  <div style={{ fontSize: '11px', color: '#dc2626', fontWeight: 600, marginTop: '4px' }}>
-                                    {emailOtpError}
-                                  </div>
-                                )}
-                              </>
-                            )}
-                          </div>
+                          <Field
+                            label="Mobile Number"
+                            name="mobile"
+                            prefix="+91"
+                            inputMode="numeric"
+                            placeholder="10-digit mobile number"
+                            {...common}
+                          />
+                          <Field
+                            label="Email Address"
+                            name="email"
+                            type="email"
+                            placeholder="candidate.email@gmail.com"
+                            {...common}
+                          />
                         </div>
                       </>
                     )}

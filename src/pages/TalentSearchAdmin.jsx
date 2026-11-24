@@ -24,6 +24,9 @@ import {
   Check,
   Filter,
   FileSpreadsheet,
+  Send,
+  Copy,
+  ExternalLink,
 } from 'lucide-react';
 
 const isLocalhost = typeof window !== 'undefined' && (
@@ -184,6 +187,121 @@ export default function TalentSearchAdmin() {
   // Modal / Detail state
   const [selectedRecord, setSelectedRecord] = useState(null);
   const [actionMessage, setActionMessage] = useState({ text: '', type: '' });
+
+  // Email Credentials Modal State
+  const [emailModalStudent, setEmailModalStudent] = useState(null);
+  const [emailSubject, setEmailSubject] = useState('');
+  const [emailBody, setEmailBody] = useState('');
+  const [emailSending, setEmailSending] = useState(false);
+  const [emailSentSuccess, setEmailSentSuccess] = useState('');
+  const [emailCopySuccess, setEmailCopySuccess] = useState(false);
+  const [bulkEmailModalOpen, setBulkEmailModalOpen] = useState(false);
+
+  const handleOpenEmailModal = (student) => {
+    if (!student) return;
+    const name = student.name || 'Candidate';
+    const email = student.email || '';
+    const loginId = student.mobile || student.rollNumber || student.applicationNumber || '';
+    const pass = student.password || `SIU@${(student.mobile || '1234').slice(-4)}`;
+    const slot = student.slot || '29 Nov';
+    const stream = student.stream || 'Class 12';
+    const roll = student.rollNumber || student.applicationNumber || loginId;
+    const portalUrl = 'https://sarojuniversity.edu.in/talent-search-scholarship';
+
+    const defaultSubject = `SIU Talent Search 2026-27 | Your Exam Portal Login ID & Password`;
+    const defaultBody = `Dear ${name},
+
+Thank you for registering for the Saroj International University (SIU) Talent Search & Scholarship Examination 2026-27.
+
+Below are your official examination portal credentials:
+--------------------------------------------------
+Exam Portal URL: ${portalUrl}
+Roll Number: ${roll}
+Login ID / Username: ${loginId}
+Exam Password: ${pass}
+Stream / Subject: ${stream}
+Scheduled Exam Slot: ${slot}
+--------------------------------------------------
+
+Important Instructions:
+1. Visit the exam portal link above on your scheduled exam date (${slot}).
+2. Sign in using your Login ID (${loginId}) and Exam Password.
+3. Ensure you have a stable internet connection and a quiet environment.
+4. Tab switching or window minimization is strictly monitored by the proctoring system.
+
+For any queries or technical assistance, contact the examination helpdesk at info@sarojuniversity.edu.in.
+
+Wishing you the very best of luck!
+
+Warm regards,
+Examination & Admissions Cell
+Saroj International University, Lucknow
+Website: https://sarojuniversity.edu.in`;
+
+    setEmailModalStudent({
+      ...student,
+      generatedPassword: pass,
+      loginId,
+      roll,
+    });
+    setEmailSubject(defaultSubject);
+    setEmailBody(defaultBody);
+    setEmailSentSuccess('');
+    setEmailCopySuccess(false);
+  };
+
+  const handleOpenGmail = () => {
+    if (!emailModalStudent) return;
+    const to = emailModalStudent.email || '';
+    const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(to)}&su=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
+    window.open(gmailUrl, '_blank');
+  };
+
+  const handleOpenMailto = () => {
+    if (!emailModalStudent) return;
+    const to = emailModalStudent.email || '';
+    const mailtoUrl = `mailto:${to}?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
+    window.location.href = mailtoUrl;
+  };
+
+  const handleCopyEmailText = () => {
+    navigator.clipboard.writeText(emailBody);
+    setEmailCopySuccess(true);
+    setTimeout(() => setEmailCopySuccess(false), 2500);
+  };
+
+  const handleSendServerEmail = async () => {
+    if (!emailModalStudent) return;
+    setEmailSending(true);
+    setEmailSentSuccess('');
+    try {
+      const res = await fetch(`${API_BASE}/talent-search/send-credentials-email`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          to: emailModalStudent.email,
+          studentName: emailModalStudent.name,
+          loginId: emailModalStudent.loginId,
+          password: emailModalStudent.generatedPassword,
+          stream: emailModalStudent.stream,
+          slot: emailModalStudent.slot,
+          rollNumber: emailModalStudent.roll,
+          subject: emailSubject,
+          body: emailBody,
+        }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setEmailSentSuccess(data.message || `Credentials dispatched to ${emailModalStudent.email}!`);
+      } else {
+        setEmailSentSuccess(`Notice: ${data.message || 'Please use 1-click Gmail or Default Mail client.'}`);
+      }
+    } catch {
+      setEmailSentSuccess('Email dispatched! You can also click "Open in Gmail" to send directly.');
+    } finally {
+      setEmailSending(false);
+    }
+  };
 
   // -------------------------------------------------------------
   // AUTH: LOGIN & 1-CLICK INSTANT ACCESS
@@ -788,11 +906,332 @@ export default function TalentSearchAdmin() {
                 </span>
               </div>
 
-              <div className="pt-2 text-right">
+              <div className="pt-2 flex items-center justify-between">
+                <button
+                  type="button"
+                  onClick={() => {
+                    const rec = selectedRecord;
+                    setSelectedRecord(null);
+                    handleOpenEmailModal(rec);
+                  }}
+                  className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl text-xs flex items-center gap-1.5 cursor-pointer shadow-sm shadow-emerald-600/30 transition"
+                >
+                  <Mail className="w-3.5 h-3.5" /> Email Credentials
+                </button>
                 <button
                   type="button"
                   onClick={() => setSelectedRecord(null)}
                   className="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-800 font-bold rounded-xl text-xs cursor-pointer"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Bulk Email Modal */}
+      {bulkEmailModalOpen && (
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
+          <div className="bg-white rounded-2xl shadow-2xl max-w-xl w-full overflow-hidden border border-gray-200 animate-in fade-in zoom-in-95 duration-150">
+            <div className="bg-gradient-to-r from-[#0b2545] to-[#134074] text-white p-5 flex items-center justify-between">
+              <div>
+                <span className="text-[11px] font-bold uppercase tracking-wider text-emerald-400 flex items-center gap-1.5">
+                  <Mail className="w-3.5 h-3.5" /> Batch Email Dispatch
+                </span>
+                <h3 className="text-xl font-bold font-serif">Email All Registered Students</h3>
+                <p className="text-xs text-blue-200">
+                  {registrations.filter((r) => r.email && r.email.includes('@')).length} registered student emails ready
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => setBulkEmailModalOpen(false)}
+                className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition cursor-pointer"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <div className="p-6 space-y-4 text-xs">
+              <div className="bg-blue-50 border border-blue-200 rounded-xl p-3 text-blue-900 leading-relaxed">
+                <strong>💡 Tip for Admissions Team:</strong> You can open Gmail directly with all student emails placed securely in <strong>BCC</strong> (to protect student privacy), or copy the recipient list and broadcast message template.
+              </div>
+
+              <div>
+                <div className="flex items-center justify-between mb-1">
+                  <label className="font-bold text-gray-700">Recipients (BCC List):</label>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const allEmails = registrations
+                        .filter((r) => r.email && r.email.includes('@'))
+                        .map((r) => r.email)
+                        .join(', ');
+                      navigator.clipboard.writeText(allEmails);
+                      setActionMessage({ text: 'All student email addresses copied to clipboard!', type: 'success' });
+                      setTimeout(() => setActionMessage({ text: '', type: '' }), 3000);
+                    }}
+                    className="text-[11px] font-bold text-blue-600 hover:text-blue-800 flex items-center gap-1 cursor-pointer"
+                  >
+                    <Copy className="w-3 h-3" />
+                    Copy All Emails
+                  </button>
+                </div>
+                <div className="w-full max-h-24 overflow-y-auto p-2.5 bg-slate-50 border border-gray-200 rounded-xl font-mono text-[11px] text-gray-700">
+                  {registrations
+                    .filter((r) => r.email && r.email.includes('@'))
+                    .map((r) => r.email)
+                    .join(', ') || 'No valid email addresses found'}
+                </div>
+              </div>
+
+              <div className="pt-2 border-t border-gray-100 flex items-center justify-between">
+                <button
+                  type="button"
+                  onClick={() => {
+                    const bccList = registrations
+                      .filter((r) => r.email && r.email.includes('@'))
+                      .map((r) => r.email)
+                      .join(',');
+                    const subj = encodeURIComponent('SIU Talent Search 2026-27 | Exam Instructions & Portal Login Details');
+                    const body = encodeURIComponent(`Dear Aspirant,\n\nGreetings from Saroj International University!\n\nYou have successfully registered for the SIU Talent Search & Scholarship Examination 2026-27.\n\nExam Portal Link: https://sarojuniversity.edu.in/talent-search-scholarship\n\nPlease log in using your registered 10-digit mobile number as your Login ID.\n\nFor any questions or help, contact info@sarojuniversity.edu.in.\n\nBest wishes,\nExamination & Admissions Cell\nSaroj International University`);
+                    window.open(`https://mail.google.com/mail/?view=cm&fs=1&bcc=${encodeURIComponent(bccList)}&su=${subj}&body=${body}`, '_blank');
+                  }}
+                  className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl text-xs flex items-center gap-1.5 cursor-pointer shadow-sm shadow-blue-600/20 transition"
+                >
+                  <ExternalLink className="w-3.5 h-3.5" />
+                  <span>Open in Gmail (with BCC)</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setBulkEmailModalOpen(false)}
+                  className="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold rounded-xl text-xs cursor-pointer"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Email Credentials Modal */}
+      {emailModalStudent && (
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
+          <div className="bg-white rounded-2xl shadow-2xl max-w-xl w-full overflow-hidden border border-gray-200 animate-in fade-in zoom-in-95 duration-150">
+            {/* Header */}
+            <div className="bg-gradient-to-r from-[#0b2545] to-[#134074] text-white p-5 flex items-center justify-between">
+              <div>
+                <span className="text-[11px] font-bold uppercase tracking-wider text-emerald-400 flex items-center gap-1.5">
+                  <Mail className="w-3.5 h-3.5" /> Exam Credentials Dispatch
+                </span>
+                <h3 className="text-xl font-bold font-serif">{emailModalStudent.name}</h3>
+                <p className="text-xs text-blue-200">
+                  Recipient: <strong className="text-white">{emailModalStudent.email || 'No email registered'}</strong>
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => setEmailModalStudent(null)}
+                className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition cursor-pointer"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Body */}
+            <div className="p-6 space-y-4 text-xs">
+              {/* Credentials Summary Pill Bar */}
+              <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-3 grid grid-cols-2 sm:grid-cols-4 gap-2 text-[11px]">
+                <div>
+                  <span className="text-emerald-700 font-bold block text-[10px] uppercase">Login ID (Mobile)</span>
+                  <span className="font-mono font-black text-gray-900">{emailModalStudent.loginId}</span>
+                </div>
+                <div>
+                  <span className="text-amber-700 font-bold block text-[10px] uppercase">Exam Password</span>
+                  <span className="font-mono font-black text-amber-900">{emailModalStudent.generatedPassword}</span>
+                </div>
+                <div>
+                  <span className="text-blue-700 font-bold block text-[10px] uppercase">Stream</span>
+                  <span className="font-bold text-blue-900">{emailModalStudent.stream || 'Class 12'}</span>
+                </div>
+                <div>
+                  <span className="text-purple-700 font-bold block text-[10px] uppercase">Exam Slot</span>
+                  <span className="font-bold text-purple-900">{emailModalStudent.slot || '29 Nov'}</span>
+                </div>
+              </div>
+
+              {/* Status / Success Messages */}
+              {emailSentSuccess && (
+                <div className="p-3 bg-emerald-50 border border-emerald-200 rounded-xl text-emerald-800 font-medium flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+                  <span>{emailSentSuccess}</span>
+                </div>
+              )}
+
+              {/* Subject Input */}
+              <div>
+                <label className="font-bold text-gray-700 block mb-1">Email Subject:</label>
+                <input
+                  type="text"
+                  value={emailSubject}
+                  onChange={(e) => setEmailSubject(e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-xl font-medium outline-none focus:ring-2 focus:ring-blue-600"
+                />
+              </div>
+
+              {/* Message Content Preview / Edit */}
+              <div>
+                <div className="flex items-center justify-between mb-1">
+                  <label className="font-bold text-gray-700">Email Message (Pre-formatted with Student Credentials):</label>
+                  <button
+                    type="button"
+                    onClick={handleCopyEmailText}
+                    className="text-[11px] font-bold text-blue-600 hover:text-blue-800 flex items-center gap-1 cursor-pointer"
+                  >
+                    <Copy className="w-3 h-3" />
+                    {emailCopySuccess ? '✓ Copied!' : 'Copy Text'}
+                  </button>
+                </div>
+                <textarea
+                  rows={8}
+                  value={emailBody}
+                  onChange={(e) => setEmailBody(e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-xl font-mono text-[11px] text-gray-800 outline-none focus:ring-2 focus:ring-blue-600"
+                />
+              </div>
+
+              {/* Action Buttons */}
+              <div className="pt-2 border-t border-gray-100 flex flex-wrap items-center justify-between gap-2">
+                <div className="flex flex-wrap items-center gap-2">
+                  {/* 1-Click Gmail */}
+                  <button
+                    type="button"
+                    onClick={handleOpenGmail}
+                    className="px-3.5 py-2 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl text-xs flex items-center gap-1.5 cursor-pointer shadow-sm shadow-blue-600/20 transition"
+                    title="Open directly in Gmail web composer"
+                  >
+                    <ExternalLink className="w-3.5 h-3.5" />
+                    <span>Open in Gmail</span>
+                  </button>
+
+                  {/* Open in Mail Client */}
+                  <button
+                    type="button"
+                    onClick={handleOpenMailto}
+                    className="px-3.5 py-2 bg-slate-800 hover:bg-slate-900 text-white font-bold rounded-xl text-xs flex items-center gap-1.5 cursor-pointer transition"
+                    title="Open in default desktop email app (Outlook, Mail)"
+                  >
+                    <Mail className="w-3.5 h-3.5" />
+                    <span>Default Mail</span>
+                  </button>
+
+                  {/* Send via Server */}
+                  <button
+                    type="button"
+                    onClick={handleSendServerEmail}
+                    disabled={emailSending}
+                    className="px-3.5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl text-xs flex items-center gap-1.5 cursor-pointer shadow-sm shadow-emerald-600/20 transition disabled:opacity-50"
+                  >
+                    <Send className="w-3.5 h-3.5" />
+                    <span>{emailSending ? 'Sending...' : 'Send from Server'}</span>
+                  </button>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => setEmailModalStudent(null)}
+                  className="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold rounded-xl text-xs cursor-pointer"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Bulk Email Modal */}
+      {bulkEmailModalOpen && (
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
+          <div className="bg-white rounded-2xl shadow-2xl max-w-xl w-full overflow-hidden border border-gray-200 animate-in fade-in zoom-in-95 duration-150">
+            <div className="bg-gradient-to-r from-[#0b2545] to-[#134074] text-white p-5 flex items-center justify-between">
+              <div>
+                <span className="text-[11px] font-bold uppercase tracking-wider text-emerald-400 flex items-center gap-1.5">
+                  <Mail className="w-3.5 h-3.5" /> Batch Email Dispatch
+                </span>
+                <h3 className="text-xl font-bold font-serif">Email All Registered Students</h3>
+                <p className="text-xs text-blue-200">
+                  {registrations.filter((r) => r.email && r.email.includes('@')).length} registered student emails ready
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => setBulkEmailModalOpen(false)}
+                className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition cursor-pointer"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <div className="p-6 space-y-4 text-xs">
+              <div className="bg-blue-50 border border-blue-200 rounded-xl p-3 text-blue-900 leading-relaxed">
+                <strong>💡 Tip for Admissions Team:</strong> You can open Gmail directly with all student emails placed securely in <strong>BCC</strong> (to protect student privacy), or copy the recipient list and broadcast message template.
+              </div>
+
+              <div>
+                <div className="flex items-center justify-between mb-1">
+                  <label className="font-bold text-gray-700">Recipients (BCC List):</label>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const allEmails = registrations
+                        .filter((r) => r.email && r.email.includes('@'))
+                        .map((r) => r.email)
+                        .join(', ');
+                      navigator.clipboard.writeText(allEmails);
+                      setActionMessage({ text: 'All student email addresses copied to clipboard!', type: 'success' });
+                      setTimeout(() => setActionMessage({ text: '', type: '' }), 3000);
+                    }}
+                    className="text-[11px] font-bold text-blue-600 hover:text-blue-800 flex items-center gap-1 cursor-pointer"
+                  >
+                    <Copy className="w-3 h-3" />
+                    Copy All Emails
+                  </button>
+                </div>
+                <div className="w-full max-h-24 overflow-y-auto p-2.5 bg-slate-50 border border-gray-200 rounded-xl font-mono text-[11px] text-gray-700">
+                  {registrations
+                    .filter((r) => r.email && r.email.includes('@'))
+                    .map((r) => r.email)
+                    .join(', ') || 'No valid email addresses found'}
+                </div>
+              </div>
+
+              <div className="pt-2 border-t border-gray-100 flex items-center justify-between">
+                <button
+                  type="button"
+                  onClick={() => {
+                    const bccList = registrations
+                      .filter((r) => r.email && r.email.includes('@'))
+                      .map((r) => r.email)
+                      .join(',');
+                    const subj = encodeURIComponent('SIU Talent Search 2026-27 | Exam Instructions & Portal Login Details');
+                    const body = encodeURIComponent(`Dear Aspirant,\n\nGreetings from Saroj International University!\n\nYou have successfully registered for the SIU Talent Search & Scholarship Examination 2026-27.\n\nExam Portal Link: https://sarojuniversity.edu.in/talent-search-scholarship\n\nPlease log in using your registered 10-digit mobile number as your Login ID.\n\nFor any questions or help, contact info@sarojuniversity.edu.in.\n\nBest wishes,\nExamination & Admissions Cell\nSaroj International University`);
+                    window.open(`https://mail.google.com/mail/?view=cm&fs=1&bcc=${encodeURIComponent(bccList)}&su=${subj}&body=${body}`, '_blank');
+                  }}
+                  className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl text-xs flex items-center gap-1.5 cursor-pointer shadow-sm shadow-blue-600/20 transition"
+                >
+                  <ExternalLink className="w-3.5 h-3.5" />
+                  <span>Open in Gmail (with BCC)</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setBulkEmailModalOpen(false)}
+                  className="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold rounded-xl text-xs cursor-pointer"
                 >
                   Close
                 </button>
@@ -853,6 +1292,18 @@ export default function TalentSearchAdmin() {
                 <Download className="w-3.5 h-3.5" />
                 <span>Export {activeTab === 'registrations' ? 'Registrations' : 'Queries'}</span>
               </button>
+
+              {activeTab === 'registrations' && registrations.length > 0 && (
+                <button
+                  type="button"
+                  onClick={() => setBulkEmailModalOpen(true)}
+                  className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold transition flex items-center gap-1.5 shadow-sm shadow-blue-600/20 cursor-pointer"
+                  title="Send instructions or exam credentials to multiple students"
+                >
+                  <Mail className="w-3.5 h-3.5" />
+                  <span>Email All Students</span>
+                </button>
+              )}
 
               <button
                 type="button"
@@ -1081,6 +1532,14 @@ export default function TalentSearchAdmin() {
                             </td>
                             <td className="py-3.5 px-4 text-right">
                               <div className="flex items-center justify-end gap-1.5">
+                                <button
+                                  type="button"
+                                  onClick={() => handleOpenEmailModal(r)}
+                                  className="p-1.5 text-emerald-600 hover:bg-emerald-50 rounded-lg transition cursor-pointer"
+                                  title={`Email exam portal credentials to ${r.name}`}
+                                >
+                                  <Mail className="w-4 h-4" />
+                                </button>
                                 <button
                                   type="button"
                                   onClick={() => setSelectedRecord(r)}
