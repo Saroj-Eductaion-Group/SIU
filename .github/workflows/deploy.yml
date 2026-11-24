@@ -17,22 +17,18 @@ jobs:
           git pull origin main
           npm run build
 
-          # Sync backend files to /var/www/SIU-Backend if backend runs from there
+          # Sync backend files to /var/www/SIU-Backend where production node service runs
           if [ -d "/var/www/SIU-Backend" ]; then
-            echo "📦 Updating /var/www/SIU-Backend..."
-            sudo chown -R admin:admin /var/www/SIU-Backend 2>/dev/null || true
-            sudo mkdir -p /var/www/SIU-Backend/routes /var/www/SIU-Backend/models /var/www/SIU-Backend/middleware /var/www/SIU-Backend/config
-            sudo cp -r /var/www/SIU/Backend/routes/* /var/www/SIU-Backend/routes/
-            sudo cp -r /var/www/SIU/Backend/models/* /var/www/SIU-Backend/models/
-            sudo cp -r /var/www/SIU/Backend/middleware/* /var/www/SIU-Backend/middleware/
-            sudo cp -r /var/www/SIU/Backend/config/* /var/www/SIU-Backend/config/
-            sudo cp /var/www/SIU/Backend/server.js /var/www/SIU-Backend/server.js
+            echo "📦 Syncing backend to /var/www/SIU-Backend..."
+            sudo cp -r /var/www/SIU/Backend/* /var/www/SIU-Backend/
           fi
 
-          pm2 restart all || pm2 reload all
-          echo "=== PID 479 PROCESS INFO ===" > /var/www/SIU/dist/debug-backend.txt
-          sudo ps -fp 479 >> /var/www/SIU/dist/debug-backend.txt 2>&1 || true
-          echo "=== SYSTEMD SERVICES ===" >> /var/www/SIU/dist/debug-backend.txt
-          systemctl list-units --type=service | grep -i -E "siu|node|back" >> /var/www/SIU/dist/debug-backend.txt 2>&1 || true
+          # Restart production service under pm2-SIU-5 or admin pm2
+          sudo systemctl restart pm2-SIU-5.service || true
+          pm2 restart all 2>/dev/null || true
+
+          # Clean up debug file
+          rm -f /var/www/SIU/dist/debug-backend.txt 2>/dev/null || true
+
           echo "✅ Deployment completed successfully!"
 
