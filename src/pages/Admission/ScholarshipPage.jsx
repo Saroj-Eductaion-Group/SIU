@@ -61,7 +61,7 @@ const ScholarshipPage = () => {
               </div>
               <ul className="list-disc list-inside text-gray-600 space-y-2 text-lg">
                 <li>12th / UG Marks: <strong>75% or above</strong></li>
-                <li>SIUAT Score: <strong>90% or above</strong></li>
+                <li>Talent Search Score: <strong>90% or above</strong></li>
               </ul>
             </div>
 
@@ -73,7 +73,7 @@ const ScholarshipPage = () => {
               </div>
               <ul className="list-disc list-inside text-gray-600 space-y-2 text-lg">
                 <li>12th / UG Marks: <strong>60% or above</strong></li>
-                <li>SIUAT Score: <strong>75%–89%</strong></li>
+                <li>Talent Search Score: <strong>75%–89%</strong></li>
               </ul>
             </div>
 

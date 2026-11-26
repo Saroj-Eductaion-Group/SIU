@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 
 // Pages
 import HomePage from "./pages/HomePage";
@@ -102,8 +102,6 @@ import CryptographyPage from "./pages/tcs/Cryptography";
 // Fee Payment Page
 import FeePaymentPage from "./pages/FeePaymentPage";
 import OrientationPage from "./pages/Admission/OrientationPage";
-import TalentHunt from "./pages/TalentHunt";
-import NeetTalentHunt from "./pages/NeetTalentHunt";
 import TalentSearchLevel1 from "./pages/TalentSearchLevel1";
 import TalentSearchAdmin from "./pages/TalentSearchAdmin";
 import InstituteAgriculture from "./pages/InstitutePages/Agriculture";
@@ -121,8 +119,9 @@ function App() {
       {/* FeePayment Page */}
       <Route path='/fee-payment' element ={<FeePaymentPage />} />
 
-      {/* Talent Hunt & Scholarship */}
-      <Route path='/talent-hunt' element={<TalentHunt />} />
+      {/* Talent Search Scholarship (SIUAT Discontinued) */}
+      <Route path='/talent-hunt' element={<Navigate to='/talent-search-scholarship' replace />} />
+      <Route path='/siuat' element={<Navigate to='/talent-search-scholarship' replace />} />
       <Route path='/talent-search-scholarship' element={<TalentSearchLevel1 />} />
       <Route path='/talent-sarch-scholership' element={<TalentSearchLevel1 />} />
       <Route path='/talent-search' element={<TalentSearchLevel1 />} />

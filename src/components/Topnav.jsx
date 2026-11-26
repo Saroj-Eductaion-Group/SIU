@@ -61,7 +61,7 @@ href='/fee-payment'            target="_blank"
 
           </div>
 
-          {/* Talent Hunt Buttons */}
+          {/* Talent Search Scholarship Button */}
           <div className="flex items-center gap-2">
             <a 
               href="/talent-search-scholarship"
@@ -69,13 +69,6 @@ href='/fee-payment'            target="_blank"
               aria-label="Talent Search 2026-27 Scholarship"
             >
               🎯 Talent Search 2026-27 Scholarship
-            </a>
-            <a 
-              href="/talent-hunt"
-              className="bg-red-600 hover:bg-red-700 text-white px-4 py-1 rounded-md font-medium transition-all duration-300 shadow-lg animate-pulse whitespace-nowrap text-sm sm:text-base"
-              aria-label="SIUAT 2026-27"
-            >
-              🏆 SIUAT 2026-27
             </a>
           </div>
         </div>
