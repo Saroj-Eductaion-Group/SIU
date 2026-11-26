@@ -30,5 +30,8 @@ jobs:
           # Clean up debug file
           rm -f /var/www/SIU/dist/debug-backend.txt 2>/dev/null || true
 
+          # Reload nginx to ensure changes take effect immediately
+          sudo systemctl reload nginx 2>/dev/null || true
+
           echo "✅ Deployment completed successfully!"
 
