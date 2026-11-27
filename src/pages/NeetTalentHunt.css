@@ -585,14 +585,49 @@
 }
 
 @media print {
-  body * { visibility: hidden; }
-  .th-slip, .th-slip * { visibility: visible; }
-  .th-slip {
+  /* Hide all surrounding non-printable layout elements */
+  header, footer, nav, .th-hero, .th-side, .th-how-wrap, .th-faq, .th-actions, .th-notice-box, .th-tabs, .th-field, .th-prog, .th-pat, .th-reg-head {
+    display: none !important;
+  }
+
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  body * {
+    visibility: hidden;
+  }
+
+  #siu-admit-card,
+  #siu-admit-card * {
+    visibility: visible;
+  }
+
+  #siu-admit-card {
     position: absolute;
     left: 0;
     top: 0;
-    width: 100%;
-    margin: 0;
-    border: 2px solid #000;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 16px 20px !important;
+    background: #ffffff !important;
+    color: #0f172a !important;
+    border: 2px solid #0b2545 !important;
+    border-radius: 8px !important;
+    box-shadow: none !important;
+    page-break-inside: avoid;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  @page {
+    size: A4 portrait;
+    margin: 10mm;
   }
 }

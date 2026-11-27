@@ -585,6 +585,52 @@ export default function TalentSearchLevel1() {
                   </div>
                 ))}
               </div>
+
+              {/* Online Exam Portal Button (Inactive until exam day as requested) */}
+              <div style={{ marginTop: '16px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '6px' }}>
+                <button
+                  type="button"
+                  disabled
+                  title="Examination portal will be enabled on the day of the examination (10:00 AM)"
+                  style={{
+                    padding: '11px 28px',
+                    borderRadius: '9999px',
+                    fontSize: '13.5px',
+                    fontWeight: 700,
+                    background: 'linear-gradient(135deg, #334155 0%, #1e293b 100%)',
+                    color: '#94a3b8',
+                    border: '1.5px solid rgba(255, 255, 255, 0.18)',
+                    cursor: 'not-allowed',
+                    opacity: 0.9,
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '10px',
+                    boxShadow: '0 4px 14px rgba(0, 0, 0, 0.25)',
+                    letterSpacing: '0.01em',
+                  }}
+                >
+                  <span style={{ fontSize: '15px' }}>🔒</span>
+                  <span>Enter Online Exam Portal</span>
+                  <span
+                    style={{
+                      fontSize: '10px',
+                      background: 'rgba(239, 68, 68, 0.2)',
+                      color: '#fca5a5',
+                      border: '1px solid rgba(239, 68, 68, 0.35)',
+                      padding: '2px 8px',
+                      borderRadius: '999px',
+                      fontWeight: 800,
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.04em',
+                    }}
+                  >
+                    Inactive
+                  </span>
+                </button>
+                <span style={{ fontSize: '11.5px', color: '#94a3b8', fontWeight: 500, letterSpacing: '0.01em' }}>
+                  ⏳ Exam button will be activated on exam day (10:00 AM – 5:00 PM)
+                </span>
+              </div>
             </div>
 
             <div className="th-tiers">
@@ -929,99 +975,218 @@ export default function TalentSearchLevel1() {
                     Congratulations <strong>{form.name}</strong>! Your application for the SIU Talent Search &amp; Scholarship Examination 2026-27 has been submitted.
                   </p>
 
-                  {/* High-Priority Notification Box: Admit Card sent to Mailbox & SMS */}
-                  <div style={{
-                    background: 'linear-gradient(135deg, #eff6ff 0%, #ecfdf5 100%)',
-                    border: '2px solid #60a5fa',
-                    borderRadius: '18px',
-                    padding: '24px 20px',
-                    margin: '22px 0',
-                    textAlign: 'center',
-                    boxShadow: '0 4px 18px rgba(37, 99, 235, 0.1)'
-                  }}>
-                    <div style={{ fontSize: '42px', marginBottom: '8px' }}>📬</div>
-                    <h3 style={{ fontSize: '19px', fontWeight: 800, color: '#1e3a8a', margin: '0 0 8px' }}>
-                      Check Your Mailbox &amp; SMS
-                    </h3>
-                    <p style={{ fontSize: '13.5px', color: '#1e40af', lineHeight: 1.6, fontWeight: 500, maxWidth: '520px', margin: '0 auto 16px' }}>
-                      To safeguard your privacy and exam credentials, your <strong>Official Admit Card</strong>, including your <strong>Exam Portal Login ID and Password</strong>, is <strong>NOT</strong> displayed on-screen. It has been dispatched directly to your registered Email Address and Mobile Number.
-                    </p>
+                  {/* High-Priority Attention Box: Urgent Prompt to Download Admit Card */}
+                  <div
+                    className="th-notice-box"
+                    style={{
+                      background: 'linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%)',
+                      border: '2px solid #f59e0b',
+                      borderRadius: '16px',
+                      padding: '20px 22px',
+                      margin: '22px 0',
+                      boxShadow: '0 4px 16px rgba(245, 158, 11, 0.15)',
+                    }}
+                  >
+                    <div style={{ display: 'flex', alignItems: 'flex-start', gap: '14px' }}>
+                      <span style={{ fontSize: '32px', lineHeight: 1 }}>⚠️</span>
+                      <div>
+                        <h3 style={{ margin: '0 0 6px', color: '#92400e', fontSize: '17px', fontWeight: 800 }}>
+                          IMPORTANT: PLEASE DOWNLOAD / PRINT YOUR ADMIT CARD NOW!
+                        </h3>
+                        <p style={{ margin: 0, color: '#78350f', fontSize: '13px', lineHeight: 1.6, fontWeight: 500 }}>
+                          Your official <strong>Exam Login ID (Roll Number)</strong> and <strong>Exam Password</strong> are printed directly on the Admit Card below. Please download or print a physical copy right now so you can log in on the exam portal without any trouble.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
 
-                    <div style={{
-                      background: '#ffffff',
-                      border: '1.5px solid #bfdbfe',
+                  {/* OFFICIAL PROVISIONAL ADMIT CARD (Printable via window.print()) */}
+                  <div
+                    id="siu-admit-card"
+                    className="th-slip"
+                    style={{
+                      border: '2px solid #0b2545',
                       borderRadius: '14px',
-                      padding: '14px 20px',
-                      fontSize: '13px',
-                      color: '#1e293b',
-                      display: 'inline-block',
-                      textAlign: 'left',
-                      boxShadow: '0 2px 8px rgba(0,0,0,0.04)'
-                    }}>
-                      <div style={{ padding: '3px 0' }}>
-                        📧 <strong>Registered Email:</strong> <span style={{ color: '#0369a1', fontFamily: 'monospace', fontWeight: 700 }}>{form.email}</span>
+                      background: '#ffffff',
+                      boxShadow: '0 6px 20px rgba(0, 0, 0, 0.06)',
+                      overflow: 'hidden',
+                      margin: '20px 0',
+                    }}
+                  >
+                    {/* Admit Card University Header */}
+                    <div
+                      className="th-slip-h"
+                      style={{
+                        background: '#0b2545',
+                        color: '#ffffff',
+                        padding: '16px 20px',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        textAlign: 'center',
+                        borderBottom: '3px solid #fbbf24',
+                      }}
+                    >
+                      <b style={{ fontSize: '18px', letterSpacing: '0.04em', textTransform: 'uppercase', color: '#ffffff' }}>
+                        Saroj International University
+                      </b>
+                      <span style={{ fontSize: '12px', color: '#fbbf24', fontWeight: 700, marginTop: '3px' }}>
+                        TALENT SEARCH SCHOLARSHIP EXAMINATION 2026-27 · PROVISIONAL ADMIT CARD
+                      </span>
+                    </div>
+
+                    {/* Official Login Credentials Banner (High Visibility) */}
+                    <div
+                      style={{
+                        background: '#eff6ff',
+                        borderBottom: '2px dashed #93c5fd',
+                        padding: '14px 20px',
+                      }}
+                    >
+                      <div style={{ fontSize: '11px', color: '#1e40af', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '8px', textAlign: 'center' }}>
+                        🔑 Official Online Examination Login Credentials
                       </div>
-                      <div style={{ padding: '3px 0' }}>
-                        📱 <strong>Registered Mobile (SMS):</strong> <span style={{ color: '#0369a1', fontFamily: 'monospace', fontWeight: 700 }}>+91 {form.mobile}</span>
+                      <div
+                        style={{
+                          display: 'grid',
+                          gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
+                          gap: '12px',
+                          background: '#ffffff',
+                          padding: '12px 16px',
+                          borderRadius: '10px',
+                          border: '1.5px solid #bfdbfe',
+                        }}
+                      >
+                        <div>
+                          <small style={{ color: '#64748b', fontSize: '10px', fontWeight: 800, textTransform: 'uppercase', display: 'block' }}>
+                            Roll Number / Login ID
+                          </small>
+                          <b style={{ color: '#1e40af', fontSize: '17px', fontFamily: 'monospace', display: 'block', marginTop: '2px' }}>
+                            {result.rollNo || result.regNo}
+                          </b>
+                        </div>
+                        <div>
+                          <small style={{ color: '#64748b', fontSize: '10px', fontWeight: 800, textTransform: 'uppercase', display: 'block' }}>
+                            Student Exam Password
+                          </small>
+                          <b style={{ color: '#b45309', fontSize: '17px', fontFamily: 'monospace', display: 'block', marginTop: '2px' }}>
+                            {result.password}
+                          </b>
+                        </div>
+                        <div>
+                          <small style={{ color: '#64748b', fontSize: '10px', fontWeight: 800, textTransform: 'uppercase', display: 'block' }}>
+                            Application Reference ID
+                          </small>
+                          <b style={{ color: '#0f172a', fontSize: '15px', fontFamily: 'monospace', display: 'block', marginTop: '2px' }}>
+                            {result.regNo}
+                          </b>
+                        </div>
                       </div>
-                      <div style={{ padding: '3px 0' }}>
-                        🎯 <strong>Selected Stream:</strong> <span style={{ color: '#047857', fontWeight: 700 }}>{form.stream}</span>
-                      </div>
-                      <div style={{ padding: '3px 0' }}>
-                        📅 <strong>Scheduled Exam Slot:</strong> <span style={{ color: '#b45309', fontWeight: 700 }}>{slotF.full}</span>
+                      <div style={{ marginTop: '8px', fontSize: '11px', color: '#0369a1', textAlign: 'center', fontWeight: 600 }}>
+                        Keep these credentials safe. You will enter this Roll No and Password to start your examination.
                       </div>
                     </div>
 
-                    <div style={{ marginTop: '16px', fontSize: '12px', color: '#475569', lineHeight: 1.5 }}>
-                      ⚠️ <strong>Important Note:</strong> Please check your Email Inbox as well as your <strong>Spam / Promotions folder</strong>. If you do not see the email within a few minutes, our university helpdesk is ready to assist you.
+                    {/* Candidate Details Grid */}
+                    <div className="th-slip-b" style={{ padding: '16px 20px', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+                      <div>
+                        <small style={{ color: '#64748b', fontSize: '10.5px', textTransform: 'uppercase', fontWeight: 700 }}>Student Name</small>
+                        <b style={{ color: '#0f172a', fontSize: '14px', display: 'block' }}>{form.name}</b>
+                      </div>
+                      <div>
+                        <small style={{ color: '#64748b', fontSize: '10.5px', textTransform: 'uppercase', fontWeight: 700 }}>Father's Name</small>
+                        <b style={{ color: '#0f172a', fontSize: '14px', display: 'block' }}>{form.father}</b>
+                      </div>
+                      <div>
+                        <small style={{ color: '#64748b', fontSize: '10.5px', textTransform: 'uppercase', fontWeight: 700 }}>Registered Mobile</small>
+                        <b style={{ color: '#0f172a', fontSize: '13.5px', display: 'block' }}>+91 {form.mobile}</b>
+                      </div>
+                      <div>
+                        <small style={{ color: '#64748b', fontSize: '10.5px', textTransform: 'uppercase', fontWeight: 700 }}>Registered Email</small>
+                        <b style={{ color: '#0f172a', fontSize: '13.5px', display: 'block', wordBreak: 'break-all' }}>{form.email}</b>
+                      </div>
+                      <div>
+                        <small style={{ color: '#64748b', fontSize: '10.5px', textTransform: 'uppercase', fontWeight: 700 }}>School / College</small>
+                        <b style={{ color: '#0f172a', fontSize: '13.5px', display: 'block' }}>{form.school}</b>
+                      </div>
+                      <div>
+                        <small style={{ color: '#64748b', fontSize: '10.5px', textTransform: 'uppercase', fontWeight: 700 }}>Board of Examination</small>
+                        <b style={{ color: '#0f172a', fontSize: '13.5px', display: 'block' }}>{form.board}</b>
+                      </div>
+                      <div>
+                        <small style={{ color: '#64748b', fontSize: '10.5px', textTransform: 'uppercase', fontWeight: 700 }}>Selected Stream / Paper</small>
+                        <b style={{ color: '#0284c7', fontSize: '14px', display: 'block' }}>{form.stream}</b>
+                      </div>
+                      <div>
+                        <small style={{ color: '#64748b', fontSize: '10.5px', textTransform: 'uppercase', fontWeight: 700 }}>Examination Mode</small>
+                        <b style={{ color: '#059669', fontSize: '13.5px', display: 'block' }}>Online Computer Based Test (CBT)</b>
+                      </div>
+                      <div className="full" style={{ gridColumn: 'span 2', background: '#f8fafc', padding: '10px 14px', borderRadius: '8px', border: '1px solid #e2e8f0' }}>
+                        <small style={{ color: '#64748b', fontSize: '10.5px', textTransform: 'uppercase', fontWeight: 700 }}>Scheduled Exam Date &amp; Time Window</small>
+                        <b style={{ color: '#b45309', fontSize: '14px', display: 'block', marginTop: '2px' }}>
+                          📅 {slotF.full} · 10:00 AM – 5:00 PM (Attempt anytime within this window)
+                        </b>
+                      </div>
+                    </div>
+
+                    {/* Key Instructions for Candidate */}
+                    <div style={{ background: '#f8fafc', borderTop: '1px solid #e2e8f0', padding: '12px 20px', fontSize: '11px', color: '#475569', lineHeight: 1.5 }}>
+                      <strong style={{ color: '#0f172a', display: 'block', marginBottom: '4px', textTransform: 'uppercase', fontSize: '10.5px' }}>
+                        Candidate Instructions:
+                      </strong>
+                      <ol style={{ margin: 0, paddingLeft: '16px' }}>
+                        <li>Candidate must appear for the 60-minute test using a laptop, desktop, or smartphone with a working camera and internet.</li>
+                        <li>Log in to the exam portal on your exam day using the <strong>Roll Number</strong> and <strong>Password</strong> shown above.</li>
+                        <li>Question paper will be based on your chosen stream: <strong>{form.stream}</strong>.</li>
+                        <li>For technical assistance, contact Admission Cell at <strong>+91 95137-31275</strong> or <strong>info@sarojuniversity.edu.in</strong>.</li>
+                      </ol>
+                    </div>
+
+                    {/* Admit Card Footer */}
+                    <div
+                      className="th-slip-f"
+                      style={{
+                        textAlign: 'center',
+                        background: '#f1f5f9',
+                        color: '#64748b',
+                        fontSize: '11px',
+                        padding: '10px 20px',
+                        borderTop: '1px solid #e2e8f0',
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        flexWrap: 'wrap',
+                        gap: '8px',
+                      }}
+                    >
+                      <span>Registered On: {result.at}</span>
+                      <span style={{ fontWeight: 700, color: '#0f172a' }}>Controller of Examinations · Saroj International University</span>
                     </div>
                   </div>
 
-                  {/* Summary Acknowledgement Card (No passwords or printable slip generated here) */}
-                  <div className="th-slip" style={{ border: '1px solid #e2e8f0', background: '#fafafa' }}>
-                    <div className="th-slip-h" style={{ background: '#0b2545', color: '#ffffff' }}>
-                      <b>Saroj International University</b>
-                      <span>Registration Acknowledgement · Talent Search 2026-27</span>
-                    </div>
-                    <div className="th-slip-b">
-                      <div className="full">
-                        <small>Application Reference</small>
-                        <b className="th-regno">{result.regNo}</b>
-                      </div>
-                      <div>
-                        <small>Student Name</small>
-                        <b>{form.name}</b>
-                      </div>
-                      <div>
-                        <small>Father's Name</small>
-                        <b>{form.father}</b>
-                      </div>
-                      <div>
-                        <small>School</small>
-                        <b>{form.school}</b>
-                      </div>
-                      <div>
-                        <small>Board</small>
-                        <b>{form.board}</b>
-                      </div>
-                      <div>
-                        <small>Stream / Paper Type</small>
-                        <b style={{ color: '#0284c7' }}>{form.stream}</b>
-                      </div>
-                      <div>
-                        <small>Scheduled Slot</small>
-                        <b>{slotF.full}</b>
-                      </div>
-                    </div>
-                    <div className="th-slip-f" style={{ textAlign: 'center', background: '#f1f5f9', color: '#64748b', fontSize: '11px', padding: '10px' }}>
-                      Registration submitted on {result.at}. Official Admit Card dispatched to {form.email}.
-                    </div>
-                  </div>
-
-                  <div className="th-actions" style={{ justifyContent: 'center', marginTop: '22px' }}>
+                  {/* Print and Secondary Actions */}
+                  <div className="th-actions" style={{ justifyContent: 'center', marginTop: '24px', display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
                     <button
                       type="button"
                       className="th-btn primary"
+                      onClick={() => window.print()}
+                      style={{
+                        padding: '13px 28px',
+                        fontSize: '14px',
+                        fontWeight: 700,
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '8px',
+                        cursor: 'pointer',
+                        boxShadow: '0 4px 14px rgba(37, 99, 235, 0.3)',
+                      }}
+                    >
+                      <span>⬇️</span>
+                      <span>Download / Print Admit Card</span>
+                    </button>
+                    <button
+                      type="button"
+                      className="th-btn ghost"
                       onClick={() => {
                         setResult(null);
                         setStep(0);
