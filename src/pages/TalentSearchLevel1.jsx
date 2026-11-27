@@ -444,6 +444,61 @@ export default function TalentSearchLevel1() {
 
   const common = { form, errors, touched, onChange, onBlur };
 
+  const handlePrintAdmitCard = () => {
+    const cardEl = document.getElementById('siu-admit-card');
+    if (!cardEl) {
+      window.print();
+      return;
+    }
+
+    const printWin = window.open('', '_blank', 'width=900,height=950');
+    if (!printWin) {
+      window.print();
+      return;
+    }
+
+    printWin.document.write(`<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Admit Card - ${form.name || 'Candidate'} - SIU</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+    body { background: #ffffff; color: #0f172a; padding: 24px; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+    #siu-admit-card {
+      border: 2px solid #0b2545 !important;
+      border-radius: 8px !important;
+      background: #ffffff !important;
+      max-width: 820px;
+      margin: 0 auto;
+      overflow: hidden;
+    }
+    .th-slip-h { background: #0b2545 !important; color: #ffffff !important; padding: 16px 20px; text-align: center; border-bottom: 3px solid #fbbf24; }
+    .th-slip-h b { font-size: 19px; text-transform: uppercase; letter-spacing: 0.04em; display: block; color: #ffffff !important; }
+    .th-slip-h span { font-size: 12px; color: #fbbf24 !important; font-weight: 700; display: block; margin-top: 3px; }
+    .th-slip-b { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 16px 20px; }
+    .th-slip-b div { margin-bottom: 2px; }
+    .th-slip-b small { color: #64748b; font-size: 10.5px; text-transform: uppercase; font-weight: 700; display: block; }
+    .th-slip-b b { color: #0f172a; font-size: 14px; display: block; margin-top: 2px; }
+    .full { grid-column: span 2; }
+    .th-slip-f { padding: 10px 20px; background: #f1f5f9 !important; border-top: 1px solid #e2e8f0; font-size: 11px; color: #64748b; display: flex; justify-content: space-between; align-items: center; }
+    @page { size: A4 portrait; margin: 10mm; }
+  </style>
+</head>
+<body>
+  ${cardEl.outerHTML}
+  <script>
+    window.onload = function() {
+      window.focus();
+      window.print();
+      setTimeout(function() { window.close(); }, 500);
+    };
+  </script>
+</body>
+</html>`);
+    printWin.document.close();
+  };
+
   return (
     <Layout>
       <Helmet>
@@ -1169,7 +1224,7 @@ export default function TalentSearchLevel1() {
                     <button
                       type="button"
                       className="th-btn primary"
-                      onClick={() => window.print()}
+                      onClick={handlePrintAdmitCard}
                       style={{
                         padding: '13px 28px',
                         fontSize: '14px',

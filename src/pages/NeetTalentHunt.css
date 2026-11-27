@@ -586,42 +586,53 @@
 
 @media print {
   /* Hide all surrounding non-printable layout elements */
-  header, footer, nav, .th-hero, .th-side, .th-how-wrap, .th-faq, .th-actions, .th-notice-box, .th-tabs, .th-field, .th-prog, .th-pat, .th-reg-head {
+  header, footer, nav, .th-hero, .th-side, .th-how-wrap, .th-faq, .th-actions, .th-notice-box, .th-tabs, .th-field, .th-prog, .th-pat, .th-reg-head, .th-card-head, .th-check, .th-success > h2, .th-success > p, .th-confetti {
     display: none !important;
   }
 
-  body {
+  html, body {
     background: #ffffff !important;
     color: #000000 !important;
     margin: 0 !important;
     padding: 0 !important;
+    height: auto !important;
+    overflow: visible !important;
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
   }
 
-  body * {
-    visibility: hidden;
+  .th, .th-wrap, .th-body, .th-card, .th-success {
+    display: block !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    overflow: visible !important;
+    max-width: 100% !important;
+    width: 100% !important;
   }
 
   #siu-admit-card,
   #siu-admit-card * {
-    visibility: visible;
+    visibility: visible !important;
   }
 
   #siu-admit-card {
-    position: absolute;
-    left: 0;
-    top: 0;
+    display: block !important;
+    position: relative !important;
+    left: 0 !important;
+    top: 0 !important;
     width: 100% !important;
     max-width: 100% !important;
-    margin: 0 !important;
-    padding: 16px 20px !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
     background: #ffffff !important;
     color: #0f172a !important;
     border: 2px solid #0b2545 !important;
     border-radius: 8px !important;
     box-shadow: none !important;
-    page-break-inside: avoid;
+    page-break-inside: avoid !important;
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
   }
