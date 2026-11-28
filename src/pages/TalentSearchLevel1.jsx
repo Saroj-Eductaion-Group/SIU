@@ -640,52 +640,39 @@ export default function TalentSearchLevel1() {
                   </div>
                 ))}
               </div>
+            </div>
 
-              {/* Online Exam Portal Button (Inactive until exam day as requested) */}
-              <div style={{ marginTop: '16px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '6px' }}>
-                <button
-                  type="button"
-                  disabled
-                  title="Examination portal will be enabled on the day of the examination (10:00 AM)"
-                  style={{
-                    padding: '11px 28px',
-                    borderRadius: '9999px',
-                    fontSize: '13.5px',
-                    fontWeight: 700,
-                    background: 'linear-gradient(135deg, #334155 0%, #1e293b 100%)',
-                    color: '#94a3b8',
-                    border: '1.5px solid rgba(255, 255, 255, 0.18)',
-                    cursor: 'not-allowed',
-                    opacity: 0.9,
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '10px',
-                    boxShadow: '0 4px 14px rgba(0, 0, 0, 0.25)',
-                    letterSpacing: '0.01em',
-                  }}
-                >
-                  <span style={{ fontSize: '15px' }}>🔒</span>
-                  <span>Enter Online Exam Portal</span>
-                  <span
-                    style={{
-                      fontSize: '10px',
-                      background: 'rgba(239, 68, 68, 0.2)',
-                      color: '#fca5a5',
-                      border: '1px solid rgba(239, 68, 68, 0.35)',
-                      padding: '2px 8px',
-                      borderRadius: '999px',
-                      fontWeight: 800,
-                      textTransform: 'uppercase',
-                      letterSpacing: '0.04em',
-                    }}
-                  >
-                    Inactive
-                  </span>
-                </button>
-                <span style={{ fontSize: '11.5px', color: '#94a3b8', fontWeight: 500, letterSpacing: '0.01em' }}>
-                  ⏳ Exam button will be activated on exam day (10:00 AM – 5:00 PM)
-                </span>
-              </div>
+            {/* Online Exam Portal Button (Directly Below Countdown, Centered, Active, Opens in New Tab) */}
+            <div style={{ marginTop: '18px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
+              <a
+                href="https://talent-search-scholership.vercel.app/login"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="th-exam-portal-btn"
+                style={{
+                  padding: '13px 34px',
+                  borderRadius: '9999px',
+                  fontSize: '14.5px',
+                  fontWeight: 800,
+                  background: 'linear-gradient(135deg, #2563eb 0%, #1d4ed8 50%, #1e40af 100%)',
+                  color: '#ffffff',
+                  border: '1.5px solid rgba(255, 255, 255, 0.35)',
+                  cursor: 'pointer',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  boxShadow: '0 6px 20px rgba(37, 99, 235, 0.45)',
+                  letterSpacing: '0.02em',
+                  textDecoration: 'none',
+                  transition: 'all 0.25s ease',
+                }}
+              >
+                <span>Enter Online Exam Portal</span>
+                <span style={{ fontSize: '16px', fontWeight: 900 }}>↗</span>
+              </a>
+              <span style={{ fontSize: '12px', color: '#cbd5e1', fontWeight: 500, letterSpacing: '0.01em' }}>
+                Log in using your Roll Number and Password from your Admit Card
+              </span>
             </div>
 
             <div className="th-tiers">
