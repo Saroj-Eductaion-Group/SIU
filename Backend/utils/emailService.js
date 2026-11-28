@@ -1,4 +1,6 @@
 const nodemailer = require('nodemailer');
+const path = require('path');
+const fs = require('fs');
 
 /**
  * Configure Nodemailer SMTP Transporter
@@ -22,7 +24,7 @@ function createTransporter() {
 }
 
 /**
- * Generate full HTML email for Talent Search Exam Registration & Credentials
+ * Generate clean, transactional HTML email for Talent Search Exam
  */
 function generateTalentSearchEmailHtml({
   studentName,
@@ -42,177 +44,169 @@ function generateTalentSearchEmailHtml({
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SIU Talent Search Examination Credentials</title>
+  <title>Saroj International University - Examination Slip</title>
 </head>
-<body style="margin: 0; padding: 0; background-color: #f1f5f9; font-family: 'Segoe UI', Arial, sans-serif; color: #1e293b;">
-  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background-color: #f1f5f9; padding: 24px 12px;">
+<body style="margin: 0; padding: 0; background-color: #f8fafc; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #1e293b; line-height: 1.6;">
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background-color: #f8fafc; padding: 24px 10px;">
     <tr>
       <td align="center">
-        <!-- Container -->
-        <table role="presentation" width="100%" style="max-width: 650px; background-color: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.08); border: 1px solid #e2e8f0;" cellspacing="0" cellpadding="0">
+        <!-- Main Card Container -->
+        <table role="presentation" width="100%" style="max-width: 600px; background-color: #ffffff; border-radius: 12px; overflow: hidden; border: 1px solid #e2e8f0; box-shadow: 0 4px 12px rgba(0,0,0,0.05);" cellspacing="0" cellpadding="0">
           
-          <!-- Header Banner -->
+          <!-- Institutional Header -->
           <tr>
-            <td style="background: linear-gradient(135deg, #0e2557 0%, #1e3a8a 100%); padding: 32px 24px; text-align: center;">
-              <table role="presentation" width="100%" cellspacing="0" cellpadding="0">
-                <tr>
-                  <td align="center">
-                    <img src="https://sarojuniversity.edu.in/favicon.png" alt="SIU Logo" width="64" height="64" style="display: block; margin-bottom: 12px; border-radius: 50%; background: #ffffff; padding: 4px;" />
-                    <h1 style="color: #ffffff; margin: 0; font-size: 24px; font-weight: 800; letter-spacing: 0.5px; text-transform: uppercase;">
-                      Saroj International University
-                    </h1>
-                    <div style="display: inline-block; background-color: #c9a84c; color: #0e2557; font-size: 11px; font-weight: 800; padding: 4px 14px; border-radius: 9999px; margin-top: 10px; text-transform: uppercase; letter-spacing: 1px;">
-                      Talent Search &amp; Scholarship Exam 2026–27
-                    </div>
-                  </td>
-                </tr>
-              </table>
+            <td style="background-color: #0e2557; padding: 28px 20px; text-align: center;">
+              <img src="cid:siu_university_logo" alt="Saroj International University" width="72" height="72" style="display: block; margin: 0 auto 10px; border-radius: 50%; background: #ffffff; padding: 4px; border: 1px solid #cbd5e1;" />
+              <h1 style="color: #ffffff; margin: 0 0 4px; font-size: 20px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase;">
+                Saroj International University
+              </h1>
+              <p style="color: #cbd5e1; margin: 0; font-size: 13px; font-weight: 500;">
+                Talent Search &amp; Scholarship Examination 2026–2027
+              </p>
             </td>
           </tr>
 
-          <!-- Welcome Body -->
+          <!-- Notice Bar -->
           <tr>
-            <td style="padding: 28px 28px 12px 28px;">
-              <p style="font-size: 16px; margin: 0 0 12px; color: #0f172a;">
+            <td style="background-color: #f1f5f9; padding: 10px 24px; border-bottom: 1px solid #e2e8f0; font-size: 12px; color: #475569; text-align: center;">
+              Official Candidate Registration &amp; Examination Allotment Slip
+            </td>
+          </tr>
+
+          <!-- Message Body -->
+          <tr>
+            <td style="padding: 24px 24px 12px 24px;">
+              <p style="font-size: 15px; margin: 0 0 12px; color: #0f172a;">
                 Dear <strong>${studentName || 'Candidate'}</strong>,
               </p>
-              <p style="font-size: 14px; line-height: 1.6; margin: 0 0 18px; color: #334155;">
-                Congratulations on your successful registration for the <strong>Saroj International University Talent Search &amp; Scholarship Examination 2026–27</strong>! Your examination profile and portal access credentials have been officially generated.
+              <p style="font-size: 13.5px; color: #334155; margin: 0 0 16px;">
+                Your registration for the <strong>Saroj International University Talent Search &amp; Scholarship Examination 2026–27</strong> has been successfully confirmed. Please find your official roll number, exam schedule, and portal access details below.
               </p>
 
-              <!-- Credentials Box -->
-              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background: #f8fafc; border: 2px solid #cbd5e1; border-radius: 12px; margin-bottom: 24px; overflow: hidden;">
+              <!-- Access Credentials Table -->
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background-color: #f8fafc; border: 1px solid #cbd5e1; border-radius: 8px; margin-bottom: 20px; overflow: hidden;">
                 <tr>
-                  <td style="background: #e2e8f0; padding: 10px 16px; font-size: 12px; font-weight: 800; color: #0f172a; text-transform: uppercase; letter-spacing: 0.5px;">
-                    🔑 Your Exam Portal Login Credentials
+                  <td colspan="2" style="background-color: #e2e8f0; padding: 9px 16px; font-size: 12px; font-weight: 700; color: #1e293b; text-transform: uppercase;">
+                    Candidate Allotment &amp; Login Details
                   </td>
                 </tr>
                 <tr>
-                  <td style="padding: 18px 20px;">
-                    <table role="presentation" width="100%" cellspacing="0" cellpadding="6">
+                  <td style="padding: 14px 16px;">
+                    <table role="presentation" width="100%" cellspacing="0" cellpadding="4" style="font-size: 13px;">
                       <tr>
-                        <td width="38%" style="font-size: 13px; color: #64748b; font-weight: 600;">Candidate Name:</td>
-                        <td style="font-size: 14px; color: #0f172a; font-weight: 700;">${studentName || 'N/A'}</td>
+                        <td width="40%" style="color: #64748b; font-weight: 600;">Student Name:</td>
+                        <td style="color: #0f172a; font-weight: 700;">${studentName || 'N/A'}</td>
                       </tr>
                       <tr>
-                        <td style="font-size: 13px; color: #64748b; font-weight: 600;">Roll Number:</td>
-                        <td style="font-size: 15px; color: #1e3a8a; font-weight: 800; font-family: monospace;">${rollNumber || 'N/A'}</td>
+                        <td style="color: #64748b; font-weight: 600;">Roll Number:</td>
+                        <td style="color: #0e2557; font-weight: 700; font-family: monospace; font-size: 14px;">${rollNumber || 'N/A'}</td>
                       </tr>
                       <tr>
-                        <td style="font-size: 13px; color: #64748b; font-weight: 600;">Application No:</td>
-                        <td style="font-size: 13px; color: #334155; font-family: monospace;">${applicationNumber || 'N/A'}</td>
+                        <td style="color: #64748b; font-weight: 600;">Application ID:</td>
+                        <td style="color: #334155; font-family: monospace;">${applicationNumber || 'N/A'}</td>
                       </tr>
                       <tr>
-                        <td style="font-size: 13px; color: #64748b; font-weight: 600;">Login ID (Username):</td>
-                        <td style="font-size: 15px; color: #1e3a8a; font-weight: 800; font-family: monospace;">${loginId || 'N/A'}</td>
+                        <td style="color: #64748b; font-weight: 600;">Portal Username:</td>
+                        <td style="color: #0e2557; font-weight: 700; font-family: monospace;">${loginId || 'N/A'}</td>
                       </tr>
                       <tr>
-                        <td style="font-size: 13px; color: #64748b; font-weight: 600;">Exam Password:</td>
-                        <td style="font-size: 16px; color: #b45309; font-weight: 800; font-family: monospace; background: #fef3c7; padding: 2px 8px; border-radius: 4px; display: inline-block;">${password || 'N/A'}</td>
+                        <td style="color: #64748b; font-weight: 600;">Access Password:</td>
+                        <td style="color: #9a3412; font-weight: 700; font-family: monospace; font-size: 14px;">${password || 'N/A'}</td>
                       </tr>
                       <tr>
-                        <td style="font-size: 13px; color: #64748b; font-weight: 600;">Selected Stream:</td>
-                        <td style="font-size: 14px; color: #047857; font-weight: 700;">${stream || 'General'}</td>
+                        <td style="color: #64748b; font-weight: 600;">Selected Stream:</td>
+                        <td style="color: #0f172a; font-weight: 600;">${stream || 'General'}</td>
                       </tr>
                       <tr>
-                        <td style="font-size: 13px; color: #64748b; font-weight: 600;">Allocated Exam Slot:</td>
-                        <td style="font-size: 14px; color: #b91c1c; font-weight: 800;">${slot || '29 Nov'}</td>
+                        <td style="color: #64748b; font-weight: 600;">Allocated Slot Date:</td>
+                        <td style="color: #0e2557; font-weight: 700;">${slot || '29 Nov'}</td>
                       </tr>
                     </table>
 
-                    <!-- Login Button -->
-                    <div style="text-align: center; margin-top: 18px; padding-top: 14px; border-top: 1px solid #e2e8f0;">
-                      <a href="${portalUrl}" target="_blank" style="display: inline-block; background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%); color: #ffffff; text-decoration: none; font-size: 14px; font-weight: 800; padding: 12px 28px; border-radius: 8px; box-shadow: 0 4px 12px rgba(37,99,235,0.35);">
-                        🚀 Enter Online Exam Portal →
+                    <!-- Portal Link -->
+                    <div style="text-align: center; margin-top: 14px; padding-top: 12px; border-top: 1px dashed #cbd5e1;">
+                      <a href="${portalUrl}" target="_blank" style="display: inline-block; background-color: #0e2557; color: #ffffff; text-decoration: none; font-size: 13px; font-weight: 600; padding: 10px 24px; border-radius: 6px;">
+                        Access Online Examination Portal &rarr;
                       </a>
-                      <div style="margin-top: 8px; font-size: 11px; color: #64748b;">
-                        Exam Portal Link: <a href="${portalUrl}" style="color: #2563eb;">${portalUrl}</a>
+                      <div style="margin-top: 6px; font-size: 11px; color: #64748b;">
+                        Direct URL: <a href="${portalUrl}" style="color: #0e2557;">${portalUrl}</a>
                       </div>
                     </div>
                   </td>
                 </tr>
               </table>
 
-              <!-- About the Test Section -->
-              <div style="margin-bottom: 24px;">
-                <h3 style="color: #0e2557; font-size: 16px; font-weight: 800; margin: 0 0 10px; border-left: 4px solid #c9a84c; padding-left: 10px;">
-                  📘 About The Talent Search Examination
-                </h3>
-                <p style="font-size: 13px; line-height: 1.6; color: #334155; margin: 0 0 12px;">
-                  The <strong>Saroj International University Talent Search &amp; Scholarship Exam</strong> is an all-India talent identification initiative aimed at identifying exceptionally talented young minds. High scorers in this examination unlock prestigious merit scholarships across university degree programmes including B.Tech, BCA, B.Sc, BBA, B.Com, Pharmacy, Film &amp; Mass Media, and Humanities.
-                </p>
+              <!-- About the Examination -->
+              <h2 style="font-size: 14px; color: #0e2557; margin: 18px 0 8px; font-weight: 700; border-bottom: 2px solid #e2e8f0; padding-bottom: 4px;">
+                Examination Structure &amp; Scholarship Slabs
+              </h2>
+              <p style="font-size: 13px; color: #334155; margin: 0 0 10px;">
+                The SIU Talent Search Examination is an academic assessment conducted by Saroj International University to identify meritorious students for merit-based tuition waivers across academic degree programmes (B.Tech, BCA, B.Sc, BBA, B.Com, Pharmacy, Film &amp; Media, and Allied Sciences).
+              </p>
 
-                <!-- Scholarship Slabs Box -->
-                <table role="presentation" width="100%" cellspacing="0" cellpadding="8" style="background: #fffbeb; border: 1px solid #fde68a; border-radius: 8px; font-size: 12px; margin-bottom: 16px;">
-                  <tr>
-                    <td colspan="2" style="font-weight: 800; color: #92400e; font-size: 13px; border-bottom: 1px dashed #fcd34d;">
-                      🏆 Scholarship Slabs &amp; Merit Awards:
-                    </td>
-                  </tr>
-                  <tr>
-                    <td width="35%" style="color: #78350f; font-weight: 700;">Score 90% or above:</td>
-                    <td style="color: #065f46; font-weight: 800;">100% Complete Tuition Fee Waiver (Full Scholarship)</td>
-                  </tr>
-                  <tr>
-                    <td style="color: #78350f; font-weight: 700;">Score 75% – 89%:</td>
-                    <td style="color: #1e3a8a; font-weight: 700;">50% Tuition Fee Waiver</td>
-                  </tr>
-                  <tr>
-                    <td style="color: #78350f; font-weight: 700;">Score 60% – 74%:</td>
-                    <td style="color: #c2410c; font-weight: 700;">25% Tuition Fee Waiver</td>
-                  </tr>
-                  <tr>
-                    <td style="color: #78350f; font-weight: 700;">All Qualifiers:</td>
-                    <td style="color: #475569; font-weight: 600;">Official Certificate of Merit &amp; Admission Priority</td>
-                  </tr>
-                </table>
+              <!-- Slabs Table -->
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="6" style="font-size: 12.5px; border: 1px solid #e2e8f0; border-radius: 6px; margin-bottom: 16px; background-color: #ffffff;">
+                <tr style="background-color: #f8fafc;">
+                  <th align="left" style="padding: 8px 10px; border-bottom: 1px solid #e2e8f0; color: #475569;">Performance Tier</th>
+                  <th align="left" style="padding: 8px 10px; border-bottom: 1px solid #e2e8f0; color: #475569;">Merit Award</th>
+                </tr>
+                <tr>
+                  <td style="padding: 6px 10px; border-bottom: 1px solid #f1f5f9; font-weight: 600; color: #0f172a;">Score 90% and above</td>
+                  <td style="padding: 6px 10px; border-bottom: 1px solid #f1f5f9; color: #047857; font-weight: 700;">100% Tuition Fee Exemption</td>
+                </tr>
+                <tr>
+                  <td style="padding: 6px 10px; border-bottom: 1px solid #f1f5f9; font-weight: 600; color: #0f172a;">Score 75% to 89%</td>
+                  <td style="padding: 6px 10px; border-bottom: 1px solid #f1f5f9; color: #1e3a8a; font-weight: 600;">50% Tuition Fee Exemption</td>
+                </tr>
+                <tr>
+                  <td style="padding: 6px 10px; border-bottom: 1px solid #f1f5f9; font-weight: 600; color: #0f172a;">Score 60% to 74%</td>
+                  <td style="padding: 6px 10px; border-bottom: 1px solid #f1f5f9; color: #b45309; font-weight: 600;">25% Tuition Fee Exemption</td>
+                </tr>
+                <tr>
+                  <td style="padding: 6px 10px; font-weight: 600; color: #0f172a;">All Qualifying Students</td>
+                  <td style="padding: 6px 10px; color: #475569;">Official Certificate of Merit &amp; Admission Preference</td>
+                </tr>
+              </table>
 
-                <!-- Exam Pattern & Syllabus -->
-                <h4 style="color: #0e2557; font-size: 14px; font-weight: 700; margin: 14px 0 8px;">
-                  📝 Examination Pattern &amp; Syllabus:
-                </h4>
-                <ul style="font-size: 13px; color: #334155; line-height: 1.6; margin: 0 0 16px; padding-left: 20px;">
-                  <li><strong>Format:</strong> Online Computer-Based / Mobile-friendly Proctored Test consisting of Multiple Choice Questions (MCQs).</li>
-                  <li><strong>Syllabus Focus:</strong> Strictly based on your selected stream (<strong>${stream || 'PCM / Class 12'}</strong>) following the standard NCERT / CBSE / State Board curriculum.</li>
-                  <li><strong>Negative Marking:</strong> There is <strong>NO negative marking</strong>. You are encouraged to attempt all questions.</li>
-                  <li><strong>Exam Duration:</strong> 60 Minutes.</li>
-                </ul>
+              <!-- Instructions -->
+              <h2 style="font-size: 14px; color: #0e2557; margin: 16px 0 8px; font-weight: 700; border-bottom: 2px solid #e2e8f0; padding-bottom: 4px;">
+                Examination Guidelines
+              </h2>
+              <ul style="font-size: 12.5px; color: #334155; margin: 0 0 16px; padding-left: 20px; line-height: 1.6;">
+                <li><strong>Format:</strong> Computer-Based Objective Test (Multiple Choice Questions) based on your selected stream (${stream || 'Class 12'}).</li>
+                <li><strong>Duration:</strong> 60 Minutes. There is <strong>no negative marking</strong>.</li>
+                <li><strong>Timing:</strong> Please log in to the portal 15 minutes before your allotted exam slot.</li>
+                <li><strong>Requirements:</strong> Ensure a stable internet connection on your laptop, desktop, or mobile device with camera permission enabled.</li>
+              </ul>
 
-                <!-- Important Instructions -->
-                <h4 style="color: #0e2557; font-size: 14px; font-weight: 700; margin: 14px 0 8px;">
-                  ⚠️ Important Exam Day Guidelines:
-                </h4>
-                <ol style="font-size: 13px; color: #334155; line-height: 1.6; margin: 0 0 16px; padding-left: 20px;">
-                  <li>Log in to the exam portal at least <strong>15 minutes prior</strong> to your scheduled slot.</li>
-                  <li>Ensure a stable internet connection and allow camera access for the proctoring verification.</li>
-                  <li>Do not switch tabs or minimize your browser window during the active test session.</li>
-                  <li>Keep your Login ID and Password confidential.</li>
-                </ol>
-              </div>
-
-              <!-- Download Admit Card Link -->
-              <div style="background-color: #f1f5f9; border-radius: 8px; padding: 12px 16px; margin-bottom: 20px; font-size: 12px; color: #475569;">
-                📄 <strong>Need your Admit Card?</strong> You can download or print your official admit card at any time by visiting <a href="${admitCardUrl}" style="color: #1e3a8a; font-weight: 700;">${admitCardUrl}</a>.
+              <!-- Admit Card Download Notice -->
+              <div style="background-color: #f1f5f9; border-left: 3px solid #0e2557; padding: 10px 14px; margin-bottom: 16px; font-size: 12px; color: #334155;">
+                You may also download or print your provisional admit slip anytime from: <a href="${admitCardUrl}" style="color: #0e2557; font-weight: 600;">${admitCardUrl}</a>.
               </div>
             </td>
           </tr>
 
-          <!-- Footer -->
+          <!-- Institutional Footer -->
           <tr>
-            <td style="background-color: #0e2557; color: #94a3b8; padding: 24px 28px; text-align: center; font-size: 12px; line-height: 1.6; border-top: 1px solid #1e3a8a;">
-              <p style="margin: 0 0 6px; color: #ffffff; font-weight: 700; font-size: 13px;">
-                Examination Cell | Saroj International University
+            <td style="background-color: #0e2557; color: #94a3b8; padding: 20px 24px; text-align: center; font-size: 11.5px; line-height: 1.6;">
+              <p style="margin: 0 0 4px; color: #f8fafc; font-weight: 600; font-size: 12px;">
+                Examination Cell, Saroj International University
               </p>
-              <p style="margin: 0 0 6px;">
-                Helpline &amp; Queries: <a href="mailto:tse@sarojuniversity.edu.in" style="color: #c9a84c; text-decoration: none;">tse@sarojuniversity.edu.in</a> | <a href="mailto:info@sarojuniversity.edu.in" style="color: #c9a84c; text-decoration: none;">info@sarojuniversity.edu.in</a>
+              <p style="margin: 0 0 4px;">
+                Email Support: <a href="mailto:tse@sarojuniversity.edu.in" style="color: #f8fafc; text-decoration: underline;">tse@sarojuniversity.edu.in</a>
               </p>
-              <p style="margin: 0; font-size: 11px; color: #64748b;">
-                Website: <a href="https://sarojuniversity.edu.in" style="color: #94a3b8;">sarojuniversity.edu.in</a> | Shivrajpur, Kanpur Nagar, Uttar Pradesh, India
+              <p style="margin: 0; color: #64748b;">
+                Campus: Shivrajpur, Kanpur Nagar, Uttar Pradesh, India | <a href="https://sarojuniversity.edu.in" style="color: #94a3b8; text-decoration: none;">sarojuniversity.edu.in</a>
               </p>
             </td>
           </tr>
 
         </table>
+
+        <!-- Anti-Spam Footer Notice -->
+        <p style="font-size: 11px; color: #94a3b8; margin: 12px 0 0; text-align: center;">
+          This is an automated transactional confirmation regarding your examination registration at Saroj International University.
+        </p>
       </td>
     </tr>
   </table>
@@ -253,50 +247,81 @@ async function sendTalentSearchCredentialsEmail(candidate) {
 
   const textContent = `
 SAROJ INTERNATIONAL UNIVERSITY
-Talent Search & Scholarship Examination 2026-27
+Talent Search & Scholarship Examination 2026-2027
+Official Candidate Registration & Examination Allotment Slip
 
 Dear ${studentName},
 
-Congratulations! You have successfully registered for the SIU Talent Search & Scholarship Examination 2026-27.
+Your registration for the Saroj International University Talent Search & Scholarship Examination 2026-27 has been successfully confirmed.
 
-YOUR EXAM CREDENTIALS:
-- Exam Portal URL: https://talent-search-scholership.vercel.app/login
+CANDIDATE ALLOTMENT & LOGIN DETAILS:
+- Candidate Name: ${studentName}
 - Roll Number: ${rollNumber}
-- Application Number: ${applicationNumber}
-- Login ID (Username): ${loginId}
-- Exam Password: ${password}
+- Application ID: ${applicationNumber}
+- Portal Username: ${loginId}
+- Access Password: ${password}
 - Selected Stream: ${stream}
 - Allocated Exam Slot: ${slot}
+- Online Examination Portal: https://talent-search-scholership.vercel.app/login
 
-ABOUT THE EXAM:
-The SIU Talent Search Examination offers 100% full fee waiver scholarships to high scorers.
-- Score 90% or above: 100% Tuition Fee Waiver (Full Scholarship)
-- Score 75% to 89%: 50% Tuition Fee Waiver
-- Score 60% to 74%: 25% Tuition Fee Waiver
-- Format: Online MCQ Proctored Test (60 Minutes) based strictly on your stream syllabus. No negative marking.
+EXAMINATION STRUCTURE & MERIT SLABS:
+- Score 90% and above: 100% Tuition Fee Exemption
+- Score 75% to 89%: 50% Tuition Fee Exemption
+- Score 60% to 74%: 25% Tuition Fee Exemption
+- All Qualifiers: Certificate of Merit & Admission Preference
+- Format: 60-Minute Online Objective Test based on stream syllabus (${stream}). No negative marking.
 
-Please log in 15 minutes prior to your allocated slot at:
-https://talent-search-scholership.vercel.app/login
+Please log in to the portal 15 minutes before your scheduled slot.
+You can also print your admit slip at: https://sarojuniversity.edu.in/talent-search-scholarship
 
-For queries, email us at: tse@sarojuniversity.edu.in
 Examination Cell, Saroj International University
+Helpline: tse@sarojuniversity.edu.in | https://sarojuniversity.edu.in
   `.trim();
 
   try {
     const transporter = createTransporter();
-    const fromAddress = process.env.SMTP_FROM || `"Saroj International University Examination Cell" <${process.env.SMTP_USER || 'rajsharmafullstackdev@gmail.com'}>`;
+    const fromAddress = process.env.SMTP_FROM || `"SIU Examination Cell" <${process.env.SMTP_USER || 'rajsharmafullstackdev@gmail.com'}>`;
     const replyToAddress = process.env.SMTP_REPLY_TO || 'tse@sarojuniversity.edu.in';
 
-    console.log(`[TalentSearch Mail] Sending credentials email to ${recipient}...`);
+    // Locate inline logo
+    const logoCandidates = [
+      path.join(__dirname, '../assets/logo.png'),
+      path.join(__dirname, '../../public/logo.png'),
+      path.join(__dirname, '../../dist/logo.png'),
+    ];
+    let logoAttachment = null;
+    for (const p of logoCandidates) {
+      if (fs.existsSync(p)) {
+        logoAttachment = {
+          filename: 'siu-logo.png',
+          path: p,
+          cid: 'siu_university_logo',
+        };
+        break;
+      }
+    }
 
-    const info = await transporter.sendMail({
+    const mailOptions = {
       from: fromAddress,
       replyTo: replyToAddress,
       to: recipient,
-      subject: `SIU Talent Search 2026-27 | Your Exam Portal Login ID & Password (${rollNumber})`,
+      subject: `Saroj International University: Talent Search Examination Slip [Roll No: ${rollNumber}]`,
       text: textContent,
       html: htmlContent,
-    });
+      headers: {
+        'X-Priority': '3',
+        'X-Entity-Ref-ID': rollNumber,
+        'X-Auto-Response-Suppress': 'OOF, AutoReply',
+      },
+    };
+
+    if (logoAttachment) {
+      mailOptions.attachments = [logoAttachment];
+    }
+
+    console.log(`[TalentSearch Mail] Dispatching credentials email to ${recipient}...`);
+
+    const info = await transporter.sendMail(mailOptions);
 
     console.log(`[TalentSearch Mail] Email sent successfully to ${recipient}! Message ID: ${info.messageId}`);
     return { success: true, messageId: info.messageId, message: `Credentials email dispatched to ${recipient}` };
