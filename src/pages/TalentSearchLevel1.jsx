@@ -1016,6 +1016,9 @@ export default function TalentSearchLevel1() {
                   <p>
                     Congratulations <strong>{form.name}</strong>! Your application for the SIU Talent Search &amp; Scholarship Examination 2026-27 has been submitted.
                   </p>
+                  <p style={{ color: '#047857', fontWeight: 600, fontSize: '14px', marginTop: '6px' }}>
+                    📧 Your Exam Login ID, Password, and full test description have been sent to <strong>{form.email}</strong>.
+                  </p>
 
                   {/* High-Priority Attention Box: Urgent Prompt to Download Admit Card */}
                   <div

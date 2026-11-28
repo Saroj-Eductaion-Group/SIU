@@ -9,6 +9,9 @@ const {
   syncStudentToSiitjeeCollections,
 } = require('../config/siitjeeDb');
 
+// Dedicated Talent Search Email Dispatch Service
+const { sendTalentSearchCredentialsEmail } = require('../utils/emailService');
+
 // In-memory OTP storage with 10-minute expiry
 const otpCache = new Map();
 
@@ -350,17 +353,28 @@ router.post('/register', async (req, res) => {
     // Mirror to SIITJEE students and users collections for immediate student login in new software
     await syncStudentToSiitjeeCollections(candidate);
 
+    // Automatically send credentials email with full exam description, login ID, and password
+    let emailResult = { success: false };
+    try {
+      emailResult = await sendTalentSearchCredentialsEmail(candidate);
+    } catch (emailErr) {
+      console.error('[TalentSearch Auto-Email Exception]:', emailErr.message);
+    }
+
     return res.json({
       success: true,
       candidate,
       paperSet: assignedSet,
+      emailDispatched: emailResult.success,
       loginCredentials: {
         username: mobile,
         applicationNumber: candidate.applicationNumber,
         rollNumber: candidate.rollNumber,
         password: candidate.password,
       },
-      message: 'Registration for Talent Search 2026-2027 Scholarship Exam successful! Saved in SIITJEE database.'
+      message: emailResult.success
+        ? 'Registration successful! Exam credentials & details have been sent to your email.'
+        : 'Registration for Talent Search 2026-2027 Scholarship Exam successful! Saved in SIITJEE database.'
     });
   } catch (err) {
     console.error('Error in register:', err);
@@ -720,70 +734,39 @@ router.put('/admin/candidate/:id/reset-attempt', authMiddleware, async (req, res
 // POST /api/talent-search/send-credentials-email
 router.post('/send-credentials-email', async (req, res) => {
   try {
-    const { to, studentName, loginId, password, stream, slot, rollNumber } = req.body;
+    const { to, studentName, loginId, password, stream, slot, rollNumber, applicationNumber } = req.body;
     if (!to || !to.includes('@')) {
       return res.status(400).json({ success: false, message: 'Valid recipient email address is required.' });
     }
 
-    console.log(`[Email Dispatch] Preparing credentials for ${to} (${studentName}) - Login: ${loginId}, Slot: ${slot}`);
+    console.log(`[Email Dispatch] Sending credentials to ${to} (${studentName}) - Login: ${loginId}, Slot: ${slot}`);
 
-    // If SMTP credentials exist in process.env, attempt sending via nodemailer
-    if (process.env.SMTP_USER && process.env.SMTP_PASS) {
-      try {
-        const nodemailer = require('nodemailer');
-        const transporter = nodemailer.createTransport({
-          host: process.env.SMTP_HOST || 'smtp.gmail.com',
-          port: parseInt(process.env.SMTP_PORT || '587', 10),
-          secure: process.env.SMTP_SECURE === 'true',
-          auth: {
-            user: process.env.SMTP_USER,
-            pass: process.env.SMTP_PASS,
-          },
-        });
+    const candidateData = {
+      email: to,
+      name: studentName,
+      username: loginId,
+      mobile: loginId,
+      password: password,
+      stream: stream,
+      slot: slot,
+      rollNumber: rollNumber,
+      applicationNumber: applicationNumber || rollNumber,
+    };
 
-        await transporter.sendMail({
-          from: `"Saroj International University" <${process.env.SMTP_FROM || process.env.SMTP_USER}>`,
-          to,
-          subject: 'SIU Talent Search 2026-27 | Your Exam Portal Login ID & Password',
-          html: `
-            <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e2e8f0; border-radius: 12px;">
-              <div style="text-align: center; border-bottom: 2px solid #1e3a8a; padding-bottom: 15px; margin-bottom: 20px;">
-                <h2 style="color: #1e3a8a; margin: 0;">Saroj International University</h2>
-                <p style="color: #64748b; margin: 5px 0 0; font-size: 14px;">Talent Search & Scholarship Examination 2026-27</p>
-              </div>
-              <p>Dear <strong>${studentName || 'Candidate'}</strong>,</p>
-              <p>Thank you for registering for the SIU Talent Search Examination. Below are your official examination portal credentials:</p>
-              <div style="background-color: #f8fafc; border: 1px solid #cbd5e1; border-radius: 8px; padding: 15px; margin: 20px 0;">
-                <p style="margin: 6px 0;"><strong>Exam Portal:</strong> <a href="https://sarojuniversity.edu.in/talent-search-scholarship">https://sarojuniversity.edu.in/talent-search-scholarship</a></p>
-                <p style="margin: 6px 0;"><strong>Roll Number:</strong> <span style="font-family: monospace; font-weight: bold; color: #1e3a8a;">${rollNumber || loginId}</span></p>
-                <p style="margin: 6px 0;"><strong>Login ID (Username):</strong> <span style="font-family: monospace; font-weight: bold; color: #1e3a8a;">${loginId}</span></p>
-                <p style="margin: 6px 0;"><strong>Exam Password:</strong> <span style="font-family: monospace; font-weight: bold; color: #b45309;">${password}</span></p>
-                <p style="margin: 6px 0;"><strong>Stream / Subject:</strong> <strong>${stream || 'General'}</strong></p>
-                <p style="margin: 6px 0;"><strong>Scheduled Exam Slot:</strong> <strong>${slot || '29 Nov'}</strong></p>
-              </div>
-              <h4 style="color: #1e3a8a; margin-top: 20px;">Important Instructions:</h4>
-              <ol style="color: #334155; font-size: 13px; line-height: 1.6;">
-                <li>Please visit the exam portal on your allocated slot date.</li>
-                <li>Enter your Login ID and Password to start your examination.</li>
-                <li>Ensure a stable internet connection. Tab switching is strictly monitored.</li>
-              </ol>
-              <p style="margin-top: 30px; font-size: 13px; color: #64748b;">For any queries, please reach out to us at <a href="mailto:info@sarojuniversity.edu.in">info@sarojuniversity.edu.in</a>.<br/>Examination Cell, Saroj International University</p>
-            </div>
-          `,
-        });
+    const emailResult = await sendTalentSearchCredentialsEmail(candidateData);
 
-        return res.json({
-          success: true,
-          message: `Credentials email dispatched successfully to ${to}.`,
-        });
-      } catch (smtpErr) {
-        console.warn('[SMTP Error]', smtpErr.message);
-      }
+    if (emailResult.success) {
+      return res.json({
+        success: true,
+        message: `Credentials email dispatched successfully to ${to}.`,
+        messageId: emailResult.messageId,
+      });
     }
 
     return res.json({
-      success: true,
-      message: `Email content generated for ${to}. You can send directly via 1-click Gmail or configured email client.`,
+      success: false,
+      message: emailResult.message || 'SMTP dispatch notice: Please check email credentials.',
+      error: emailResult.error,
       credentials: {
         to,
         studentName,
@@ -793,6 +776,11 @@ router.post('/send-credentials-email', async (req, res) => {
         stream,
       },
     });
+  } catch (err) {
+    console.error('Error in send-credentials-email:', err);
+    return res.status(500).json({ success: false, message: err.message });
+  }
+});
   } catch (err) {
     console.error('Error in send-credentials-email:', err);
     return res.status(500).json({ success: false, message: err.message });
