@@ -30,15 +30,8 @@ jobs:
           sudo systemctl restart pm2-SIU-5.service || true
           pm2 restart all 2>/dev/null || true
 
-          # Diagnostics
-          {
-            echo "=== PM2 STATUS ==="
-            pm2 status 2>&1
-            echo "=== SYSTEMCTL STATUS ==="
-            sudo systemctl status pm2-SIU-5.service 2>&1 || true
-            echo "=== PM2 LOGS ==="
-            pm2 logs --lines 30 --nostream 2>&1 || true
-          } > /var/www/SIU/dist/debug-backend.txt 2>&1 || true
+          # Clean up debug file
+          rm -f /var/www/SIU/dist/debug-backend.txt 2>/dev/null || true
 
           # Reload nginx to ensure changes take effect immediately
           sudo systemctl reload nginx 2>/dev/null || true

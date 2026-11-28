@@ -781,10 +781,5 @@ router.post('/send-credentials-email', async (req, res) => {
     return res.status(500).json({ success: false, message: err.message });
   }
 });
-  } catch (err) {
-    console.error('Error in send-credentials-email:', err);
-    return res.status(500).json({ success: false, message: err.message });
-  }
-});
 
 module.exports = router;
