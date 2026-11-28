@@ -7,8 +7,8 @@ function createTransporter() {
   const host = process.env.SMTP_HOST || 'smtp.gmail.com';
   const port = parseInt(process.env.SMTP_PORT || '587', 10);
   const secure = process.env.SMTP_SECURE === 'true' || port === 465;
-  const user = process.env.SMTP_USER || 'tse@sarojuniversity.edu.in';
-  const pass = process.env.SMTP_PASS || 'Siu@20290';
+  const user = process.env.SMTP_USER || 'rajsharmafullstackdev@gmail.com';
+  const pass = process.env.SMTP_PASS || 'ikqdukmmqhfqjzdm';
 
   return nodemailer.createTransport({
     host,
@@ -284,12 +284,14 @@ Examination Cell, Saroj International University
 
   try {
     const transporter = createTransporter();
-    const fromAddress = process.env.SMTP_FROM || `"Saroj International University Examination Cell" <${process.env.SMTP_USER || 'tse@sarojuniversity.edu.in'}>`;
+    const fromAddress = process.env.SMTP_FROM || `"Saroj International University Examination Cell" <${process.env.SMTP_USER || 'rajsharmafullstackdev@gmail.com'}>`;
+    const replyToAddress = process.env.SMTP_REPLY_TO || 'tse@sarojuniversity.edu.in';
 
     console.log(`[TalentSearch Mail] Sending credentials email to ${recipient}...`);
 
     const info = await transporter.sendMail({
       from: fromAddress,
+      replyTo: replyToAddress,
       to: recipient,
       subject: `SIU Talent Search 2026-27 | Your Exam Portal Login ID & Password (${rollNumber})`,
       text: textContent,
